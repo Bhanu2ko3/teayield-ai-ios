@@ -7,38 +7,7 @@ struct OnboardingView: View {
     @Binding var hasCompletedOnboarding: Bool
     @State private var currentSlide = 0
 
-    private let slides: [OnboardingSlide] = [
-        OnboardingSlide(
-            badge: "SENTINEL-2 & PLANETSCOPE AI",
-            title: "Zero-IoT Satellite Yield Prediction & Plucking Optimization",
-            description: "Predict daily block yield, detect peak vegetative NDVI (0.82) windows, and automate plucker task allocation across Pedro Estate without physical sensors.",
-            pills: [
-                PillItem(title: "0.82", subtitle: "Peak NDVI"),
-                PillItem(title: "850 kg", subtitle: "Pedro Target"),
-                PillItem(title: "88%", subtitle: "Two Leaves")
-            ]
-        ),
-        OnboardingSlide(
-            badge: "ON-DEVICE APPLE SILICON NEURAL ENGINE",
-            title: "Real-Time 60fps Shoot Maturity Quality Inspection",
-            description: "Evaluate the fine-to-coarse leaf ratio directly on your iPhone camera. Guarantees 85% Two Leaves and a Bud auction export benchmarks 100% offline.",
-            pills: [
-                PillItem(title: "60 FPS", subtitle: "Live Scanner"),
-                PillItem(title: "Zero Latency", subtitle: "Neural Engine"),
-                PillItem(title: "Grade A", subtitle: "Fine Shoot")
-            ]
-        ),
-        OnboardingSlide(
-            badge: "DEAP GENETIC ALGORITHM ENGINE",
-            title: "Conflict-Free Workforce Scheduling & Factory Protection",
-            description: "Translate complex yield forecasts into balanced 6-day plucking rosters, preventing mountain labor mismatch and factory withering trough overloads.",
-            pills: [
-                PillItem(title: "3,000 kg", subtitle: "Intake Cap"),
-                PillItem(title: "6-Day", subtitle: "Rest Cycle"),
-                PillItem(title: "Optimal", subtitle: "Labor Match")
-            ]
-        )
-    ]
+    private let slides: [OnboardingSlide] = OnboardingSlide.defaultSlides
 
     var body: some View {
         NavigationStack {
@@ -141,59 +110,12 @@ struct OnboardingView: View {
     private var carouselSection: some View {
         TabView(selection: $currentSlide) {
             ForEach(0..<slides.count, id: \.self) { index in
-                slideCard(slides[index])
+                OnboardingSlideCardView(slide: slides[index])
                     .tag(index)
                     .padding(.horizontal, 24)
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
-    }
-
-    private func slideCard(_ slide: OnboardingSlide) -> some View {
-        VStack(spacing: 14) {
-            Text(slide.badge)
-                .font(.system(size: 10, weight: .bold, design: .rounded))
-                .foregroundColor(AppTheme.emerald)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 4)
-                .background(AppTheme.emerald.opacity(0.1))
-                .cornerRadius(AppTheme.radiusSmall)
-
-            Text(slide.title)
-                .font(.appHeadline)
-                .foregroundColor(.primary)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-
-            Text(slide.description)
-                .font(.appCaption)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .lineSpacing(3)
-                .padding(.horizontal, 8)
-                .fixedSize(horizontal: false, vertical: true)
-
-            HStack(spacing: 10) {
-                ForEach(slide.pills) { pill in
-                    VStack(spacing: 2) {
-                        Text(pill.title)
-                            .font(.system(size: 13, weight: .bold, design: .rounded))
-                            .foregroundColor(AppTheme.emerald)
-
-                        Text(pill.subtitle)
-                            .font(.system(size: 10, weight: .medium, design: .rounded))
-                            .foregroundColor(.secondary)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(AppTheme.radiusSmall)
-                }
-            }
-            .padding(.top, 4)
-        }
-        .padding(18)
-        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 
     private var pageIndicatorDots: some View {
@@ -268,19 +190,4 @@ struct OnboardingView: View {
         generator.prepare()
         generator.impactOccurred()
     }
-}
-
-// MARK: - Slide Models
-
-private struct OnboardingSlide {
-    let badge: String
-    let title: String
-    let description: String
-    let pills: [PillItem]
-}
-
-private struct PillItem: Identifiable {
-    let id = UUID()
-    let title: String
-    let subtitle: String
 }

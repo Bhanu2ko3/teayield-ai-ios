@@ -58,7 +58,18 @@
 		74ABC812308D070100E22417 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC802308D070100E22417 /* OnboardingView.swift */; };
 		74ABC813308D070100E22417 /* SupervisorMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC803308D070100E22417 /* SupervisorMainTabView.swift */; };
 		74ABC814308D070100E22417 /* SupervisorSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC804308D070100E22417 /* SupervisorSettingsView.swift */; };
-		74ABC815308D070100E22417 /* PlaceholderViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC805308D070100E22417 /* PlaceholderViews.swift */; };
+		74ABC830308D080100E22417 /* SupervisorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC820308D080100E22417 /* SupervisorSettingsViewModel.swift */; };
+		74ABC831308D080100E22417 /* OfficerProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC821308D080100E22417 /* OfficerProfileCardView.swift */; };
+		74ABC832308D080100E22417 /* DataStorageSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC822308D080100E22417 /* DataStorageSectionView.swift */; };
+		74ABC833308D080100E22417 /* SecuritySettingsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC823308D080100E22417 /* SecuritySettingsSectionView.swift */; };
+		74ABC834308D080100E22417 /* NotificationSettingsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC824308D080100E22417 /* NotificationSettingsSectionView.swift */; };
+		74ABC835308D080100E22417 /* AppInfoSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC825308D080100E22417 /* AppInfoSectionView.swift */; };
+		74ABC836308D080100E22417 /* LeafScannerPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC826308D080100E22417 /* LeafScannerPlaceholderView.swift */; };
+		74ABC837308D080100E22417 /* FieldMapPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC827308D080100E22417 /* FieldMapPlaceholderView.swift */; };
+		74ABC838308D080100E22417 /* GeofenceArrivalBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC828308D080100E22417 /* GeofenceArrivalBannerView.swift */; };
+		74ABC839308D080100E22417 /* KpiSummaryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC829308D080100E22417 /* KpiSummaryRowView.swift */; };
+		74ABC83A308D080100E22417 /* OnboardingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC82A308D080100E22417 /* OnboardingSlide.swift */; };
+		74ABC83B308D080100E22417 /* OnboardingSlideCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC82B308D080100E22417 /* OnboardingSlideCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,7 +144,18 @@
 		74ABC802308D070100E22417 /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		74ABC803308D070100E22417 /* SupervisorMainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorMainTabView.swift; sourceTree = "<group>"; };
 		74ABC804308D070100E22417 /* SupervisorSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorSettingsView.swift; sourceTree = "<group>"; };
-		74ABC805308D070100E22417 /* PlaceholderViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderViews.swift; sourceTree = "<group>"; };
+		74ABC820308D080100E22417 /* SupervisorSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorSettingsViewModel.swift; sourceTree = "<group>"; };
+		74ABC821308D080100E22417 /* OfficerProfileCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficerProfileCardView.swift; sourceTree = "<group>"; };
+		74ABC822308D080100E22417 /* DataStorageSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStorageSectionView.swift; sourceTree = "<group>"; };
+		74ABC823308D080100E22417 /* SecuritySettingsSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsSectionView.swift; sourceTree = "<group>"; };
+		74ABC824308D080100E22417 /* NotificationSettingsSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsSectionView.swift; sourceTree = "<group>"; };
+		74ABC825308D080100E22417 /* AppInfoSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoSectionView.swift; sourceTree = "<group>"; };
+		74ABC826308D080100E22417 /* LeafScannerPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerPlaceholderView.swift; sourceTree = "<group>"; };
+		74ABC827308D080100E22417 /* FieldMapPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapPlaceholderView.swift; sourceTree = "<group>"; };
+		74ABC828308D080100E22417 /* GeofenceArrivalBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeofenceArrivalBannerView.swift; sourceTree = "<group>"; };
+		74ABC829308D080100E22417 /* KpiSummaryRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KpiSummaryRowView.swift; sourceTree = "<group>"; };
+		74ABC82A308D080100E22417 /* OnboardingSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
+		74ABC82B308D080100E22417 /* OnboardingSlideCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Components/OnboardingSlideCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +305,7 @@
 				74ABC7A4308D053100E22417 /* TeaField.swift */,
 				74ABC7A5308D053100E22417 /* UserProfile.swift */,
 				74ABC7A6308D053100E22417 /* PluckingTask.swift */,
+				74ABC82A308D080100E22417 /* OnboardingSlide.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -369,6 +392,7 @@
 				74ABC7BD308D053100E22417 /* TodayTasksViewModel.swift */,
 				74ABC7BE308D053100E22417 /* AuthViewModel.swift */,
 				74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */,
+				74ABC820308D080100E22417 /* SupervisorSettingsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -388,6 +412,7 @@
 			isa = PBXGroup;
 			children = (
 				74ABC802308D070100E22417 /* OnboardingView.swift */,
+				74ABC82B308D080100E22417 /* OnboardingSlideCardView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -425,7 +450,15 @@
 			children = (
 				74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */,
 				74ABC7C9308D053100E22417 /* TaskCardView.swift */,
-				74ABC805308D070100E22417 /* PlaceholderViews.swift */,
+				74ABC821308D080100E22417 /* OfficerProfileCardView.swift */,
+				74ABC822308D080100E22417 /* DataStorageSectionView.swift */,
+				74ABC823308D080100E22417 /* SecuritySettingsSectionView.swift */,
+				74ABC824308D080100E22417 /* NotificationSettingsSectionView.swift */,
+				74ABC825308D080100E22417 /* AppInfoSectionView.swift */,
+				74ABC826308D080100E22417 /* LeafScannerPlaceholderView.swift */,
+				74ABC827308D080100E22417 /* FieldMapPlaceholderView.swift */,
+				74ABC828308D080100E22417 /* GeofenceArrivalBannerView.swift */,
+				74ABC829308D080100E22417 /* KpiSummaryRowView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -614,7 +647,18 @@
 				74ABC812308D070100E22417 /* OnboardingView.swift in Sources */,
 				74ABC813308D070100E22417 /* SupervisorMainTabView.swift in Sources */,
 				74ABC814308D070100E22417 /* SupervisorSettingsView.swift in Sources */,
-				74ABC815308D070100E22417 /* PlaceholderViews.swift in Sources */,
+				74ABC830308D080100E22417 /* SupervisorSettingsViewModel.swift in Sources */,
+				74ABC831308D080100E22417 /* OfficerProfileCardView.swift in Sources */,
+				74ABC832308D080100E22417 /* DataStorageSectionView.swift in Sources */,
+				74ABC833308D080100E22417 /* SecuritySettingsSectionView.swift in Sources */,
+				74ABC834308D080100E22417 /* NotificationSettingsSectionView.swift in Sources */,
+				74ABC835308D080100E22417 /* AppInfoSectionView.swift in Sources */,
+				74ABC836308D080100E22417 /* LeafScannerPlaceholderView.swift in Sources */,
+				74ABC837308D080100E22417 /* FieldMapPlaceholderView.swift in Sources */,
+				74ABC838308D080100E22417 /* GeofenceArrivalBannerView.swift in Sources */,
+				74ABC839308D080100E22417 /* KpiSummaryRowView.swift in Sources */,
+				74ABC83A308D080100E22417 /* OnboardingSlide.swift in Sources */,
+				74ABC83B308D080100E22417 /* OnboardingSlideCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -31,6 +31,14 @@ final class TodayTasksViewModel: ObservableObject {
         tasks.reduce(0) { $0 + $1.assignedPluckersCount }
     }
 
+    var estateDisplayName: String {
+        "Pedro Estate"
+    }
+
+    var activeArrivalFieldName: String {
+        tasks.first?.fieldName ?? "Assigned Field"
+    }
+
     private let apiService: APIServiceProtocol
     private let syncManager: SyncManagerProtocol
     private let fieldRepository: FieldRepositoryProtocol
