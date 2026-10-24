@@ -1,5 +1,8 @@
 # Component 6 Specification: In-Class Tutorial 4 — "The Real App" (PlayHubApp)
 **Target Weightage:** 10% (Elective / Marked Lab Submission)  
+**Author:** Bhanuka Bandara (Student ID: 082 | Coventry ID: 16604375)  
+**Module:** iOS Application Development — BSc (Hons) Computing (BSCCOMP25.1P)  
+**Institution:** National Institute of Business Management (NIBM) / Coventry University  
 **Status:** Complete Tutorial 4 Blueprint  
 
 ---

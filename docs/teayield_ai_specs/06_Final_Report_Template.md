@@ -2,11 +2,13 @@
 **Project Title:** TeaYield AI — Precision Tea Yield Prediction & Plucking Schedule Optimization Platform  
 **Target Format:** 4-Page Structured PDF Document  
 **Weightage:** Part of Component 4 (15%)  
-**Author:** Bhanuka Bandara (Student ID: 082)  
+**Author:** Bhanuka Bandara (Student ID: 082 | Coventry ID: 16604375)  
+**Module:** iOS Application Development — BSc (Hons) Computing (BSCCOMP25.1P)  
+**Institution:** National Institute of Business Management (NIBM) / Coventry University  
 
 ---
 
-## 📄 Page 1: Executive Overview, Problem Domain & UI Showcases
+## Page 1: Executive Overview, Problem Domain & UI Showcases
 
 ### 1.1 Executive Overview & Problem Domain
 - **Problem Statement:** Traditional Sri Lankan tea estates rely on visual heuristics for plucking schedules, causing labor mismatch and factory processing bottlenecks.
@@ -19,7 +21,7 @@
 
 ---
 
-## 📄 Page 2: Technical Architecture & System Implementation
+## Page 2: Technical Architecture & System Implementation
 
 ### 2.1 MVVM + POP Architecture Diagram
 - Visual diagram showing declarative SwiftUI Views -> `@Observable` ViewModels -> Protocol-based Services -> Core Data & Supabase Repositories.
@@ -29,16 +31,16 @@
 - Offline caching lifecycle explanation: Local writes in remote fields with background sync via `NWPathMonitor`.
 
 ### 2.3 Cloud Backend Integration & Security
-- REST API synchronization specs between iOS app, Supabase PostGIS DB, and Python FastAPI backend (`/api/v1/predict/yield`, `/api/v1/optimize/roster`).
+- REST API synchronization specs between iOS app, Supabase PostGIS DB, and Python FastAPI backend (`POST /api/v1/yield/predict`, `POST /api/v1/roster/optimize`, `POST /api/v1/harvest/sync`).
 - Biometric security integration using `LocalAuthentication` Face ID for financial roster access control.
 
 ---
 
-## 📄 Page 3: Advanced iOS SDKs (On-Device) & Technical Challenges
+## Page 3: Advanced iOS SDKs (On-Device) & Technical Challenges
 
 ### 3.1 On-Device Computer Vision & Core ML Shoot Scanner
 - Real-time 60fps camera buffer processing using Apple Silicon Neural Engine (`CoreML` + `Vision`).
-- Zero cloud API dependency justification and fine-to-coarse leaf ratio classification logic.
+- Zero cloud API dependency justification and fine-to-coarse leaf ratio classification logic (*"Two Leaves and a Bud"*).
 
 ### 3.2 MapKit & Active Geofencing System
 - Dynamic spatial polygon rendering (`MKPolygon`) and `CLCircularRegion` background geofencing alerts upon entering harvest-ready fields.
@@ -51,7 +53,7 @@
 
 ---
 
-## 📄 Page 4: Learning Outcomes (LO1–LO4) Reflection & Mandatory LLM Log
+## Page 4: Learning Outcomes (LO1–LO4) Reflection & Mandatory LLM Log
 
 ### 4.1 Learning Outcomes Reflection Matrix
 | Learning Outcome | Description | Specific TeaYield AI Project Evidence & Justification |

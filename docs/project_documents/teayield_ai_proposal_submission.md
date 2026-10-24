@@ -3,8 +3,8 @@
 **Module Name:** iOS Application Development (BSCCOMP25.1P)  
 **Degree Programme:** BSc (Hons) in Computing  
 **Student Name:** Bhanuka Bandara  
-**Student ID:** 082  
-**Institution:** National Institute of Business Management (NIBM) — School of Computing  
+**Student ID:** 082 | **Coventry ID:** 16604375  
+**Institution:** National Institute of Business Management (NIBM) / Coventry University  
 **Submission Date:** September 2026  
 
 ---
@@ -99,7 +99,7 @@ TeaYield AI strictly follows Apple's **Human Interface Guidelines (HIG)**:
 1. **Screen 01 (Welcome & Platform Onboarding):** Introduces Zero-IoT satellite yield prediction, Sentinel-2 spectral analysis, and core estate targets.
 2. **Screen 02 (User Registration & Access Tier):** Dual role selector (Field Superintendent vs. Estate Manager), corporate domain verification (`bhanuka@pedroestates.lk`), and assigned block authorization.
 3. **Screen 03 (Biometric Face ID Authentication):** Secure biometric login using `LocalAuthentication` with TrueDepth HUD feedback and passcode fallback.
-4. **Screen 04 (Tasks Home & Active Geofence Alert):** Live GPS geofence arrival detection banner ("Field 01 — 25 Pluckers Assigned"), shift target gauges, and harvest task list.
+4. **Screen 04 (Tasks Home & Active Geofence Alert):** Live GPS geofence arrival detection banner ("Upper Division Block A — 25 Pluckers Assigned"), shift target gauges, and harvest task list.
 5. **Screen 05 (Core ML Shoot Quality Scanner HUD):** Real-time 60fps camera viewfinder running Vision framework (`VisionTransformer-v3.2`) with bounding box HUD ("88% Fine Leaf — Two Leaves & Bud") and Core Data log trigger.
 6. **Screen 06 (Spatial MapKit GIS Polygon Explorer):** Interactive vector map overlaying field polygons (`MKPolygon`), elevation contours, and active geofences (`CLCircularRegion`).
 

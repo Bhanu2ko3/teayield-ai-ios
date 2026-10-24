@@ -4,11 +4,11 @@
 
 **Student Name:** Bhanuka Bandara
 
-**Student ID:** 082
+**Student ID:** 082 | **Coventry ID:** 16604375
 
 **Degree Programme:** BSc (Hons) in Computing
 
-**Affiliation:** National Institute of Business Management (NIBM)
+**Affiliation:** National Institute of Business Management (NIBM) / Coventry University
 
 ---
 

@@ -1,9 +1,9 @@
 # Component 1 Specification: App Proposal & High-Fidelity UI/UX Prototype
 **Project Title:** TeaYield AI — Precision Tea Yield Prediction & Plucking Schedule Optimization Platform  
 **Target Weightage:** 10% (Mandatory Component)  
-**Author:** Bhanuka Bandara (Student ID: 082)  
-**Module:** iOS Application Development — BSC (Hons) Computing (BSCCOMP25.1P)  
-**Affiliation:** National Institute of Business Management (NIBM)  
+**Author:** Bhanuka Bandara (Student ID: 082 | Coventry ID: 16604375)  
+**Module:** iOS Application Development — BSc (Hons) Computing (BSCCOMP25.1P)  
+**Affiliation:** National Institute of Business Management (NIBM) / Coventry University  
 
 ---
 

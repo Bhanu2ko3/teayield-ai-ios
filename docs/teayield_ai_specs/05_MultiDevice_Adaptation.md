@@ -1,6 +1,9 @@
 # Component 5 Specification: Above & Beyond — Multi-Device Adaptation & Architecture
 **Project Title:** TeaYield AI — Precision Tea Yield Prediction & Plucking Schedule Optimization Platform  
 **Target Weightage:** 25% (Maximum Weightage Component)  
+**Author:** Bhanuka Bandara (Student ID: 082 | Coventry ID: 16604375)  
+**Module:** iOS Application Development — BSc (Hons) Computing (BSCCOMP25.1P)  
+**Institution:** National Institute of Business Management (NIBM) / Coventry University  
 **Status:** Complete Advanced Polish & Architecture Spec  
 
 ---

@@ -1,6 +1,9 @@
 # Component 4 Specification: Swift Testing, Accessibility & Documentation
 **Project Title:** TeaYield AI — Precision Tea Yield Prediction & Plucking Schedule Optimization Platform  
 **Target Weightage:** 15% (Elective / Max Marks)  
+**Author:** Bhanuka Bandara (Student ID: 082 | Coventry ID: 16604375)  
+**Module:** iOS Application Development — BSc (Hons) Computing (BSCCOMP25.1P)  
+**Institution:** National Institute of Business Management (NIBM) / Coventry University  
 **Status:** Complete QA & Documentation Spec  
 
 ---

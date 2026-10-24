@@ -88,14 +88,14 @@ final class LeafScannerViewModel {
 1. **Interactive Field Polygon Overlays (`MKPolygon`):**
    - Reads field spatial boundaries (`GeoJSON`) from Core Data / Supabase.
    - Renders interactive color-coded polygons on MapKit satellite view:
-     - 🟢 **Green Polygon:** Peak harvest readiness (High NDVI, scheduled for plucking today).
-     - 🟡 **Yellow Polygon:** Moderate growth (Harvest window in 3–5 days).
-     - 🔴 **Red Polygon:** Rest period (Plucked recently, do not enter).
+     - **Green Polygon:** Peak harvest readiness (High NDVI, scheduled for plucking today).
+     - **Yellow Polygon:** Moderate growth (Harvest window in 3–5 days).
+     - **Red Polygon:** Rest period (Plucked recently, do not enter).
 
 2. **Active GPS Geofencing System (`CLCircularRegion`):**
    - When a field supervisor physically walks into a field boundary, `CoreLocationManager` detects the region entry via `didEnterRegion`.
    - Triggers an automated local `UNNotification`:
-     > *"📍 You entered Field 01 (Pedro Estate). Scheduled for plucking today: 25 Pluckers assigned."*
+     > *"You entered Upper Division Block A (Pedro Estate). Scheduled for plucking today: 25 Pluckers assigned."*
 
 ### 2.2 Geofencing Swift Implementation
 ```swift
@@ -128,7 +128,7 @@ final class LocationServiceManager: NSObject, CLLocationManagerDelegate {
     
     private func sendLocalGeofenceNotification(fieldId: String) {
         let content = UNMutableNotificationContent()
-        content.title = "📍 Field Arrival Alert"
+        content.title = "Field Arrival Alert"
         content.body = "You have entered \(fieldId). This field is scheduled for plucking today."
         content.sound = .default
         
