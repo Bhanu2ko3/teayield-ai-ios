@@ -1,0 +1,910 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		74ABC773308D036800E22417 /* TeaYieldAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC772308D036800E22417 /* TeaYieldAITests.swift */; };
+		74ABC77D308D036800E22417 /* TeaYieldAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77C308D036800E22417 /* TeaYieldAIUITests.swift */; };
+		74ABC77F308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77E308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift */; };
+		74ABC7CD308D053200E22417 /* TeaYieldAIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC78C308D053100E22417 /* TeaYieldAIApp.swift */; };
+		74ABC7CE308D053200E22417 /* NDVIRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC78F308D053100E22417 /* NDVIRepositoryProtocol.swift */; };
+		74ABC7CF308D053200E22417 /* FieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC790308D053100E22417 /* FieldRepository.swift */; };
+		74ABC7D0308D053200E22417 /* NDVIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC791308D053100E22417 /* NDVIRepository.swift */; };
+		74ABC7D1308D053200E22417 /* FieldRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC792308D053100E22417 /* FieldRepositoryProtocol.swift */; };
+		74ABC7D2308D053200E22417 /* HarvestRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC793308D053100E22417 /* HarvestRepositoryProtocol.swift */; };
+		74ABC7D3308D053200E22417 /* HarvestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC794308D053100E22417 /* HarvestRepository.swift */; };
+		74ABC7D4308D053200E22417 /* TeaFieldEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC796308D053100E22417 /* TeaFieldEntity.swift */; };
+		74ABC7D5308D053200E22417 /* NDVILogEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC797308D053100E22417 /* NDVILogEntity.swift */; };
+		74ABC7D6308D053200E22417 /* HarvestLogEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC798308D053100E22417 /* HarvestLogEntity.swift */; };
+		74ABC7D7308D053200E22417 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC799308D053100E22417 /* PersistenceController.swift */; };
+		74ABC7D8308D053200E22417 /* EstateDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC79C308D053100E22417 /* EstateDTOs.swift */; };
+		74ABC7D9308D053200E22417 /* AuthDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC79D308D053100E22417 /* AuthDTOs.swift */; };
+		74ABC7DA308D053200E22417 /* TaskDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC79E308D053100E22417 /* TaskDTOs.swift */; };
+		74ABC7DB308D053200E22417 /* APIErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC79F308D053100E22417 /* APIErrorDTO.swift */; };
+		74ABC7DC308D053200E22417 /* FieldDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A0308D053100E22417 /* FieldDTOs.swift */; };
+		74ABC7DD308D053200E22417 /* HarvestSyncDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A1308D053100E22417 /* HarvestSyncDTOs.swift */; };
+		74ABC7DE308D053200E22417 /* HarvestRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A3308D053100E22417 /* HarvestRecord.swift */; };
+		74ABC7DF308D053200E22417 /* TeaField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A4308D053100E22417 /* TeaField.swift */; };
+		74ABC7E0308D053200E22417 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A5308D053100E22417 /* UserProfile.swift */; };
+		74ABC7E1308D053200E22417 /* PluckingTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A6308D053100E22417 /* PluckingTask.swift */; };
+		74ABC7E2308D053200E22417 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A9308D053100E22417 /* AppContainer.swift */; };
+		74ABC7E3308D053200E22417 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7AB308D053100E22417 /* KeychainHelper.swift */; };
+		74ABC7E4308D053200E22417 /* BiometricAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7AC308D053100E22417 /* BiometricAuthManager.swift */; };
+		74ABC7E5308D053200E22417 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7AE308D053100E22417 /* APIEndpoint.swift */; };
+		74ABC7E6308D053200E22417 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7AF308D053100E22417 /* NetworkError.swift */; };
+		74ABC7E7308D053200E22417 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B0308D053100E22417 /* NetworkMonitor.swift */; };
+		74ABC7E8308D053200E22417 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B2308D053100E22417 /* AppConfiguration.swift */; };
+		74ABC7E9308D053200E22417 /* OfflineSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B5308D053100E22417 /* OfflineSyncManager.swift */; };
+		74ABC7EA308D053200E22417 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B6308D053100E22417 /* AuthService.swift */; };
+		74ABC7EB308D053200E22417 /* CloudAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B7308D053100E22417 /* CloudAPIService.swift */; };
+		74ABC7EC308D053200E22417 /* AuthServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B9308D053100E22417 /* AuthServiceProtocol.swift */; };
+		74ABC7ED308D053200E22417 /* SyncManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BA308D053100E22417 /* SyncManagerProtocol.swift */; };
+		74ABC7EE308D053200E22417 /* APIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BB308D053100E22417 /* APIServiceProtocol.swift */; };
+		74ABC7EF308D053200E22417 /* TodayTasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BD308D053100E22417 /* TodayTasksViewModel.swift */; };
+		74ABC7F0308D053200E22417 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BE308D053100E22417 /* AuthViewModel.swift */; };
+		74ABC7F1308D053200E22417 /* HarvestWeighingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */; };
+		74ABC7F2308D053200E22417 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C2308D053100E22417 /* LoginView.swift */; };
+		74ABC7F3308D053200E22417 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C4308D053100E22417 /* RootView.swift */; };
+		74ABC7F4308D053200E22417 /* TodayTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C6308D053100E22417 /* TodayTasksView.swift */; };
+		74ABC7F5308D053200E22417 /* SyncStatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */; };
+		74ABC7F6308D053200E22417 /* TaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C9308D053100E22417 /* TaskCardView.swift */; };
+		74ABC7F7308D053200E22417 /* HarvestWeighingFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */; };
+		74ABC7F8308D053200E22417 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7CC308D053100E22417 /* MockData.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		74ABC76F308D036800E22417 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74ABC756308D036400E22417 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74ABC75D308D036400E22417;
+			remoteInfo = TeaYieldAI;
+		};
+		74ABC779308D036800E22417 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74ABC756308D036400E22417 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74ABC75D308D036400E22417;
+			remoteInfo = TeaYieldAI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		74ABC75E308D036400E22417 /* TeaYieldAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeaYieldAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeaYieldAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74ABC772308D036800E22417 /* TeaYieldAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAITests.swift; sourceTree = "<group>"; };
+		74ABC778308D036800E22417 /* TeaYieldAIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeaYieldAIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74ABC77C308D036800E22417 /* TeaYieldAIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAIUITests.swift; sourceTree = "<group>"; };
+		74ABC77E308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAIUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		74ABC78C308D053100E22417 /* TeaYieldAIApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaYieldAIApp.swift; sourceTree = "<group>"; };
+		74ABC78F308D053100E22417 /* NDVIRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVIRepositoryProtocol.swift; sourceTree = "<group>"; };
+		74ABC790308D053100E22417 /* FieldRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldRepository.swift; sourceTree = "<group>"; };
+		74ABC791308D053100E22417 /* NDVIRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVIRepository.swift; sourceTree = "<group>"; };
+		74ABC792308D053100E22417 /* FieldRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldRepositoryProtocol.swift; sourceTree = "<group>"; };
+		74ABC793308D053100E22417 /* HarvestRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestRepositoryProtocol.swift; sourceTree = "<group>"; };
+		74ABC794308D053100E22417 /* HarvestRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestRepository.swift; sourceTree = "<group>"; };
+		74ABC796308D053100E22417 /* TeaFieldEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaFieldEntity.swift; sourceTree = "<group>"; };
+		74ABC797308D053100E22417 /* NDVILogEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVILogEntity.swift; sourceTree = "<group>"; };
+		74ABC798308D053100E22417 /* HarvestLogEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestLogEntity.swift; sourceTree = "<group>"; };
+		74ABC799308D053100E22417 /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		74ABC79C308D053100E22417 /* EstateDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstateDTOs.swift; sourceTree = "<group>"; };
+		74ABC79D308D053100E22417 /* AuthDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthDTOs.swift; sourceTree = "<group>"; };
+		74ABC79E308D053100E22417 /* TaskDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDTOs.swift; sourceTree = "<group>"; };
+		74ABC79F308D053100E22417 /* APIErrorDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIErrorDTO.swift; sourceTree = "<group>"; };
+		74ABC7A0308D053100E22417 /* FieldDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldDTOs.swift; sourceTree = "<group>"; };
+		74ABC7A1308D053100E22417 /* HarvestSyncDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestSyncDTOs.swift; sourceTree = "<group>"; };
+		74ABC7A3308D053100E22417 /* HarvestRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestRecord.swift; sourceTree = "<group>"; };
+		74ABC7A4308D053100E22417 /* TeaField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaField.swift; sourceTree = "<group>"; };
+		74ABC7A5308D053100E22417 /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		74ABC7A6308D053100E22417 /* PluckingTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluckingTask.swift; sourceTree = "<group>"; };
+		74ABC7A9308D053100E22417 /* AppContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		74ABC7AB308D053100E22417 /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		74ABC7AC308D053100E22417 /* BiometricAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricAuthManager.swift; sourceTree = "<group>"; };
+		74ABC7AE308D053100E22417 /* APIEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		74ABC7AF308D053100E22417 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		74ABC7B0308D053100E22417 /* NetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		74ABC7B2308D053100E22417 /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		74ABC7B5308D053100E22417 /* OfflineSyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineSyncManager.swift; sourceTree = "<group>"; };
+		74ABC7B6308D053100E22417 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		74ABC7B7308D053100E22417 /* CloudAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudAPIService.swift; sourceTree = "<group>"; };
+		74ABC7B9308D053100E22417 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
+		74ABC7BA308D053100E22417 /* SyncManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerProtocol.swift; sourceTree = "<group>"; };
+		74ABC7BB308D053100E22417 /* APIServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIServiceProtocol.swift; sourceTree = "<group>"; };
+		74ABC7BD308D053100E22417 /* TodayTasksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTasksViewModel.swift; sourceTree = "<group>"; };
+		74ABC7BE308D053100E22417 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestWeighingViewModel.swift; sourceTree = "<group>"; };
+		74ABC7C2308D053100E22417 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		74ABC7C4308D053100E22417 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		74ABC7C6308D053100E22417 /* TodayTasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTasksView.swift; sourceTree = "<group>"; };
+		74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncStatusBarView.swift; sourceTree = "<group>"; };
+		74ABC7C9308D053100E22417 /* TaskCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCardView.swift; sourceTree = "<group>"; };
+		74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestWeighingFormView.swift; sourceTree = "<group>"; };
+		74ABC7CC308D053100E22417 /* MockData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		74ABC75B308D036400E22417 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC76B308D036800E22417 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC775308D036800E22417 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		74ABC755308D036400E22417 = {
+			isa = PBXGroup;
+			children = (
+				74ABC760308D036400E22417 /* TeaYieldAI */,
+				74ABC771308D036800E22417 /* TeaYieldAITests */,
+				74ABC77B308D036800E22417 /* TeaYieldAIUITests */,
+				74ABC75F308D036400E22417 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		74ABC75F308D036400E22417 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC75E308D036400E22417 /* TeaYieldAI.app */,
+				74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */,
+				74ABC778308D036800E22417 /* TeaYieldAIUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		74ABC760308D036400E22417 /* TeaYieldAI */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC78B308D053100E22417 /* App */,
+				74ABC7A7308D053100E22417 /* Core */,
+				74ABC79A308D053100E22417 /* Models */,
+				74ABC78D308D053100E22417 /* Persistence */,
+				74ABC7CB308D053100E22417 /* Preview Content */,
+				74ABC7B3308D053100E22417 /* Services */,
+				74ABC7BC308D053100E22417 /* ViewModels */,
+				74ABC7C0308D053100E22417 /* Views */,
+			);
+			path = TeaYieldAI;
+			sourceTree = "<group>";
+		};
+		74ABC771308D036800E22417 /* TeaYieldAITests */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC772308D036800E22417 /* TeaYieldAITests.swift */,
+			);
+			path = TeaYieldAITests;
+			sourceTree = "<group>";
+		};
+		74ABC77B308D036800E22417 /* TeaYieldAIUITests */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC77C308D036800E22417 /* TeaYieldAIUITests.swift */,
+				74ABC77E308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift */,
+			);
+			path = TeaYieldAIUITests;
+			sourceTree = "<group>";
+		};
+		74ABC78B308D053100E22417 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC78C308D053100E22417 /* TeaYieldAIApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		74ABC78D308D053100E22417 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC78E308D053100E22417 /* Repositories */,
+				74ABC795308D053100E22417 /* Models */,
+				74ABC799308D053100E22417 /* PersistenceController.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		74ABC78E308D053100E22417 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC78F308D053100E22417 /* NDVIRepositoryProtocol.swift */,
+				74ABC790308D053100E22417 /* FieldRepository.swift */,
+				74ABC791308D053100E22417 /* NDVIRepository.swift */,
+				74ABC792308D053100E22417 /* FieldRepositoryProtocol.swift */,
+				74ABC793308D053100E22417 /* HarvestRepositoryProtocol.swift */,
+				74ABC794308D053100E22417 /* HarvestRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		74ABC795308D053100E22417 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC796308D053100E22417 /* TeaFieldEntity.swift */,
+				74ABC797308D053100E22417 /* NDVILogEntity.swift */,
+				74ABC798308D053100E22417 /* HarvestLogEntity.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		74ABC79A308D053100E22417 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC79B308D053100E22417 /* DTOs */,
+				74ABC7A2308D053100E22417 /* Domain */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		74ABC79B308D053100E22417 /* DTOs */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC79C308D053100E22417 /* EstateDTOs.swift */,
+				74ABC79D308D053100E22417 /* AuthDTOs.swift */,
+				74ABC79E308D053100E22417 /* TaskDTOs.swift */,
+				74ABC79F308D053100E22417 /* APIErrorDTO.swift */,
+				74ABC7A0308D053100E22417 /* FieldDTOs.swift */,
+				74ABC7A1308D053100E22417 /* HarvestSyncDTOs.swift */,
+			);
+			path = DTOs;
+			sourceTree = "<group>";
+		};
+		74ABC7A2308D053100E22417 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7A3308D053100E22417 /* HarvestRecord.swift */,
+				74ABC7A4308D053100E22417 /* TeaField.swift */,
+				74ABC7A5308D053100E22417 /* UserProfile.swift */,
+				74ABC7A6308D053100E22417 /* PluckingTask.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		74ABC7A7308D053100E22417 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7A8308D053100E22417 /* DI */,
+				74ABC7AA308D053100E22417 /* Security */,
+				74ABC7AD308D053100E22417 /* Network */,
+				74ABC7B1308D053100E22417 /* Utilities */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		74ABC7A8308D053100E22417 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7A9308D053100E22417 /* AppContainer.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		74ABC7AA308D053100E22417 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7AB308D053100E22417 /* KeychainHelper.swift */,
+				74ABC7AC308D053100E22417 /* BiometricAuthManager.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		74ABC7AD308D053100E22417 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7AE308D053100E22417 /* APIEndpoint.swift */,
+				74ABC7AF308D053100E22417 /* NetworkError.swift */,
+				74ABC7B0308D053100E22417 /* NetworkMonitor.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		74ABC7B1308D053100E22417 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7B2308D053100E22417 /* AppConfiguration.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		74ABC7B3308D053100E22417 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7B4308D053100E22417 /* Implementations */,
+				74ABC7B8308D053100E22417 /* Protocols */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		74ABC7B4308D053100E22417 /* Implementations */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7B5308D053100E22417 /* OfflineSyncManager.swift */,
+				74ABC7B6308D053100E22417 /* AuthService.swift */,
+				74ABC7B7308D053100E22417 /* CloudAPIService.swift */,
+			);
+			path = Implementations;
+			sourceTree = "<group>";
+		};
+		74ABC7B8308D053100E22417 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7B9308D053100E22417 /* AuthServiceProtocol.swift */,
+				74ABC7BA308D053100E22417 /* SyncManagerProtocol.swift */,
+				74ABC7BB308D053100E22417 /* APIServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		74ABC7BC308D053100E22417 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7BD308D053100E22417 /* TodayTasksViewModel.swift */,
+				74ABC7BE308D053100E22417 /* AuthViewModel.swift */,
+				74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		74ABC7C0308D053100E22417 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7C1308D053100E22417 /* Auth */,
+				74ABC7C3308D053100E22417 /* Root */,
+				74ABC7C5308D053100E22417 /* Supervisor */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		74ABC7C1308D053100E22417 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7C2308D053100E22417 /* LoginView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		74ABC7C3308D053100E22417 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7C4308D053100E22417 /* RootView.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		74ABC7C5308D053100E22417 /* Supervisor */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7C6308D053100E22417 /* TodayTasksView.swift */,
+				74ABC7C7308D053100E22417 /* Components */,
+				74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */,
+			);
+			path = Supervisor;
+			sourceTree = "<group>";
+		};
+		74ABC7C7308D053100E22417 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */,
+				74ABC7C9308D053100E22417 /* TaskCardView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		74ABC7CB308D053100E22417 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7CC308D053100E22417 /* MockData.swift */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		74ABC75D308D036400E22417 /* TeaYieldAI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74ABC782308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAI" */;
+			buildPhases = (
+				74ABC75A308D036400E22417 /* Sources */,
+				74ABC75B308D036400E22417 /* Frameworks */,
+				74ABC75C308D036400E22417 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TeaYieldAI;
+			productName = TeaYieldAI;
+			productReference = 74ABC75E308D036400E22417 /* TeaYieldAI.app */;
+			productType = "com.apple.product-type.application";
+		};
+		74ABC76D308D036800E22417 /* TeaYieldAITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74ABC785308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAITests" */;
+			buildPhases = (
+				74ABC76A308D036800E22417 /* Sources */,
+				74ABC76B308D036800E22417 /* Frameworks */,
+				74ABC76C308D036800E22417 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74ABC770308D036800E22417 /* PBXTargetDependency */,
+			);
+			name = TeaYieldAITests;
+			productName = TeaYieldAITests;
+			productReference = 74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		74ABC777308D036800E22417 /* TeaYieldAIUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74ABC788308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAIUITests" */;
+			buildPhases = (
+				74ABC774308D036800E22417 /* Sources */,
+				74ABC775308D036800E22417 /* Frameworks */,
+				74ABC776308D036800E22417 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74ABC77A308D036800E22417 /* PBXTargetDependency */,
+			);
+			name = TeaYieldAIUITests;
+			productName = TeaYieldAIUITests;
+			productReference = 74ABC778308D036800E22417 /* TeaYieldAIUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		74ABC756308D036400E22417 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					74ABC75D308D036400E22417 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					74ABC76D308D036800E22417 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 74ABC75D308D036400E22417;
+					};
+					74ABC777308D036800E22417 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 74ABC75D308D036400E22417;
+					};
+				};
+			};
+			buildConfigurationList = 74ABC759308D036400E22417 /* Build configuration list for PBXProject "TeaYieldAI" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 74ABC755308D036400E22417;
+			productRefGroup = 74ABC75F308D036400E22417 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				74ABC75D308D036400E22417 /* TeaYieldAI */,
+				74ABC76D308D036800E22417 /* TeaYieldAITests */,
+				74ABC777308D036800E22417 /* TeaYieldAIUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		74ABC75C308D036400E22417 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC76C308D036800E22417 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC776308D036800E22417 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		74ABC75A308D036400E22417 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74ABC7DF308D053200E22417 /* TeaField.swift in Sources */,
+				74ABC7D3308D053200E22417 /* HarvestRepository.swift in Sources */,
+				74ABC7D6308D053200E22417 /* HarvestLogEntity.swift in Sources */,
+				74ABC7DA308D053200E22417 /* TaskDTOs.swift in Sources */,
+				74ABC7D0308D053200E22417 /* NDVIRepository.swift in Sources */,
+				74ABC7DE308D053200E22417 /* HarvestRecord.swift in Sources */,
+				74ABC7D4308D053200E22417 /* TeaFieldEntity.swift in Sources */,
+				74ABC7E7308D053200E22417 /* NetworkMonitor.swift in Sources */,
+				74ABC7F0308D053200E22417 /* AuthViewModel.swift in Sources */,
+				74ABC7F8308D053200E22417 /* MockData.swift in Sources */,
+				74ABC7EE308D053200E22417 /* APIServiceProtocol.swift in Sources */,
+				74ABC7EB308D053200E22417 /* CloudAPIService.swift in Sources */,
+				74ABC7EC308D053200E22417 /* AuthServiceProtocol.swift in Sources */,
+				74ABC7DB308D053200E22417 /* APIErrorDTO.swift in Sources */,
+				74ABC7F6308D053200E22417 /* TaskCardView.swift in Sources */,
+				74ABC7E9308D053200E22417 /* OfflineSyncManager.swift in Sources */,
+				74ABC7E4308D053200E22417 /* BiometricAuthManager.swift in Sources */,
+				74ABC7F1308D053200E22417 /* HarvestWeighingViewModel.swift in Sources */,
+				74ABC7F2308D053200E22417 /* LoginView.swift in Sources */,
+				74ABC7F4308D053200E22417 /* TodayTasksView.swift in Sources */,
+				74ABC7D7308D053200E22417 /* PersistenceController.swift in Sources */,
+				74ABC7DD308D053200E22417 /* HarvestSyncDTOs.swift in Sources */,
+				74ABC7D2308D053200E22417 /* HarvestRepositoryProtocol.swift in Sources */,
+				74ABC7DC308D053200E22417 /* FieldDTOs.swift in Sources */,
+				74ABC7E0308D053200E22417 /* UserProfile.swift in Sources */,
+				74ABC7F5308D053200E22417 /* SyncStatusBarView.swift in Sources */,
+				74ABC7D1308D053200E22417 /* FieldRepositoryProtocol.swift in Sources */,
+				74ABC7D8308D053200E22417 /* EstateDTOs.swift in Sources */,
+				74ABC7D9308D053200E22417 /* AuthDTOs.swift in Sources */,
+				74ABC7ED308D053200E22417 /* SyncManagerProtocol.swift in Sources */,
+				74ABC7E1308D053200E22417 /* PluckingTask.swift in Sources */,
+				74ABC7E2308D053200E22417 /* AppContainer.swift in Sources */,
+				74ABC7E5308D053200E22417 /* APIEndpoint.swift in Sources */,
+				74ABC7CF308D053200E22417 /* FieldRepository.swift in Sources */,
+				74ABC7CE308D053200E22417 /* NDVIRepositoryProtocol.swift in Sources */,
+				74ABC7CD308D053200E22417 /* TeaYieldAIApp.swift in Sources */,
+				74ABC7E6308D053200E22417 /* NetworkError.swift in Sources */,
+				74ABC7E3308D053200E22417 /* KeychainHelper.swift in Sources */,
+				74ABC7EA308D053200E22417 /* AuthService.swift in Sources */,
+				74ABC7F3308D053200E22417 /* RootView.swift in Sources */,
+				74ABC7E8308D053200E22417 /* AppConfiguration.swift in Sources */,
+				74ABC7F7308D053200E22417 /* HarvestWeighingFormView.swift in Sources */,
+				74ABC7D5308D053200E22417 /* NDVILogEntity.swift in Sources */,
+				74ABC7EF308D053200E22417 /* TodayTasksViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC76A308D036800E22417 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74ABC773308D036800E22417 /* TeaYieldAITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC774308D036800E22417 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74ABC77D308D036800E22417 /* TeaYieldAIUITests.swift in Sources */,
+				74ABC77F308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		74ABC770308D036800E22417 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74ABC75D308D036400E22417 /* TeaYieldAI */;
+			targetProxy = 74ABC76F308D036800E22417 /* PBXContainerItemProxy */;
+		};
+		74ABC77A308D036800E22417 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74ABC75D308D036400E22417 /* TeaYieldAI */;
+			targetProxy = 74ABC779308D036800E22417 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		74ABC780308D036800E22417 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		74ABC781308D036800E22417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		74ABC783308D036800E22417 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TeaYieldAI/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		74ABC784308D036800E22417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TeaYieldAI/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		74ABC786308D036800E22417 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TeaYieldAI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TeaYieldAI";
+			};
+			name = Debug;
+		};
+		74ABC787308D036800E22417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TeaYieldAI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TeaYieldAI";
+			};
+			name = Release;
+		};
+		74ABC789308D036800E22417 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAIUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TeaYieldAI;
+			};
+			name = Debug;
+		};
+		74ABC78A308D036800E22417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAIUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TeaYieldAI;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		74ABC759308D036400E22417 /* Build configuration list for PBXProject "TeaYieldAI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74ABC780308D036800E22417 /* Debug */,
+				74ABC781308D036800E22417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74ABC782308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74ABC783308D036800E22417 /* Debug */,
+				74ABC784308D036800E22417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74ABC785308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74ABC786308D036800E22417 /* Debug */,
+				74ABC787308D036800E22417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74ABC788308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAIUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74ABC789308D036800E22417 /* Debug */,
+				74ABC78A308D036800E22417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 74ABC756308D036400E22417 /* Project object */;
+}
