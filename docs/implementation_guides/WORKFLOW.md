@@ -1,16 +1,19 @@
 # Master Engineering Workflow & Delivery Roadmap
-**Project Title:** TeaYield AI — Precision Tea Yield Prediction & Plucking Schedule Optimization Platform  
-**Coursework:** NIBM BSc (Hons) Computing — iOS Application Development (BSCCOMP25.1P)  
-**Target Grade:** 100% / A+ Distinction  
+**Project Title:** TeaYield AI — Precision Tea Yield Prediction & Plucking Schedule Optimization Platform (iOS Companion Client)  
+**Workspace:** `teayield-ai-ios`  
+**Affiliation:** Coventry University (UK) & National Institute of Business Management (Sri Lanka)  
+**Coursework:** BSc (Hons) in Computing — iOS Application Development (BSCCOMP25.1P)  
 **Author:** Bhanuka Bandara (Student ID: 082 | Coventry ID: 16604375)  
-**Institution:** National Institute of Business Management (NIBM) / Coventry University  
-**Cross-Repo Reference:** `~/BSC-computing/research/teayield-ai-core` (Backend Core)
+**Target Grade:** 100% / A+ Distinction  
+**Companion Core Repository:** `~/BSC-computing/research/teayield-ai-core` (Backend Core)  
+**Document Status:** Active Master Engineering Roadmap  
+**Version:** 1.1.0  
 
 ---
 
 ## 1. Dual-Track Ecosystem Execution Status
 
-The TeaYield AI ecosystem operates on an Agile API-First dual-track strategy. The backend core (`teayield-ai-core`) has completed its database provisioning and API contract deployment, unblocking the native iOS companion application (`teayield-ai-ios`):
+The TeaYield AI platform operates on an Agile API-First dual-track strategy. The backend core (`teayield-ai-core`) has completed its database provisioning and API contract deployment, unblocking the native iOS companion application (`teayield-ai-ios`):
 
 ```
 +───────────────────────────────────────────────────────────────────────────────────────────────────+
@@ -22,12 +25,11 @@ The TeaYield AI ecosystem operates on an Agile API-First dual-track strategy. Th
 | • Phase 3: FastAPI REST Service & Deterministic Stubs (31 tests pass) [ COMPLETED ]                 |
 |                                                                                                   |
 | teayield-ai-ios (Client & iOS Coursework):                                                        |
-| • Component 1: Proposal, HIG Design System & Figma Prototype (10%)    [ IN PROGRESS / APPROVED ]    |
-| • Component 2: MVP Core Implementation, Offline & Viva (20%)          [ READY TO EXECUTE ]          |
+| • Component 1: Proposal, HIG Design System & Figma Prototype (10%)    [ COMPLETED ]                 |
+| • Component 2: MVP Core Implementation, Offline & Viva (20%)          [ IN PROGRESS ]               |
 | • Component 3: Advanced iOS SDK - On-Device Vision & Geofence (20%)   [ READY TO EXECUTE ]          |
 | • Component 4: Swift Testing, VoiceOver & 4-Page Report (15%)         [ PENDING ]                   |
 | • Component 5: Above & Beyond - iPad SplitView & Architecture (25%)   [ PENDING ]                   |
-| • Component 6: In-Class Tutorial 4 - PlayHubApp (10%)                 [ COMPLETED / READY ]         |
 +───────────────────────────────────────────────────────────────────────────────────────────────────+
 ```
 
@@ -39,70 +41,132 @@ The TeaYield AI ecosystem operates on an Agile API-First dual-track strategy. Th
 gantt
     title TeaYield AI iOS Engineering Execution Timeline
     dateFormat  YYYY-MM-DD
+    
     section Component 1: Proposal & Figma
-    AGENTS.md & Specification Suite               :done, c1_spec, 2026-09-26, 2d
-    Proposal Document & High-Fi Figma UI          :active, c1_prop, 2026-09-28, 3d
+    Specification Suite & Governance              :done, c1_spec, 2026-09-26, 2d
+    Proposal Document & High-Fi Figma Plan        :done, c1_prop, 2026-09-28, 2d
+    Git Flow & Branching Protocol Setup           :done, c1_git, 2026-09-30, 1d
+    
     section Component 2: Core MVP & Backend
-    FastAPI URLSession Networking & Swift Models  :c2_net, 2026-10-01, 3d
-    Core Data / SwiftData Offline Store & Face ID :c2_cd, 2026-10-04, 3d
+    Domain Entities & Swift Codable DTOs          :active, c2_dto, 2026-10-01, 2d
+    FastAPI URLSession REST Networking Client     :c2_net, 2026-10-03, 2d
+    Core Data Offline Relational Persistence      :c2_cd, 2026-10-05, 2d
+    Biometric Face ID & Keychain Security         :c2_sec, 2026-10-07, 2d
+    Supervisor Tasks & Harvest Weighing UI        :c2_ui, 2026-10-09, 2d
+    
     section Component 3: Advanced On-Device SDKs
-    Core ML Vision Leaf Shoot Quality Scanner     :c3_ml, 2026-10-07, 3d
-    MapKit Spatial Polygons & Geofence Monitoring :c3_map, 2026-10-10, 3d
+    Core ML Vision Leaf Quality Segmentation      :c3_ml, 2026-10-12, 3d
+    MapKit Spatial Polygons & Background Geofence :c3_map, 2026-10-15, 3d
+    
     section Component 5: iPad Suite & UX Polish
-    iPad NavigationSplitView & Swift Charts       :c5_ipad, 2026-10-13, 3d
-    POP, AppContainer DI & Micro-Haptics          :c5_arch, 2026-10-16, 2d
+    iPad NavigationSplitView & Swift Charts       :c5_ipad, 2026-10-18, 3d
+    POP, AppContainer DI & Micro-Haptics          :c5_arch, 2026-10-21, 2d
+    
     section Component 4: QA, Accessibility & Report
-    Swift Testing Suite & VoiceOver Audit         :c4_qa, 2026-10-18, 3d
-    4-Page Final Report PDF & LO Reflection       :c4_rep, 2026-10-21, 3d
-    section Component 6 & Final Submission
-    PlayHubApp Tutorial 4 Verification            :done, c6_tut, 2026-09-28, 1d
-    Narrated Video, Git Final Commit & Zip Package:c6_sub, 2026-10-24, 2d
+    Swift Testing Suite & VoiceOver Audit         :c4_qa, 2026-10-23, 3d
+    4-Page Final Report PDF & LO Reflection       :c4_rep, 2026-10-26, 3d
 ```
 
 ---
 
-## 3. Component Breakdown & Definition of Done (DoD)
+## 3. Work Breakdown Structure (WBS) & Detailed Technical Specifications
 
-### Component 1: Proposal & High-Fidelity UI/UX Prototype (10% - Mandatory)
-- [x] Finalize TeaYield AI problem statement, target profiles (Managers vs Supervisors), and Zero-IoT USP.
-- [x] Formulate HIG-compliant Design System tokens (Emerald `#059669`, Amber `#D97706`, Crimson `#DC2626`).
-- [x] Design 10-screen High-Fidelity Figma Prototype covering both iPhone supervisor flow and iPad manager suite.
-- [ ] Submit Component 1 proposal document & interactive Figma link via LMS for lecturer approval.
-- **Definition of Done (DoD):** Proposal approved by module lecturer; Figma link verified and interactive.
+---
 
-### Component 2: MVP Core Implementation, External API & Live Viva (20% - Mandatory)
-- [ ] Setup Xcode Project with strict MVVM folder structure (`Models`, `Views`, `ViewModels`, `Services`, `Repositories`).
-- [ ] Implement `CloudAPIService` communicating with `teayield-ai-core` FastAPI backend via `URLSession`.
-- [ ] Decode Pydantic DTOs into Swift `Codable` models (`FieldResponseDTO`, `DailySupervisorTasksResponseDTO`, `HarvestSyncBatchDTO`).
-- [ ] Implement local SQLite persistence via Core Data / SwiftData (`TeaFieldEntity`, `NDVILogEntity`, `PluckingSessionEntity`).
-- [ ] Implement Face ID / Touch ID authentication via `LocalAuthentication` securing executive rosters.
-- [ ] Prepare live Viva presentation defense notes.
-- **Definition of Done (DoD):** Functional app compiling cleanly in Xcode; loads fields from backend; authenticates via Face ID; persists weighing logs offline; passes live viva defense.
+### Component 1: Proposal, HIG Design System & High-Fidelity UI/UX Prototype [ COMPLETED ]
+- **Status:** [ COMPLETED ]
+- **Target Weightage:** 10% (Mandatory Component)
+- **Objective:** Formulate the agritech domain problem statement, Zero-IoT architecture, Apple HIG design system tokens, 10-screen interactive Figma prototype, and project proposal submission.
+- **Detailed Sub-Steps:**
+  - **1.1 [ COMPLETED ] Problem Statement & Domain Definition:** Formulate the operational crisis of manual heuristics, plucker misallocation, and factory withering bottlenecks across Nuwara Eliya estates in `docs/teayield_ai_specs/01_App_Proposal_Figma.md`.
+  - **1.2 [ COMPLETED ] Apple HIG Design System Formulation:** Define semantic light/dark mode color tokens (`Primary Emerald`, `Secondary Amber`, `Rest Crimson`), SF Pro typography scale, card radii, and materials in `docs/project_documents/DESIGN.md`.
+  - **1.3 [ COMPLETED ] 10-Screen Figma Prototype Specification:** Formulate master component library architecture, responsive size-class adaptations, and prompt specifications for Figma AI in `docs/project_documents/teayield_ai_figma_prototype_plan.md`.
+  - **1.4 [ COMPLETED ] Formal Proposal Document Compilation:** Compile academic coursework proposal submission covering background, target profiles, and technical stack justifications in `docs/project_documents/teayield_ai_proposal_submission.md`.
+  - **1.5 [ COMPLETED ] Master Git Flow & Branching Protocol:** Formulate the enterprise Git Flow branching model, Conventional Commits 1.0.0, PR quality gate, and dual-repo version sync in `docs/teayield_ai_specs/GIT_BRANCHING_STRATEGY.md`.
+- **Deliverables:**
+  - Approved App Proposal Document.
+  - 10-Screen Interactive Figma Prototype Link.
+  - Complete Specification Suite (01 through 09).
+  - Production-grade `.gitignore` and `.github/pull_request_template.md`.
+- **Definition of Done (DoD):** Proposal finalized with zero emojis; Figma share link validated; git repositories synchronized on `main` and `develop`.
 
-### Component 3: Advanced iOS SDK Integration - On-Device (20% - Mandatory)
-- [ ] Feature 1 (Edge AI): Integrate on-device Core ML + Vision framework (`VNCoreMLModel`) running at 60fps on Apple Silicon Neural Engine to classify fine vs coarse leaf ratio ("Two Leaves and a Bud").
-- [ ] Feature 2 (Spatial GIS): Implement MapKit spatial vector field polygon overlays (`MKPolygon`) and low-power background geofencing alerts (`CLCircularRegion`).
-- [ ] Strict Compliance Verification: Confirm 0 remote cloud AI API calls and verify non-reuse of Component 2 features.
-- **Definition of Done (DoD):** Camera viewfinder segmentation operates completely offline; background geofence dispatches arrival notifications upon entering field coordinates.
+---
 
-### Component 4: Swift Testing, Accessibility & Documentation (15%)
-- [ ] Write unit test suite using Apple's modern **Swift Testing framework** (`import Testing`, `@Test`, `#expect`), achieving comprehensive coverage across ViewModels and repositories.
-- [ ] Implement 100% VoiceOver support (`.accessibilityLabel`, `.accessibilityHint`) and Dynamic Type font scaling.
-- [ ] Compile 4-Page Final Report PDF including **Learning Outcomes Reflection (LO1–LO4)** and non-code LLM log.
-- **Definition of Done (DoD):** All Swift Testing suites pass green; VoiceOver navigates smoothly without unlabelled elements; 4-page PDF report conforms to anti-AI humanization guidelines.
+### Component 2: MVP Core Implementation, External API & Live Viva [ IN PROGRESS ]
+- **Status:** [ IN PROGRESS ]
+- **Target Weightage:** 20% (Mandatory Component)
+- **Target Branch:** `feat/comp-2-mvp-core`
+- **Objective:** Construct the foundational native iOS application codebase implementing clean MVVM architecture, FastAPI REST connectivity, Core Data offline persistence, and biometric Face ID security.
+- **Detailed Sub-Steps:**
+  - **2.1 [ COMPLETED ] MVVM Folder Architecture & Foundation Entities:** Construct the production Swift directory hierarchy (`TeaYieldAI/`: `App/`, `Core/`, `Models/`, `Views/`, `ViewModels/`, `Services/`, `Persistence/`) with immutable domain structs (`TeaField`, `PluckingTask`, `HarvestRecord`, `UserProfile`), dynamic `AppConfiguration`, and isolated `MockData` fixtures.
+  - **2.2 [ PENDING ] Swift Codable DTO Contracts:** Implement Codable request/response DTOs strictly synchronized with `teayield-ai-core` Pydantic v2 schemas (`FieldResponseDTO`, `DailySupervisorTasksResponseDTO`, `HarvestSyncBatchDTO`, `HarvestSyncResponseDTO`).
+  - **2.3 [ PENDING ] Asynchronous URLSession Networking Layer (`CloudAPIService`):** Implement `APIServiceProtocol` and concrete `CloudAPIService` managing async/await requests, Bearer token injection, retry policies, and RFC 7807 problem details error decoding.
+  - **2.4 [ PENDING ] Core Data Relational Schema & Offline Persistence Stack:** Define Core Data managed object model (`TeaFieldEntity`, `NDVILogEntity`, `PluckingSessionEntity`) with `NSPersistentContainer` background context execution (`newBackgroundContext()`) to prevent UI hitching.
+  - **2.5 [ PENDING ] Store-and-Forward Offline Sync Engine:** Implement `OfflineSyncManager` utilizing `NWPathMonitor` to detect network availability, batch unsynced weighing records (`isSynced = false`), dispatch to `POST /api/v1/harvest/sync`, and reconcile server `synced_ids`.
+  - **2.6 [ PENDING ] Biometric Estate Security (`LocalAuthentication` Face ID):** Implement `AuthService` managing Face ID / Touch ID hardware authentication with passcode fallback and Secure Enclave Keychain token storage.
+  - **2.7 [ PENDING ] Supervisor Operational Views & ViewModels:** Build declarative SwiftUI views (`TodayTasksView`, `HarvestWeighingFormView`, `LoginView`) driven by `@MainActor` ViewModels (`TodayTasksViewModel`, `HarvestWeighingViewModel`, `AuthViewModel`).
+  - **2.8 [ PENDING ] Live Viva Defense Notes & Verification:** Prepare code ownership defense answers and verify live challenge modifications in `docs/teayield_ai_specs/07_Viva_Preparation_Guide.md`.
+- **Deliverables:**
+  - Complete Swift source code for Component 2 compiling cleanly in Xcode.
+  - Working `URLSession` REST networking communicating with FastAPI stubs.
+  - Core Data offline persistence with idempotent UUID synchronization.
+  - Face ID biometric authentication gate.
+- **Definition of Done (DoD):** Clean Xcode build; zero runtime data race warnings; offline weighing records successfully cache and sync; passes live viva defense.
 
-### Component 5: Above & Beyond - Multi-Device iPad Suite & Architecture (25% - Maximum Weightage)
-- [ ] Implement responsive multi-device design: iPhone compact supervisor view vs iPad desktop-class `NavigationSplitView` executive manager suite.
-- [ ] Integrate Apple **Charts Framework** (`BarMark`, `LineMark`) for predicted yield visualizations and factory capacity gauges.
-- [ ] Refactor application services using Protocol-Oriented Programming (POP) and Dependency Injection (`AppContainer`).
-- [ ] Add SwiftUI custom matched geometry animations, micro-haptics (`UIImpactFeedbackGenerator`), and offline status banners.
-- **Definition of Done (DoD):** Dynamic size-class adaptation between iPhone and iPad; zero tight coupling; fluid 60fps animations.
+---
 
-### Component 6: In-Class Tutorial 4 "PlayHubApp" (10%)
-- [x] Refactor Tutorials 1-3 game modes (Tap Frenzy, Light It Up, Quiz Rush) into unified **PlayHubApp**.
-- [x] TabBar navigation (Home, Stats, Map, Settings), Swift Charts (`BarMark`), MapKit pins, local notifications, `UserDefaults` persistence.
-- [x] Lab check completed and Git commit history verified.
-- **Definition of Done (DoD):** Complete Xcode project package verified.
+### Component 3: Advanced iOS SDK Integration — On-Device Intelligence [ READY TO EXECUTE ]
+- **Status:** [ READY TO EXECUTE ]
+- **Target Weightage:** 20% (Mandatory Component)
+- **Target Branch:** `feat/comp-3-advanced-sdk`
+- **Objective:** Deploy 100% offline edge computing on the Apple Silicon Neural Engine for tea shoot maturity scanning alongside MapKit spatial GIS polygon overlays and background geofencing.
+- **Detailed Sub-Steps:**
+  - **3.1 [ PENDING ] Camera Frame Capture Pipeline (`AVFoundation`):** Configure `AVCaptureSession` and `AVCaptureVideoDataOutput` with background queue dispatch and `CVPixelBuffer` pool management preserving 60fps UI responsiveness.
+  - **3.2 [ PENDING ] On-Device Core ML Leaf Quality Classifier (`Vision` + `CoreML`):** Integrate `VNCoreMLModel` executing fine vs coarse leaf shoot segmentation (*"Two Leaves and a Bud"*) 100% on-device with zero cloud AI API dependencies.
+  - **3.3 [ PENDING ] MapKit Spatial GIS Vector Polygons (`MKPolygon`):** Render estate field boundaries as interactive vector polygon overlays color-coded by vegetative NDVI health (Emerald `#059669`, Amber `#D97706`, Crimson `#DC2626`).
+  - **3.4 [ PENDING ] Low-Power Background Geofencing Engine (`CLCircularRegion`):** Implement `CoreLocation` boundary monitoring alerting supervisors via local push notifications upon entering harvest-ready fields without battery drain.
+- **Deliverables:**
+  - 60fps real-time camera viewfinder shoot quality analyzer.
+  - Dynamic MapKit estate field visualization with custom callouts.
+  - Background geofencing arrival notification engine.
+- **Definition of Done (DoD):** Camera viewfinder segmentation executes 100% offline without network; background geofence triggers local alerts upon entering coordinates; strictly zero remote AI calls.
+
+---
+
+### Component 4: Swift Testing, Accessibility & Formal Documentation [ PENDING ]
+- **Status:** [ PENDING ]
+- **Target Weightage:** 15% (Elective / Max Marks)
+- **Target Branch:** `feat/comp-4-qa-a11y-report`
+- **Objective:** Validate application reliability with modern Apple Swift Testing suites, achieve 100% VoiceOver accessibility compliance, and compile the 4-page academic final report PDF.
+- **Detailed Sub-Steps:**
+  - **4.1 [ PENDING ] Apple Swift Testing Suite Implementation (`import Testing`):** Construct macro-driven test suites (`@Test`, `#expect`) covering ViewModel state logic, DTO mapping, and offline Core Data persistence fallbacks.
+  - **4.2 [ PENDING ] VoiceOver 100% Accessibility Compliance Audit:** Annotate every interactive control, camera overlay, and map pin with descriptive `.accessibilityLabel`, `.accessibilityHint`, and `.accessibilityTraits`.
+  - **4.3 [ PENDING ] Dynamic Type Semantic Font Scaling Audit:** Wrap container views in flexible `ScrollView` and dynamic layouts, verifying zero text clipping when system font scales up to accessibility sizes.
+  - **4.4 [ PENDING ] 4-Page Final Report PDF Compilation:** Compile the formal 4-page academic report covering overview, system architecture, technical challenges, and explicit Learning Outcomes Reflection (LO1–LO4).
+  - **4.5 [ PENDING ] Academic Integrity Declaration & LLM Usage Log:** Formulate the non-code LLM usage log in accordance with university anti-AI humanization standards (`.agents/rules/AGENT_REPORT.md`).
+- **Deliverables:**
+  - Swift Testing suite passing 100% green.
+  - 100% VoiceOver-compliant user interface.
+  - 4-Page Final Report PDF.
+- **Definition of Done (DoD):** All unit tests pass; zero unlabelled elements in VoiceOver; report adheres strictly to anti-AI humanization guidelines.
+
+---
+
+### Component 5: Above & Beyond — Multi-Device Adaptation & Architecture [ PENDING ]
+- **Status:** [ PENDING ]
+- **Target Weightage:** 25% (Maximum Weightage Component)
+- **Target Branch:** `feat/comp-5-ipad-suite`
+- **Objective:** Deliver desktop-class iPadOS executive features, Apple Charts framework visualizations, Protocol-Oriented dependency injection, and polished UI micro-interactions.
+- **Detailed Sub-Steps:**
+  - **5.1 [ PENDING ] Responsive Multi-Device Adaptation (`NavigationSplitView`):** Build a 3-column desktop-class iPad executive suite (Sidebar, Interactive Map Canvas, Detail Analytics Pane) dynamically adapting between compact and regular size classes.
+  - **5.2 [ PENDING ] Native Swift Charts Analytics Dashboard:** Implement interactive `BarMark` and `LineMark` visualizations comparing 7-day predicted yields against historical actuals and factory intake gauges.
+  - **5.3 [ PENDING ] Protocol-Oriented Architecture & Dependency Injection:** Refactor services behind clean protocol abstractions injected via `AppContainer`, guaranteeing loose coupling and testability.
+  - **5.4 [ PENDING ] SwiftUI Matched Geometry Animations & Micro-Haptics:** Implement fluid view transitions (`.matchedGeometryEffect`), haptic feedback (`UIImpactFeedbackGenerator`), and offline status banners.
+- **Deliverables:**
+  - iPad desktop-class operational suite with `NavigationSplitView`.
+  - Interactive Swift Charts yield analytics canvas.
+  - Decoupled `AppContainer` dependency injection architecture.
+- **Definition of Done (DoD):** Seamless transition between iPhone compact and iPad regular size classes; zero tight coupling; fluid 60fps animations.
 
 ---
 
@@ -129,10 +193,10 @@ TeaYield AI adheres to a rigorous **Phase-Aligned Git Flow Branching Protocol** 
       │         ▲                                ▲
       │ Fork    │ PR Squash Merge                │ PR Squash Merge
       ▼         │                                │
-  feat/comp-2-mvp-fastapi                        │
+  feat/comp-2-mvp-core                           │
   ──────────────●                                │
                                                  │
-  feat/comp-3-ondevice-coreml-vision ────────────●
+  feat/comp-3-advanced-sdk ──────────────────────●
                                                  
   hotfix/v1.0.1-geofence-fix (Emergency Hotfix Branch)
   ──────────────────────────────────────● (Branches from main, back-merges to main and develop)
@@ -187,4 +251,54 @@ Before any feature branch merges into `develop`:
 | `v0.5.0-ai-integrated` | `v1.1.0-ai-client` | Live LSTM yield prediction and Genetic Algorithm roster sync operational. |
 | `v1.0.0-final` | `v1.2.0-final` | Final production build, 4-page report compiled, ready for viva defense. |
 
-> Detailed protocol, branch protection rules, and CI/CD pipeline blueprint available in [GIT_BRANCHING_STRATEGY.md](../teayield_ai_specs/GIT_BRANCHING_STRATEGY.md).
+---
+
+## 5. Mobile-Backend Integration Checkpoints
+
+```
++───────────────────────────+───────────────────────────────────────+───────────────────────────+
+| Engineering Milestone    | Backend Availability                  | iOS Client Capabilities   |
++───────────────────────────+───────────────────────────────────────+───────────────────────────+
+| Milestone 1 (End Phase 2) | Supabase DB Schema & Auth Live        | Swift Models & Codables   |
+|                           | RLS Policies Enforced                 | Supabase Auth Integration |
++───────────────────────────+───────────────────────────────────────+───────────────────────────+
+| Milestone 2 (End Phase 3) | FastAPI REST Service Live with Stubs  | API Integration Ready     |
+|                           | Pydantic DTOs & Swagger Live          | DTO Codable Decoders      |
++───────────────────────────+───────────────────────────────────────+───────────────────────────+
+| Milestone 3 (End Phase 4) | Full Mobile-Backend Integration       | 100% Mobile Unblocked     |
+| *Mobile Release Ready*    | GET /fields, POST /harvest/sync       | Interactive MapKit UI     |
+|                           | GET /tasks/daily, GET /roster/current | Core Data Offline Sync    |
+|                           | Deterministic Prediction Stubs        | CoreML Leaf Quality Vision|
++───────────────────────────+───────────────────────────────────────+───────────────────────────+
+| Milestone 4 (End Phase 6) | Stacked LSTM Live Prediction Engine   | Live Yield Predictions    |
+|                           | Satellite NDVI Ingested               | Yield Forecasts on iPad   |
++───────────────────────────+───────────────────────────────────────+───────────────────────────+
+| Milestone 5 (End Phase 7) | DEAP Genetic Algorithm Live Scheduler | Multi-Constraint Roster   |
+|                           | Optimized Daily Plucker Allocation    | Interactive Daily Roster  |
++───────────────────────────+───────────────────────────────────────+───────────────────────────+
+```
+
+---
+
+## 6. Milestone Quality Gates
+
+```
++───────────────────────────+       Passed       +───────────────────────────+
+|    GATE 1: COMPONENT 1    | ─────────────────> |    GATE 2: COMPONENT 2    |
+|  Proposal, HIG & Figma    |                    |  MVP Core, API & Offline  |
++───────────────────────────+                    +───────────────────────────+
+                                                               │ Passed
+                                                               ▼
++───────────────────────────+       Passed       +───────────────────────────+
+|    GATE 4: COMPONENT 4    | <───────────────── |    GATE 3: COMPONENT 3    |
+|  Swift Testing & VoiceOver|                    |  On-Device Vision 60fps   |
+|  4-Page Report PDF        |                    |  MapKit Spatial Polygons  |
++───────────────────────────+                    +───────────────────────────+
+       │ Passed
+       ▼
++───────────────────────────+       Passed       +───────────────────────────+
+|    GATE 5: COMPONENT 5    | ─────────────────> |     GATE 6: LIVE VIVA     |
+|  iPad SplitView Analytics |                    |  100% Student Ownership   |
+|  Charts & Clean POP       |                    |  A+ Distinction (100%)    |
++───────────────────────────+                    +───────────────────────────+
+```

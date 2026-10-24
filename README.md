@@ -168,12 +168,30 @@ All models, offline mock fixtures, and simulator workflows are synchronized with
 
 ---
 
-## Project Documentation Suite
+## Repository Architecture & Codebase Structure
 
-The complete engineering, design, and academic documentation is organized under `docs/`:
+The codebase adheres to clean MVVM and Protocol-Oriented modular separation:
 
 ```
 teayield-ai-ios/
+├── TeaYieldAI/
+│   ├── App/                                     # App Lifecycle & Dependency Injection Container
+│   ├── Core/
+│   │   ├── Network/                             # Endpoint Builder, Error Enums & Network Monitor
+│   │   ├── Security/                            # Secure Enclave Keychain Helper
+│   │   └── Utilities/                           # AppConfiguration & Dynamic Environment Helpers
+│   ├── Preview Content/                         # SwiftUI Preview Assets & Pedro Estate Mock Fixtures
+│   ├── Models/
+│   │   ├── Domain/                              # Immutable Pure Domain Structs (TeaField, PluckingTask, etc.)
+│   │   └── DTOs/                                # Swift Codables matching FastAPI Pydantic v2
+│   ├── Services/
+│   │   ├── Protocols/                           # Abstract Service Interfaces for Unit Testing
+│   │   └── Implementations/                     # URLSession REST Client & Face ID Auth
+│   ├── Persistence/
+│   │   ├── Repositories/                        # Thread-Safe Core Data SQLite Repositories
+│   │   └── Models/                              # Core Data NSManagedObject Entities
+│   ├── ViewModels/                              # @MainActor Observable State ViewModels
+│   └── Views/                                   # Declarative SwiftUI Views (iPhone & iPad)
 ├── docs/
 │   ├── project_documents/
 │   │   ├── DESIGN.md                            # Product HIG Tokens, Typography & Data Dictionary
