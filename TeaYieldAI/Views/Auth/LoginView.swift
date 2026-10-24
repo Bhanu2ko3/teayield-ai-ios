@@ -72,7 +72,7 @@ struct LoginView: View {
                         .foregroundColor(.secondary)
                         .frame(width: 20)
 
-                    TextField("supervisor@teayield.ai", text: $viewModel.email)
+                    TextField("Enter your enterprise email", text: $viewModel.email)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
                         .keyboardType(.emailAddress)

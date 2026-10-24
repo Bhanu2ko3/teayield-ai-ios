@@ -17,22 +17,26 @@ final class SupervisorSettingsViewModel: ObservableObject {
     @Published var cachedRecordsCount: Int = 0
     @Published var notificationsAuthorized: Bool = false
     @Published var divisionAssignmentName: String = "Division Pending"
+    @Published var estateDisplayName: String = ""
 
     private let authService: AuthServiceProtocol
     private let syncManager: SyncManagerProtocol
     private let fieldRepository: FieldRepositoryProtocol
     private let harvestRepository: HarvestRepositoryProtocol
+    private let apiService: APIServiceProtocol?
 
     init(
         authService: AuthServiceProtocol,
         syncManager: SyncManagerProtocol,
         fieldRepository: FieldRepositoryProtocol,
-        harvestRepository: HarvestRepositoryProtocol
+        harvestRepository: HarvestRepositoryProtocol,
+        apiService: APIServiceProtocol? = nil
     ) {
         self.authService = authService
         self.syncManager = syncManager
         self.fieldRepository = fieldRepository
         self.harvestRepository = harvestRepository
+        self.apiService = apiService
 
         Task {
             await loadCachedDetails()
@@ -44,7 +48,7 @@ final class SupervisorSettingsViewModel: ObservableObject {
 
     var officerName: String {
         guard let name = authService.currentUser?.fullName, !name.isEmpty else {
-            return "Officer Name"
+            return "Unassigned Officer"
         }
         return name
     }
@@ -54,15 +58,18 @@ final class SupervisorSettingsViewModel: ObservableObject {
     }
 
     var officerEmployeeId: String {
-        guard let id = authService.currentUser?.employeeId, !id.isEmpty else {
-            return "EMP-001"
+        if let id = authService.currentUser?.employeeId, !id.isEmpty {
+            return id
         }
-        return id
+        if let user = authService.currentUser {
+            return "ID-\(user.id.uuidString.prefix(6).uppercased())"
+        }
+        return "Not Assigned"
     }
 
     var officerEmail: String {
         guard let email = authService.currentUser?.email, !email.isEmpty else {
-            return "officer@estate.lk"
+            return "Not Provided"
         }
         return email
     }
@@ -72,8 +79,11 @@ final class SupervisorSettingsViewModel: ObservableObject {
     }
 
     var estateName: String {
+        if !estateDisplayName.isEmpty {
+            return estateDisplayName
+        }
         if let user = authService.currentUser {
-            return "Estate ID: \(user.estateId.uuidString.prefix(8))..."
+            return "Estate #\(user.estateId.uuidString.prefix(6).uppercased())"
         }
         return "Estate Not Assigned"
     }
@@ -106,6 +116,12 @@ final class SupervisorSettingsViewModel: ObservableObject {
     // MARK: - Actions
 
     func loadCachedDetails() async {
+        if let user = authService.currentUser, let api = apiService {
+            if let estate = try? await api.fetchEstate(id: user.estateId) {
+                self.estateDisplayName = estate.name
+            }
+        }
+
         if let fields = try? await fieldRepository.fetchAllFields() {
             self.cachedFieldsCount = fields.count
             if let first = fields.first {

@@ -11,23 +11,38 @@ enum HTTPMethod: String {
 /// Type-safe endpoint builder for FastAPI backend microservices.
 enum APIEndpoint {
     case login(LoginRequestDTO)
+    case getMe
+    case listEstates
     case getEstate(id: UUID)
     case getFields(estateId: UUID)
+    case getFieldNDVI(fieldId: UUID, limit: Int?)
+    case getFieldWeather(fieldId: UUID, limit: Int?)
     case getDailyTasks(estateId: UUID, dayIndex: Int?)
     case syncHarvest(HarvestSyncBatchDTO)
+    case getHarvestLogs(fieldId: UUID?, limit: Int?, offset: Int?)
 
     var path: String {
         switch self {
         case .login:
-            return "/auth/login"
+            return "auth/login"
+        case .getMe:
+            return "auth/me"
+        case .listEstates:
+            return "estates"
         case .getEstate(let id):
-            return "/estates/\(id.uuidString)"
+            return "estates/\(id.uuidString)"
         case .getFields:
-            return "/fields"
+            return "fields"
+        case .getFieldNDVI(let fieldId, _):
+            return "fields/\(fieldId.uuidString)/ndvi"
+        case .getFieldWeather(let fieldId, _):
+            return "fields/\(fieldId.uuidString)/weather"
         case .getDailyTasks:
-            return "/tasks/daily"
+            return "tasks/daily"
         case .syncHarvest:
-            return "/harvest/sync"
+            return "harvest/sync"
+        case .getHarvestLogs:
+            return "harvest/logs"
         }
     }
 
@@ -35,7 +50,7 @@ enum APIEndpoint {
         switch self {
         case .login, .syncHarvest:
             return .post
-        case .getEstate, .getFields, .getDailyTasks:
+        case .getMe, .listEstates, .getEstate, .getFields, .getFieldNDVI, .getFieldWeather, .getDailyTasks, .getHarvestLogs:
             return .get
         }
     }
@@ -44,12 +59,30 @@ enum APIEndpoint {
         switch self {
         case .getFields(let estateId):
             return [URLQueryItem(name: "estate_id", value: estateId.uuidString)]
+        case .getFieldNDVI(_, let limit):
+            guard let limit = limit else { return nil }
+            return [URLQueryItem(name: "limit", value: String(limit))]
+        case .getFieldWeather(_, let limit):
+            guard let limit = limit else { return nil }
+            return [URLQueryItem(name: "limit", value: String(limit))]
         case .getDailyTasks(let estateId, let dayIndex):
             var items = [URLQueryItem(name: "estate_id", value: estateId.uuidString)]
             if let dayIndex = dayIndex {
                 items.append(URLQueryItem(name: "day_index", value: String(dayIndex)))
             }
             return items
+        case .getHarvestLogs(let fieldId, let limit, let offset):
+            var items: [URLQueryItem] = []
+            if let fieldId = fieldId {
+                items.append(URLQueryItem(name: "field_id", value: fieldId.uuidString))
+            }
+            if let limit = limit {
+                items.append(URLQueryItem(name: "limit", value: String(limit)))
+            }
+            if let offset = offset {
+                items.append(URLQueryItem(name: "offset", value: String(offset)))
+            }
+            return items.isEmpty ? nil : items
         default:
             return nil
         }
@@ -76,9 +109,14 @@ enum APIEndpoint {
         }
     }
 
-    /// Constructs a fully configured URLRequest targeting the given base URL.
+    /// Constructs a fully configured URLRequest targeting the given base URL without percent-encoding path separators.
     func asURLRequest(baseURL: URL, authToken: String?) throws -> URLRequest {
-        guard var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: true) else {
+        let cleanPath = path.hasPrefix("/") ? String(path.dropFirst()) : path
+        let fullURLString = baseURL.absoluteString.hasSuffix("/")
+            ? "\(baseURL.absoluteString)\(cleanPath)"
+            : "\(baseURL.absoluteString)/\(cleanPath)"
+
+        guard var components = URLComponents(string: fullURLString) else {
             throw NetworkError.invalidURL
         }
 

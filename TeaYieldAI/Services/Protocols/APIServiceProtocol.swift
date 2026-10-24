@@ -8,15 +8,30 @@ protocol APIServiceProtocol: AnyObject {
     /// Authenticates user credentials and returns a bearer token session.
     func login(credentials: LoginRequestDTO) async throws -> TokenResponseDTO
 
+    /// Fetches the profile of the currently authenticated user.
+    func fetchCurrentUserProfile() async throws -> UserProfileDTO
+
+    /// Fetches all registered commercial tea plantations.
+    func fetchEstates() async throws -> [EstateResponseDTO]
+
     /// Fetches tea estate details including processing capacity and acreage.
     func fetchEstate(id: UUID) async throws -> EstateResponseDTO
 
     /// Fetches all registered tea field plots with spatial polygon coordinates for an estate.
     func fetchFields(estateId: UUID) async throws -> [FieldResponseDTO]
 
+    /// Fetches historical Sentinel-2 NDVI multispectral satellite observations for a field.
+    func fetchFieldNDVI(fieldId: UUID, limit: Int?) async throws -> [NDVILogResponseDTO]
+
+    /// Fetches historical meteorological reanalysis time-series records for a field.
+    func fetchFieldWeather(fieldId: UUID, limit: Int?) async throws -> [WeatherLogResponseDTO]
+
     /// Fetches the daily plucking briefing and assigned fields for a field supervisor.
     func fetchDailyTasks(estateId: UUID, dayIndex: Int?) async throws -> DailySupervisorTasksResponseDTO
 
     /// Synchronizes a batch of offline harvest weigh-in records.
     func syncHarvestBatch(_ batch: HarvestSyncBatchDTO) async throws -> HarvestSyncResponseDTO
+
+    /// Fetches historical persisted green leaf intake records.
+    func fetchHarvestLogs(fieldId: UUID?, limit: Int?, offset: Int?) async throws -> [HarvestLogRecordResponseDTO]
 }

@@ -112,3 +112,26 @@ struct NDVILogResponseDTO: Codable {
         case capturedAt = "captured_at"
     }
 }
+
+/// Historical meteorological weekly reanalysis observations.
+struct WeatherLogResponseDTO: Codable {
+    let id: UUID
+    let fieldId: UUID
+    let weekStartDate: String
+    let cumulativeRainfallMm: Double
+    let meanTempC: Double
+    let meanHumidityPct: Double
+    let source: String
+    let createdAt: String
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case fieldId = "field_id"
+        case weekStartDate = "week_start_date"
+        case cumulativeRainfallMm = "cumulative_rainfall_mm"
+        case meanTempC = "mean_temp_c"
+        case meanHumidityPct = "mean_humidity_pct"
+        case source
+        case createdAt = "created_at"
+    }
+}

@@ -14,7 +14,8 @@ struct SupervisorSettingsView: View {
                 authService: container.authService,
                 syncManager: container.syncManager,
                 fieldRepository: container.fieldRepository,
-                harvestRepository: container.harvestRepository
+                harvestRepository: container.harvestRepository,
+                apiService: container.apiService
             )
         )
     }

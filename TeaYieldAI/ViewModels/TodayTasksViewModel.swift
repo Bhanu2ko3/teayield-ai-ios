@@ -14,6 +14,8 @@ final class TodayTasksViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showErrorAlert: Bool = false
 
+    @Published var estateName: String = ""
+
     var totalTargetKg: Double {
         tasks.reduce(0.0) { $0 + $1.targetWeightKg }
     }
@@ -32,7 +34,13 @@ final class TodayTasksViewModel: ObservableObject {
     }
 
     var estateDisplayName: String {
-        "Pedro Estate"
+        if !estateName.isEmpty {
+            return estateName
+        }
+        if let user = authService.currentUser {
+            return "Estate #\(user.estateId.uuidString.prefix(6).uppercased())"
+        }
+        return "Central Tea Plantation"
     }
 
     var activeArrivalFieldName: String {
@@ -98,6 +106,11 @@ final class TodayTasksViewModel: ObservableObject {
             if let fieldDTOs = try? await apiService.fetchFields(estateId: user.estateId) {
                 let domainFields = fieldDTOs.map { $0.toDomain() }
                 try? await fieldRepository.saveFields(domainFields)
+            }
+
+            // Fetch estate enterprise profile dynamically
+            if let estate = try? await apiService.fetchEstate(id: user.estateId) {
+                self.estateName = estate.name
             }
 
             self.isLoading = false

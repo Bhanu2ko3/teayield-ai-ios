@@ -12,9 +12,8 @@ final class ManagerOverviewViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showErrorAlert: Bool = false
     @Published var showingLogoutConfirmation: Bool = false
-
-    /// Standard withering trough capacity limit to prevent factory overloading.
-    let factoryIntakeCapKg: Double = 3000.0
+    @Published var estateName: String = ""
+    @Published var factoryIntakeCapKg: Double = 3000.0
 
     private let fieldRepository: FieldRepositoryProtocol
     private let harvestRepository: HarvestRepositoryProtocol
@@ -46,8 +45,11 @@ final class ManagerOverviewViewModel: ObservableObject {
     }
 
     var estateDisplayName: String {
+        if !estateName.isEmpty {
+            return estateName
+        }
         if let user = authService.currentUser {
-            return "Estate ID: \(user.estateId.uuidString.prefix(8))..."
+            return "Estate #\(user.estateId.uuidString.prefix(6).uppercased())"
         }
         return "Estate Unassigned"
     }
@@ -89,6 +91,12 @@ final class ManagerOverviewViewModel: ObservableObject {
         }
 
         do {
+            // Fetch estate enterprise profile dynamically
+            if let estate = try? await apiService.fetchEstate(id: user.estateId) {
+                self.estateName = estate.name
+                self.factoryIntakeCapKg = estate.dailyFactoryCapacityKg
+            }
+
             var fetchedFields = try await fieldRepository.fetchAllFields()
             if fetchedFields.isEmpty {
                 if let dtos = try? await apiService.fetchFields(estateId: user.estateId) {
