@@ -150,8 +150,6 @@ final class PersistenceController {
         lastHarvested.attributeType = .dateAttributeType
         lastHarvested.isOptional = true
 
-        fieldEntity.uniquenessConstraints = [["id"]]
-
         // 2. NDVILogEntity
         let ndviEntity = NSEntityDescription()
         ndviEntity.name = "NDVILogEntity"
@@ -193,8 +191,6 @@ final class PersistenceController {
         capturedAt.name = "capturedAt"
         capturedAt.attributeType = .dateAttributeType
         capturedAt.isOptional = false
-
-        ndviEntity.uniquenessConstraints = [["id"]]
 
         // 3. HarvestLogEntity (PluckingSessionEntity)
         let harvestEntity = NSEntityDescription()
@@ -262,8 +258,6 @@ final class PersistenceController {
         isSynced.isOptional = false
         isSynced.defaultValue = false
 
-        harvestEntity.uniquenessConstraints = [["id"]]
-
         // MARK: - Relational Mappings (1-to-Many Relationships)
 
         let fieldToHarvests = NSRelationshipDescription()
@@ -306,13 +300,20 @@ final class PersistenceController {
             lastHarvested, fieldToHarvests, fieldToNDVI
         ]
 
-        ndviEntity.properties = [ndviId, ndviFieldId, weekStart, ndviVal, redBand, nirBand, capturedAt, ndviToField]
+        ndviEntity.properties = [
+            ndviId, ndviFieldId, weekStart, ndviVal,
+            redBand, nirBand, capturedAt, ndviToField
+        ]
 
         harvestEntity.properties = [
             harvestId, harvestFieldId, pluckerId, pluckerName,
             grossWeight, tareWeight, netWeight, fineLeafRatio,
             timestamp, lat, lon, isSynced, harvestToField
         ]
+
+        fieldEntity.uniquenessConstraints = [["id"]]
+        ndviEntity.uniquenessConstraints = [["id"]]
+        harvestEntity.uniquenessConstraints = [["id"]]
 
         model.entities = [fieldEntity, ndviEntity, harvestEntity]
         return model
