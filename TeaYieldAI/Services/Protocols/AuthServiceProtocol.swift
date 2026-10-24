@@ -1,6 +1,7 @@
 import Foundation
 
 /// Defines the contract for user authentication, biometric unlock, and secure token lifecycle.
+@MainActor
 protocol AuthServiceProtocol: AnyObject {
     var currentUser: UserProfile? { get }
     var isAuthenticated: Bool { get }

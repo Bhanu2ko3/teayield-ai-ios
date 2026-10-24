@@ -2,6 +2,7 @@ import Foundation
 import CoreData
 
 /// Defines the protocol interface for application dependency injection.
+@MainActor
 protocol AppContainerProtocol {
     var apiService: APIServiceProtocol { get }
     var authService: AuthServiceProtocol { get }
