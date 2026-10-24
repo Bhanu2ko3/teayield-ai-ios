@@ -127,6 +127,8 @@ struct OnboardingView: View {
                     .animation(.easeInOut(duration: 0.25), value: currentSlide)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Step \(currentSlide + 1) of \(slides.count)")
     }
 
     private var bottomActionControls: some View {
