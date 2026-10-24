@@ -67,8 +67,8 @@ final class CloudAPIService: APIServiceProtocol {
         var request = try endpoint.asURLRequest(baseURL: baseURL, authToken: authToken)
         request.cachePolicy = .reloadIgnoringLocalCacheData
 
-        var data: Data
-        var response: URLResponse
+        let data: Data
+        let response: URLResponse
         do {
             (data, response) = try await session.data(for: request)
         } catch is CancellationError {
@@ -77,24 +77,10 @@ final class CloudAPIService: APIServiceProtocol {
             if urlError.code == .cancelled {
                 throw CancellationError()
             }
-            // Auto-detect QEMU host loopback alias 10.0.2.2 if 127.0.0.1 is not reachable
-            if baseURL.host == "127.0.0.1",
-               let altURL = URL(string: baseURL.absoluteString.replacingOccurrences(of: "127.0.0.1", with: "10.0.2.2")),
-               let altRequest = try? endpoint.asURLRequest(baseURL: altURL, authToken: authToken) {
-                do {
-                    (data, response) = try await session.data(for: altRequest)
-                } catch {
-                    if urlError.code == .notConnectedToInternet || urlError.code == .networkConnectionLost {
-                        throw NetworkError.connectionFailure("No internet connection")
-                    }
-                    throw NetworkError.connectionFailure("Estate cloud backend unreachable. Please verify the FastAPI server is running.")
-                }
-            } else {
-                if urlError.code == .notConnectedToInternet || urlError.code == .networkConnectionLost {
-                    throw NetworkError.connectionFailure("No internet connection")
-                }
-                throw NetworkError.connectionFailure(urlError.localizedDescription)
+            if urlError.code == .notConnectedToInternet || urlError.code == .networkConnectionLost {
+                throw NetworkError.connectionFailure("No internet connection")
             }
+            throw NetworkError.connectionFailure(urlError.localizedDescription)
         } catch {
             throw NetworkError.connectionFailure(error.localizedDescription)
         }
