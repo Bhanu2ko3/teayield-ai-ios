@@ -53,7 +53,7 @@ struct OnboardingView: View {
                     .fill(AppTheme.emerald)
                     .frame(width: 8, height: 8)
 
-                Text("PEDRO ESTATE V2.4")
+                Text("TEAYIELD AI • PRECISION")
                     .font(.appBadge)
                     .foregroundColor(.secondary)
                     .tracking(0.5)

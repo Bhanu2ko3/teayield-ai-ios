@@ -43,7 +43,7 @@ struct DataStorageSectionView: View {
 
                     Spacer()
 
-                    Text("Active")
+                    Text(viewModel.cachedFieldsCount > 0 ? "\(viewModel.cachedFieldsCount) Blocks Cached" : "Active")
                         .font(.appBadge)
                         .foregroundColor(AppTheme.emerald)
                         .padding(.horizontal, 8)

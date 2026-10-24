@@ -23,4 +23,13 @@ enum AppConfiguration {
 
     /// Minimum fine leaf ratio required for premium export tea classification (SLTB Benchmark).
     static let fineLeafTargetRatio: Double = 0.85
+
+    /// Runtime deployment environment label.
+    static var environmentName: String {
+        #if DEBUG
+        return "Development Edge"
+        #else
+        return "Production Edge"
+        #endif
+    }
 }

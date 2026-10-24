@@ -38,7 +38,7 @@ struct LeafScannerPlaceholderView: View {
                             .foregroundColor(AppTheme.emerald)
                             .fontWeight(.semibold)
 
-                        Text("Scans tea bushes at 60fps to determine the fine-to-coarse leaf ratio (Two Leaves and a Bud) against the 85% export auction benchmark 100% offline.")
+                        Text("Scans tea bushes at 60fps to determine the fine-to-coarse leaf ratio (Two Leaves and a Bud) against the \(Int(AppConfiguration.fineLeafTargetRatio * 100))% export auction benchmark 100% offline.")
                             .font(.appBody)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
@@ -49,7 +49,7 @@ struct LeafScannerPlaceholderView: View {
                     HStack(spacing: 12) {
                         featureTag(icon: "bolt.fill", title: "60 FPS")
                         featureTag(icon: "wifi.slash", title: "100% Offline")
-                        featureTag(icon: "checkmark.seal.fill", title: "85% Target")
+                        featureTag(icon: "checkmark.seal.fill", title: "\(Int(AppConfiguration.fineLeafTargetRatio * 100))% Target")
                     }
 
                     Spacer()

@@ -102,9 +102,14 @@ struct TodayTasksView: View {
                 }
             }
 
-            GeofenceArrivalBannerView(fieldName: viewModel.activeArrivalFieldName) {
-                selectedFieldForWeighing = viewModel.tasks.first?.fieldId
-                showingWeighingSheet = true
+            if let activeTask = viewModel.tasks.first {
+                GeofenceArrivalBannerView(
+                    fieldName: activeTask.fieldName,
+                    shiftDate: activeTask.shiftDate
+                ) {
+                    selectedFieldForWeighing = activeTask.fieldId
+                    showingWeighingSheet = true
+                }
             }
         }
     }

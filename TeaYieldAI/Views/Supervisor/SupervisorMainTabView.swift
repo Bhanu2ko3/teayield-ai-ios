@@ -35,7 +35,7 @@ struct SupervisorMainTabView: View {
             }
             .tag(Tab.scanner)
 
-            FieldMapPlaceholderView()
+            FieldMapPlaceholderView(fieldRepository: container.fieldRepository)
                 .tabItem {
                     Label("Map", systemImage: "map.fill")
                 }

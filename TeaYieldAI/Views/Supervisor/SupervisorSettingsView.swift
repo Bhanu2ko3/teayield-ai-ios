@@ -10,7 +10,8 @@ struct SupervisorSettingsView: View {
         _viewModel = StateObject(
             wrappedValue: SupervisorSettingsViewModel(
                 authService: container.authService,
-                syncManager: container.syncManager
+                syncManager: container.syncManager,
+                fieldRepository: container.fieldRepository
             )
         )
     }

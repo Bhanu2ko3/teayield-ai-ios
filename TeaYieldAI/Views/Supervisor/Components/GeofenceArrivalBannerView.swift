@@ -4,6 +4,7 @@ import SwiftUI
 struct GeofenceArrivalBannerView: View {
 
     let fieldName: String
+    let shiftDate: Date
     var onWeighTap: () -> Void
 
     var body: some View {
@@ -32,7 +33,7 @@ struct GeofenceArrivalBannerView: View {
                     .font(.appHeadline)
                     .foregroundColor(.primary)
 
-                Text("GPS Accuracy ±3.2m • Shift 07:30 - 16:30")
+                Text("GPS Accuracy ±3.2m • \(formattedDate)")
                     .font(.system(size: 11, weight: .medium, design: .rounded))
                     .foregroundColor(.secondary)
             }
@@ -55,5 +56,12 @@ struct GeofenceArrivalBannerView: View {
         }
         .padding(14)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+    }
+
+    private var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return "Active Shift: \(formatter.string(from: shiftDate))"
     }
 }

@@ -30,7 +30,7 @@ struct AppInfoSectionView: View {
                     Text("Environment")
                         .font(.appBody)
                     Spacer()
-                    Text("Production Edge")
+                    Text(viewModel.environmentName)
                         .font(.appCallout)
                         .foregroundColor(AppTheme.emerald)
                 }

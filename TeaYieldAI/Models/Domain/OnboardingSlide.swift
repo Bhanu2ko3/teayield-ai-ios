@@ -12,10 +12,10 @@ struct OnboardingSlide: Identifiable {
         OnboardingSlide(
             badge: "SENTINEL-2 & PLANETSCOPE AI",
             title: "Zero-IoT Satellite Yield Prediction & Plucking Optimization",
-            description: "Predict daily block yield, detect peak vegetative NDVI (0.82) windows, and automate plucker task allocation across Pedro Estate without physical sensors.",
+            description: "Predict daily block yield, detect peak vegetative NDVI (0.82) windows, and automate plucker task allocation across tea field blocks without physical sensors.",
             pills: [
                 OnboardingPill(title: "0.82", subtitle: "Peak NDVI"),
-                OnboardingPill(title: "850 kg", subtitle: "Pedro Target"),
+                OnboardingPill(title: "850 kg", subtitle: "Daily Target"),
                 OnboardingPill(title: "88%", subtitle: "Two Leaves")
             ]
         ),

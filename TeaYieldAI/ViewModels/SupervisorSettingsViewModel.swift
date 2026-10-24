@@ -13,13 +13,25 @@ final class SupervisorSettingsViewModel: ObservableObject {
     @Published var isSyncing: Bool = false
     @Published var syncStatusMessage: String?
     @Published var showingLogoutConfirmation: Bool = false
+    @Published var cachedFieldsCount: Int = 0
+    @Published var divisionAssignmentName: String = "Division Pending"
 
     private let authService: AuthServiceProtocol
     private let syncManager: SyncManagerProtocol
+    private let fieldRepository: FieldRepositoryProtocol
 
-    init(authService: AuthServiceProtocol, syncManager: SyncManagerProtocol) {
+    init(
+        authService: AuthServiceProtocol,
+        syncManager: SyncManagerProtocol,
+        fieldRepository: FieldRepositoryProtocol
+    ) {
         self.authService = authService
         self.syncManager = syncManager
+        self.fieldRepository = fieldRepository
+
+        Task {
+            await loadCachedDetails()
+        }
     }
 
     // MARK: - Computed Dynamic Properties
@@ -54,11 +66,14 @@ final class SupervisorSettingsViewModel: ObservableObject {
     }
 
     var estateName: String {
-        "Pedro Estate, Nuwara Eliya"
+        if let user = authService.currentUser {
+            return "Estate ID: \(user.estateId.uuidString.prefix(8))..."
+        }
+        return "Estate Not Assigned"
     }
 
     var divisionAssignment: String {
-        "Upper Division"
+        divisionAssignmentName
     }
 
     var avatarInitials: String {
@@ -73,10 +88,27 @@ final class SupervisorSettingsViewModel: ObservableObject {
     }
 
     var appVersionDisplay: String {
-        "v2.4.0 (Build 082)"
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.4.0"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "082"
+        return "v\(version) (Build \(build))"
+    }
+
+    var environmentName: String {
+        AppConfiguration.environmentName
     }
 
     // MARK: - Actions
+
+    func loadCachedDetails() async {
+        if let fields = try? await fieldRepository.fetchAllFields() {
+            self.cachedFieldsCount = fields.count
+            if let first = fields.first {
+                self.divisionAssignmentName = "\(first.name) (\(first.blockCode))"
+            } else {
+                self.divisionAssignmentName = "Division Pending"
+            }
+        }
+    }
 
     func triggerManualSync() {
         guard let user = authService.currentUser else { return }
@@ -90,6 +122,7 @@ final class SupervisorSettingsViewModel: ObservableObject {
                     self.isSyncing = false
                     self.syncStatusMessage = result.statusMessage
                 }
+                await self.loadCachedDetails()
             } catch {
                 await MainActor.run {
                     self.isSyncing = false
