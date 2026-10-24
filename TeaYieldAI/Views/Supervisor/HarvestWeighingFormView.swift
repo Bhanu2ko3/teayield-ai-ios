@@ -1,0 +1,240 @@
+import SwiftUI
+
+/// Form interface for field supervisors to record plucker green leaf harvest weights and fine leaf quality.
+struct HarvestWeighingFormView: View {
+
+    @Environment(\.dismiss) private var dismiss
+    @StateObject private var viewModel: HarvestWeighingViewModel
+
+    init(viewModel: HarvestWeighingViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                fieldSelectionSection
+                pluckerIdentitySection
+                weightMeasurementSection
+                leafQualitySection
+                locationVerificationSection
+
+                if let message = viewModel.validationMessage {
+                    Section {
+                        HStack {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundColor(.red)
+                            Text(message)
+                                .font(.footnote)
+                                .foregroundColor(.red)
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Record Leaf Weighing")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        Task {
+                            let success = await viewModel.saveWeighingRecord()
+                            if success {
+                                triggerSuccessHaptic()
+                                dismiss()
+                            }
+                        }
+                    } label: {
+                        if viewModel.isSaving {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                        } else {
+                            Text("Save")
+                                .fontWeight(.bold)
+                        }
+                    }
+                    .disabled(viewModel.isSaving)
+                }
+            }
+            .alert("Weighing Error", isPresented: $viewModel.showErrorAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(viewModel.errorMessage ?? "Failed to save record.")
+            }
+        }
+    }
+
+    // MARK: - Sections
+
+    private var fieldSelectionSection: some View {
+        Section(header: Text("Field Assignment")) {
+            Picker("Target Field", selection: $viewModel.selectedFieldId) {
+                Text("Select Field").tag(nil as UUID?)
+                ForEach(viewModel.availableFields) { field in
+                    Text("\(field.name) (\(field.formattedAcreage))")
+                        .tag(field.id as UUID?)
+                }
+            }
+            .onChange(of: viewModel.selectedFieldId) { _ in
+                viewModel.updateCoordinatesForSelectedField()
+            }
+        }
+    }
+
+    private var pluckerIdentitySection: some View {
+        Section(header: Text("Plucker Details")) {
+            HStack {
+                Text("Plucker ID")
+                    .foregroundColor(.secondary)
+                    .frame(width: 100, alignment: .leading)
+
+                TextField("e.g. EMP-4012", text: $viewModel.pluckerId)
+                    .autocapitalization(.allCharacters)
+                    .disableAutocorrection(true)
+            }
+
+            HStack {
+                Text("Name")
+                    .foregroundColor(.secondary)
+                    .frame(width: 100, alignment: .leading)
+
+                TextField("Plucker Full Name", text: $viewModel.pluckerName)
+                    .autocapitalization(.words)
+                    .disableAutocorrection(true)
+            }
+        }
+    }
+
+    private var weightMeasurementSection: some View {
+        Section(header: Text("Weight Measurement")) {
+            HStack {
+                Text("Gross Weight")
+                    .foregroundColor(.secondary)
+                    .frame(width: 100, alignment: .leading)
+
+                TextField("0.0", text: $viewModel.grossWeightInput)
+                    .keyboardType(.decimalPad)
+
+                Text("kg")
+                    .foregroundColor(.secondary)
+            }
+
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text("Bag Tare")
+                        .foregroundColor(.secondary)
+                        .frame(width: 100, alignment: .leading)
+
+                    TextField("1.5", text: $viewModel.bagTareWeightInput)
+                        .keyboardType(.decimalPad)
+
+                    Text("kg")
+                        .foregroundColor(.secondary)
+                }
+
+                HStack(spacing: 8) {
+                    Text("Presets:")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+
+                    Button("1.0 kg") { viewModel.selectTarePreset(1.0) }
+                        .buttonStyle(.bordered)
+                        .controlSize(.mini)
+
+                    Button("1.5 kg") { viewModel.selectTarePreset(1.5) }
+                        .buttonStyle(.bordered)
+                        .controlSize(.mini)
+
+                    Button("2.0 kg") { viewModel.selectTarePreset(2.0) }
+                        .buttonStyle(.bordered)
+                        .controlSize(.mini)
+                }
+            }
+
+            HStack {
+                Text("Net Weight")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+
+                Spacer()
+
+                Text(String(format: "%.2f kg", viewModel.netWeight))
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(red: 0.02, green: 0.59, blue: 0.41))
+            }
+            .padding(.vertical, 4)
+        }
+    }
+
+    private var leafQualitySection: some View {
+        Section(header: Text("Shoot Quality Assessment")) {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text("Fine Leaf Ratio")
+                        .font(.subheadline)
+
+                    Spacer()
+
+                    Text(String(format: "%.0f%%", viewModel.fineLeafRatio * 100.0))
+                        .font(.headline)
+                        .foregroundColor(viewModel.isQualityExportGrade ? Color(red: 0.02, green: 0.59, blue: 0.41) : .orange)
+                }
+
+                Slider(value: $viewModel.fineLeafRatio, in: 0.50...1.0, step: 0.05)
+                    .tint(viewModel.isQualityExportGrade ? Color(red: 0.02, green: 0.59, blue: 0.41) : .orange)
+
+                HStack(spacing: 6) {
+                    Image(systemName: viewModel.isQualityExportGrade ? "checkmark.seal.fill" : "exclamationmark.triangle.fill")
+                        .font(.caption)
+                    Text(viewModel.isQualityExportGrade ? "Meets 85% Auction Benchmark (Two Leaves & A Bud)" : "Below 85% - High Coarse Leaf Ratio")
+                        .font(.caption)
+                }
+                .foregroundColor(viewModel.isQualityExportGrade ? Color(red: 0.02, green: 0.59, blue: 0.41) : .orange)
+            }
+            .padding(.vertical, 4)
+        }
+    }
+
+    private var locationVerificationSection: some View {
+        Section(header: Text("Geospatial Coordinates")) {
+            HStack {
+                Image(systemName: "location.fill")
+                    .foregroundColor(.secondary)
+                    .font(.caption)
+
+                if viewModel.latitude != 0.0 && viewModel.longitude != 0.0 {
+                    Text(String(format: "Lat: %.4f, Lon: %.4f", viewModel.latitude, viewModel.longitude))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+
+                    Spacer()
+
+                    Text("Centroid Verified")
+                        .font(.system(size: 10, weight: .bold))
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color(red: 0.02, green: 0.59, blue: 0.41).opacity(0.12))
+                        .foregroundColor(Color(red: 0.02, green: 0.59, blue: 0.41))
+                        .cornerRadius(4)
+                } else {
+                    Text("Field Coordinates Pending Selection")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+    }
+
+    // MARK: - Haptic Feedback
+
+    private func triggerSuccessHaptic() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        generator.notificationOccurred(.success)
+    }
+}

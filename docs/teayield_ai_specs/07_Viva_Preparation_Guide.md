@@ -13,7 +13,7 @@
 ### Key Questions & Model Defense Answers:
 
 1. **Q: Walk me through the exact entry point and architecture of your SwiftUI app.**
-   - *Model Answer:* The entry point is `@main struct TeaYieldAIApp: App`. We follow pure MVVM augmented with Protocol-Oriented Services. Views are declarative and thin; `@Observable` ViewModels manage UI state and handle business logic; data services (`CoreDataRepository`, `CloudAPIService`, `CoreLocationManager`) are injected via the `AppContainerProtocol` dependency injection container. This ensures zero tight coupling and allows full mock injection during unit testing.
+   - *Model Answer:* The entry point is `@main struct TeaYieldAIApp: App`. We follow pure MVVM augmented with Protocol-Oriented Services. Views are declarative and thin; `ObservableObject` ViewModels (`@Published`) manage UI state and handle business logic; data services (`CoreDataRepository`, `CloudAPIService`, `OfflineSyncManager`) are injected via the `AppContainerProtocol` dependency injection container. This ensures zero tight coupling, Xcode 14.3.1 / iOS 16.4 backward compatibility, and allows full mock injection during unit testing.
 
 2. **Q: How does your Core Data stack handle background saves without blocking the main UI thread?**
    - *Model Answer:* `NSPersistentContainer` manages main thread reads via `viewContext`. Background saves—such as camera shoot quality scans and background network sync flushes—execute on a separate `newBackgroundContext()` using `perform { ... }`, configured with `automaticallyMergesChangesFromParent = true` so that updates merge seamlessly into the UI thread without UI stutter.
@@ -23,6 +23,9 @@
 
 4. **Q: Explain how the dual-repository architecture operates and how your iOS client was integrated.**
    - *Model Answer:* The platform is partitioned into `teayield-ai-core` (Python FastAPI cloud intelligence engine and research core) and `teayield-ai-ios` (native Swift client). Under Phase 3 of the backend roadmap, the FastAPI microservice deployed deterministic, agro-ecologically realistic contract stubs matching our Swift `Codable` models. This unblocked our iOS client development early in the project lifecycle, allowing us to build, test, and verify MapKit polygon rendering, Face ID auth, and offline weighing sync without waiting for offline neural network training.
+
+5. **Q: How are user credentials and passwords handled, and why are zero credentials hardcoded in the app?**
+   - *Model Answer:* In accordance with enterprise mobile security standards, zero passwords or credentials are hardcoded or stored in the frontend codebase. User-entered credentials are transmitted over HTTPS to `/api/v1/auth/login`. The FastAPI backend validates credentials against the Supabase database and issues an encrypted JWT bearer token. On the client, this token is securely persisted in the hardware iOS Keychain using `kSecClassGenericPassword` with `kSecAttrAccessibleAfterFirstUnlock`. Subsequent sessions unlock via Apple Silicon biometric authentication (`LocalAuthentication` Face ID) retrieving the cached Keychain token without storing cleartext passwords in application memory.
 
 ---
 
