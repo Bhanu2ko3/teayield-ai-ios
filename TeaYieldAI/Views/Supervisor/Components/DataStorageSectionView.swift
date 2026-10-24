@@ -4,6 +4,7 @@ import SwiftUI
 struct DataStorageSectionView: View {
 
     @ObservedObject var viewModel: SupervisorSettingsViewModel
+    let harvestRepository: HarvestRepositoryProtocol
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -43,13 +44,48 @@ struct DataStorageSectionView: View {
 
                     Spacer()
 
-                    Text(viewModel.cachedFieldsCount > 0 ? "\(viewModel.cachedFieldsCount) Blocks Cached" : "Active")
-                        .font(.appBadge)
-                        .foregroundColor(AppTheme.emerald)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                        .background(AppTheme.emerald.opacity(0.12))
-                        .cornerRadius(6)
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text("\(viewModel.cachedFieldsCount) Blocks")
+                            .font(.appBadge)
+                            .foregroundColor(AppTheme.emerald)
+
+                        Text("\(viewModel.cachedRecordsCount) Logs")
+                            .font(.system(size: 10, weight: .semibold, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(AppTheme.emerald.opacity(0.12))
+                    .cornerRadius(6)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+
+                Divider().padding(.leading, 50)
+
+                NavigationLink {
+                    HarvestHistoryView(harvestRepository: harvestRepository)
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "clock.arrow.circlepath")
+                            .foregroundColor(AppTheme.emerald)
+                            .frame(width: 22)
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("View Weighing History")
+                                .font(.appBody)
+                                .foregroundColor(.primary)
+                            Text("Inspect locally cached harvest logs")
+                                .font(.appCaption)
+                                .foregroundColor(.secondary)
+                        }
+
+                        Spacer()
+
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)

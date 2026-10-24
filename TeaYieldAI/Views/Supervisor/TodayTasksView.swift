@@ -67,6 +67,8 @@ struct TodayTasksView: View {
                                 .font(.system(size: 15, weight: .semibold))
                                 .foregroundColor(AppTheme.emerald)
                         }
+                        .accessibilityLabel("Weighing History")
+                        .accessibilityHint("View locally cached green leaf weigh-in records from Core Data")
 
                         Button {
                             selectedFieldForWeighing = viewModel.tasks.first?.fieldId

@@ -12,30 +12,28 @@ struct HarvestHistoryView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color(uiColor: .systemGroupedBackground)
-                    .ignoresSafeArea()
+        ZStack {
+            Color(uiColor: .systemGroupedBackground)
+                .ignoresSafeArea()
 
-                ScrollView {
-                    VStack(spacing: 16) {
-                        summaryHeaderCard
-                        filterSegmentedPicker
-                        recordsListSection
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
+            ScrollView {
+                VStack(spacing: 16) {
+                    summaryHeaderCard
+                    filterSegmentedPicker
+                    recordsListSection
                 }
-                .refreshable {
-                    await viewModel.loadRecords()
-                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
             }
-            .navigationTitle("Weighing History")
-            .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $viewModel.searchText, prompt: "Search by plucker name or ID")
-            .task {
+            .refreshable {
                 await viewModel.loadRecords()
             }
+        }
+        .navigationTitle("Weighing History")
+        .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $viewModel.searchText, prompt: "Search by plucker name or ID")
+        .task {
+            await viewModel.loadRecords()
         }
     }
 

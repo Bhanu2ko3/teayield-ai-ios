@@ -45,6 +45,7 @@ final class TodayTasksViewModel: ObservableObject {
     private let harvestRepository: HarvestRepositoryProtocol
     private let authService: AuthServiceProtocol
     private let tasksCacheKey = "teayield.cache.today_tasks"
+    private var hasDispatchedGeofenceNotification: Bool = false
 
     init(
         apiService: APIServiceProtocol,
@@ -105,6 +106,11 @@ final class TodayTasksViewModel: ObservableObject {
             self.isOffline = true
             loadTasksFromOfflineCache()
             self.isLoading = false
+        }
+
+        if !hasDispatchedGeofenceNotification, let active = tasks.first {
+            hasDispatchedGeofenceNotification = true
+            NotificationManager.shared.sendGeofenceArrivalAlert(fieldName: active.fieldName)
         }
 
         await refreshPendingSyncCount()

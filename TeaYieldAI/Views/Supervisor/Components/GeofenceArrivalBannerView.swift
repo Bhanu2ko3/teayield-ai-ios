@@ -56,6 +56,8 @@ struct GeofenceArrivalBannerView: View {
         }
         .padding(14)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Live Geofence Arrival Detected at \(fieldName). \(formattedDate). Double tap Weigh button to record harvest.")
     }
 
     private var formattedDate: String {

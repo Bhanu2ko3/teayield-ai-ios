@@ -4,14 +4,17 @@ import SwiftUI
 /// Composes modular sub-components for profile, storage, security, and notification settings.
 struct SupervisorSettingsView: View {
 
+    private let container: AppContainerProtocol
     @StateObject private var viewModel: SupervisorSettingsViewModel
 
     init(container: AppContainerProtocol) {
+        self.container = container
         _viewModel = StateObject(
             wrappedValue: SupervisorSettingsViewModel(
                 authService: container.authService,
                 syncManager: container.syncManager,
-                fieldRepository: container.fieldRepository
+                fieldRepository: container.fieldRepository,
+                harvestRepository: container.harvestRepository
             )
         )
     }
@@ -25,7 +28,10 @@ struct SupervisorSettingsView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         OfficerProfileCardView(viewModel: viewModel)
-                        DataStorageSectionView(viewModel: viewModel)
+                        DataStorageSectionView(
+                            viewModel: viewModel,
+                            harvestRepository: container.harvestRepository
+                        )
                         SecuritySettingsSectionView(viewModel: viewModel)
                         NotificationSettingsSectionView(viewModel: viewModel)
                         AppInfoSectionView(viewModel: viewModel)

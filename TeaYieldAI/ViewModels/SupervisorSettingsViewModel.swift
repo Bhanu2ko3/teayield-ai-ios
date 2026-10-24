@@ -14,23 +14,29 @@ final class SupervisorSettingsViewModel: ObservableObject {
     @Published var syncStatusMessage: String?
     @Published var showingLogoutConfirmation: Bool = false
     @Published var cachedFieldsCount: Int = 0
+    @Published var cachedRecordsCount: Int = 0
+    @Published var notificationsAuthorized: Bool = false
     @Published var divisionAssignmentName: String = "Division Pending"
 
     private let authService: AuthServiceProtocol
     private let syncManager: SyncManagerProtocol
     private let fieldRepository: FieldRepositoryProtocol
+    private let harvestRepository: HarvestRepositoryProtocol
 
     init(
         authService: AuthServiceProtocol,
         syncManager: SyncManagerProtocol,
-        fieldRepository: FieldRepositoryProtocol
+        fieldRepository: FieldRepositoryProtocol,
+        harvestRepository: HarvestRepositoryProtocol
     ) {
         self.authService = authService
         self.syncManager = syncManager
         self.fieldRepository = fieldRepository
+        self.harvestRepository = harvestRepository
 
         Task {
             await loadCachedDetails()
+            await checkNotificationStatus()
         }
     }
 
@@ -107,6 +113,21 @@ final class SupervisorSettingsViewModel: ObservableObject {
             } else {
                 self.divisionAssignmentName = "Division Pending"
             }
+        }
+        if let records = try? await harvestRepository.fetchAllRecords() {
+            self.cachedRecordsCount = records.count
+        }
+    }
+
+    func checkNotificationStatus() async {
+        await NotificationManager.shared.checkAuthorizationStatus()
+        self.notificationsAuthorized = NotificationManager.shared.isAuthorized
+    }
+
+    func requestNotificationPermissionIfNeeded() {
+        Task {
+            let granted = await NotificationManager.shared.requestAuthorization()
+            self.notificationsAuthorized = granted
         }
     }
 

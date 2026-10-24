@@ -61,6 +61,8 @@ struct HarvestRecordRowView: View {
         }
         .padding(14)
         .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(record.pluckerName), Employee ID \(record.pluckerId), Net Weight \(record.formattedNetWeight), Quality Grade \(record.qualityGrade), Fine leaf ratio \(record.formattedFineLeafPercentage), Status \(record.isSynced ? "Synced" : "Pending Sync")")
     }
 
     private var qualityBadgeColor: Color {
