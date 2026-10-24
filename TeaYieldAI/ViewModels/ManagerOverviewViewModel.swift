@@ -7,8 +7,10 @@ final class ManagerOverviewViewModel: ObservableObject {
 
     @Published var fields: [TeaField] = []
     @Published var totalHarvestTodayKg: Double = 0.0
-    @Published var averageFineLeafPercentage: Double = 85.0
+    @Published var averageFineLeafPercentage: Double = 0.0
     @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
+    @Published var showErrorAlert: Bool = false
     @Published var showingLogoutConfirmation: Bool = false
 
     /// Standard withering trough capacity limit to prevent factory overloading.
@@ -32,19 +34,22 @@ final class ManagerOverviewViewModel: ObservableObject {
     }
 
     var managerName: String {
-        authService.currentUser?.fullName ?? "Bhanuka Bandara"
+        authService.currentUser?.fullName ?? ""
     }
 
     var managerEmployeeId: String {
-        authService.currentUser?.employeeId ?? "MGR-082"
+        authService.currentUser?.employeeId ?? ""
     }
 
     var managerEmail: String {
-        authService.currentUser?.email ?? "manager@estate.lk"
+        authService.currentUser?.email ?? ""
     }
 
     var estateDisplayName: String {
-        "Pedro Estate • Nuwara Eliya"
+        if let user = authService.currentUser {
+            return "Estate ID: \(user.estateId.uuidString.prefix(8))..."
+        }
+        return "Estate Unassigned"
     }
 
     var totalAcreage: Double {
@@ -74,9 +79,14 @@ final class ManagerOverviewViewModel: ObservableObject {
 
     func loadEstateTelemetry() async {
         isLoading = true
+        errorMessage = nil
         defer { isLoading = false }
 
-        guard let user = authService.currentUser else { return }
+        guard let user = authService.currentUser else {
+            errorMessage = "No authenticated session. Please sign in."
+            showErrorAlert = true
+            return
+        }
 
         do {
             var fetchedFields = try await fieldRepository.fetchAllFields()
@@ -85,64 +95,6 @@ final class ManagerOverviewViewModel: ObservableObject {
                     let domainFields = dtos.map { $0.toDomain() }
                     try? await fieldRepository.saveFields(domainFields)
                     fetchedFields = domainFields
-                } else {
-                    // Seed initial Pedro Estate fields into Core Data if local database is empty
-                    let defaultFields: [TeaField] = [
-                        TeaField(
-                            id: UUID(uuidString: "7c9e6679-7425-40de-944b-e07fc1f90ae7")!,
-                            estateId: user.estateId,
-                            name: "Upper Division Block A",
-                            blockCode: "UD-BLK-A",
-                            acreage: 12.50,
-                            currentNDVI: 0.820,
-                            status: .ready,
-                            centroidLatitude: 6.9642,
-                            centroidLongitude: 80.7932,
-                            polygonCoordinates: [],
-                            lastHarvestedDate: Date().addingTimeInterval(-86400 * 7)
-                        ),
-                        TeaField(
-                            id: UUID(uuidString: "8d0f778a-8536-41ef-055c-f18fd2a01bf8")!,
-                            estateId: user.estateId,
-                            name: "Lower Division Block B",
-                            blockCode: "LD-BLK-B",
-                            acreage: 18.20,
-                            currentNDVI: 0.760,
-                            status: .ready,
-                            centroidLatitude: 6.9615,
-                            centroidLongitude: 80.7950,
-                            polygonCoordinates: [],
-                            lastHarvestedDate: Date().addingTimeInterval(-86400 * 9)
-                        ),
-                        TeaField(
-                            id: UUID(uuidString: "9e1a889b-9647-42fa-166d-a29fe3b12ca9")!,
-                            estateId: user.estateId,
-                            name: "Ragala Division Block C",
-                            blockCode: "RD-BLK-C",
-                            acreage: 14.80,
-                            currentNDVI: 0.640,
-                            status: .growing,
-                            centroidLatitude: 6.9680,
-                            centroidLongitude: 80.7910,
-                            polygonCoordinates: [],
-                            lastHarvestedDate: Date().addingTimeInterval(-86400 * 4)
-                        ),
-                        TeaField(
-                            id: UUID(uuidString: "af2b99ac-0758-430b-277e-b30af4c23db0")!,
-                            estateId: user.estateId,
-                            name: "Oliphant Division Block D",
-                            blockCode: "OD-BLK-D",
-                            acreage: 10.00,
-                            currentNDVI: 0.480,
-                            status: .resting,
-                            centroidLatitude: 6.9590,
-                            centroidLongitude: 80.7980,
-                            polygonCoordinates: [],
-                            lastHarvestedDate: Date().addingTimeInterval(-86400 * 1)
-                        )
-                    ]
-                    try? await fieldRepository.saveFields(defaultFields)
-                    fetchedFields = defaultFields
                 }
             }
 
@@ -155,10 +107,11 @@ final class ManagerOverviewViewModel: ObservableObject {
                 let totalFine = fetchedRecords.reduce(0.0) { $0 + $1.fineLeafRatio }
                 self.averageFineLeafPercentage = (totalFine / Double(fetchedRecords.count)) * 100.0
             } else {
-                self.averageFineLeafPercentage = 85.0
+                self.averageFineLeafPercentage = 0.0
             }
         } catch {
-            // Error handling maintains previous values
+            self.errorMessage = "Failed to synchronize estate telemetry: \(error.localizedDescription)"
+            self.showErrorAlert = true
         }
     }
 

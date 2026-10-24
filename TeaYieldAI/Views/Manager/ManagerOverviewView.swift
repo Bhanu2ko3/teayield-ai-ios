@@ -66,6 +66,11 @@ struct ManagerOverviewView: View {
             } message: {
                 Text("Your manager session will end and return to the login screen.")
             }
+            .alert("Estate Telemetry Error", isPresented: $viewModel.showErrorAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(viewModel.errorMessage ?? "An unexpected telemetry error occurred.")
+            }
             .task {
                 await viewModel.loadEstateTelemetry()
             }
@@ -194,9 +199,30 @@ struct ManagerOverviewView: View {
                     .foregroundColor(.secondary)
             }
 
-            VStack(spacing: 10) {
-                ForEach(viewModel.fields) { field in
-                    ManagerFieldRowView(field: field)
+            if viewModel.fields.isEmpty && !viewModel.isLoading {
+                VStack(spacing: 12) {
+                    Image(systemName: "square.stack.3d.slash")
+                        .font(.system(size: 36))
+                        .foregroundColor(.secondary.opacity(0.6))
+
+                    Text("No Estate Divisions Found")
+                        .font(.appHeadline)
+                        .foregroundColor(.primary)
+
+                    Text("Field boundaries and vegetative health logs will populate after synchronizing with the database.")
+                        .font(.appCaption)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 16)
+                }
+                .padding(24)
+                .frame(maxWidth: .infinity)
+                .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+            } else {
+                VStack(spacing: 10) {
+                    ForEach(viewModel.fields) { field in
+                        ManagerFieldRowView(field: field)
+                    }
                 }
             }
         }
