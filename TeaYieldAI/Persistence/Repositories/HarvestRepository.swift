@@ -31,6 +31,15 @@ final class HarvestRepository: HarvestRepositoryProtocol {
         }
     }
 
+    func fetchUnsyncedCount() async throws -> Int {
+        let context = persistenceController.viewContext
+        return try await context.perform {
+            let request = NSFetchRequest<HarvestLogEntity>(entityName: "HarvestLogEntity")
+            request.predicate = NSPredicate(format: "isSynced == NO")
+            return try context.count(for: request)
+        }
+    }
+
     func saveRecord(_ record: HarvestRecord) async throws {
         let backgroundContext = persistenceController.newBackgroundContext()
         try await backgroundContext.perform {

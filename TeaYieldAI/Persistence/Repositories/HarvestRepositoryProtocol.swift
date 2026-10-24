@@ -8,6 +8,9 @@ protocol HarvestRepositoryProtocol {
     /// Retrieves weighing logs that have not yet been synchronized with the cloud backend.
     func fetchUnsyncedRecords() async throws -> [HarvestRecord]
 
+    /// Returns the exact count of pending unsynced records without loading entities into memory.
+    func fetchUnsyncedCount() async throws -> Int
+
     /// Persists a new or updated harvest weigh-in record.
     func saveRecord(_ record: HarvestRecord) async throws
 
