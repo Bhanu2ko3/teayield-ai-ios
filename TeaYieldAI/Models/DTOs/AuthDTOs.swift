@@ -4,6 +4,14 @@ import Foundation
 struct LoginRequestDTO: Codable {
     let email: String
     let password: String
+
+    /// Validates basic email structure and minimum password length before making network calls.
+    var isValid: Bool {
+        let trimmed = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let emailPattern = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
+        let hasValidEmail = trimmed.range(of: emailPattern, options: .regularExpression) != nil
+        return hasValidEmail && password.count >= 6
+    }
 }
 
 /// Server response containing the JWT bearer access token and user metadata.
