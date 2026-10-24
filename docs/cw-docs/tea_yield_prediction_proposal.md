@@ -16,9 +16,10 @@
 
 The tea industry is a cornerstone of Sri Lanka's economy, accounting for a significant share of agricultural exports and providing livelihoods for hundreds of thousands of workers. Managing tea estates efficiently, however, requires precise planning of agricultural operations—most notably, the scheduling of tea leaf plucking (harvesting). The growth rate of tea leaves is highly sensitive to micro-climatic factors such as daily rainfall, temperature fluctuations, and soil moisture levels, causing weekly tea yields to vary dynamically.
 
-In traditional Sri Lankan tea estates, plucking schedules and labor allocation are managed manually using historical heuristics. Supervisors decide which fields to harvest based on visual inspection and general intuition. This manual scheduling frequently leads to two major operational inefficiencies:
+In traditional Sri Lankan tea estates, plucking schedules and labor allocation are managed manually using historical heuristics. Supervisors decide which fields to harvest based on visual inspection and general intuition. This manual scheduling frequently leads to three major operational inefficiencies:
 1. **Labor Mismatch:** Over-allocating workers to low-yield fields (causing high labor costs and low productivity) or under-allocating workers to high-yield fields (leading to overgrown leaves that degrade tea quality).
 2. **Factory Processing Bottlenecks:** Sudden spikes in harvested volumes that exceed the processing capacity of the estate's factory, leading to leaf spoilage.
+3. **Harvest Quality Dilution at Weighing Checkpoints:** Because pluckers are compensated on a piece-rate basis per kilogram, pluckers often pluck coarse, mature foliage and heavy stalks to artificially boost bag weight. Without an objective, on-site quality verification mechanism at field weighing sheds, high proportions of coarse leaves pass into factory processing, severely reducing Ceylon tea auction grade and export market prices.
 
 To address these challenges, precision agriculture utilizes predictive modeling and mathematical optimization. By predicting weekly tea yields in advance and automatically generating optimized plucking schedules, tea estates can stabilize their supply chain, minimize labor costs, and maintain high-quality leaf harvesting.
 
@@ -54,7 +55,7 @@ This research addresses this gap by developing an integrated **Prediction-Optimi
 * **Objective 1:** To retrieve and preprocess multi-temporal satellite imagery (specifically **NDVI** values from Sentinel-2) and meteorological datasets (rainfall, temperature, humidity) for a targeted Sri Lankan tea estate.
 * **Objective 2:** To design and train a **Long Short-Term Memory (LSTM)** deep learning model to forecast weekly tea leaf yield based on temporal environmental patterns.
 * **Objective 3:** To formulate a **Genetic Algorithm (GA)** to optimize the weekly plucking roster, allocating the workforce across different fields to minimize labor costs while maximizing leaf quality.
-* **Objective 4:** To develop a lightweight, offline-friendly prototype web dashboard that presents predicted yields and optimized work schedules to estate managers.
+* **Objective 4:** To develop an offline-enabled native iOS mobile application backed by a Python FastAPI engine that presents predicted yields, optimized work schedules, and on-device leaf maturity inspection to estate managers.
 
 ---
 
@@ -123,28 +124,35 @@ The predicted weekly yield (in kg) serves as the primary driver for a **Genetic 
 
 ### 6. Tools, Technologies, and Libraries
 
-* **Programming Language:** Python
+* **Programming Languages:** Python (Core Engine & Backend), Swift (Native iOS Client)
+* **Backend API Framework:** FastAPI (Asynchronous high-performance REST API)
+* **Security & Access Control:** Role-Based Access Control (RBAC) with JWT separating Executive Manager and Field Supervisor operational scopes
 * **Data Sources & APIs:** Sentinel Hub API (Satellite Imagery), Open-Meteo API (Weather data)
-* **Machine Learning Framework:** TensorFlow / Keras (LSTM Model)
+* **Machine Learning & Edge AI Frameworks:** TensorFlow / Keras (LSTM Model for Yield Prediction), Apple CoreML / Vision (On-Device Leaf Shoot Quality & Maturity Classification at Weighing Points)
 * **Optimization Library:** DEAP (Distributed Evolutionary Algorithms in Python)
 * **Data Analytics & Preprocessing:** NumPy, Pandas, Scikit-learn
-* **User Interface:** Streamlit (For building the manager dashboard)
-* **Geospatial Mapping:** Streamlit-Folium / Plotly (For interactive boundary rendering)
+* **Mobile Client Framework:** SwiftUI, SwiftData (Offline Local Caching)
+* **Geospatial Mapping & Navigation:** Apple MapKit & CoreLocation (Native GPS field boundary logging and satellite overlay rendering)
 
 ---
 
-### 7. User Workflow & Dashboard Interface
+### 7. User Workflow & System Interface (Role-Based Operational Architecture)
 
-The final prototype is deployed as a web application running on a local server or cloud space, allowing estate managers to interact with the system through a simple 5-step workflow:
+The system is architected as an offline-capable native iOS mobile application communicating with a local or cloud-hosted Python FastAPI backend, enforcing Role-Based Access Control (RBAC) across two distinct operational roles:
 
-1. **Polygon Registration:** The manager inputs coordinates mapped using mobile GPS, defining the boundaries of each field. The system saves these as GeoJSON files and highlights the fields on a Google Satellite map.
-2. **Environmental Data Sync:** The manager clicks a "Sync Data" button, prompting the backend to call the Sentinel-2 and Open-Meteo APIs to update weather and NDVI records up to the current date.
-3. **Parameter Input:** The manager enters operational constraints for the upcoming week, such as the number of available workers (e.g., 50 pluckers) and the desired rest cycle (e.g., 8 days).
-4. **Schedule Generation:** The manager clicks "Generate Schedule". The app runs the LSTM model followed by the Genetic Algorithm. Within seconds, it displays:
-   * A yield forecasting chart showing predicted kg per field.
+#### 7.1 Estate Manager Workflow (Executive Planning & Scheduling)
+1. **Polygon Registration:** The manager registers estate field boundaries as spatial GeoJSON polygons using MapKit satellite view or GPS walking boundaries.
+2. **Environmental Data Sync:** When network connectivity is available, the manager taps "Sync Data", triggering the FastAPI backend to call Sentinel-2 and Open-Meteo APIs to update weather and NDVI records up to the current date.
+3. **Parameter Input & Optimization Execution:** The manager enters operational constraints for the upcoming week (e.g., available plucker workforce, 7–10 day field rest cycle, factory daily intake thresholds) and executes the optimization engine. The FastAPI backend runs the LSTM prediction model followed by the Genetic Algorithm, delivering:
+   * A 7-day yield forecasting chart showing predicted kg per field.
    * An interactive satellite heatmap coloring fields green (high yield, ready to pluck), yellow (medium yield), and red (rest period).
-   * A weekly calendar table assigning worker counts to specific fields.
-5. **Roster Export:** The manager downloads the generated schedule as a PDF/CSV to print and distribute to field supervisors.
+   * An optimized weekly workforce roster assigning plucker counts to specific fields across a 6-day cycle.
+4. **Roster Export & Delegation:** The manager reviews the generated roster and exports it as a PDF/CSV or delegates daily field plucking assignments directly to field supervisors.
+
+#### 7.2 Field Supervisor Workflow (On-Field Execution & Quality Assurance)
+1. **Task Assignment & Geofenced Field Alerts:** Supervisors receive their daily assigned fields on the iPhone app. As they physically enter a field boundary, native iOS geofencing (`CLCircularRegion`) dispatches arrival alerts and confirms assigned plucker headcounts.
+2. **Harvest Checkpoint Quality Inspection (CoreML Edge AI):** At the field weighing station, pluckers submit harvested bags to be weighed. To prevent pluckers from inflating bag weights with coarse foliage, the supervisor captures a frame of the harvested batch using the iPhone camera. An on-device **CoreML + Vision** model classifies fine leaf ("Two Leaves and a Bud") vs. coarse leaf proportions in real time (60fps, 0-latency, 100% offline) to generate an objective Quality Score.
+3. **Offline Session Logging & Auto-Sync:** The supervisor logs harvested kilograms alongside the CoreML quality score into local SwiftData storage. Once cellular network or Wi-Fi connectivity is re-established, the app automatically synchronizes plucking logs back to the central backend.
 
 ---
 
@@ -152,6 +160,6 @@ The final prototype is deployed as a web application running on a local server o
 
 The final submission to NIBM will include:
 
-* Fully documented Python source code containing the data extraction scripts, the pre-trained LSTM predictor, the Genetic Algorithm scheduler, and the Streamlit frontend.
+* Fully documented source code containing the Python FastAPI backend (data extraction scripts, pre-trained LSTM predictor, and Genetic Algorithm scheduler) alongside the native Swift/SwiftUI iOS mobile application.
 * A processed dataset combining local tea estate coordinates, historical weather, and calculated NDVI values.
 * An academic Research Thesis containing literature evaluation, model architecture details, and comparative performance graphs.
