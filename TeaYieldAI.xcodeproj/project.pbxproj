@@ -77,6 +77,7 @@
 		74ABC854308D090100E22417 /* HarvestHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC844308D090100E22417 /* HarvestHistoryView.swift */; };
 		74ABC855308D090100E22417 /* FactoryIntakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */; };
 		74ABC856308D090100E22417 /* ManagerOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC846308D090100E22417 /* ManagerOverviewView.swift */; };
+		74ABC857308D090100E22417 /* ManagerFieldRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC847308D090100E22417 /* ManagerFieldRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +171,7 @@
 		74ABC844308D090100E22417 /* HarvestHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestHistoryView.swift; sourceTree = "<group>"; };
 		74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Components/FactoryIntakeCardView.swift; sourceTree = "<group>"; };
 		74ABC846308D090100E22417 /* ManagerOverviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerOverviewView.swift; sourceTree = "<group>"; };
+		74ABC847308D090100E22417 /* ManagerFieldRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Components/ManagerFieldRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -447,6 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */,
+				74ABC847308D090100E22417 /* ManagerFieldRowView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -711,6 +714,7 @@
 				74ABC854308D090100E22417 /* HarvestHistoryView.swift in Sources */,
 				74ABC855308D090100E22417 /* FactoryIntakeCardView.swift in Sources */,
 				74ABC856308D090100E22417 /* ManagerOverviewView.swift in Sources */,
+				74ABC857308D090100E22417 /* ManagerFieldRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

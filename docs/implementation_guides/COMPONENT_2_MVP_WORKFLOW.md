@@ -43,15 +43,15 @@ This engineering workflow is directly mapped to the official coursework specific
 
 | # | Requirement (Index 25.1/082) | Current Status | Implemented Files | Delivered Architecture & Polish |
 |---|---|:---:|---|---|
-| **1** | **Auth and Onboarding** | ✅ 100% | `LoginView.swift`, `OnboardingView.swift`, `OnboardingSlideCardView.swift` | 3-slide interactive feature carousel, haptics, VoiceOver labels, first-launch `@AppStorage` gating. |
-| **2** | **Settings / Profile** | ✅ 100% | `SupervisorSettingsView.swift`, `SupervisorSettingsViewModel.swift` | Dynamic officer card, Core Data cache badge, Face ID toggle, manual Supabase sync, and logout confirmation dialog. |
-| **3** | **Dashboard** | ✅ 100% | `TodayTasksView.swift`, `TaskCardView.swift`, `KpiSummaryRowView.swift` | Today's Operations KPI metrics, assigned fields list, and pull-to-refresh. |
-| **4** | **API Integration** | ✅ 100% | `CloudAPIService.swift`, `APIEndpoint.swift`, DTOs | Synchronized with `teayield-ai-core` FastAPI Pydantic v2 schemas and RFC 7807 error decoding. |
-| **5** | **Push Notifications** | ✅ 100% | `NotificationManager.swift` | `UserNotifications` framework authorization on launch, geofence arrival alerts, and sync confirmations. |
-| **6** | **Face ID** | ✅ 100% | `BiometricAuthManager.swift`, `KeychainHelper.swift` | Hardware biometric verification with Secure Enclave Keychain storage and passcode fallback. |
-| **7** | **Tasks Home & Geofence** | ✅ 100% | `GeofenceArrivalBannerView.swift`, `TodayTasksViewModel.swift` | Dynamic arrival HUD banner conditional on active tasks, with formatted shift date and quick weighing launch. |
-| **8** | **Shoot Quality** | ✅ 100% | `HarvestWeighingFormView.swift`, `HarvestHistoryView.swift`, `HarvestRecordRowView.swift` | Tare weight presets, Core Data history list, search bar, segmented filter, and Grade A fine leaf ratio badges. |
-| **9** | **Estate Manager & Agronomist** | ✅ 100% | `ManagerOverviewView.swift`, `ManagerOverviewViewModel.swift`, `RootView.swift` | Dual-role coordinator in `RootView` routing Estate Managers to executive macro telemetry and factory intake gauge. |
+| **1** | **Auth and Onboarding** | [100% COMPLETE] | `LoginView.swift`, `OnboardingView.swift`, `OnboardingSlideCardView.swift` | 3-slide interactive feature carousel, haptics, VoiceOver labels, first-launch `@AppStorage` gating. |
+| **2** | **Settings / Profile** | [100% COMPLETE] | `SupervisorSettingsView.swift`, `SupervisorSettingsViewModel.swift` | Dynamic officer card, Core Data cache badge, Face ID toggle, manual Supabase sync, and logout confirmation dialog. |
+| **3** | **Dashboard** | [100% COMPLETE] | `TodayTasksView.swift`, `TaskCardView.swift`, `KpiSummaryRowView.swift` | Today's Operations KPI metrics, assigned fields list, and pull-to-refresh. |
+| **4** | **API Integration** | [100% COMPLETE] | `CloudAPIService.swift`, `APIEndpoint.swift`, DTOs | Synchronized with `teayield-ai-core` FastAPI Pydantic v2 schemas and RFC 7807 error decoding. |
+| **5** | **Push Notifications** | [100% COMPLETE] | `NotificationManager.swift` | `UserNotifications` framework authorization on launch, geofence arrival alerts, and sync confirmations. |
+| **6** | **Face ID** | [100% COMPLETE] | `BiometricAuthManager.swift`, `KeychainHelper.swift` | Hardware biometric verification with Secure Enclave Keychain storage and passcode fallback. |
+| **7** | **Tasks Home & Geofence** | [100% COMPLETE] | `GeofenceArrivalBannerView.swift`, `TodayTasksViewModel.swift` | Dynamic arrival HUD banner conditional on active tasks, with formatted shift date and quick weighing launch. |
+| **8** | **Shoot Quality** | [100% COMPLETE] | `HarvestWeighingFormView.swift`, `HarvestHistoryView.swift`, `HarvestRecordRowView.swift` | Tare weight presets, Core Data history list, search bar, segmented filter, and Grade A fine leaf ratio badges. |
+| **9** | **Estate Manager & Agronomist** | [100% COMPLETE] | `ManagerOverviewView.swift`, `ManagerOverviewViewModel.swift`, `RootView.swift` | Dual-role coordinator in `RootView` routing Estate Managers to executive macro telemetry and factory intake gauge. |
 
 ---
 

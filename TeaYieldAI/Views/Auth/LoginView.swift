@@ -101,6 +101,41 @@ struct LoginView: View {
                 .background(Color(uiColor: .secondarySystemGroupedBackground))
                 .cornerRadius(12)
             }
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("QUICK DEMO PROFILES (VIVA DEFENSE)")
+                    .font(.system(size: 10, weight: .bold, design: .rounded))
+                    .foregroundColor(.secondary)
+
+                HStack(spacing: 8) {
+                    Button {
+                        viewModel.email = "supervisor@teayield.ai"
+                        viewModel.password = "password123"
+                    } label: {
+                        Text("Supervisor")
+                            .font(.system(size: 11, weight: .semibold, design: .rounded))
+                            .foregroundColor(AppTheme.emerald)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(AppTheme.emerald.opacity(0.12))
+                            .cornerRadius(8)
+                    }
+
+                    Button {
+                        viewModel.email = "manager@teayield.ai"
+                        viewModel.password = "password123"
+                    } label: {
+                        Text("Estate Manager")
+                            .font(.system(size: 11, weight: .semibold, design: .rounded))
+                            .foregroundColor(.blue)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(Color.blue.opacity(0.12))
+                            .cornerRadius(8)
+                    }
+                }
+            }
+            .padding(.top, 4)
         }
         .padding(20)
         .background(Color(uiColor: .secondarySystemGroupedBackground))
