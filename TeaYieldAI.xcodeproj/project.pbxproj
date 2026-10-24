@@ -70,6 +70,13 @@
 		74ABC839308D080100E22417 /* KpiSummaryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC829308D080100E22417 /* KpiSummaryRowView.swift */; };
 		74ABC83A308D080100E22417 /* OnboardingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC82A308D080100E22417 /* OnboardingSlide.swift */; };
 		74ABC83B308D080100E22417 /* OnboardingSlideCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC82B308D080100E22417 /* OnboardingSlideCardView.swift */; };
+		74ABC850308D090100E22417 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC840308D090100E22417 /* NotificationManager.swift */; };
+		74ABC851308D090100E22417 /* HarvestHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC841308D090100E22417 /* HarvestHistoryViewModel.swift */; };
+		74ABC852308D090100E22417 /* ManagerOverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC842308D090100E22417 /* ManagerOverviewViewModel.swift */; };
+		74ABC853308D090100E22417 /* HarvestRecordRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC843308D090100E22417 /* HarvestRecordRowView.swift */; };
+		74ABC854308D090100E22417 /* HarvestHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC844308D090100E22417 /* HarvestHistoryView.swift */; };
+		74ABC855308D090100E22417 /* FactoryIntakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */; };
+		74ABC856308D090100E22417 /* ManagerOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC846308D090100E22417 /* ManagerOverviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +163,13 @@
 		74ABC829308D080100E22417 /* KpiSummaryRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KpiSummaryRowView.swift; sourceTree = "<group>"; };
 		74ABC82A308D080100E22417 /* OnboardingSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
 		74ABC82B308D080100E22417 /* OnboardingSlideCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Components/OnboardingSlideCardView.swift; sourceTree = "<group>"; };
+		74ABC840308D090100E22417 /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		74ABC841308D090100E22417 /* HarvestHistoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestHistoryViewModel.swift; sourceTree = "<group>"; };
+		74ABC842308D090100E22417 /* ManagerOverviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerOverviewViewModel.swift; sourceTree = "<group>"; };
+		74ABC843308D090100E22417 /* HarvestRecordRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestRecordRowView.swift; sourceTree = "<group>"; };
+		74ABC844308D090100E22417 /* HarvestHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestHistoryView.swift; sourceTree = "<group>"; };
+		74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Components/FactoryIntakeCardView.swift; sourceTree = "<group>"; };
+		74ABC846308D090100E22417 /* ManagerOverviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerOverviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,8 +331,17 @@
 				74ABC7AA308D053100E22417 /* Security */,
 				74ABC7AD308D053100E22417 /* Network */,
 				74ABC7B1308D053100E22417 /* Utilities */,
+				74ABC847308D090100E22417 /* Notifications */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		74ABC847308D090100E22417 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC840308D090100E22417 /* NotificationManager.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		74ABC7A8308D053100E22417 /* DI */ = {
@@ -393,6 +416,8 @@
 				74ABC7BE308D053100E22417 /* AuthViewModel.swift */,
 				74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */,
 				74ABC820308D080100E22417 /* SupervisorSettingsViewModel.swift */,
+				74ABC841308D090100E22417 /* HarvestHistoryViewModel.swift */,
+				74ABC842308D090100E22417 /* ManagerOverviewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -404,8 +429,26 @@
 				74ABC7C1308D053100E22417 /* Auth */,
 				74ABC7C3308D053100E22417 /* Root */,
 				74ABC7C5308D053100E22417 /* Supervisor */,
+				74ABC848308D090100E22417 /* Manager */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		74ABC848308D090100E22417 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC846308D090100E22417 /* ManagerOverviewView.swift */,
+				74ABC849308D090100E22417 /* Components */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		74ABC849308D090100E22417 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		74ABC806308D070100E22417 /* Onboarding */ = {
@@ -440,6 +483,7 @@
 				74ABC7C6308D053100E22417 /* TodayTasksView.swift */,
 				74ABC7C7308D053100E22417 /* Components */,
 				74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */,
+				74ABC844308D090100E22417 /* HarvestHistoryView.swift */,
 				74ABC804308D070100E22417 /* SupervisorSettingsView.swift */,
 			);
 			path = Supervisor;
@@ -459,6 +503,7 @@
 				74ABC827308D080100E22417 /* FieldMapPlaceholderView.swift */,
 				74ABC828308D080100E22417 /* GeofenceArrivalBannerView.swift */,
 				74ABC829308D080100E22417 /* KpiSummaryRowView.swift */,
+				74ABC843308D090100E22417 /* HarvestRecordRowView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -659,6 +704,13 @@
 				74ABC839308D080100E22417 /* KpiSummaryRowView.swift in Sources */,
 				74ABC83A308D080100E22417 /* OnboardingSlide.swift in Sources */,
 				74ABC83B308D080100E22417 /* OnboardingSlideCardView.swift in Sources */,
+				74ABC850308D090100E22417 /* NotificationManager.swift in Sources */,
+				74ABC851308D090100E22417 /* HarvestHistoryViewModel.swift in Sources */,
+				74ABC852308D090100E22417 /* ManagerOverviewViewModel.swift in Sources */,
+				74ABC853308D090100E22417 /* HarvestRecordRowView.swift in Sources */,
+				74ABC854308D090100E22417 /* HarvestHistoryView.swift in Sources */,
+				74ABC855308D090100E22417 /* FactoryIntakeCardView.swift in Sources */,
+				74ABC856308D090100E22417 /* ManagerOverviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

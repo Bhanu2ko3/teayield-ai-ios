@@ -17,7 +17,11 @@ struct RootView: View {
             if !hasCompletedOnboarding {
                 OnboardingView(hasCompletedOnboarding: $hasCompletedOnboarding)
             } else if authService.isAuthenticated {
-                SupervisorMainTabView(container: container)
+                if authService.currentUser?.isManager == true {
+                    ManagerOverviewView(container: container)
+                } else {
+                    SupervisorMainTabView(container: container)
+                }
             } else {
                 LoginView(viewModel: AuthViewModel(authService: container.authService))
             }

@@ -35,4 +35,15 @@ struct HarvestRecord: Identifiable, Hashable, Codable {
     var formattedFineLeafPercentage: String {
         String(format: "%.1f%%", fineLeafRatio * 100.0)
     }
+
+    /// Evaluates fine leaf ratio classification against export auction standards.
+    var qualityGrade: String {
+        if fineLeafRatio >= AppConfiguration.fineLeafTargetRatio {
+            return "GRADE A FINE"
+        } else if fineLeafRatio >= 0.70 {
+            return "STANDARD"
+        } else {
+            return "COARSE"
+        }
+    }
 }

@@ -59,17 +59,27 @@ struct TodayTasksView: View {
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        selectedFieldForWeighing = viewModel.tasks.first?.fieldId
-                        showingWeighingSheet = true
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "plus.circle.fill")
-                            Text("Weigh Leaf")
-                                .font(.appCallout)
-                                .fontWeight(.semibold)
+                    HStack(spacing: 12) {
+                        NavigationLink {
+                            HarvestHistoryView(harvestRepository: container.harvestRepository)
+                        } label: {
+                            Image(systemName: "clock.arrow.circlepath")
+                                .font(.system(size: 15, weight: .semibold))
+                                .foregroundColor(AppTheme.emerald)
                         }
-                        .foregroundColor(AppTheme.emerald)
+
+                        Button {
+                            selectedFieldForWeighing = viewModel.tasks.first?.fieldId
+                            showingWeighingSheet = true
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: "plus.circle.fill")
+                                Text("Weigh Leaf")
+                                    .font(.appCallout)
+                                    .fontWeight(.semibold)
+                            }
+                            .foregroundColor(AppTheme.emerald)
+                        }
                     }
                 }
             }
