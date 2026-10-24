@@ -21,6 +21,6 @@ enum AppConfiguration {
     /// Timeout interval in seconds for network requests.
     static let timeoutInterval: TimeInterval = 15.0
 
-    /// Minimum fine leaf ratio required for premium export tea classification.
+    /// Minimum fine leaf ratio required for premium export tea classification (SLTB Benchmark).
     static let fineLeafTargetRatio: Double = 0.85
 }

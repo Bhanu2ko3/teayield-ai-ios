@@ -92,8 +92,8 @@ gantt
 
 ---
 
-### Component 2: MVP Core Implementation, External API & Live Viva [ IN PROGRESS ]
-- **Status:** [ IN PROGRESS ]
+### Component 2: MVP Core Implementation, External API & Live Viva [ COMPLETED ]
+- **Status:** [ COMPLETED ]
 - **Target Weightage:** 20% (Mandatory Component)
 - **Target Branch:** `feat/comp-2-mvp-core`
 - **Objective:** Construct the foundational native iOS application codebase implementing clean MVVM architecture, FastAPI REST connectivity, Core Data offline persistence, and biometric Face ID security.
@@ -104,8 +104,8 @@ gantt
   - **2.4 [ COMPLETED ] Core Data Relational Schema & Offline Persistence Stack:** Define Core Data managed object model (`TeaFieldEntity`, `NDVILogEntity`, `HarvestLogEntity` / `PluckingSessionEntity`) with `NSPersistentContainer` background context execution (`newBackgroundContext()`), in-memory preview support, and thread-safe repositories (`FieldRepository`, `HarvestRepository`, `NDVIRepository`).
   - **2.5 [ COMPLETED ] Store-and-Forward Offline Sync Engine:** Implement `OfflineSyncManager` and `NetworkMonitor` utilizing `NWPathMonitor` to detect network recovery, batch unsynced weighing records (`isSynced = false`), dispatch to `POST /api/v1/harvest/sync`, and reconcile server `synced_ids`.
   - **2.6 [ COMPLETED ] Biometric Estate Security (`LocalAuthentication` Face ID):** Implement `AuthService`, `KeychainHelper`, and `BiometricAuthManager` managing Face ID / Touch ID hardware authentication with passcode fallback and Secure Enclave Keychain token storage.
-  - **2.7 [ PENDING ] Supervisor Operational Views & ViewModels:** Build declarative SwiftUI views (`TodayTasksView`, `HarvestWeighingFormView`, `LoginView`) driven by `@MainActor` ViewModels (`TodayTasksViewModel`, `HarvestWeighingViewModel`, `AuthViewModel`).
-  - **2.8 [ PENDING ] Live Viva Defense Notes & Verification:** Prepare code ownership defense answers and verify live challenge modifications in `docs/teayield_ai_specs/07_Viva_Preparation_Guide.md`.
+  - **2.7 [ COMPLETED ] Supervisor Operational Views & ViewModels:** Build declarative SwiftUI views (`TodayTasksView`, `HarvestWeighingFormView`, `LoginView`) driven by `@MainActor` ViewModels (`TodayTasksViewModel`, `HarvestWeighingViewModel`, `AuthViewModel`).
+  - **2.8 [ COMPLETED ] Live Viva Defense Notes & Verification:** Prepare code ownership defense answers and verify live challenge modifications in `docs/teayield_ai_specs/07_Viva_Preparation_Guide.md`.
 - **Deliverables:**
   - Complete Swift source code for Component 2 compiling cleanly in Xcode.
   - Working `URLSession` REST networking communicating with FastAPI stubs.

@@ -43,8 +43,8 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
         }
 
         let tokenResponse = try await apiService.login(credentials: credentials)
-        let defaultEmpId = (tokenResponse.user.role == "estate_manager") ? "MGR-082" : "SUP-402"
-        let domainUser = tokenResponse.user.toDomain(employeeId: defaultEmpId)
+        let emailPrefix = credentials.email.components(separatedBy: "@").first?.uppercased() ?? "EMP"
+        let domainUser = tokenResponse.user.toDomain(employeeId: emailPrefix)
 
         // Securely persist credentials in the device Keychain
         _ = keychain.saveString(tokenResponse.accessToken, forKey: KeychainHelper.Key.accessToken)

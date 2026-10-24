@@ -54,7 +54,7 @@ struct UserProfileDTO: Codable {
     /// Converts the network DTO into an internal domain entity.
     func toDomain(employeeId: String = "EMP-001") -> UserProfile {
         let domainRole: UserRole = (role == "estate_manager") ? .estateManager : .fieldSupervisor
-        let defaultEstateId = estateId ?? UUID(uuidString: "3b241101-5231-4822-a982-f87c126d4001")!
+        let resolvedEstateId = estateId ?? UUID()
         
         return UserProfile(
             id: id,
@@ -62,7 +62,7 @@ struct UserProfileDTO: Codable {
             fullName: fullName,
             role: domainRole,
             employeeId: employeeId,
-            estateId: defaultEstateId
+            estateId: resolvedEstateId
         )
     }
 }
