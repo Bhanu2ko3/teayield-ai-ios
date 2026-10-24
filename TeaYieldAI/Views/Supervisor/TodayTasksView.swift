@@ -43,15 +43,14 @@ struct TodayTasksView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        container.authService.logout()
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "rectangle.portrait.and.arrow.right")
-                            Text("Logout")
-                                .font(.caption)
-                        }
-                        .foregroundColor(.secondary)
+                    HStack(spacing: 6) {
+                        Image(systemName: "leaf.fill")
+                            .font(.system(size: 12))
+                            .foregroundColor(AppTheme.emerald)
+                        Text("Pedro Estate")
+                            .font(.appCallout)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
                     }
                 }
 
@@ -63,9 +62,10 @@ struct TodayTasksView: View {
                         HStack(spacing: 4) {
                             Image(systemName: "plus.circle.fill")
                             Text("Weigh Leaf")
+                                .font(.appCallout)
                                 .fontWeight(.semibold)
                         }
-                        .foregroundColor(Color(red: 0.02, green: 0.59, blue: 0.41))
+                        .foregroundColor(AppTheme.emerald)
                     }
                 }
             }
@@ -86,16 +86,74 @@ struct TodayTasksView: View {
     // MARK: - Subviews
 
     private var syncStatusHeader: some View {
-        SyncStatusBarView(
-            unsyncedCount: viewModel.unsyncedRecordsCount,
-            isSyncing: viewModel.isSyncing,
-            isOffline: viewModel.isOffline,
-            statusMessage: viewModel.statusBannerMessage
-        ) {
-            Task {
-                await viewModel.triggerManualSync()
+        VStack(spacing: 12) {
+            SyncStatusBarView(
+                unsyncedCount: viewModel.unsyncedRecordsCount,
+                isSyncing: viewModel.isSyncing,
+                isOffline: viewModel.isOffline,
+                statusMessage: viewModel.statusBannerMessage
+            ) {
+                Task {
+                    await viewModel.triggerManualSync()
+                }
+            }
+
+            geofenceArrivalBanner
+        }
+    }
+
+    private var geofenceArrivalBanner: some View {
+        HStack(spacing: 12) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.emerald.opacity(0.15))
+                    .frame(width: 42, height: 42)
+
+                Image(systemName: "location.fill")
+                    .foregroundColor(AppTheme.emerald)
+                    .font(.system(size: 18))
+            }
+
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 6) {
+                    Circle()
+                        .fill(AppTheme.emerald)
+                        .frame(width: 6, height: 6)
+                    Text("LIVE GEOFENCE ARRIVAL DETECTED")
+                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.emerald)
+                }
+
+                Text(viewModel.tasks.first?.fieldName ?? "Upper Division Block A")
+                    .font(.appHeadline)
+                    .foregroundColor(.primary)
+
+                Text("GPS Accuracy ±3.2m • Shift 07:30 - 16:30")
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer()
+
+            Button {
+                selectedFieldForWeighing = viewModel.tasks.first?.fieldId
+                showingWeighingSheet = true
+            } label: {
+                HStack(spacing: 4) {
+                    Image(systemName: "scalemass.fill")
+                        .font(.system(size: 10))
+                    Text("Weigh")
+                        .font(.appBadge)
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 7)
+                .background(AppTheme.emerald)
+                .cornerRadius(AppTheme.radiusSmall)
             }
         }
+        .padding(14)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 
     private var kpiSummaryRow: some View {
@@ -111,7 +169,7 @@ struct TodayTasksView: View {
                 title: "Harvested",
                 value: String(format: "%.0f kg", viewModel.totalHarvestedKg),
                 icon: "scalemass.fill",
-                tintColor: Color(red: 0.02, green: 0.59, blue: 0.41)
+                tintColor: AppTheme.emerald
             )
 
             kpiCard(
@@ -142,9 +200,7 @@ struct TodayTasksView: View {
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(uiColor: .secondarySystemGroupedBackground))
-        .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
+        .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
     }
 
     private var taskListSection: some View {

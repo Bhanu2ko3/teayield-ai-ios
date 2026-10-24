@@ -54,6 +54,11 @@
 		74ABC7F6308D053200E22417 /* TaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C9308D053100E22417 /* TaskCardView.swift */; };
 		74ABC7F7308D053200E22417 /* HarvestWeighingFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */; };
 		74ABC7F8308D053200E22417 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7CC308D053100E22417 /* MockData.swift */; };
+		74ABC811308D070100E22417 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC801308D070100E22417 /* AppTheme.swift */; };
+		74ABC812308D070100E22417 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC802308D070100E22417 /* OnboardingView.swift */; };
+		74ABC813308D070100E22417 /* SupervisorMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC803308D070100E22417 /* SupervisorMainTabView.swift */; };
+		74ABC814308D070100E22417 /* SupervisorSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC804308D070100E22417 /* SupervisorSettingsView.swift */; };
+		74ABC815308D070100E22417 /* PlaceholderViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC805308D070100E22417 /* PlaceholderViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +129,11 @@
 		74ABC7C9308D053100E22417 /* TaskCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCardView.swift; sourceTree = "<group>"; };
 		74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestWeighingFormView.swift; sourceTree = "<group>"; };
 		74ABC7CC308D053100E22417 /* MockData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		74ABC801308D070100E22417 /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		74ABC802308D070100E22417 /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		74ABC803308D070100E22417 /* SupervisorMainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorMainTabView.swift; sourceTree = "<group>"; };
+		74ABC804308D070100E22417 /* SupervisorSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorSettingsView.swift; sourceTree = "<group>"; };
+		74ABC805308D070100E22417 /* PlaceholderViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -319,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				74ABC7B2308D053100E22417 /* AppConfiguration.swift */,
+				74ABC801308D070100E22417 /* AppTheme.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -365,11 +376,20 @@
 		74ABC7C0308D053100E22417 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC806308D070100E22417 /* Onboarding */,
 				74ABC7C1308D053100E22417 /* Auth */,
 				74ABC7C3308D053100E22417 /* Root */,
 				74ABC7C5308D053100E22417 /* Supervisor */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		74ABC806308D070100E22417 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC802308D070100E22417 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		74ABC7C1308D053100E22417 /* Auth */ = {
@@ -391,9 +411,11 @@
 		74ABC7C5308D053100E22417 /* Supervisor */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC803308D070100E22417 /* SupervisorMainTabView.swift */,
 				74ABC7C6308D053100E22417 /* TodayTasksView.swift */,
 				74ABC7C7308D053100E22417 /* Components */,
 				74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */,
+				74ABC804308D070100E22417 /* SupervisorSettingsView.swift */,
 			);
 			path = Supervisor;
 			sourceTree = "<group>";
@@ -403,6 +425,7 @@
 			children = (
 				74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */,
 				74ABC7C9308D053100E22417 /* TaskCardView.swift */,
+				74ABC805308D070100E22417 /* PlaceholderViews.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -587,6 +610,11 @@
 				74ABC7F7308D053200E22417 /* HarvestWeighingFormView.swift in Sources */,
 				74ABC7D5308D053200E22417 /* NDVILogEntity.swift in Sources */,
 				74ABC7EF308D053200E22417 /* TodayTasksViewModel.swift in Sources */,
+				74ABC811308D070100E22417 /* AppTheme.swift in Sources */,
+				74ABC812308D070100E22417 /* OnboardingView.swift in Sources */,
+				74ABC813308D070100E22417 /* SupervisorMainTabView.swift in Sources */,
+				74ABC814308D070100E22417 /* SupervisorSettingsView.swift in Sources */,
+				74ABC815308D070100E22417 /* PlaceholderViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
