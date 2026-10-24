@@ -6,6 +6,7 @@ protocol AuthServiceProtocol: AnyObject {
     var currentUser: UserProfile? { get }
     var isAuthenticated: Bool { get }
     var isBiometricAvailable: Bool { get }
+    var hasEnrolledBiometricCredentials: Bool { get }
     var biometricType: BiometryType { get }
 
     /// Authenticates with email and password credentials via the remote API.
