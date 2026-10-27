@@ -164,6 +164,7 @@ final class TodayTasksViewModel: ObservableObject {
             } else {
                 matchedField = TeaField(
                     id: task.fieldId,
+                    estateId: authService.currentUser?.estateId ?? UUID(),
                     name: task.fieldName,
                     blockCode: task.blockCode,
                     acreage: 4.2,

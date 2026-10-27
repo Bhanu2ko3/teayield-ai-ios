@@ -2,6 +2,7 @@ import SwiftUI
 
 /// Primary navigation shell for field supervisors providing the native 4-tab bottom bar.
 /// Strictly conforms to Figma Screen 04, 06, 08, 09 specifications.
+@MainActor
 struct SupervisorMainTabView: View {
 
     private let container: AppContainerProtocol
@@ -78,23 +79,17 @@ struct SupervisorMainTabView: View {
 
     @ViewBuilder
     private var weighingSheet: some View {
-        let viewModel = HarvestWeighingViewModel(
-            harvestRepository: container.harvestRepository,
-            fieldRepository: container.fieldRepository,
-            syncManager: container.syncManager,
-            authService: container.authService,
-            apiService: container.apiService
+        HarvestWeighingFormView(
+            viewModel: HarvestWeighingViewModel(
+                harvestRepository: container.harvestRepository,
+                fieldRepository: container.fieldRepository,
+                syncManager: container.syncManager,
+                authService: container.authService,
+                apiService: container.apiService,
+                initialFieldId: preselectedFieldId,
+                initialFineLeafRatio: scannedFineLeafRatio
+            )
         )
-        let _ = {
-            if let ratio = scannedFineLeafRatio {
-                viewModel.fineLeafRatio = ratio
-            }
-            if let fieldId = preselectedFieldId {
-                viewModel.selectedFieldId = fieldId
-            }
-        }()
-
-        HarvestWeighingFormView(viewModel: viewModel)
     }
 }
 

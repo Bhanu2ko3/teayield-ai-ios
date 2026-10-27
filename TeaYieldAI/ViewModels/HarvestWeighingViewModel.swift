@@ -60,7 +60,8 @@ final class HarvestWeighingViewModel: ObservableObject {
         syncManager: SyncManagerProtocol,
         authService: AuthServiceProtocol,
         apiService: APIServiceProtocol,
-        initialFieldId: UUID? = nil
+        initialFieldId: UUID? = nil,
+        initialFineLeafRatio: Double? = nil
     ) {
         self.harvestRepository = harvestRepository
         self.fieldRepository = fieldRepository
@@ -68,6 +69,9 @@ final class HarvestWeighingViewModel: ObservableObject {
         self.authService = authService
         self.apiService = apiService
         self.selectedFieldId = initialFieldId
+        if let ratio = initialFineLeafRatio {
+            self.fineLeafRatio = ratio
+        }
 
         Task {
             await loadAvailableFields()

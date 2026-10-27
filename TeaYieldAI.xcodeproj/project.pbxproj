@@ -150,6 +150,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldAnalyticsItem.swift; sourceTree = "<group>"; };
+		74ABCA03308D0E0000E22417 /* HapticFeedback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
+		74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldComparisonChartView.swift; sourceTree = "<group>"; };
+		74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVITrendChartView.swift; sourceTree = "<group>"; };
+		74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactoryCapacityChartView.swift; sourceTree = "<group>"; };
+		74ABCA0B308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerAnalyticsDashboardView.swift; sourceTree = "<group>"; };
+		74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerExecutiveSuiteView.swift; sourceTree = "<group>"; };
+		74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldAnalyticsTests.swift; sourceTree = "<group>"; };
 		74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModelTests.swift; sourceTree = "<group>"; };
 		74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestHistoryViewModelTests.swift; sourceTree = "<group>"; };
 		74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerOverviewViewModelTests.swift; sourceTree = "<group>"; };

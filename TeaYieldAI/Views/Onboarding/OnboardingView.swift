@@ -169,7 +169,7 @@ struct OnboardingView: View {
     // MARK: - Navigation Logic
 
     private func nextSlideOrFinish() {
-        triggerHaptic()
+        HapticFeedback.lightImpact()
         if currentSlide < slides.count - 1 {
             withAnimation(.easeInOut(duration: 0.3)) {
                 currentSlide += 1
@@ -177,6 +177,10 @@ struct OnboardingView: View {
         } else {
             completeOnboarding()
         }
+    }
+
+    private func triggerHaptic() {
+        HapticFeedback.lightImpact()
     }
 
     private func completeOnboarding() {
