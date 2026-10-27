@@ -51,7 +51,6 @@ struct YieldComparisonChartView: View {
                 )
                 .foregroundStyle(Color.blue.opacity(0.85))
                 .position(by: .value("Type", "Predicted"))
-                .cornerRadius(4)
 
                 BarMark(
                     x: .value("Day", item.dayName),
@@ -59,7 +58,6 @@ struct YieldComparisonChartView: View {
                 )
                 .foregroundStyle(AppTheme.emerald)
                 .position(by: .value("Type", "Actual"))
-                .cornerRadius(4)
             }
 
             RuleMark(y: .value("TRI Target", 750.0))
@@ -174,7 +172,10 @@ struct YieldComparisonChartView: View {
     }
 
     private func handleChartTap(at location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) {
-        guard let xValue: String = proxy.value(atX: location.x) else { return }
+        let plotFrame = geometry[proxy.plotAreaFrame]
+        guard plotFrame.contains(location) else { return }
+        let plotX = location.x - plotFrame.origin.x
+        guard let xValue: String = proxy.value(atX: plotX) else { return }
         if let matched = data.first(where: { $0.dayName == xValue }) {
             withAnimation(.easeInOut(duration: 0.2)) {
                 if selectedDay?.id == matched.id {

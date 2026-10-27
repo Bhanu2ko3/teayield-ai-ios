@@ -15,6 +15,20 @@ struct FieldMapView: View {
         self.onRecordWeighingTap = onRecordWeighingTap
     }
 
+    init(
+        fieldRepository: FieldRepositoryProtocol,
+        locationService: LocationServiceProtocol,
+        onRecordWeighingTap: ((TeaField) -> Void)? = nil
+    ) {
+        self._viewModel = StateObject(
+            wrappedValue: FieldMapViewModel(
+                fieldRepository: fieldRepository,
+                locationService: locationService
+            )
+        )
+        self.onRecordWeighingTap = onRecordWeighingTap
+    }
+
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {

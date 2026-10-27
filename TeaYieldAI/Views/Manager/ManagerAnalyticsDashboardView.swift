@@ -5,50 +5,18 @@ struct ManagerAnalyticsDashboardView: View {
 
     @ObservedObject var viewModel: ManagerOverviewViewModel
 
-    // MARK: - Sample Weekly Telemetry Generators
-
-    private var weeklyYieldData: [DailyYieldComparison] {
-        let calendar = Calendar.current
-        let today = Date()
-        let dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-        let predictedTargets = [720.0, 810.0, 780.0, 850.0, 920.0, 680.0, 450.0]
-        let actualHarvests = [745.0, 790.0, 815.0, 840.0, 955.0, 670.0, 0.0]
-
-        return (0..<7).map { index in
-            let date = calendar.date(byAdding: .day, value: index - 6, to: today) ?? today
-            return DailyYieldComparison(
-                dayName: dayNames[index],
-                date: date,
-                predictedYieldKg: predictedTargets[index],
-                actualHarvestedKg: actualHarvests[index]
-            )
-        }
-    }
-
-    private var ndviTrendData: [NDVITrendPoint] {
-        let scores = [0.62, 0.65, 0.69, 0.72, 0.74, 0.78, 0.81, 0.83]
-        return scores.enumerated().map { index, score in
-            NDVITrendPoint(
-                weekLabel: "Wk \(index + 1)",
-                weekIndex: index + 1,
-                ndviScore: score,
-                targetThreshold: 0.75
-            )
-        }
-    }
-
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 kpiSummaryRow
-                YieldComparisonChartView(data: weeklyYieldData)
+                YieldComparisonChartView(data: viewModel.weeklyYieldComparisons)
                 FactoryCapacityChartView(
-                    currentIntakeKg: viewModel.totalHarvestTodayKg > 0 ? viewModel.totalHarvestTodayKg : 3250.0,
+                    currentIntakeKg: viewModel.totalHarvestTodayKg,
                     capacityCapKg: viewModel.factoryIntakeCapKg,
-                    utilizationRatio: viewModel.factoryUtilizationRatio > 0 ? viewModel.factoryUtilizationRatio : 0.65,
-                    remainingCapacityKg: viewModel.remainingCapacityKg > 0 ? viewModel.remainingCapacityKg : 1750.0
+                    utilizationRatio: viewModel.factoryUtilizationRatio,
+                    remainingCapacityKg: viewModel.remainingCapacityKg
                 )
-                NDVITrendChartView(data: ndviTrendData)
+                NDVITrendChartView(data: viewModel.ndviTrendData)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 16)
@@ -64,15 +32,15 @@ struct ManagerAnalyticsDashboardView: View {
         HStack(spacing: 12) {
             analyticsKpiCard(
                 title: "Weekly Intake",
-                value: "4,815 kg",
-                subtext: "+4.2% vs target",
+                value: String(format: "%.0f kg", viewModel.weeklyTotalHarvestKg),
+                subtext: "TRI Estate Cycle",
                 icon: "scalemass.fill",
                 tint: AppTheme.emerald
             )
 
             analyticsKpiCard(
                 title: "AI Forecast Accuracy",
-                value: "96.4%",
+                value: String(format: "%.1f%%", viewModel.forecastAccuracyPercentage),
                 subtext: "LSTM Deep Engine",
                 icon: "bolt.badge.clock.fill",
                 tint: .blue
@@ -80,7 +48,7 @@ struct ManagerAnalyticsDashboardView: View {
 
             analyticsKpiCard(
                 title: "Avg Fine Leaf",
-                value: String(format: "%.1f%%", viewModel.averageFineLeafPercentage > 0 ? viewModel.averageFineLeafPercentage : 88.5),
+                value: String(format: "%.1f%%", viewModel.averageFineLeafPercentage),
                 subtext: "Auction Benchmark 85%",
                 icon: "leaf.fill",
                 tint: AppTheme.emerald

@@ -73,10 +73,10 @@ struct FactoryCapacityChartView: View {
     private var stackedBarChart: some View {
         Chart(segments) { segment in
             BarMark(
-                x: .value("Weight", segment.weightKg)
+                x: .value("Weight", segment.weightKg),
+                y: .value("Metric", "Withering Line")
             )
             .foregroundStyle(segment.color)
-            .cornerRadius(4)
         }
         .chartXScale(domain: 0...max(capacityCapKg, currentIntakeKg))
         .chartXAxis {

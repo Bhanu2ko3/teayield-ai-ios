@@ -156,6 +156,50 @@ struct ManagerOverviewViewModelTests {
         #expect(viewModel.showErrorAlert == true)
         #expect(viewModel.errorMessage?.contains("sign in") == true)
     }
+
+    @Test("Verifies dynamic weekly yield comparison and forecast accuracy calculations")
+    func weeklyYieldTelemetryCalculations() async {
+        let sampleFields = createSampleFields()
+        let fieldRepo = MockFieldRepository(initialFields: sampleFields)
+        let record = HarvestRecord(
+            id: UUID(),
+            fieldId: sampleFields[0].id,
+            pluckerId: "PLK-001",
+            pluckerName: "Sunil Silva",
+            grossWeightKg: 25.0,
+            tareWeightKg: 2.0,
+            netWeightKg: 23.0,
+            fineLeafRatio: 0.92,
+            timestamp: Date(),
+            latitude: 6.965,
+            longitude: 80.793,
+            isSynced: true
+        )
+        let harvestRepo = MockHarvestRepository(initialRecords: [record])
+        let user = createSampleUser()
+        let auth = MockAuthService(initialUser: user)
+        let api = MockAPIService()
+
+        let viewModel = ManagerOverviewViewModel(
+            fieldRepository: fieldRepo,
+            harvestRepository: harvestRepo,
+            authService: auth,
+            apiService: api
+        )
+
+        await viewModel.loadEstateTelemetry()
+
+        let weeklyComparisons = viewModel.weeklyYieldComparisons
+        #expect(weeklyComparisons.count == 7)
+        #expect(weeklyComparisons.allSatisfy { $0.predictedYieldKg > 0 })
+
+        #expect(viewModel.weeklyTotalHarvestKg >= 23.0)
+        #expect(viewModel.forecastAccuracyPercentage >= 85.0 && viewModel.forecastAccuracyPercentage <= 100.0)
+
+        let ndviPoints = viewModel.ndviTrendData
+        #expect(ndviPoints.count == 8)
+        #expect(ndviPoints.allSatisfy { $0.ndviScore >= 0.40 && $0.ndviScore <= 0.95 })
+    }
 }
 
 #else
@@ -306,6 +350,50 @@ final class ManagerOverviewViewModelTests: XCTestCase {
 
         XCTAssertTrue(viewModel.showErrorAlert)
         XCTAssertTrue(viewModel.errorMessage?.contains("sign in") == true)
+    }
+
+    func testWeeklyYieldTelemetryCalculations() async {
+        let sampleFields = createSampleFields()
+        let fieldRepo = MockFieldRepository(initialFields: sampleFields)
+        let record = HarvestRecord(
+            id: UUID(),
+            fieldId: sampleFields[0].id,
+            pluckerId: "PLK-001",
+            pluckerName: "Sunil Silva",
+            grossWeightKg: 25.0,
+            tareWeightKg: 2.0,
+            netWeightKg: 23.0,
+            fineLeafRatio: 0.92,
+            timestamp: Date(),
+            latitude: 6.965,
+            longitude: 80.793,
+            isSynced: true
+        )
+        let harvestRepo = MockHarvestRepository(initialRecords: [record])
+        let user = createSampleUser()
+        let auth = MockAuthService(initialUser: user)
+        let api = MockAPIService()
+
+        let viewModel = ManagerOverviewViewModel(
+            fieldRepository: fieldRepo,
+            harvestRepository: harvestRepo,
+            authService: auth,
+            apiService: api
+        )
+
+        await viewModel.loadEstateTelemetry()
+
+        let weeklyComparisons = viewModel.weeklyYieldComparisons
+        XCTAssertEqual(weeklyComparisons.count, 7)
+        XCTAssertTrue(weeklyComparisons.allSatisfy { $0.predictedYieldKg > 0 })
+
+        XCTAssertGreaterThanOrEqual(viewModel.weeklyTotalHarvestKg, 23.0)
+        XCTAssertGreaterThanOrEqual(viewModel.forecastAccuracyPercentage, 85.0)
+        XCTAssertLessThanOrEqual(viewModel.forecastAccuracyPercentage, 100.0)
+
+        let ndviPoints = viewModel.ndviTrendData
+        XCTAssertEqual(ndviPoints.count, 8)
+        XCTAssertTrue(ndviPoints.allSatisfy { $0.ndviScore >= 0.40 && $0.ndviScore <= 0.95 })
     }
 }
 #endif

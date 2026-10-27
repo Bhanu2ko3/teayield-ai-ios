@@ -192,7 +192,7 @@ struct ManagerExecutiveSuiteView: View {
 
                     kpiMetricCard(
                         title: "Export Quality",
-                        value: String(format: "%.1f%%", viewModel.averageFineLeafPercentage > 0 ? viewModel.averageFineLeafPercentage : 88.5),
+                        value: String(format: "%.1f%%", viewModel.averageFineLeafPercentage),
                         subtext: "TRI Standard (85%)",
                         icon: "rosette",
                         color: AppTheme.emerald
@@ -203,10 +203,10 @@ struct ManagerExecutiveSuiteView: View {
                 HStack(alignment: .top, spacing: 20) {
                     VStack(spacing: 20) {
                         FactoryCapacityChartView(
-                            currentIntakeKg: viewModel.totalHarvestTodayKg > 0 ? viewModel.totalHarvestTodayKg : 3150.0,
+                            currentIntakeKg: viewModel.totalHarvestTodayKg,
                             capacityCapKg: viewModel.factoryIntakeCapKg,
-                            utilizationRatio: viewModel.factoryUtilizationRatio > 0 ? viewModel.factoryUtilizationRatio : 0.63,
-                            remainingCapacityKg: viewModel.remainingCapacityKg > 0 ? viewModel.remainingCapacityKg : 1850.0
+                            utilizationRatio: viewModel.factoryUtilizationRatio,
+                            remainingCapacityKg: viewModel.remainingCapacityKg
                         )
 
                         // Quick division readiness summary
@@ -215,7 +215,7 @@ struct ManagerExecutiveSuiteView: View {
                     .frame(maxWidth: .infinity)
 
                     VStack(spacing: 20) {
-                        YieldComparisonChartView(data: sampleWeeklyYield)
+                        YieldComparisonChartView(data: viewModel.weeklyYieldComparisons)
                     }
                     .frame(maxWidth: .infinity)
                 }
@@ -365,21 +365,6 @@ struct ManagerExecutiveSuiteView: View {
         case .ready: return AppTheme.emerald
         case .growing: return AppTheme.amber
         case .resting: return AppTheme.crimson
-        }
-    }
-
-    private var sampleWeeklyYield: [DailyYieldComparison] {
-        let dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-        let predictedTargets = [720.0, 810.0, 780.0, 850.0, 920.0, 680.0, 450.0]
-        let actualHarvests = [745.0, 790.0, 815.0, 840.0, 955.0, 670.0, 0.0]
-
-        return (0..<7).map { index in
-            DailyYieldComparison(
-                dayName: dayNames[index],
-                date: Date().addingTimeInterval(Double(index - 6) * 86400),
-                predictedYieldKg: predictedTargets[index],
-                actualHarvestedKg: actualHarvests[index]
-            )
         }
     }
 }

@@ -162,7 +162,10 @@ struct NDVITrendChartView: View {
     }
 
     private func handleChartTap(at location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) {
-        guard let xValue: String = proxy.value(atX: location.x) else { return }
+        let plotFrame = geometry[proxy.plotAreaFrame]
+        guard plotFrame.contains(location) else { return }
+        let plotX = location.x - plotFrame.origin.x
+        guard let xValue: String = proxy.value(atX: plotX) else { return }
         if let matched = data.first(where: { $0.weekLabel == xValue }) {
             withAnimation(.easeInOut(duration: 0.2)) {
                 if selectedPoint?.id == matched.id {
