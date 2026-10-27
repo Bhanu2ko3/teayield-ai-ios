@@ -26,8 +26,8 @@ The TeaYield AI platform operates on an Agile API-First dual-track strategy. The
 |                                                                                                   |
 | teayield-ai-ios (Client & iOS Coursework):                                                        |
 | • Component 1: Proposal, HIG Design System & Figma Prototype (10%)    [ COMPLETED ]                 |
-| • Component 2: MVP Core Implementation, Offline & Viva (20%)          [ IN PROGRESS ]               |
-| • Component 3: Advanced iOS SDK - On-Device Vision & Geofence (20%)   [ READY TO EXECUTE ]          |
+| • Component 2: MVP Core Implementation, Offline & Viva (20%)          [ COMPLETED ]                 |
+| • Component 3: Advanced iOS SDK - On-Device Vision & Geofence (20%)   [ IN PROGRESS ]               |
 | • Component 4: Swift Testing, VoiceOver & 4-Page Report (15%)         [ PENDING ]                   |
 | • Component 5: Above & Beyond - iPad SplitView & Architecture (25%)   [ PENDING ]                   |
 +───────────────────────────────────────────────────────────────────────────────────────────────────+
