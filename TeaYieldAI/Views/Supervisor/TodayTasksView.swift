@@ -16,7 +16,8 @@ struct TodayTasksView: View {
             syncManager: container.syncManager,
             fieldRepository: container.fieldRepository,
             harvestRepository: container.harvestRepository,
-            authService: container.authService
+            authService: container.authService,
+            locationService: container.locationService
         ))
     }
 
@@ -114,7 +115,15 @@ struct TodayTasksView: View {
                 }
             }
 
-            if let activeTask = viewModel.tasks.first {
+            if let activeField = viewModel.activeGeofencedField {
+                GeofenceArrivalBannerView(
+                    fieldName: activeField.name,
+                    shiftDate: Date()
+                ) {
+                    selectedFieldForWeighing = activeField.id
+                    showingWeighingSheet = true
+                }
+            } else if let activeTask = viewModel.tasks.first {
                 GeofenceArrivalBannerView(
                     fieldName: activeTask.fieldName,
                     shiftDate: activeTask.shiftDate
@@ -158,6 +167,20 @@ struct TodayTasksView: View {
                     TaskCardView(task: task) {
                         selectedFieldForWeighing = task.fieldId
                         showingWeighingSheet = true
+                    }
+                    .contextMenu {
+                        Button {
+                            viewModel.simulateArrival(at: task)
+                        } label: {
+                            Label("Simulate Geofence Arrival", systemImage: "location.fill")
+                        }
+
+                        Button {
+                            selectedFieldForWeighing = task.fieldId
+                            showingWeighingSheet = true
+                        } label: {
+                            Label("Weigh Green Leaf", systemImage: "scalemass.fill")
+                        }
                     }
                 }
             }

@@ -44,7 +44,7 @@ Component 3 is a mandatory assessment component carrying **20% overall coursewor
 | **3** | **Real-Time Viewfinder HUD** | [COMPLETED] | Declarative SwiftUI camera overlay (`LeafScannerView.swift`, `ScannerHudOverlayView.swift`) displaying fine leaf percentage gauge, Grade A export benchmark indicator (85%), and direct handoff to harvest weighing. |
 | **4** | **PhotosUI Library Picker** | [COMPLETED] | Native `PhotosPicker` allowing supervisors to inspect high-resolution batch photos from device storage alongside the live camera feed inside the QEMU simulator or physical hardware. |
 | **5** | **MapKit Spatial GIS Polygons** | [COMPLETED] | Vector polygon rendering (`InteractiveMapView.swift`, `MKPolygonRenderer`) reading field GeoJSON coordinates from Core Data, dynamically color-coded by vegetative NDVI canopy health with interactive detail sheet. |
-| **6** | **Low-Power Geofencing Engine** | [PENDING SERVICE] | `CoreLocation` boundary monitoring (`CLCircularRegion`) tracking supervisor proximity to scheduled fields and triggering local arrival notifications (`UNNotification`). |
+| **6** | **Low-Power Geofencing Engine** | [COMPLETED] | `CoreLocation` boundary monitoring (`CLCircularRegion`) tracking supervisor proximity to scheduled fields and triggering local arrival notifications (`UNNotification`). |
 
 ---
 

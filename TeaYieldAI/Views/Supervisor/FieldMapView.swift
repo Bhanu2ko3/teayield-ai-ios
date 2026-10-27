@@ -40,8 +40,12 @@ struct FieldMapView: View {
                 if let selected = viewModel.selectedField {
                     FieldDetailBottomSheetView(
                         field: selected,
+                        isCurrentlyGeofenced: viewModel.activeGeofencedField?.id == selected.id,
                         onWeighTap: { field in
                             onRecordWeighingTap?(field)
+                        },
+                        onSimulateGeofenceTap: { field in
+                            viewModel.simulateGeofenceArrival(at: field)
                         },
                         onCloseTap: {
                             viewModel.selectedField = nil

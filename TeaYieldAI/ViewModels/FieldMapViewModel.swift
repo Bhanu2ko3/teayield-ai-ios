@@ -17,6 +17,8 @@ final class FieldMapViewModel: ObservableObject {
     @Published var showingFieldDetail: Bool = false
     @Published var errorMessage: String? = nil
 
+    @Published var activeGeofencedField: TeaField? = nil
+
     @Published var cameraRegion: MKCoordinateRegion = MKCoordinateRegion(
         center: MockData.nuwaraEliyaEstateCentroid,
         span: MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)
@@ -25,6 +27,7 @@ final class FieldMapViewModel: ObservableObject {
     // MARK: - Dependencies
 
     private let fieldRepository: FieldRepositoryProtocol
+    let locationService: LocationServiceProtocol
 
     // MARK: - Computed Properties
 
@@ -47,8 +50,36 @@ final class FieldMapViewModel: ObservableObject {
 
     // MARK: - Initialization
 
-    init(fieldRepository: FieldRepositoryProtocol) {
+    init(
+        fieldRepository: FieldRepositoryProtocol,
+        locationService: LocationServiceProtocol = LocationService()
+    ) {
         self.fieldRepository = fieldRepository
+        self.locationService = locationService
+        setupGeofenceObservers()
+    }
+
+    private func setupGeofenceObservers() {
+        NotificationCenter.default.addObserver(
+            forName: .teaFieldGeofenceEntered,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            self?.activeGeofencedField = notification.object as? TeaField
+        }
+
+        NotificationCenter.default.addObserver(
+            forName: .teaFieldGeofenceExited,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.activeGeofencedField = nil
+        }
+    }
+
+    /// Simulates arriving at a specific field boundary for live demonstration during the Viva exam.
+    func simulateGeofenceArrival(at field: TeaField) {
+        locationService.simulateArrival(at: field)
     }
 
     // MARK: - Field Data Loading

@@ -4,7 +4,9 @@ import SwiftUI
 struct FieldDetailBottomSheetView: View {
 
     let field: TeaField
+    var isCurrentlyGeofenced: Bool = false
     var onWeighTap: ((TeaField) -> Void)?
+    var onSimulateGeofenceTap: ((TeaField) -> Void)?
     var onCloseTap: (() -> Void)?
 
     var body: some View {
@@ -30,6 +32,25 @@ struct FieldDetailBottomSheetView: View {
                 Spacer()
 
                 statusBadge
+            }
+
+            if isCurrentlyGeofenced {
+                HStack(spacing: 6) {
+                    Circle()
+                        .fill(AppTheme.emerald)
+                        .frame(width: 8, height: 8)
+                    Text("SUPERVISOR INSIDE FIELD GEOFENCE")
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.emerald)
+                    Spacer()
+                    Image(systemName: "location.fill")
+                        .font(.system(size: 12))
+                        .foregroundColor(AppTheme.emerald)
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(AppTheme.emerald.opacity(0.12))
+                .cornerRadius(AppTheme.radiusSmall)
             }
 
             Divider()
@@ -97,6 +118,23 @@ struct FieldDetailBottomSheetView: View {
                     .cornerRadius(AppTheme.radiusMedium)
                 }
                 .padding(.top, 4)
+            }
+
+            // Secondary Viva Simulation Button: "Simulate Geofence Arrival"
+            if let onSimulateGeofenceTap = onSimulateGeofenceTap {
+                Button(action: { onSimulateGeofenceTap(field) }) {
+                    HStack(spacing: 6) {
+                        Image(systemName: isCurrentlyGeofenced ? "checkmark.circle.fill" : "location.radiowaves.left.and.right")
+                            .font(.system(size: 13))
+                        Text(isCurrentlyGeofenced ? "Geofence Active (Boundary Triggered)" : "Simulate Geofence Arrival (Viva Test)")
+                            .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    }
+                    .foregroundColor(isCurrentlyGeofenced ? AppTheme.emerald : .secondary)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 38)
+                    .background(Color.secondary.opacity(0.08))
+                    .cornerRadius(AppTheme.radiusSmall)
+                }
             }
         }
         .padding(.horizontal, 20)

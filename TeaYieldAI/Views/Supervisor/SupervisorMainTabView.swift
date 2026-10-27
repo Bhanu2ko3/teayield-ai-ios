@@ -46,7 +46,10 @@ struct SupervisorMainTabView: View {
             .tag(Tab.scanner)
 
             FieldMapView(
-                viewModel: FieldMapViewModel(fieldRepository: container.fieldRepository),
+                viewModel: FieldMapViewModel(
+                    fieldRepository: container.fieldRepository,
+                    locationService: container.locationService
+                ),
                 onRecordWeighingTap: { field in
                     self.preselectedFieldId = field.id
                     self.scannedFineLeafRatio = nil

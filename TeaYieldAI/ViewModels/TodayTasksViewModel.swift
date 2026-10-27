@@ -47,11 +47,14 @@ final class TodayTasksViewModel: ObservableObject {
         tasks.first?.fieldName ?? "Assigned Field"
     }
 
+    @Published var activeGeofencedField: TeaField? = nil
+
     private let apiService: APIServiceProtocol
     private let syncManager: SyncManagerProtocol
     private let fieldRepository: FieldRepositoryProtocol
     private let harvestRepository: HarvestRepositoryProtocol
     private let authService: AuthServiceProtocol
+    let locationService: LocationServiceProtocol
     private let tasksCacheKey = "teayield.cache.today_tasks"
     private var hasDispatchedGeofenceNotification: Bool = false
 
@@ -60,16 +63,38 @@ final class TodayTasksViewModel: ObservableObject {
         syncManager: SyncManagerProtocol,
         fieldRepository: FieldRepositoryProtocol,
         harvestRepository: HarvestRepositoryProtocol,
-        authService: AuthServiceProtocol
+        authService: AuthServiceProtocol,
+        locationService: LocationServiceProtocol = LocationService()
     ) {
         self.apiService = apiService
         self.syncManager = syncManager
         self.fieldRepository = fieldRepository
         self.harvestRepository = harvestRepository
         self.authService = authService
+        self.locationService = locationService
+
+        setupGeofenceObservers()
 
         Task {
             await refreshPendingSyncCount()
+        }
+    }
+
+    private func setupGeofenceObservers() {
+        NotificationCenter.default.addObserver(
+            forName: .teaFieldGeofenceEntered,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            self?.activeGeofencedField = notification.object as? TeaField
+        }
+
+        NotificationCenter.default.addObserver(
+            forName: .teaFieldGeofenceExited,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.activeGeofencedField = nil
         }
     }
 
@@ -123,10 +148,34 @@ final class TodayTasksViewModel: ObservableObject {
 
         if !hasDispatchedGeofenceNotification, let active = tasks.first {
             hasDispatchedGeofenceNotification = true
-            NotificationManager.shared.sendGeofenceArrivalAlert(fieldName: active.fieldName)
+            Task { @MainActor in
+                NotificationManager.shared.sendGeofenceArrivalAlert(fieldName: active.fieldName)
+            }
+        }
+
+        // Start hardware geofence monitoring for harvest-ready field boundaries
+        if let cached = try? await fieldRepository.fetchCachedFields(), !cached.isEmpty {
+            locationService.startMonitoringFields(cached)
         }
 
         await refreshPendingSyncCount()
+    }
+
+    /// Simulates arriving at a specific assigned field boundary for live demonstration during the Viva exam.
+    func simulateArrival(at task: PluckingTask) {
+        let simulatedField = TeaField(
+            id: task.fieldId,
+            name: task.fieldName,
+            blockCode: task.blockCode,
+            acreage: 4.5,
+            currentNDVI: 0.78,
+            status: .ready,
+            centroidLatitude: task.centroidLatitude,
+            centroidLongitude: task.centroidLongitude,
+            polygonCoordinates: [],
+            lastHarvestedDate: nil
+        )
+        locationService.simulateArrival(at: simulatedField)
     }
 
     /// Triggers an immediate store-and-forward batch sync of pending weighing records.

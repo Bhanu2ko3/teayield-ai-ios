@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABC890308D0C0100E22417 /* LocationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */; };
+		74ABC892308D0C0100E22417 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC893308D0C0100E22417 /* LocationService.swift */; };
 		74ABC880308D0B0100E22417 /* GeoJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC881308D0B0100E22417 /* GeoJSONParser.swift */; };
 		74ABC882308D0B0100E22417 /* TeaFieldMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */; };
 		74ABC884308D0B0100E22417 /* FieldMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */; };
@@ -117,6 +119,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceProtocol.swift; sourceTree = "<group>"; };
+		74ABC893308D0C0100E22417 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		74ABC881308D0B0100E22417 /* GeoJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONParser.swift; sourceTree = "<group>"; };
 		74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaFieldMapItem.swift; sourceTree = "<group>"; };
 		74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapViewModel.swift; sourceTree = "<group>"; };
@@ -445,6 +449,7 @@
 		74ABC7B4308D053100E22417 /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC893308D0C0100E22417 /* LocationService.swift */,
 				74ABC867308D0A0100E22417 /* CameraService.swift */,
 				74ABC869308D0A0100E22417 /* VisionLeafClassifier.swift */,
 				74ABC7B5308D053100E22417 /* OfflineSyncManager.swift */,
@@ -457,6 +462,7 @@
 		74ABC7B8308D053100E22417 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */,
 				74ABC863308D0A0100E22417 /* CameraServiceProtocol.swift */,
 				74ABC865308D0A0100E22417 /* VisionLeafClassifierProtocol.swift */,
 				74ABC7B9308D053100E22417 /* AuthServiceProtocol.swift */,
@@ -943,6 +949,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "TeaYield AI requires camera access to scan tea shoots in real-time and analyze leaf maturity ratio.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "TeaYield AI uses Face ID to secure estate yield records and manager approvals.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TeaYield AI requires background location access to trigger proximity notifications as you arrive at assigned tea fields.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TeaYield AI requires location access to monitor field boundaries and trigger harvest alerts when entering plucking zones.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -971,6 +981,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "TeaYield AI requires camera access to scan tea shoots in real-time and analyze leaf maturity ratio.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "TeaYield AI uses Face ID to secure estate yield records and manager approvals.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TeaYield AI requires background location access to trigger proximity notifications as you arrive at assigned tea fields.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TeaYield AI requires location access to monitor field boundaries and trigger harvest alerts when entering plucking zones.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
