@@ -70,6 +70,10 @@ extension Font {
         .system(.callout, design: .rounded).weight(.medium)
     }
 
+    static var appFootnote: Font {
+        .system(.footnote, design: .rounded)
+    }
+
     static var appCaption: Font {
         .system(.caption, design: .rounded)
     }
