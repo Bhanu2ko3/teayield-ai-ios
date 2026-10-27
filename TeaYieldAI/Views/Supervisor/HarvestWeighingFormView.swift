@@ -46,8 +46,10 @@ struct HarvestWeighingFormView: View {
                         Task {
                             let success = await viewModel.saveWeighingRecord()
                             if success {
-                                triggerSuccessHaptic()
+                                HapticFeedback.success()
                                 dismiss()
+                            } else {
+                                HapticFeedback.error()
                             }
                         }
                     } label: {
@@ -233,11 +235,5 @@ struct HarvestWeighingFormView: View {
         }
     }
 
-    // MARK: - Haptic Feedback
-
-    private func triggerSuccessHaptic() {
-        let generator = UINotificationFeedbackGenerator()
-        generator.prepare()
-        generator.notificationOccurred(.success)
-    }
 }
+

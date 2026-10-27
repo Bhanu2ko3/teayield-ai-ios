@@ -6,6 +6,7 @@ struct RootView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @ObservedObject var authService: AuthService
     private let container: AppContainerProtocol
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     init(container: AppContainerProtocol) {
         self.container = container
@@ -17,7 +18,10 @@ struct RootView: View {
             if !hasCompletedOnboarding {
                 OnboardingView(hasCompletedOnboarding: $hasCompletedOnboarding)
             } else if authService.isAuthenticated {
-                if authService.currentUser?.isManager == true {
+                if horizontalSizeClass == .regular {
+                    // iPad Desktop-class NavigationSplitView Executive Suite
+                    ManagerExecutiveSuiteView(container: container)
+                } else if authService.currentUser?.isManager == true {
                     ManagerOverviewView(container: container)
                 } else {
                     SupervisorMainTabView(container: container)

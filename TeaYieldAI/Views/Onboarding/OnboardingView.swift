@@ -180,16 +180,10 @@ struct OnboardingView: View {
     }
 
     private func completeOnboarding() {
-        triggerHaptic()
+        HapticFeedback.lightImpact()
         UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
         withAnimation(.easeInOut(duration: 0.25)) {
             hasCompletedOnboarding = true
         }
-    }
-
-    private func triggerHaptic() {
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.prepare()
-        generator.impactOccurred()
     }
 }

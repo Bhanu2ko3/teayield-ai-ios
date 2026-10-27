@@ -68,6 +68,9 @@ struct SupervisorMainTabView: View {
                 .tag(Tab.settings)
         }
         .accentColor(AppTheme.emerald)
+        .onChange(of: selectedTab) { _ in
+            HapticFeedback.selection()
+        }
         .sheet(isPresented: $showingWeighingSheet) {
             weighingSheet
         }
@@ -93,5 +96,5 @@ struct SupervisorMainTabView: View {
 
         HarvestWeighingFormView(viewModel: viewModel)
     }
-    }
 }
+

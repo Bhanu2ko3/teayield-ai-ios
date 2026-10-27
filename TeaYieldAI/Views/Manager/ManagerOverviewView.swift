@@ -33,6 +33,35 @@ struct ManagerOverviewView: View {
                             utilizationRatio: viewModel.factoryUtilizationRatio,
                             remainingCapacityKg: viewModel.remainingCapacityKg
                         )
+
+                        NavigationLink {
+                            ManagerAnalyticsDashboardView(viewModel: viewModel)
+                        } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: "chart.bar.xaxis")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(AppTheme.emerald)
+
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Harvest & Yield Analytics")
+                                        .font(.appHeadline)
+                                        .foregroundColor(.primary)
+                                    Text("Interactive 7-Day predictions & NDVI trends")
+                                        .font(.appCaption)
+                                        .foregroundColor(.secondary)
+                                }
+
+                                Spacer()
+
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(14)
+                            .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+                        }
+                        .accessibilityLabel("Open harvest and yield analytics with interactive Swift Charts")
+
                         estateMacroKpiGrid
                         ndviDistributionSection
                         estateDivisionsSection

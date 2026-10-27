@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABCA02308D0E0000E22417 /* YieldAnalyticsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */; };
+		74ABCA04308D0E0000E22417 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA03308D0E0000E22417 /* HapticFeedback.swift */; };
+		74ABCA06308D0E0000E22417 /* YieldComparisonChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */; };
+		74ABCA08308D0E0000E22417 /* NDVITrendChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */; };
+		74ABCA0A308D0E0000E22417 /* FactoryCapacityChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */; };
+		74ABCA0C308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0B308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift */; };
+		74ABCA0E308D0E0000E22417 /* ManagerExecutiveSuiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */; };
+		74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */; };
 		74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */; };
 		74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */; };
 		74ABC944308D0D0000E22417 /* ManagerOverviewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */; };
@@ -342,6 +350,7 @@
 		74ABC9E1308D0D0000E22417 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */,
 				74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */,
 				74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */,
 				74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */,
@@ -454,6 +463,7 @@
 		74ABC7A2308D053100E22417 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */,
 				74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */,
 				74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */,
 				74ABC7A3308D053100E22417 /* HarvestRecord.swift */,
@@ -515,6 +525,7 @@
 		74ABC7B1308D053100E22417 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA03308D0E0000E22417 /* HapticFeedback.swift */,
 				74ABC881308D0B0100E22417 /* GeoJSONParser.swift */,
 				74ABC7B2308D053100E22417 /* AppConfiguration.swift */,
 				74ABC801308D070100E22417 /* AppTheme.swift */,
@@ -587,6 +598,8 @@
 		74ABC848308D090100E22417 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */,
+				74ABCA0B308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift */,
 				74ABC846308D090100E22417 /* ManagerOverviewView.swift */,
 				74ABC849308D090100E22417 /* Components */,
 			);
@@ -596,6 +609,9 @@
 		74ABC849308D090100E22417 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */,
+				74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */,
+				74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */,
 				74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */,
 				74ABC858308D090100E22417 /* ManagerFieldRowView.swift */,
 			);
@@ -779,6 +795,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABC876308D0A0100E22417 /* sample_fine_shoot.jpg in Resources */,
+				74ABC878308D0A0100E22417 /* sample_coarse_leaf.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,6 +821,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCA02308D0E0000E22417 /* YieldAnalyticsItem.swift in Sources */,
+				74ABCA04308D0E0000E22417 /* HapticFeedback.swift in Sources */,
+				74ABCA06308D0E0000E22417 /* YieldComparisonChartView.swift in Sources */,
+				74ABCA08308D0E0000E22417 /* NDVITrendChartView.swift in Sources */,
+				74ABCA0A308D0E0000E22417 /* FactoryCapacityChartView.swift in Sources */,
+				74ABCA0C308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift in Sources */,
+				74ABCA0E308D0E0000E22417 /* ManagerExecutiveSuiteView.swift in Sources */,
+				74ABC890308D0C0100E22417 /* LocationServiceProtocol.swift in Sources */,
+				74ABC892308D0C0100E22417 /* LocationService.swift in Sources */,
+				74ABC880308D0B0100E22417 /* GeoJSONParser.swift in Sources */,
+				74ABC882308D0B0100E22417 /* TeaFieldMapItem.swift in Sources */,
+				74ABC884308D0B0100E22417 /* FieldMapViewModel.swift in Sources */,
+				74ABC886308D0B0100E22417 /* InteractiveMapView.swift in Sources */,
+				74ABC888308D0B0100E22417 /* FieldDetailBottomSheetView.swift in Sources */,
+				74ABC88A308D0B0100E22417 /* FieldMapView.swift in Sources */,
+				74ABC860308D0A0100E22417 /* LeafQualityAssessment.swift in Sources */,
+				74ABC862308D0A0100E22417 /* CameraServiceProtocol.swift in Sources */,
+				74ABC864308D0A0100E22417 /* VisionLeafClassifierProtocol.swift in Sources */,
+				74ABC866308D0A0100E22417 /* CameraService.swift in Sources */,
+				74ABC868308D0A0100E22417 /* VisionLeafClassifier.swift in Sources */,
+				74ABC86A308D0A0100E22417 /* LeafScannerViewModel.swift in Sources */,
+				74ABC86C308D0A0100E22417 /* LeafScannerView.swift in Sources */,
+				74ABC86E308D0A0100E22417 /* CameraPreviewView.swift in Sources */,
+				74ABC870308D0A0100E22417 /* ScannerHudOverlayView.swift in Sources */,
+				74ABC872308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel in Sources */,
+				74ABC874308D0A0100E22417 /* TeaShootClassifier.mlmodel in Sources */,
 				74ABC7DF308D053200E22417 /* TeaField.swift in Sources */,
 				74ABC7D3308D053200E22417 /* HarvestRepository.swift in Sources */,
 				74ABC7D6308D053200E22417 /* HarvestLogEntity.swift in Sources */,
@@ -878,6 +922,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */,
 				74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */,
 				74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */,
 				74ABC944308D0D0000E22417 /* ManagerOverviewViewModelTests.swift in Sources */,
