@@ -148,6 +148,7 @@ struct LoginView: View {
                                 .foregroundColor(.secondary)
                                 .font(.system(size: 14))
                         }
+                        .accessibilityLabel("Clear email field")
                     }
                 }
                 .padding(14)
@@ -238,6 +239,8 @@ struct LoginView: View {
                 .cornerRadius(12)
             }
             .disabled(viewModel.isLoading)
+            .accessibilityLabel("Sign in with email and password")
+            .accessibilityHint("Authenticates credentials with estate server")
 
             if viewModel.isBiometricAvailable {
                 Button {
@@ -271,6 +274,8 @@ struct LoginView: View {
                     .cornerRadius(12)
                 }
                 .disabled(viewModel.isLoading)
+                .accessibilityLabel("Sign in with \(viewModel.biometricType.rawValue)")
+                .accessibilityHint("Authenticates using device Secure Enclave biometric scan")
             }
         }
     }

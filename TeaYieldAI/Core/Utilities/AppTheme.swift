@@ -42,40 +42,40 @@ extension Color {
     static let crimsonRest = AppTheme.crimson
 }
 
-// MARK: - Typography & Font Helpers (Modern Rounded Aesthetic)
+// MARK: - Typography & Font Helpers (Native Dynamic Type Scaling)
 
 extension Font {
-    /// Modern rounded typography scale providing clean, legible agritech dashboard font styling.
+    /// Modern rounded typography scale linked to Apple Dynamic Type text styles.
     static var appLargeTitle: Font {
-        .system(size: 30, weight: .bold, design: .rounded)
+        .system(.largeTitle, design: .rounded).weight(.bold)
     }
 
     static var appTitle: Font {
-        .system(size: 22, weight: .bold, design: .rounded)
+        .system(.title2, design: .rounded).weight(.bold)
     }
 
     static var appHeadline: Font {
-        .system(size: 17, weight: .semibold, design: .rounded)
+        .system(.headline, design: .rounded).weight(.semibold)
     }
 
     static var appSubheadline: Font {
-        .system(size: 15, weight: .medium, design: .rounded)
+        .system(.subheadline, design: .rounded).weight(.medium)
     }
 
     static var appBody: Font {
-        .system(size: 15, weight: .regular, design: .default)
+        .system(.body, design: .default)
     }
 
     static var appCallout: Font {
-        .system(size: 13, weight: .medium, design: .rounded)
+        .system(.callout, design: .rounded).weight(.medium)
     }
 
     static var appCaption: Font {
-        .system(size: 12, weight: .regular, design: .rounded)
+        .system(.caption, design: .rounded)
     }
 
     static var appBadge: Font {
-        .system(size: 11, weight: .bold, design: .rounded)
+        .system(.caption2, design: .rounded).weight(.bold)
     }
 }
 

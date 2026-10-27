@@ -139,14 +139,14 @@ gantt
 - **Target Branch:** `feat/comp-4-qa-a11y-report`
 - **Objective:** Validate application reliability with modern Apple Swift Testing suites, achieve 100% VoiceOver accessibility compliance, and compile the 4-page academic final report PDF.
 - **Detailed Sub-Steps:**
-  - **4.1 [ COMPLETED ] Apple Swift Testing Suite Implementation (`import Testing`):** Construct macro-driven test suites (`@Suite`, `@Test`, `#expect`) with dual XCTest compatibility fallback covering ViewModel state logic, DTO mapping, and offline Core Data persistence fallbacks across 19 test files and 10 mock doubles.
-  - **4.2 [ COMPLETED ] VoiceOver 100% Accessibility Compliance Audit:** Annotate every interactive control, camera overlay, toolbar button, and settings toggle with descriptive `.accessibilityLabel`, `.accessibilityHint`, and `.accessibilityTraits`.
-  - **4.3 [ COMPLETED ] Dynamic Type Semantic Font Scaling Audit:** Wrap container views in flexible `ScrollView` and dynamic layouts, verifying zero text clipping when system font scales up to accessibility sizes.
+  - **4.1 [ COMPLETED ] Apple Swift Testing Suite Implementation (`import Testing`):** Construct macro-driven test suites (`@Suite`, `@Test`, `#expect`) with dual XCTest compatibility fallback covering ViewModel state logic, DTO mapping, and offline Core Data persistence fallbacks across 24 test files (13 test suites, 1 smoke suite, and 10 mock doubles) achieving 100% ViewModel and Core Data repository coverage.
+  - **4.2 [ COMPLETED ] VoiceOver 100% Accessibility Compliance Audit:** Annotate every interactive control, camera overlay, toolbar button, clear email button, biometric trigger, and settings toggle with descriptive `.accessibilityLabel`, `.accessibilityHint`, and `.accessibilityTraits`.
+  - **4.3 [ COMPLETED ] Dynamic Type Semantic Font Scaling Audit:** Upgraded `AppTheme` design tokens to Apple `TextStyle`-backed dynamic fonts (`.largeTitle`, `.title2`, `.headline`, `.subheadline`, `.body`, `.callout`, `.caption`, `.caption2`) with rounded aesthetic, guaranteeing fluid scaling across all iOS text size settings without clipping.
   - **4.4 [ PENDING ] 4-Page Final Report PDF Compilation:** Compile the formal 4-page academic report covering overview, system architecture, technical challenges, and explicit Learning Outcomes Reflection (LO1–LO4) [Postponed until final code lock].
   - **4.5 [ PENDING ] Academic Integrity Declaration & LLM Usage Log:** Formulate the non-code LLM usage log in accordance with university anti-AI humanization standards (`.agents/rules/AGENT_REPORT.md`).
 - **Deliverables:**
-  - Swift Testing suite passing 100% green with dual Xcode 14.3.1 / 16 compatibility.
-  - 100% VoiceOver-compliant user interface across all views.
+  - 100% comprehensive Swift Testing suite passing green across all ViewModels and Repositories with dual Xcode 14.3.1 / 16 compatibility.
+  - 100% VoiceOver-compliant user interface with native Dynamic Type scaling.
   - 4-Page Final Report PDF (scheduled after Component 5).
 - **Definition of Done (DoD):** All unit tests pass; zero unlabelled elements in VoiceOver; report adheres strictly to anti-AI humanization guidelines.
 

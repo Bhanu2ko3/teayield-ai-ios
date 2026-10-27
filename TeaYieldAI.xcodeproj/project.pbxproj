@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */; };
+		74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */; };
+		74ABC944308D0D0000E22417 /* ManagerOverviewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */; };
+		74ABC946308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */; };
+		74ABC948308D0D0000E22417 /* CoreDataRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC949308D0D0000E22417 /* CoreDataRepositoryTests.swift */; };
 		74ABC900308D0D0000E22417 /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC901308D0D0000E22417 /* MockAPIService.swift */; };
 		74ABC902308D0D0000E22417 /* MockAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC903308D0D0000E22417 /* MockAuthService.swift */; };
 		74ABC904308D0D0000E22417 /* MockCameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC905308D0D0000E22417 /* MockCameraService.swift */; };
@@ -137,6 +142,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestHistoryViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerOverviewViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorSettingsViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC949308D0D0000E22417 /* CoreDataRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataRepositoryTests.swift; sourceTree = "<group>"; };
 		74ABC901308D0D0000E22417 /* MockAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
 		74ABC903308D0D0000E22417 /* MockAuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuthService.swift; sourceTree = "<group>"; };
 		74ABC905308D0D0000E22417 /* MockCameraService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCameraService.swift; sourceTree = "<group>"; };
@@ -332,6 +342,11 @@
 		74ABC9E1308D0D0000E22417 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */,
+				74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */,
+				74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */,
+				74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */,
+				74ABC949308D0D0000E22417 /* CoreDataRepositoryTests.swift */,
 				74ABC921308D0D0000E22417 /* LeafScannerViewModelTests.swift */,
 				74ABC923308D0D0000E22417 /* FieldMapViewModelTests.swift */,
 				74ABC925308D0D0000E22417 /* TodayTasksViewModelTests.swift */,
@@ -863,6 +878,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */,
+				74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */,
+				74ABC944308D0D0000E22417 /* ManagerOverviewViewModelTests.swift in Sources */,
+				74ABC946308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift in Sources */,
+				74ABC948308D0D0000E22417 /* CoreDataRepositoryTests.swift in Sources */,
 				74ABC900308D0D0000E22417 /* MockAPIService.swift in Sources */,
 				74ABC902308D0D0000E22417 /* MockAuthService.swift in Sources */,
 				74ABC904308D0D0000E22417 /* MockCameraService.swift in Sources */,
