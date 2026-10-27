@@ -55,6 +55,8 @@ struct LeafScannerView: View {
                         Image(systemName: "arrow.counterclockwise")
                             .foregroundColor(.white)
                     }
+                    .accessibilityLabel("Reset Scanner")
+                    .accessibilityHint("Clears current leaf sample statistics and restarts scan")
                 }
             }
             .onAppear {
@@ -105,6 +107,8 @@ struct LeafScannerView: View {
                             .padding(.horizontal, 20)
                             .padding(.bottom, 24)
                         }
+                        .accessibilityLabel("Log Weighing with fine leaf ratio \(assessment.formattedFinePercentage)")
+                        .accessibilityHint("Opens weighing entry form pre-filled with this quality grade")
                     }
                 }
             } else {

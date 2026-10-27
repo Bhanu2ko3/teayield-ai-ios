@@ -117,6 +117,8 @@ struct FieldDetailBottomSheetView: View {
                     .background(field.status == .ready ? AppTheme.emerald : AppTheme.amber)
                     .cornerRadius(AppTheme.radiusMedium)
                 }
+                .accessibilityLabel("Record harvest weighing for \(field.name), block \(field.blockCode)")
+                .accessibilityHint("Opens weighing entry form pre-selected with this field")
                 .padding(.top, 4)
             }
 
@@ -135,6 +137,8 @@ struct FieldDetailBottomSheetView: View {
                     .background(Color.secondary.opacity(0.08))
                     .cornerRadius(AppTheme.radiusSmall)
                 }
+                .accessibilityLabel(isCurrentlyGeofenced ? "Geofence is currently active for \(field.name)" : "Simulate entering \(field.name) geofence boundary")
+                .accessibilityHint("Simulates GPS hardware boundary entry for viva defense")
             }
         }
         .padding(.horizontal, 20)

@@ -81,6 +81,8 @@ struct SupervisorSettingsView: View {
                     .stroke(Color.red.opacity(0.2), lineWidth: 1)
             )
         }
+        .accessibilityLabel("Log Out of Enterprise Account")
+        .accessibilityHint("Prompts confirmation to sign out of supervisor account")
         .padding(.top, 8)
         .padding(.bottom, 24)
     }

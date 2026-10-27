@@ -108,7 +108,10 @@ struct ScannerHudOverlayView: View {
             )
             .padding(.horizontal, 16)
             .padding(.bottom, 16)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("Quality grade: \(qualityGrade), fine leaf ratio: \(String(format: "%.1f percent", fineLeafRatio * 100.0)), export benchmark: 85 percent, dominant stage: \(dominantStage?.displayTitle ?? "scanning"), latency: \(String(format: "%.1f milliseconds", latencyMs))")
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var reticleColor: Color {

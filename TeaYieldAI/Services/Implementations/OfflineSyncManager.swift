@@ -10,12 +10,12 @@ final class OfflineSyncManager: ObservableObject, SyncManagerProtocol {
 
     private let apiService: APIServiceProtocol
     private let harvestRepository: HarvestRepositoryProtocol
-    private let networkMonitor: NetworkMonitor
+    private let networkMonitor: NetworkMonitorProtocol
 
     init(
         apiService: APIServiceProtocol,
         harvestRepository: HarvestRepositoryProtocol,
-        networkMonitor: NetworkMonitor = .shared
+        networkMonitor: NetworkMonitorProtocol = NetworkMonitor.shared
     ) {
         self.apiService = apiService
         self.harvestRepository = harvestRepository

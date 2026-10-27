@@ -27,8 +27,8 @@ The TeaYield AI platform operates on an Agile API-First dual-track strategy. The
 | teayield-ai-ios (Client & iOS Coursework):                                                        |
 | • Component 1: Proposal, HIG Design System & Figma Prototype (10%)    [ COMPLETED ]                 |
 | • Component 2: MVP Core Implementation, Offline & Viva (20%)          [ COMPLETED ]                 |
-| • Component 3: Advanced iOS SDK - On-Device Vision & Geofence (20%)   [ IN PROGRESS ]               |
-| • Component 4: Swift Testing, VoiceOver & 4-Page Report (15%)         [ PENDING ]                   |
+| • Component 3: Advanced iOS SDK - On-Device Vision & Geofence (20%)   [ COMPLETED ]                 |
+| • Component 4: Swift Testing, VoiceOver & 4-Page Report (15%)         [ IN PROGRESS ]               |
 | • Component 5: Above & Beyond - iPad SplitView & Architecture (25%)   [ PENDING ]                   |
 +───────────────────────────────────────────────────────────────────────────────────────────────────+
 ```
@@ -139,15 +139,15 @@ gantt
 - **Target Branch:** `feat/comp-4-qa-a11y-report`
 - **Objective:** Validate application reliability with modern Apple Swift Testing suites, achieve 100% VoiceOver accessibility compliance, and compile the 4-page academic final report PDF.
 - **Detailed Sub-Steps:**
-  - **4.1 [ PENDING ] Apple Swift Testing Suite Implementation (`import Testing`):** Construct macro-driven test suites (`@Test`, `#expect`) covering ViewModel state logic, DTO mapping, and offline Core Data persistence fallbacks.
-  - **4.2 [ PENDING ] VoiceOver 100% Accessibility Compliance Audit:** Annotate every interactive control, camera overlay, and map pin with descriptive `.accessibilityLabel`, `.accessibilityHint`, and `.accessibilityTraits`.
-  - **4.3 [ PENDING ] Dynamic Type Semantic Font Scaling Audit:** Wrap container views in flexible `ScrollView` and dynamic layouts, verifying zero text clipping when system font scales up to accessibility sizes.
-  - **4.4 [ PENDING ] 4-Page Final Report PDF Compilation:** Compile the formal 4-page academic report covering overview, system architecture, technical challenges, and explicit Learning Outcomes Reflection (LO1–LO4).
+  - **4.1 [ COMPLETED ] Apple Swift Testing Suite Implementation (`import Testing`):** Construct macro-driven test suites (`@Suite`, `@Test`, `#expect`) with dual XCTest compatibility fallback covering ViewModel state logic, DTO mapping, and offline Core Data persistence fallbacks across 19 test files and 10 mock doubles.
+  - **4.2 [ COMPLETED ] VoiceOver 100% Accessibility Compliance Audit:** Annotate every interactive control, camera overlay, toolbar button, and settings toggle with descriptive `.accessibilityLabel`, `.accessibilityHint`, and `.accessibilityTraits`.
+  - **4.3 [ COMPLETED ] Dynamic Type Semantic Font Scaling Audit:** Wrap container views in flexible `ScrollView` and dynamic layouts, verifying zero text clipping when system font scales up to accessibility sizes.
+  - **4.4 [ PENDING ] 4-Page Final Report PDF Compilation:** Compile the formal 4-page academic report covering overview, system architecture, technical challenges, and explicit Learning Outcomes Reflection (LO1–LO4) [Postponed until final code lock].
   - **4.5 [ PENDING ] Academic Integrity Declaration & LLM Usage Log:** Formulate the non-code LLM usage log in accordance with university anti-AI humanization standards (`.agents/rules/AGENT_REPORT.md`).
 - **Deliverables:**
-  - Swift Testing suite passing 100% green.
-  - 100% VoiceOver-compliant user interface.
-  - 4-Page Final Report PDF.
+  - Swift Testing suite passing 100% green with dual Xcode 14.3.1 / 16 compatibility.
+  - 100% VoiceOver-compliant user interface across all views.
+  - 4-Page Final Report PDF (scheduled after Component 5).
 - **Definition of Done (DoD):** All unit tests pass; zero unlabelled elements in VoiceOver; report adheres strictly to anti-AI humanization guidelines.
 
 ---

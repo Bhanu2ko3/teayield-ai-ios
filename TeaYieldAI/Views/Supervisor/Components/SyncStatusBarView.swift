@@ -49,6 +49,8 @@ struct SyncStatusBarView: View {
                     .foregroundColor(buttonTextColor)
                     .cornerRadius(8)
                 }
+                .accessibilityLabel("Synchronize \(unsyncedCount) queued weighing records now")
+                .accessibilityHint("Uploads local offline harvest logs to estate cloud")
             }
         }
         .padding(.horizontal, 14)
@@ -59,6 +61,8 @@ struct SyncStatusBarView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(borderColor, lineWidth: 1)
         )
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Sync status: \(primaryStatusTitle). \(statusMessage ?? "")")
     }
 
     // MARK: - Computed Styling

@@ -52,5 +52,7 @@ struct KpiSummaryRowView: View {
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
         .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title): \(value)")
     }
 }

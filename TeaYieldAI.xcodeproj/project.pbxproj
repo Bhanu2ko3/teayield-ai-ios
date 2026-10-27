@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABC900308D0D0000E22417 /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC901308D0D0000E22417 /* MockAPIService.swift */; };
+		74ABC902308D0D0000E22417 /* MockAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC903308D0D0000E22417 /* MockAuthService.swift */; };
+		74ABC904308D0D0000E22417 /* MockCameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC905308D0D0000E22417 /* MockCameraService.swift */; };
+		74ABC906308D0D0000E22417 /* MockFieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC907308D0D0000E22417 /* MockFieldRepository.swift */; };
+		74ABC908308D0D0000E22417 /* MockHarvestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC909308D0D0000E22417 /* MockHarvestRepository.swift */; };
+		74ABC90A308D0D0000E22417 /* MockNDVIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC90B308D0D0000E22417 /* MockNDVIRepository.swift */; };
+		74ABC90C308D0D0000E22417 /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC90D308D0D0000E22417 /* MockLocationService.swift */; };
+		74ABC90E308D0D0000E22417 /* MockSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC90F308D0D0000E22417 /* MockSyncManager.swift */; };
+		74ABC910308D0D0000E22417 /* MockVisionLeafClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC911308D0D0000E22417 /* MockVisionLeafClassifier.swift */; };
+		74ABC912308D0D0000E22417 /* MockNetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC913308D0D0000E22417 /* MockNetworkMonitor.swift */; };
+		74ABC920308D0D0000E22417 /* LeafScannerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC921308D0D0000E22417 /* LeafScannerViewModelTests.swift */; };
+		74ABC922308D0D0000E22417 /* FieldMapViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC923308D0D0000E22417 /* FieldMapViewModelTests.swift */; };
+		74ABC924308D0D0000E22417 /* TodayTasksViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC925308D0D0000E22417 /* TodayTasksViewModelTests.swift */; };
+		74ABC926308D0D0000E22417 /* HarvestWeighingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC927308D0D0000E22417 /* HarvestWeighingViewModelTests.swift */; };
+		74ABC928308D0D0000E22417 /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC929308D0D0000E22417 /* LocationServiceTests.swift */; };
+		74ABC92A308D0D0000E22417 /* GeoJSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC92B308D0D0000E22417 /* GeoJSONParserTests.swift */; };
+		74ABC92C308D0D0000E22417 /* OfflineSyncManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC92D308D0D0000E22417 /* OfflineSyncManagerTests.swift */; };
+		74ABC92E308D0D0000E22417 /* DomainModelAndDTOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC92F308D0D0000E22417 /* DomainModelAndDTOTests.swift */; };
 		74ABC890308D0C0100E22417 /* LocationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */; };
 		74ABC892308D0C0100E22417 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC893308D0C0100E22417 /* LocationService.swift */; };
 		74ABC880308D0B0100E22417 /* GeoJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC881308D0B0100E22417 /* GeoJSONParser.swift */; };
@@ -119,6 +137,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABC901308D0D0000E22417 /* MockAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
+		74ABC903308D0D0000E22417 /* MockAuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuthService.swift; sourceTree = "<group>"; };
+		74ABC905308D0D0000E22417 /* MockCameraService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCameraService.swift; sourceTree = "<group>"; };
+		74ABC907308D0D0000E22417 /* MockFieldRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFieldRepository.swift; sourceTree = "<group>"; };
+		74ABC909308D0D0000E22417 /* MockHarvestRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockHarvestRepository.swift; sourceTree = "<group>"; };
+		74ABC90B308D0D0000E22417 /* MockNDVIRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNDVIRepository.swift; sourceTree = "<group>"; };
+		74ABC90D308D0D0000E22417 /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
+		74ABC90F308D0D0000E22417 /* MockSyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSyncManager.swift; sourceTree = "<group>"; };
+		74ABC911308D0D0000E22417 /* MockVisionLeafClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVisionLeafClassifier.swift; sourceTree = "<group>"; };
+		74ABC913308D0D0000E22417 /* MockNetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNetworkMonitor.swift; sourceTree = "<group>"; };
+		74ABC921308D0D0000E22417 /* LeafScannerViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC923308D0D0000E22417 /* FieldMapViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC925308D0D0000E22417 /* TodayTasksViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTasksViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC927308D0D0000E22417 /* HarvestWeighingViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestWeighingViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC929308D0D0000E22417 /* LocationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
+		74ABC92B308D0D0000E22417 /* GeoJSONParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONParserTests.swift; sourceTree = "<group>"; };
+		74ABC92D308D0D0000E22417 /* OfflineSyncManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineSyncManagerTests.swift; sourceTree = "<group>"; };
+		74ABC92F308D0D0000E22417 /* DomainModelAndDTOTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainModelAndDTOTests.swift; sourceTree = "<group>"; };
 		74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceProtocol.swift; sourceTree = "<group>"; };
 		74ABC893308D0C0100E22417 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		74ABC881308D0B0100E22417 /* GeoJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONParser.swift; sourceTree = "<group>"; };
@@ -276,9 +312,43 @@
 			path = TeaYieldAI;
 			sourceTree = "<group>";
 		};
+				74ABC9E0308D0D0000E22417 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC901308D0D0000E22417 /* MockAPIService.swift */,
+				74ABC903308D0D0000E22417 /* MockAuthService.swift */,
+				74ABC905308D0D0000E22417 /* MockCameraService.swift */,
+				74ABC907308D0D0000E22417 /* MockFieldRepository.swift */,
+				74ABC909308D0D0000E22417 /* MockHarvestRepository.swift */,
+				74ABC90B308D0D0000E22417 /* MockNDVIRepository.swift */,
+				74ABC90D308D0D0000E22417 /* MockLocationService.swift */,
+				74ABC90F308D0D0000E22417 /* MockSyncManager.swift */,
+				74ABC911308D0D0000E22417 /* MockVisionLeafClassifier.swift */,
+				74ABC913308D0D0000E22417 /* MockNetworkMonitor.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		74ABC9E1308D0D0000E22417 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC921308D0D0000E22417 /* LeafScannerViewModelTests.swift */,
+				74ABC923308D0D0000E22417 /* FieldMapViewModelTests.swift */,
+				74ABC925308D0D0000E22417 /* TodayTasksViewModelTests.swift */,
+				74ABC927308D0D0000E22417 /* HarvestWeighingViewModelTests.swift */,
+				74ABC929308D0D0000E22417 /* LocationServiceTests.swift */,
+				74ABC92B308D0D0000E22417 /* GeoJSONParserTests.swift */,
+				74ABC92D308D0D0000E22417 /* OfflineSyncManagerTests.swift */,
+				74ABC92F308D0D0000E22417 /* DomainModelAndDTOTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		74ABC771308D036800E22417 /* TeaYieldAITests */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC9E0308D0D0000E22417 /* Mocks */,
+				74ABC9E1308D0D0000E22417 /* Tests */,
 				74ABC772308D036800E22417 /* TeaYieldAITests.swift */,
 			);
 			path = TeaYieldAITests;
@@ -793,6 +863,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABC900308D0D0000E22417 /* MockAPIService.swift in Sources */,
+				74ABC902308D0D0000E22417 /* MockAuthService.swift in Sources */,
+				74ABC904308D0D0000E22417 /* MockCameraService.swift in Sources */,
+				74ABC906308D0D0000E22417 /* MockFieldRepository.swift in Sources */,
+				74ABC908308D0D0000E22417 /* MockHarvestRepository.swift in Sources */,
+				74ABC90A308D0D0000E22417 /* MockNDVIRepository.swift in Sources */,
+				74ABC90C308D0D0000E22417 /* MockLocationService.swift in Sources */,
+				74ABC90E308D0D0000E22417 /* MockSyncManager.swift in Sources */,
+				74ABC910308D0D0000E22417 /* MockVisionLeafClassifier.swift in Sources */,
+				74ABC912308D0D0000E22417 /* MockNetworkMonitor.swift in Sources */,
+				74ABC920308D0D0000E22417 /* LeafScannerViewModelTests.swift in Sources */,
+				74ABC922308D0D0000E22417 /* FieldMapViewModelTests.swift in Sources */,
+				74ABC924308D0D0000E22417 /* TodayTasksViewModelTests.swift in Sources */,
+				74ABC926308D0D0000E22417 /* HarvestWeighingViewModelTests.swift in Sources */,
+				74ABC928308D0D0000E22417 /* LocationServiceTests.swift in Sources */,
+				74ABC92A308D0D0000E22417 /* GeoJSONParserTests.swift in Sources */,
+				74ABC92C308D0D0000E22417 /* OfflineSyncManagerTests.swift in Sources */,
+				74ABC92E308D0D0000E22417 /* DomainModelAndDTOTests.swift in Sources */,
 				74ABC773308D036800E22417 /* TeaYieldAITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

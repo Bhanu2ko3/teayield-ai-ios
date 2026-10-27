@@ -38,6 +38,7 @@ struct HarvestWeighingFormView: View {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .accessibilityLabel("Dismiss Weighing Form")
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
@@ -59,6 +60,8 @@ struct HarvestWeighingFormView: View {
                         }
                     }
                     .disabled(viewModel.isSaving)
+                    .accessibilityLabel("Save Weighing Record")
+                    .accessibilityHint("Validates measurements and saves harvest log into offline repository")
                 }
             }
             .alert("Weighing Error", isPresented: $viewModel.showErrorAlert) {

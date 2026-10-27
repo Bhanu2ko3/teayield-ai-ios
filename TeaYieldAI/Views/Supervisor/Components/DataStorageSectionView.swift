@@ -87,6 +87,8 @@ struct DataStorageSectionView: View {
                             .foregroundColor(.secondary)
                     }
                 }
+                .accessibilityLabel("View Weighing History")
+                .accessibilityHint("Opens screen showing all locally recorded green leaf weigh-ins")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
 
@@ -118,6 +120,8 @@ struct DataStorageSectionView: View {
                             .stroke(AppTheme.emerald.opacity(0.3), lineWidth: 1)
                     )
                 }
+                .accessibilityLabel("Manual Sync with Supabase")
+                .accessibilityHint("Uploads queued offline weighing logs to estate server")
                 .padding(14)
                 .disabled(viewModel.isSyncing)
             }

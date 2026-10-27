@@ -22,6 +22,8 @@ struct SecuritySettingsSectionView: View {
                             .font(.appBody)
                     }
                 }
+                .accessibilityLabel("Require Face ID on Launch")
+                .accessibilityHint("Toggles biometric authentication requirement when opening the application")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
 
