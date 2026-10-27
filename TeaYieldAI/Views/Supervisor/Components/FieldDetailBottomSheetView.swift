@@ -70,7 +70,7 @@ struct FieldDetailBottomSheetView: View {
                 )
                 metricTile(
                     title: "Est. Target",
-                    value: String(format: "%.0f kg", field.acreage * 195.0),
+                    value: String(format: "%.0f kg", field.acreage * AppConfiguration.benchmarkYieldPerAcreKg),
                     icon: "scalemass.fill"
                 )
             }

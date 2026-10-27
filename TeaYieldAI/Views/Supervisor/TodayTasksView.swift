@@ -123,14 +123,27 @@ struct TodayTasksView: View {
                     selectedFieldForWeighing = activeField.id
                     showingWeighingSheet = true
                 }
-            } else if let activeTask = viewModel.tasks.first {
-                GeofenceArrivalBannerView(
-                    fieldName: activeTask.fieldName,
-                    shiftDate: activeTask.shiftDate
-                ) {
-                    selectedFieldForWeighing = activeTask.fieldId
-                    showingWeighingSheet = true
+                .transition(.asymmetric(
+                    insertion: .move(edge: .top).combined(with: .opacity),
+                    removal: .opacity
+                ))
+            } else if !viewModel.tasks.isEmpty {
+                HStack(spacing: 8) {
+                    Image(systemName: "location.circle.fill")
+                        .font(.system(size: 12))
+                        .foregroundColor(AppTheme.emerald)
+                    Text("Boundary Monitoring Active (\(viewModel.tasks.count) Assigned Fields)")
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text("CoreLocation")
+                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                        .foregroundColor(.secondary.opacity(0.8))
                 }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(Color.secondary.opacity(0.06))
+                .cornerRadius(AppTheme.radiusSmall)
             }
         }
     }
@@ -164,15 +177,35 @@ struct TodayTasksView: View {
                 .padding(.vertical, 40)
             } else {
                 ForEach(viewModel.tasks) { task in
-                    TaskCardView(task: task) {
-                        selectedFieldForWeighing = task.fieldId
-                        showingWeighingSheet = true
-                    }
+                    TaskCardView(
+                        task: task,
+                        isGeofenced: viewModel.activeGeofencedField?.id == task.fieldId,
+                        onRecordWeighingTap: {
+                            selectedFieldForWeighing = task.fieldId
+                            showingWeighingSheet = true
+                        },
+                        onSimulateArrivalTap: {
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                if viewModel.activeGeofencedField?.id == task.fieldId {
+                                    viewModel.simulateExit()
+                                } else {
+                                    viewModel.simulateArrival(at: task)
+                                }
+                            }
+                        }
+                    )
                     .contextMenu {
                         Button {
-                            viewModel.simulateArrival(at: task)
+                            if viewModel.activeGeofencedField?.id == task.fieldId {
+                                viewModel.simulateExit()
+                            } else {
+                                viewModel.simulateArrival(at: task)
+                            }
                         } label: {
-                            Label("Simulate Geofence Arrival", systemImage: "location.fill")
+                            Label(
+                                viewModel.activeGeofencedField?.id == task.fieldId ? "Simulate Geofence Exit" : "Simulate Geofence Arrival",
+                                systemImage: "location.fill"
+                            )
                         }
 
                         Button {

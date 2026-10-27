@@ -4,7 +4,9 @@ import SwiftUI
 struct TaskCardView: View {
 
     let task: PluckingTask
+    var isGeofenced: Bool = false
     let onRecordWeighingTap: () -> Void
+    var onSimulateArrivalTap: (() -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -34,7 +36,23 @@ struct TaskCardView: View {
 
             Spacer()
 
-            statusBadge
+            HStack(spacing: 6) {
+                if isGeofenced {
+                    HStack(spacing: 3) {
+                        Image(systemName: "location.fill")
+                            .font(.system(size: 8))
+                        Text("IN GEOFENCE")
+                            .font(.system(size: 9, weight: .bold, design: .rounded))
+                    }
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 3)
+                    .background(AppTheme.emerald.opacity(0.15))
+                    .foregroundColor(AppTheme.emerald)
+                    .cornerRadius(6)
+                }
+
+                statusBadge
+            }
         }
     }
 
@@ -94,6 +112,19 @@ struct TaskCardView: View {
             }
 
             Spacer()
+
+            if let onSimulateArrivalTap = onSimulateArrivalTap {
+                Button(action: onSimulateArrivalTap) {
+                    Image(systemName: isGeofenced ? "location.fill" : "location.radiowaves.left.and.right")
+                        .font(.caption)
+                        .foregroundColor(isGeofenced ? AppTheme.emerald : .secondary)
+                        .padding(7)
+                        .background(isGeofenced ? AppTheme.emerald.opacity(0.12) : Color.secondary.opacity(0.08))
+                        .cornerRadius(8)
+                }
+                .accessibilityLabel(isGeofenced ? "Simulate Geofence Exit" : "Simulate Geofence Arrival")
+                .accessibilityHint("Triggers on-device CoreLocation boundary event for Viva testing")
+            }
 
             Button(action: onRecordWeighingTap) {
                 HStack(spacing: 6) {

@@ -24,6 +24,10 @@ enum AppConfiguration {
     /// Minimum fine leaf ratio required for premium export tea classification (SLTB Benchmark).
     static let fineLeafTargetRatio: Double = 0.85
 
+    /// Standard Sri Lanka Tea Research Institute (TRI) green leaf harvest benchmark:
+    /// Approximately 195 kg green leaf per acre per plucking round in high-grown tea estates.
+    static let benchmarkYieldPerAcreKg: Double = 195.0
+
     /// Runtime deployment environment label.
     static var environmentName: String {
         #if DEBUG

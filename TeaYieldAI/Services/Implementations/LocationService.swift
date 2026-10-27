@@ -43,6 +43,7 @@ final class LocationService: NSObject, LocationServiceProtocol {
     // MARK: - Geofence Lifecycle Management
 
     func startMonitoringFields(_ fields: [TeaField]) {
+        requestAuthorization()
         guard CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) else {
             return
         }
@@ -53,9 +54,18 @@ final class LocationService: NSObject, LocationServiceProtocol {
 
         // Register low-power circular geofences (capped at 20 by Apple CoreLocation guidelines)
         for field in fields.prefix(20) {
+            // Validate valid non-zero centroid coordinates
+            guard abs(field.centroidLatitude) > 0.001 && abs(field.centroidLongitude) > 0.001 else {
+                continue
+            }
+
+            // Derive perimeter radius dynamically from field acreage (1 acre approx 4046.86 sq meters)
+            let calculatedRadius = sqrt((max(field.acreage, 0.5) * 4046.86) / .pi) + 40.0
+            let clampedRadius = max(100.0, min(250.0, calculatedRadius))
+
             let region = CLCircularRegion(
                 center: field.centroidCoordinate,
-                radius: 180.0, // 180-meter field perimeter radius
+                radius: clampedRadius,
                 identifier: field.id.uuidString
             )
             region.notifyOnEntry = true

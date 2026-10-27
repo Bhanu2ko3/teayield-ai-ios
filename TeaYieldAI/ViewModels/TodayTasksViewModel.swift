@@ -146,13 +146,6 @@ final class TodayTasksViewModel: ObservableObject {
             self.isLoading = false
         }
 
-        if !hasDispatchedGeofenceNotification, let active = tasks.first {
-            hasDispatchedGeofenceNotification = true
-            Task { @MainActor in
-                NotificationManager.shared.sendGeofenceArrivalAlert(fieldName: active.fieldName)
-            }
-        }
-
         // Start hardware geofence monitoring for harvest-ready field boundaries
         if let cached = try? await fieldRepository.fetchCachedFields(), !cached.isEmpty {
             locationService.startMonitoringFields(cached)
@@ -163,19 +156,32 @@ final class TodayTasksViewModel: ObservableObject {
 
     /// Simulates arriving at a specific assigned field boundary for live demonstration during the Viva exam.
     func simulateArrival(at task: PluckingTask) {
-        let simulatedField = TeaField(
-            id: task.fieldId,
-            name: task.fieldName,
-            blockCode: task.blockCode,
-            acreage: 4.5,
-            currentNDVI: 0.78,
-            status: .ready,
-            centroidLatitude: task.centroidLatitude,
-            centroidLongitude: task.centroidLongitude,
-            polygonCoordinates: [],
-            lastHarvestedDate: nil
-        )
-        locationService.simulateArrival(at: simulatedField)
+        Task {
+            let matchedField: TeaField
+            if let cached = try? await fieldRepository.fetchCachedFields(),
+               let existing = cached.first(where: { $0.id == task.fieldId }) {
+                matchedField = existing
+            } else {
+                matchedField = TeaField(
+                    id: task.fieldId,
+                    name: task.fieldName,
+                    blockCode: task.blockCode,
+                    acreage: 4.2,
+                    currentNDVI: 0.78,
+                    status: .ready,
+                    centroidLatitude: task.centroidLatitude,
+                    centroidLongitude: task.centroidLongitude,
+                    polygonCoordinates: [],
+                    lastHarvestedDate: nil
+                )
+            }
+            locationService.simulateArrival(at: matchedField)
+        }
+    }
+
+    /// Simulates exiting a field boundary to demonstrate geofence departure during the Viva exam.
+    func simulateExit() {
+        locationService.simulateExit()
     }
 
     /// Triggers an immediate store-and-forward batch sync of pending weighing records.

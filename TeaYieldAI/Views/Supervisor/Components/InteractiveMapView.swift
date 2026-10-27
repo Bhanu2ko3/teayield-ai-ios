@@ -22,9 +22,11 @@ struct InteractiveMapView: UIViewRepresentable {
         mapView.showsCompass = true
         mapView.showsScale = true
         mapView.setRegion(cameraRegion, animated: false)
+        context.coordinator.lastCommandedRegion = cameraRegion
 
-        // Add tap gesture to detect polygon overlay taps
+        // Add tap gesture to detect polygon overlay taps without blocking marker taps
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleMapTap(_:)))
+        tapGesture.cancelsTouchesInView = false
         mapView.addGestureRecognizer(tapGesture)
 
         updateOverlays(in: mapView)
@@ -45,11 +47,36 @@ struct InteractiveMapView: UIViewRepresentable {
             updateOverlays(in: mapView)
         }
 
-        // Animate region updates
-        let centerDiff = abs(mapView.region.center.latitude - cameraRegion.center.latitude) +
-                         abs(mapView.region.center.longitude - cameraRegion.center.longitude)
-        if centerDiff > 0.0005 {
-            mapView.setRegion(cameraRegion, animated: true)
+        // Animate region updates only when parent explicitly commands a change
+        if let last = context.coordinator.lastCommandedRegion {
+            let parentDiff = abs(last.center.latitude - cameraRegion.center.latitude) +
+                             abs(last.center.longitude - cameraRegion.center.longitude) +
+                             abs(last.span.latitudeDelta - cameraRegion.span.latitudeDelta)
+            if parentDiff > 0.0001 {
+                context.coordinator.lastCommandedRegion = cameraRegion
+                mapView.setRegion(cameraRegion, animated: true)
+            }
+        } else {
+            context.coordinator.lastCommandedRegion = cameraRegion
+            mapView.setRegion(cameraRegion, animated: false)
+        }
+
+        // Update polygon stroke highlights when selection changes
+        if context.coordinator.lastSelectedFieldId != selectedField?.id {
+            context.coordinator.lastSelectedFieldId = selectedField?.id
+            for overlay in mapView.overlays {
+                if let polygon = overlay as? TeaFieldPolygon,
+                   let renderer = mapView.renderer(for: overlay) as? MKPolygonRenderer {
+                    if polygon.field?.id == selectedField?.id {
+                        renderer.lineWidth = 4.0
+                        renderer.strokeColor = .white
+                    } else if let field = polygon.field {
+                        renderer.lineWidth = 2.5
+                        renderer.strokeColor = context.coordinator.strokeColor(for: field)
+                    }
+                    renderer.setNeedsDisplay()
+                }
+            }
         }
     }
 
@@ -74,9 +101,33 @@ struct InteractiveMapView: UIViewRepresentable {
 
     final class Coordinator: NSObject, MKMapViewDelegate {
         let parent: InteractiveMapView
+        var lastCommandedRegion: MKCoordinateRegion?
+        var lastSelectedFieldId: UUID?
 
         init(_ parent: InteractiveMapView) {
             self.parent = parent
+        }
+
+        func strokeColor(for field: TeaField) -> UIColor {
+            switch field.status {
+            case .ready:
+                return UIColor(red: 0.02, green: 0.59, blue: 0.41, alpha: 0.95)
+            case .growing:
+                return UIColor(red: 0.85, green: 0.47, blue: 0.02, alpha: 0.95)
+            case .resting:
+                return UIColor(red: 0.86, green: 0.15, blue: 0.15, alpha: 0.95)
+            }
+        }
+
+        func fillColor(for field: TeaField) -> UIColor {
+            switch field.status {
+            case .ready:
+                return UIColor(red: 0.02, green: 0.59, blue: 0.41, alpha: 0.45)
+            case .growing:
+                return UIColor(red: 0.85, green: 0.47, blue: 0.02, alpha: 0.45)
+            case .resting:
+                return UIColor(red: 0.86, green: 0.15, blue: 0.15, alpha: 0.45)
+            }
         }
 
         // MARK: - Overlay Renderer (NDVI Color Coding)
@@ -88,27 +139,11 @@ struct InteractiveMapView: UIViewRepresentable {
             }
 
             let renderer = MKPolygonRenderer(polygon: fieldPolygon)
-            let fillColor: UIColor
-            let strokeColor: UIColor
+            let isSelected = field.id == parent.selectedField?.id
 
-            switch field.status {
-            case .ready:
-                // High NDVI healthy canopy (Emerald #059669)
-                fillColor = UIColor(red: 0.02, green: 0.59, blue: 0.41, alpha: 0.45)
-                strokeColor = UIColor(red: 0.02, green: 0.59, blue: 0.41, alpha: 0.95)
-            case .growing:
-                // Mid NDVI maturing canopy (Amber #D97706)
-                fillColor = UIColor(red: 0.85, green: 0.47, blue: 0.02, alpha: 0.45)
-                strokeColor = UIColor(red: 0.85, green: 0.47, blue: 0.02, alpha: 0.95)
-            case .resting:
-                // Low NDVI pruned canopy (Crimson #DC2626)
-                fillColor = UIColor(red: 0.86, green: 0.15, blue: 0.15, alpha: 0.45)
-                strokeColor = UIColor(red: 0.86, green: 0.15, blue: 0.15, alpha: 0.95)
-            }
-
-            renderer.fillColor = fillColor
-            renderer.strokeColor = strokeColor
-            renderer.lineWidth = 2.5
+            renderer.fillColor = fillColor(for: field)
+            renderer.strokeColor = isSelected ? .white : strokeColor(for: field)
+            renderer.lineWidth = isSelected ? 4.0 : 2.5
             return renderer
         }
 
@@ -168,7 +203,10 @@ struct InteractiveMapView: UIViewRepresentable {
 
                 if let renderer = mapView.renderer(for: overlay) as? MKPolygonRenderer {
                     let pointInRenderer = renderer.point(for: mapPoint)
-                    if renderer.path.contains(pointInRenderer) {
+                    if let path = renderer.path, path.contains(pointInRenderer) {
+                        parent.onSelectField(field)
+                        return
+                    } else if fieldPolygon.boundingMapRect.contains(mapPoint) {
                         parent.onSelectField(field)
                         return
                     }
