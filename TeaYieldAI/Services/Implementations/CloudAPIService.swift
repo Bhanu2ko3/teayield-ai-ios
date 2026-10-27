@@ -25,6 +25,14 @@ final class CloudAPIService: APIServiceProtocol {
         return tokenResponse
     }
 
+    func fetchCurrentUserProfile() async throws -> UserProfileDTO {
+        try await execute(.getMe)
+    }
+
+    func fetchEstates() async throws -> [EstateResponseDTO] {
+        try await execute(.listEstates)
+    }
+
     func fetchEstate(id: UUID) async throws -> EstateResponseDTO {
         try await execute(.getEstate(id: id))
     }
@@ -33,12 +41,24 @@ final class CloudAPIService: APIServiceProtocol {
         try await execute(.getFields(estateId: estateId))
     }
 
+    func fetchFieldNDVI(fieldId: UUID, limit: Int? = 12) async throws -> [NDVILogResponseDTO] {
+        try await execute(.getFieldNDVI(fieldId: fieldId, limit: limit))
+    }
+
+    func fetchFieldWeather(fieldId: UUID, limit: Int? = 12) async throws -> [WeatherLogResponseDTO] {
+        try await execute(.getFieldWeather(fieldId: fieldId, limit: limit))
+    }
+
     func fetchDailyTasks(estateId: UUID, dayIndex: Int? = nil) async throws -> DailySupervisorTasksResponseDTO {
         try await execute(.getDailyTasks(estateId: estateId, dayIndex: dayIndex))
     }
 
     func syncHarvestBatch(_ batch: HarvestSyncBatchDTO) async throws -> HarvestSyncResponseDTO {
         try await execute(.syncHarvest(batch))
+    }
+
+    func fetchHarvestLogs(fieldId: UUID? = nil, limit: Int? = 50, offset: Int? = 0) async throws -> [HarvestLogRecordResponseDTO] {
+        try await execute(.getHarvestLogs(fieldId: fieldId, limit: limit, offset: offset))
     }
 
     // MARK: - Private Request Executor

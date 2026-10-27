@@ -93,7 +93,7 @@ struct HarvestWeighingFormView: View {
                     .foregroundColor(.secondary)
                     .frame(width: 100, alignment: .leading)
 
-                TextField("e.g. EMP-4012", text: $viewModel.pluckerId)
+                TextField("Enter plucker ID", text: $viewModel.pluckerId)
                     .autocapitalization(.allCharacters)
                     .disableAutocorrection(true)
             }
@@ -103,7 +103,7 @@ struct HarvestWeighingFormView: View {
                     .foregroundColor(.secondary)
                     .frame(width: 100, alignment: .leading)
 
-                TextField("Plucker Full Name", text: $viewModel.pluckerName)
+                TextField("Enter plucker name", text: $viewModel.pluckerName)
                     .autocapitalization(.words)
                     .disableAutocorrection(true)
             }
@@ -117,7 +117,7 @@ struct HarvestWeighingFormView: View {
                     .foregroundColor(.secondary)
                     .frame(width: 100, alignment: .leading)
 
-                TextField("0.0", text: $viewModel.grossWeightInput)
+                TextField("Enter gross weight", text: $viewModel.grossWeightInput)
                     .keyboardType(.decimalPad)
 
                 Text("kg")
@@ -130,7 +130,7 @@ struct HarvestWeighingFormView: View {
                         .foregroundColor(.secondary)
                         .frame(width: 100, alignment: .leading)
 
-                    TextField("1.5", text: $viewModel.bagTareWeightInput)
+                    TextField("Enter tare weight", text: $viewModel.bagTareWeightInput)
                         .keyboardType(.decimalPad)
 
                     Text("kg")

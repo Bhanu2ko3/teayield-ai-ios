@@ -41,9 +41,7 @@ final class BiometricAuthManager {
     var biometryType: BiometryType {
         let context = LAContext()
         var error: NSError?
-        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-            return .none
-        }
+        _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
 
         switch context.biometryType {
         case .faceID:
@@ -51,14 +49,24 @@ final class BiometricAuthManager {
         case .touchID:
             return .touchID
         default:
+            #if targetEnvironment(simulator)
+            return .faceID
+            #else
             return .none
+            #endif
         }
     }
 
     /// Evaluates whether the device possesses enrolled and functional biometrics.
     var canEvaluateBiometrics: Bool {
         let context = LAContext()
-        return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        var error: NSError?
+        let can = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return can
+        #endif
     }
 
     /// Prompts for Face ID or Touch ID verification with device passcode fallback.

@@ -102,6 +102,10 @@ final class OfflineSyncManager: ObservableObject, SyncManagerProtocol {
             message = "Successfully synced \(response.processedRecords) record(s)."
         }
 
+        if response.processedRecords > 0 {
+            NotificationManager.shared.sendSyncConfirmation(recordsCount: response.processedRecords)
+        }
+
         let result = SyncResult(
             processedCount: response.processedRecords,
             failedCount: response.failedRecords,

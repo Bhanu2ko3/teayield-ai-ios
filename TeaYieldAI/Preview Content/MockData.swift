@@ -4,36 +4,36 @@ import CoreLocation
 /// Mock sample data used for SwiftUI previews and offline unit tests.
 enum MockData {
 
-    // MARK: - Pedro Estate Sample IDs
+    // MARK: - Nuwara Eliya Estate Sample IDs
     
-    static let pedroEstateId = UUID(uuidString: "3b241101-5231-4822-a982-f87c126d4001")!
-    static let pedroEstateCentroid = CLLocationCoordinate2D(latitude: 6.9642, longitude: 80.7932)
+    static let nuwaraEliyaEstateId = UUID(uuidString: "3b241101-5231-4822-a982-f87c126d4001")!
+    static let nuwaraEliyaEstateCentroid = CLLocationCoordinate2D(latitude: 6.9642, longitude: 80.7932)
 
     // MARK: - User Profiles
     
     static let supervisor = UserProfile(
         id: UUID(uuidString: "55555555-6666-7777-8888-999999999999")!,
-        email: "kusal@pedroestates.lk",
+        email: "supervisor@nuwaraeliya.estate.lk",
         fullName: "Kusal Bandara",
         role: .fieldSupervisor,
         employeeId: "SUP-402",
-        estateId: pedroEstateId
+        estateId: nuwaraEliyaEstateId
     )
     
     static let manager = UserProfile(
         id: UUID(uuidString: "66666666-7777-8888-9999-000000000000")!,
-        email: "bhanuka@pedroestates.lk",
+        email: "manager@nuwaraeliya.estate.lk",
         fullName: "Bhanuka Bandara",
         role: .estateManager,
         employeeId: "MGR-082",
-        estateId: pedroEstateId
+        estateId: nuwaraEliyaEstateId
     )
 
     // MARK: - Tea Fields
     
     static let fieldBlockA = TeaField(
         id: UUID(uuidString: "7c9e6679-7425-40de-944b-e07fc1f90ae7")!,
-        estateId: pedroEstateId,
+        estateId: nuwaraEliyaEstateId,
         name: "Upper Division Block A",
         blockCode: "UD-BLK-A",
         acreage: 12.50,
@@ -52,7 +52,7 @@ enum MockData {
     
     static let fieldBlockB = TeaField(
         id: UUID(uuidString: "8d1f7780-8536-41ef-055c-f18fd2a01bf8")!,
-        estateId: pedroEstateId,
+        estateId: nuwaraEliyaEstateId,
         name: "Middle Valley Block B",
         blockCode: "MV-BLK-B",
         acreage: 15.00,
@@ -71,7 +71,7 @@ enum MockData {
     
     static let fieldBlockC = TeaField(
         id: UUID(uuidString: "9e2a8891-9647-42f0-166d-a29fe3b12ca9")!,
-        estateId: pedroEstateId,
+        estateId: nuwaraEliyaEstateId,
         name: "Lower Ravine Block C",
         blockCode: "LR-BLK-C",
         acreage: 9.80,

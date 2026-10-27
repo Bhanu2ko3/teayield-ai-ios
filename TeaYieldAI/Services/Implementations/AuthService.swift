@@ -8,7 +8,11 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
     @Published public private(set) var isAuthenticated: Bool = false
 
     var isBiometricAvailable: Bool {
-        biometricManager.canEvaluateBiometrics && keychain.readString(forKey: KeychainHelper.Key.accessToken) != nil
+        biometricManager.canEvaluateBiometrics
+    }
+
+    var hasEnrolledBiometricCredentials: Bool {
+        keychain.readString(forKey: KeychainHelper.Key.accessToken) != nil
     }
 
     var biometricType: BiometryType {
@@ -61,7 +65,7 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
     func authenticateWithBiometrics() async throws -> UserProfile {
         guard let cachedToken = keychain.readString(forKey: KeychainHelper.Key.accessToken),
               let cachedUser = keychain.readCodable(UserProfile.self, forKey: KeychainHelper.Key.currentUser) else {
-            throw BiometricError.failed("No stored credentials found. Please log in with email and password first.")
+            throw BiometricError.failed("No linked biometric profile found. Please sign in with your enterprise email and password once to enable \(biometricType.rawValue) on this device.")
         }
 
         let prompt = "Authenticate with \(biometricType.rawValue) to unlock TeaYield AI"

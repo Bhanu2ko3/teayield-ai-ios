@@ -17,6 +17,9 @@ struct TeaYieldAIApp: App {
         WindowGroup {
             RootView(container: container)
                 .environment(\.managedObjectContext, container.persistenceController.container.viewContext)
+                .task {
+                    _ = await NotificationManager.shared.requestAuthorization()
+                }
         }
     }
 }

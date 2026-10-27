@@ -14,6 +14,8 @@ final class TodayTasksViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showErrorAlert: Bool = false
 
+    @Published var estateName: String = ""
+
     var totalTargetKg: Double {
         tasks.reduce(0.0) { $0 + $1.targetWeightKg }
     }
@@ -31,12 +33,27 @@ final class TodayTasksViewModel: ObservableObject {
         tasks.reduce(0) { $0 + $1.assignedPluckersCount }
     }
 
+    var estateDisplayName: String {
+        if !estateName.isEmpty {
+            return estateName
+        }
+        if let user = authService.currentUser {
+            return "Estate #\(user.estateId.uuidString.prefix(6).uppercased())"
+        }
+        return "Central Tea Plantation"
+    }
+
+    var activeArrivalFieldName: String {
+        tasks.first?.fieldName ?? "Assigned Field"
+    }
+
     private let apiService: APIServiceProtocol
     private let syncManager: SyncManagerProtocol
     private let fieldRepository: FieldRepositoryProtocol
     private let harvestRepository: HarvestRepositoryProtocol
     private let authService: AuthServiceProtocol
     private let tasksCacheKey = "teayield.cache.today_tasks"
+    private var hasDispatchedGeofenceNotification: Bool = false
 
     init(
         apiService: APIServiceProtocol,
@@ -91,12 +108,22 @@ final class TodayTasksViewModel: ObservableObject {
                 try? await fieldRepository.saveFields(domainFields)
             }
 
+            // Fetch estate enterprise profile dynamically
+            if let estate = try? await apiService.fetchEstate(id: user.estateId) {
+                self.estateName = estate.name
+            }
+
             self.isLoading = false
         } catch {
             // Offline fallback: load cached official schedule
             self.isOffline = true
             loadTasksFromOfflineCache()
             self.isLoading = false
+        }
+
+        if !hasDispatchedGeofenceNotification, let active = tasks.first {
+            hasDispatchedGeofenceNotification = true
+            NotificationManager.shared.sendGeofenceArrivalAlert(fieldName: active.fieldName)
         }
 
         await refreshPendingSyncCount()

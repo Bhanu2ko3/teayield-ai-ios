@@ -15,6 +15,10 @@ final class AuthViewModel: ObservableObject {
         authService.isBiometricAvailable
     }
 
+    var hasEnrolledBiometricCredentials: Bool {
+        authService.hasEnrolledBiometricCredentials
+    }
+
     var biometricType: BiometryType {
         authService.biometricType
     }
@@ -34,6 +38,19 @@ final class AuthViewModel: ObservableObject {
     }
 
     // MARK: - Actions
+
+    /// Selects pre-configured enterprise demonstration accounts for testing and viva evaluation.
+    func selectDemoProfile(role: UserRole) {
+        errorMessage = nil
+        switch role {
+        case .fieldSupervisor:
+            email = "supervisor@nuwaraeliya.estate.lk"
+            password = "Password123!"
+        case .estateManager:
+            email = "manager@nuwaraeliya.estate.lk"
+            password = "Password123!"
+        }
+    }
 
     /// Authenticates the user with email and password against the FastAPI backend.
     func login() async {
@@ -67,7 +84,13 @@ final class AuthViewModel: ObservableObject {
     /// Triggers local biometric Face ID or Touch ID authentication using cached Keychain tokens.
     func authenticateWithBiometrics() async {
         guard isBiometricAvailable else {
-            errorMessage = "Biometric credentials are not available. Please sign in with your email and password first."
+            errorMessage = "Biometric hardware is not available on this device."
+            showErrorAlert = true
+            return
+        }
+
+        guard hasEnrolledBiometricCredentials else {
+            errorMessage = "Please sign in with your enterprise email and password once. After your first sign in, \(biometricType.rawValue) will be activated for instant access."
             showErrorAlert = true
             return
         }
