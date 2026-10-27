@@ -85,7 +85,7 @@ Rather than using physical sensors, the spatial boundary of each tea field is lo
   These bands are used to calculate the Normalized Difference Vegetation Index (NDVI):
   $$\text{NDVI} = \frac{\text{NIR} - \text{Red}}{\text{NIR} + \text{Red}}$$
   
-  **Agricultural Interpretation:** Healthy, newly grown tea shoots and buds (දළු) exhibit high chlorophyll activity (absorbing Red light) and fresh cell density (reflecting NIR light), resulting in a high NDVI value (0.75 - 0.85). After plucking, the field consists of mature leaves and bare stems, causing the NDVI to drop to 0.50 - 0.60. Thus, temporal shifts in NDVI directly represent harvest readiness.
+  **Agricultural Interpretation:** Healthy, newly grown tea shoots and buds exhibit high chlorophyll activity (absorbing Red light) and fresh cell density (reflecting NIR light), resulting in a high NDVI value (0.75 - 0.85). After plucking, the field consists of mature leaves and bare stems, causing the NDVI to drop to 0.50 - 0.60. Thus, temporal shifts in NDVI directly represent harvest readiness.
 * **Climate Data:** Historical weather data (daily rainfall, humidity, and temperature) is extracted using the **Open-Meteo API** based on the estate's GPS coordinates.
 
 #### 5.2 Temporal Data Alignment & Preprocessing

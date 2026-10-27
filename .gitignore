@@ -102,3 +102,16 @@ secrets.json
 *.agentreport.md
 AGENT_REPORT.md
 .gemini/
+
+# ------------------------------------------------------------------------------
+# Local Machine Learning Datasets & Raw Archives (Untracked)
+# ------------------------------------------------------------------------------
+dataset/
+data/
+test_images/
+*.zip
+*.tar.gz
+*.venv/
+venv/
+__pycache__/
+*.pyc
