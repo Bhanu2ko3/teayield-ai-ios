@@ -7,6 +7,8 @@ struct SupervisorMainTabView: View {
     private let container: AppContainerProtocol
     @State private var selectedTab: Tab = .tasks
     @State private var showingWeighingSheet: Bool = false
+    @State private var scannedFineLeafRatio: Double? = nil
+    @State private var preselectedFieldId: UUID? = nil
 
     enum Tab: Hashable {
         case tasks
@@ -27,19 +29,34 @@ struct SupervisorMainTabView: View {
                 }
                 .tag(Tab.tasks)
 
-            LeafScannerPlaceholderView {
-                showingWeighingSheet = true
-            }
+            LeafScannerView(
+                viewModel: LeafScannerViewModel(
+                    cameraService: container.cameraService,
+                    classifier: container.leafClassifier
+                ),
+                onRecordWeighingTap: { ratio in
+                    self.scannedFineLeafRatio = ratio
+                    self.preselectedFieldId = nil
+                    self.showingWeighingSheet = true
+                }
+            )
             .tabItem {
                 Label("Scanner", systemImage: "viewfinder")
             }
             .tag(Tab.scanner)
 
-            FieldMapPlaceholderView(fieldRepository: container.fieldRepository)
-                .tabItem {
-                    Label("Map", systemImage: "map.fill")
+            FieldMapView(
+                viewModel: FieldMapViewModel(fieldRepository: container.fieldRepository),
+                onRecordWeighingTap: { field in
+                    self.preselectedFieldId = field.id
+                    self.scannedFineLeafRatio = nil
+                    self.showingWeighingSheet = true
                 }
-                .tag(Tab.map)
+            )
+            .tabItem {
+                Label("Map", systemImage: "map.fill")
+            }
+            .tag(Tab.map)
 
             SupervisorSettingsView(container: container)
                 .tabItem {
@@ -49,13 +66,29 @@ struct SupervisorMainTabView: View {
         }
         .accentColor(AppTheme.emerald)
         .sheet(isPresented: $showingWeighingSheet) {
-            HarvestWeighingFormView(viewModel: HarvestWeighingViewModel(
-                harvestRepository: container.harvestRepository,
-                fieldRepository: container.fieldRepository,
-                syncManager: container.syncManager,
-                authService: container.authService,
-                apiService: container.apiService
-            ))
+            weighingSheet
         }
+    }
+
+    @ViewBuilder
+    private var weighingSheet: some View {
+        let viewModel = HarvestWeighingViewModel(
+            harvestRepository: container.harvestRepository,
+            fieldRepository: container.fieldRepository,
+            syncManager: container.syncManager,
+            authService: container.authService,
+            apiService: container.apiService
+        )
+        let _ = {
+            if let ratio = scannedFineLeafRatio {
+                viewModel.fineLeafRatio = ratio
+            }
+            if let fieldId = preselectedFieldId {
+                viewModel.selectedFieldId = fieldId
+            }
+        }()
+
+        HarvestWeighingFormView(viewModel: viewModel)
+    }
     }
 }

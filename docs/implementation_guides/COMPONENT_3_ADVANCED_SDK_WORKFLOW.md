@@ -39,11 +39,11 @@ Component 3 is a mandatory assessment component carrying **20% overall coursewor
 
 | # | Feature Requirement | Current Workspace Status | Target Deliverable & Implementation Scope |
 |---|---|:---:|---|
-| **1** | **Leaf Shoot Core ML Model** | [PENDING GENERATION] | Lightweight MobileNetV3-Small classifier (`TeaShootClassifier.mlmodel`) trained on 4 temporal maturity classes (`1-2 Days`, `3-4 Days`, `5-7 Days`, `7+ Days`) with Swift composite fine-leaf aggregation. Exported via `coremltools` directly into the iOS bundle. |
-| **2** | **Live Vision Scanner Pipeline** | [PLACEHOLDER VIEW ACTIVE] | `AVCaptureSession` video data pipeline feeding `CVPixelBuffer` frames into `VNCoreMLRequest` on Apple Silicon Neural Engine at 60fps with zero cellular signal. |
-| **3** | **Real-Time Viewfinder HUD** | [PLACEHOLDER VIEW ACTIVE] | Declarative SwiftUI camera overlay displaying fine leaf percentage gauge, Grade A export benchmark indicator (85% fine leaf threshold), and direct handoff to harvest weighing. |
-| **4** | **PhotosUI Library Picker** | [PENDING DESIGN] | Native `PhotosPicker` allowing supervisors to inspect high-resolution batch photos from device storage alongside the live camera feed inside the QEMU simulator or physical hardware. |
-| **5** | **MapKit Spatial GIS Polygons** | [PLACEHOLDER VIEW ACTIVE] | Vector polygon rendering (`MKPolygon` / `MKPolygonRenderer`) reading field GeoJSON coordinates from Core Data, dynamically color-coded by vegetative NDVI canopy health. |
+| **1** | **Leaf Shoot Core ML Model** | [COMPLETED] | Lightweight MobileNetV3-Small classifier (`TeaShootClassifier_v2.mlmodel`, 5.79 MB) with 92.66% 4-class accuracy and 95.87% composite fine leaf accuracy. Saved in bundle. |
+| **2** | **Live Vision Scanner Pipeline** | [COMPLETED] | `AVCaptureSession` video data pipeline (`CameraService.swift`) feeding `CVPixelBuffer` frames into `VNCoreMLRequest` on Apple Silicon Neural Engine via `VisionLeafClassifier.swift`. |
+| **3** | **Real-Time Viewfinder HUD** | [COMPLETED] | Declarative SwiftUI camera overlay (`LeafScannerView.swift`, `ScannerHudOverlayView.swift`) displaying fine leaf percentage gauge, Grade A export benchmark indicator (85%), and direct handoff to harvest weighing. |
+| **4** | **PhotosUI Library Picker** | [COMPLETED] | Native `PhotosPicker` allowing supervisors to inspect high-resolution batch photos from device storage alongside the live camera feed inside the QEMU simulator or physical hardware. |
+| **5** | **MapKit Spatial GIS Polygons** | [COMPLETED] | Vector polygon rendering (`InteractiveMapView.swift`, `MKPolygonRenderer`) reading field GeoJSON coordinates from Core Data, dynamically color-coded by vegetative NDVI canopy health with interactive detail sheet. |
 | **6** | **Low-Power Geofencing Engine** | [PENDING SERVICE] | `CoreLocation` boundary monitoring (`CLCircularRegion`) tracking supervisor proximity to scheduled fields and triggering local arrival notifications (`UNNotification`). |
 
 ---

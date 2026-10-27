@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABC880308D0B0100E22417 /* GeoJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC881308D0B0100E22417 /* GeoJSONParser.swift */; };
+		74ABC882308D0B0100E22417 /* TeaFieldMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */; };
+		74ABC884308D0B0100E22417 /* FieldMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */; };
+		74ABC886308D0B0100E22417 /* InteractiveMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC887308D0B0100E22417 /* InteractiveMapView.swift */; };
+		74ABC888308D0B0100E22417 /* FieldDetailBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC889308D0B0100E22417 /* FieldDetailBottomSheetView.swift */; };
+		74ABC88A308D0B0100E22417 /* FieldMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC88B308D0B0100E22417 /* FieldMapView.swift */; };
+		74ABC860308D0A0100E22417 /* LeafQualityAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */; };
+		74ABC862308D0A0100E22417 /* CameraServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC863308D0A0100E22417 /* CameraServiceProtocol.swift */; };
+		74ABC864308D0A0100E22417 /* VisionLeafClassifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC865308D0A0100E22417 /* VisionLeafClassifierProtocol.swift */; };
+		74ABC866308D0A0100E22417 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC867308D0A0100E22417 /* CameraService.swift */; };
+		74ABC868308D0A0100E22417 /* VisionLeafClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC869308D0A0100E22417 /* VisionLeafClassifier.swift */; };
+		74ABC86A308D0A0100E22417 /* LeafScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */; };
+		74ABC86C308D0A0100E22417 /* LeafScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC86D308D0A0100E22417 /* LeafScannerView.swift */; };
+		74ABC86E308D0A0100E22417 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC86F308D0A0100E22417 /* CameraPreviewView.swift */; };
+		74ABC870308D0A0100E22417 /* ScannerHudOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC871308D0A0100E22417 /* ScannerHudOverlayView.swift */; };
+		74ABC872308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC873308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel */; };
+		74ABC874308D0A0100E22417 /* TeaShootClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC875308D0A0100E22417 /* TeaShootClassifier.mlmodel */; };
+		74ABC876308D0A0100E22417 /* sample_fine_shoot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 74ABC877308D0A0100E22417 /* sample_fine_shoot.jpg */; };
+		74ABC878308D0A0100E22417 /* sample_coarse_leaf.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 74ABC879308D0A0100E22417 /* sample_coarse_leaf.jpg */; };
 		74ABC773308D036800E22417 /* TeaYieldAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC772308D036800E22417 /* TeaYieldAITests.swift */; };
 		74ABC77D308D036800E22417 /* TeaYieldAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77C308D036800E22417 /* TeaYieldAIUITests.swift */; };
 		74ABC77F308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77E308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift */; };
@@ -98,6 +117,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABC881308D0B0100E22417 /* GeoJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONParser.swift; sourceTree = "<group>"; };
+		74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaFieldMapItem.swift; sourceTree = "<group>"; };
+		74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapViewModel.swift; sourceTree = "<group>"; };
+		74ABC887308D0B0100E22417 /* InteractiveMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveMapView.swift; sourceTree = "<group>"; };
+		74ABC889308D0B0100E22417 /* FieldDetailBottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldDetailBottomSheetView.swift; sourceTree = "<group>"; };
+		74ABC88B308D0B0100E22417 /* FieldMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapView.swift; sourceTree = "<group>"; };
+		74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafQualityAssessment.swift; sourceTree = "<group>"; };
+		74ABC863308D0A0100E22417 /* CameraServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraServiceProtocol.swift; sourceTree = "<group>"; };
+		74ABC865308D0A0100E22417 /* VisionLeafClassifierProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionLeafClassifierProtocol.swift; sourceTree = "<group>"; };
+		74ABC867308D0A0100E22417 /* CameraService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
+		74ABC869308D0A0100E22417 /* VisionLeafClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionLeafClassifier.swift; sourceTree = "<group>"; };
+		74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerViewModel.swift; sourceTree = "<group>"; };
+		74ABC86D308D0A0100E22417 /* LeafScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerView.swift; sourceTree = "<group>"; };
+		74ABC86F308D0A0100E22417 /* CameraPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		74ABC871308D0A0100E22417 /* ScannerHudOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerHudOverlayView.swift; sourceTree = "<group>"; };
+		74ABC873308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = TeaShootClassifier_v2.mlmodel; sourceTree = "<group>"; };
+		74ABC875308D0A0100E22417 /* TeaShootClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = TeaShootClassifier.mlmodel; sourceTree = "<group>"; };
+		74ABC877308D0A0100E22417 /* sample_fine_shoot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sample_fine_shoot.jpg"; sourceTree = "<group>"; };
+		74ABC879308D0A0100E22417 /* sample_coarse_leaf.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sample_coarse_leaf.jpg"; sourceTree = "<group>"; };
 		74ABC75E308D036400E22417 /* TeaYieldAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeaYieldAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeaYieldAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		74ABC772308D036800E22417 /* TeaYieldAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAITests.swift; sourceTree = "<group>"; };
@@ -292,11 +330,21 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		74ABC79A308D053100E22417 /* Models */ = {
+				74ABC87A308D0A0100E22417 /* CoreML */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC873308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel */,
+				74ABC875308D0A0100E22417 /* TeaShootClassifier.mlmodel */,
+			);
+			path = CoreML;
+			sourceTree = "<group>";
+		};
+74ABC79A308D053100E22417 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				74ABC79B308D053100E22417 /* DTOs */,
 				74ABC7A2308D053100E22417 /* Domain */,
+				74ABC87A308D0A0100E22417 /* CoreML */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -317,6 +365,8 @@
 		74ABC7A2308D053100E22417 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */,
+				74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */,
 				74ABC7A3308D053100E22417 /* HarvestRecord.swift */,
 				74ABC7A4308D053100E22417 /* TeaField.swift */,
 				74ABC7A5308D053100E22417 /* UserProfile.swift */,
@@ -376,6 +426,7 @@
 		74ABC7B1308D053100E22417 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC881308D0B0100E22417 /* GeoJSONParser.swift */,
 				74ABC7B2308D053100E22417 /* AppConfiguration.swift */,
 				74ABC801308D070100E22417 /* AppTheme.swift */,
 			);
@@ -394,6 +445,8 @@
 		74ABC7B4308D053100E22417 /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC867308D0A0100E22417 /* CameraService.swift */,
+				74ABC869308D0A0100E22417 /* VisionLeafClassifier.swift */,
 				74ABC7B5308D053100E22417 /* OfflineSyncManager.swift */,
 				74ABC7B6308D053100E22417 /* AuthService.swift */,
 				74ABC7B7308D053100E22417 /* CloudAPIService.swift */,
@@ -404,6 +457,8 @@
 		74ABC7B8308D053100E22417 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC863308D0A0100E22417 /* CameraServiceProtocol.swift */,
+				74ABC865308D0A0100E22417 /* VisionLeafClassifierProtocol.swift */,
 				74ABC7B9308D053100E22417 /* AuthServiceProtocol.swift */,
 				74ABC7BA308D053100E22417 /* SyncManagerProtocol.swift */,
 				74ABC7BB308D053100E22417 /* APIServiceProtocol.swift */,
@@ -414,6 +469,8 @@
 		74ABC7BC308D053100E22417 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */,
+				74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */,
 				74ABC7BD308D053100E22417 /* TodayTasksViewModel.swift */,
 				74ABC7BE308D053100E22417 /* AuthViewModel.swift */,
 				74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */,
@@ -482,6 +539,8 @@
 		74ABC7C5308D053100E22417 /* Supervisor */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC88B308D0B0100E22417 /* FieldMapView.swift */,
+				74ABC86D308D0A0100E22417 /* LeafScannerView.swift */,
 				74ABC803308D070100E22417 /* SupervisorMainTabView.swift */,
 				74ABC7C6308D053100E22417 /* TodayTasksView.swift */,
 				74ABC7C7308D053100E22417 /* Components */,
@@ -503,7 +562,11 @@
 				74ABC824308D080100E22417 /* NotificationSettingsSectionView.swift */,
 				74ABC825308D080100E22417 /* AppInfoSectionView.swift */,
 				74ABC826308D080100E22417 /* LeafScannerPlaceholderView.swift */,
+				74ABC86F308D0A0100E22417 /* CameraPreviewView.swift */,
+				74ABC871308D0A0100E22417 /* ScannerHudOverlayView.swift */,
 				74ABC827308D080100E22417 /* FieldMapPlaceholderView.swift */,
+				74ABC887308D0B0100E22417 /* InteractiveMapView.swift */,
+				74ABC889308D0B0100E22417 /* FieldDetailBottomSheetView.swift */,
 				74ABC828308D080100E22417 /* GeofenceArrivalBannerView.swift */,
 				74ABC829308D080100E22417 /* KpiSummaryRowView.swift */,
 				74ABC843308D090100E22417 /* HarvestRecordRowView.swift */,
@@ -514,6 +577,8 @@
 		74ABC7CB308D053100E22417 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC877308D0A0100E22417 /* sample_fine_shoot.jpg */,
+				74ABC879308D0A0100E22417 /* sample_coarse_leaf.jpg */,
 				74ABC7CC308D053100E22417 /* MockData.swift */,
 			);
 			path = "Preview Content";
