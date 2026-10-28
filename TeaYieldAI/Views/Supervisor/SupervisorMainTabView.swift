@@ -68,7 +68,8 @@ struct SupervisorMainTabView: View {
                 }
                 .tag(Tab.settings)
         }
-        .accentColor(AppTheme.emerald)
+        .tint(AppTheme.emerald)
+        .applyAppTheme()
         .onChange(of: selectedTab) { _ in
             HapticFeedback.selection()
         }
@@ -90,6 +91,7 @@ struct SupervisorMainTabView: View {
                 initialFineLeafRatio: scannedFineLeafRatio
             )
         )
+        .applyAppTheme()
     }
 }
 

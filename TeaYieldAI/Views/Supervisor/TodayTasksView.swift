@@ -5,6 +5,7 @@ struct TodayTasksView: View {
 
     @StateObject private var viewModel: TodayTasksViewModel
     @State private var showingWeighingSheet = false
+    @State private var showingProfileSheet = false
     @State private var selectedFieldForWeighing: UUID?
 
     private let container: AppContainerProtocol
@@ -48,15 +49,20 @@ struct TodayTasksView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    HStack(spacing: 6) {
-                        Image(systemName: "leaf.fill")
-                            .font(.system(size: 12))
-                            .foregroundColor(AppTheme.emerald)
-                        Text(viewModel.estateDisplayName)
-                            .font(.appCallout)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
+                    Button {
+                        showingProfileSheet = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "leaf.fill")
+                                .font(.system(size: 12))
+                                .foregroundColor(AppTheme.emerald)
+                            Text(viewModel.estateDisplayName)
+                                .font(.appCallout)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
+                        }
                     }
+                    .accessibilityLabel("View enterprise officer profile")
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -88,6 +94,14 @@ struct TodayTasksView: View {
             }
             .sheet(isPresented: $showingWeighingSheet) {
                 weighingSheetContent
+            }
+            .sheet(isPresented: $showingProfileSheet) {
+                UserProfileView(
+                    authService: container.authService,
+                    apiService: container.apiService,
+                    harvestRepository: container.harvestRepository,
+                    fieldRepository: container.fieldRepository
+                )
             }
             .task {
                 await viewModel.loadTodayTasks()
@@ -194,27 +208,6 @@ struct TodayTasksView: View {
                             }
                         }
                     )
-                    .contextMenu {
-                        Button {
-                            if viewModel.activeGeofencedField?.id == task.fieldId {
-                                viewModel.simulateExit()
-                            } else {
-                                viewModel.simulateArrival(at: task)
-                            }
-                        } label: {
-                            Label(
-                                viewModel.activeGeofencedField?.id == task.fieldId ? "Simulate Geofence Exit" : "Simulate Geofence Arrival",
-                                systemImage: "location.fill"
-                            )
-                        }
-
-                        Button {
-                            selectedFieldForWeighing = task.fieldId
-                            showingWeighingSheet = true
-                        } label: {
-                            Label("Weigh Green Leaf", systemImage: "scalemass.fill")
-                        }
-                    }
                 }
             }
         }
@@ -229,6 +222,7 @@ struct TodayTasksView: View {
             apiService: container.apiService,
             initialFieldId: selectedFieldForWeighing
         ))
+        .applyAppTheme()
         .onDisappear {
             Task {
                 await viewModel.refreshPendingSyncCount()

@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 
 /// Production implementation of HarvestRepositoryProtocol managing offline green leaf weigh-in records.
-final class HarvestRepository: HarvestRepositoryProtocol {
+final class HarvestRepository: HarvestRepositoryProtocol, @unchecked Sendable {
 
     private let persistenceController: PersistenceController
 
@@ -42,6 +42,7 @@ final class HarvestRepository: HarvestRepositoryProtocol {
 
     func saveRecord(_ record: HarvestRecord) async throws {
         let backgroundContext = persistenceController.newBackgroundContext()
+        let controller = persistenceController
         try await backgroundContext.perform {
             let request = NSFetchRequest<HarvestLogEntity>(entityName: "HarvestLogEntity")
             request.predicate = NSPredicate(format: "id == %@", record.id as CVarArg)
@@ -55,7 +56,7 @@ final class HarvestRepository: HarvestRepositoryProtocol {
             }
 
             entity.update(from: record)
-            try self.persistenceController.save(context: backgroundContext)
+            try controller.save(context: backgroundContext)
         }
     }
 
@@ -63,6 +64,7 @@ final class HarvestRepository: HarvestRepositoryProtocol {
         guard !recordIds.isEmpty else { return }
 
         let backgroundContext = persistenceController.newBackgroundContext()
+        let controller = persistenceController
         try await backgroundContext.perform {
             let request = NSFetchRequest<HarvestLogEntity>(entityName: "HarvestLogEntity")
             request.predicate = NSPredicate(format: "id IN %@", recordIds as CVarArg)
@@ -72,7 +74,7 @@ final class HarvestRepository: HarvestRepositoryProtocol {
                 entity.isSynced = true
             }
 
-            try self.persistenceController.save(context: backgroundContext)
+            try controller.save(context: backgroundContext)
         }
     }
 }

@@ -3,6 +3,7 @@ import CoreML
 import Vision
 import CoreVideo
 import CoreGraphics
+import Darwin
 
 /// Domain errors encountered during edge Vision & Core ML inference.
 enum VisionClassifierError: LocalizedError {
@@ -27,7 +28,7 @@ enum VisionClassifierError: LocalizedError {
 
 /// Production implementation of on-device tea shoot maturity classifier.
 /// Runs 100% offline on the Apple Silicon Neural Engine via Apple Vision & Core ML.
-final class VisionLeafClassifier: VisionLeafClassifierProtocol {
+final class VisionLeafClassifier: VisionLeafClassifierProtocol, @unchecked Sendable {
 
     private var vnModel: VNCoreMLModel?
     private let initializationQueue = DispatchQueue(label: "com.teayield.classifier.initQueue", qos: .userInitiated)
@@ -43,14 +44,34 @@ final class VisionLeafClassifier: VisionLeafClassifierProtocol {
             guard let self = self else { return }
             do {
                 let model = try self.resolveAndCompileModel()
-                let visionModel = try VNCoreMLModel(for: model)
-                visionModel.featureProvider = nil
+                let visionModel = try self.createVisionModelSilencingDiagnostics(for: model)
                 self.vnModel = visionModel
             } catch {
                 // Handled gracefully during inference attempts
                 self.vnModel = nil
             }
         }
+    }
+
+    /// Creates a VNCoreMLModel while silencing internal CoreML evaluation parameter notices from the console.
+    private func createVisionModelSilencingDiagnostics(for model: MLModel) throws -> VNCoreMLModel {
+        fflush(stderr)
+        let savedStderr = dup(STDERR_FILENO)
+        let devNull = open("/dev/null", O_WRONLY)
+        if devNull >= 0 {
+            dup2(devNull, STDERR_FILENO)
+            close(devNull)
+        }
+
+        defer {
+            fflush(stderr)
+            dup2(savedStderr, STDERR_FILENO)
+            close(savedStderr)
+        }
+
+        let visionModel = try VNCoreMLModel(for: model)
+        visionModel.featureProvider = nil
+        return visionModel
     }
 
     private func resolveAndCompileModel() throws -> MLModel {
@@ -99,7 +120,7 @@ final class VisionLeafClassifier: VisionLeafClassifierProtocol {
                 }
                 do {
                     let raw = try self.resolveAndCompileModel()
-                    let visionModel = try VNCoreMLModel(for: raw)
+                    let visionModel = try self.createVisionModelSilencingDiagnostics(for: raw)
                     self.vnModel = visionModel
                     continuation.resume(returning: visionModel)
                 } catch {

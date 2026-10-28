@@ -7,9 +7,14 @@ struct LoginView: View {
     @StateObject private var viewModel: AuthViewModel
     @State private var isPasswordVisible: Bool = false
     @State private var selectedDemoRole: UserRole? = nil
+    @AppStorage("appThemeMode") private var appThemeMode: String = AppThemeMode.system.rawValue
 
     init(viewModel: AuthViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
+    }
+
+    private var currentThemeMode: AppThemeMode {
+        AppThemeMode(rawValue: appThemeMode) ?? .system
     }
 
     var body: some View {
@@ -20,6 +25,7 @@ struct LoginView: View {
 
                 ScrollView {
                     VStack(spacing: 24) {
+                        topAppearanceBar
                         headerSection
                         quickRoleSelectorSection
                         credentialFormSection
@@ -27,7 +33,7 @@ struct LoginView: View {
                         securityFooterSection
                     }
                     .padding(.horizontal, 24)
-                    .padding(.vertical, 28)
+                    .padding(.vertical, 16)
                 }
             }
             .navigationBarHidden(true)
@@ -36,10 +42,43 @@ struct LoginView: View {
             } message: {
                 Text(viewModel.errorMessage ?? "An unexpected authentication error occurred.")
             }
+            .applyAppTheme()
         }
     }
 
     // MARK: - Subviews
+
+    private var topAppearanceBar: some View {
+        HStack {
+            Spacer()
+            Menu {
+                ForEach(AppThemeMode.allCases) { mode in
+                    Button {
+                        HapticFeedback.selection()
+                        appThemeMode = mode.rawValue
+                    } label: {
+                        Label(mode.title, systemImage: mode.iconName)
+                    }
+                }
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: currentThemeMode.iconName)
+                    Text(currentThemeMode.shortTitle)
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Color(uiColor: .secondarySystemGroupedBackground))
+                .foregroundColor(AppTheme.emerald)
+                .cornerRadius(AppTheme.radiusPill)
+                .overlay(
+                    RoundedRectangle(cornerRadius: AppTheme.radiusPill)
+                        .stroke(AppTheme.borderSubtle, lineWidth: 1)
+                )
+            }
+            .accessibilityLabel("Appearance Theme Switcher: currently \(currentThemeMode.title)")
+        }
+    }
 
     private var headerSection: some View {
         VStack(spacing: 12) {
@@ -152,7 +191,7 @@ struct LoginView: View {
                     }
                 }
                 .padding(14)
-                .background(Color(uiColor: .secondarySystemGroupedBackground))
+                .background(Color(uiColor: .tertiarySystemGroupedBackground))
                 .cornerRadius(12)
             }
 
@@ -187,7 +226,7 @@ struct LoginView: View {
                     .accessibilityLabel(isPasswordVisible ? "Hide password" : "Show password")
                 }
                 .padding(14)
-                .background(Color(uiColor: .secondarySystemGroupedBackground))
+                .background(Color(uiColor: .tertiarySystemGroupedBackground))
                 .cornerRadius(12)
             }
 
@@ -211,9 +250,7 @@ struct LoginView: View {
             }
         }
         .padding(18)
-        .background(Color(uiColor: .secondarySystemGroupedBackground))
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 3)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 
     private var actionButtonsSection: some View {

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABCA26308D0E0000E22417 /* UserProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */; };
+		74ABCA21308D0E0000E22417 /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */; };
+		74ABCA23308D0E0000E22417 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA24308D0E0000E22417 /* UserProfileView.swift */; };
+		74ABC9A1308D0E0000E22417 /* AppearanceSettingsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC9A2308D0E0000E22417 /* AppearanceSettingsSectionView.swift */; };
 		74ABCA02308D0E0000E22417 /* YieldAnalyticsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */; };
 		74ABCA04308D0E0000E22417 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA03308D0E0000E22417 /* HapticFeedback.swift */; };
 		74ABCA06308D0E0000E22417 /* YieldComparisonChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */; };
@@ -150,6 +154,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewModelTests.swift; sourceTree = "<group>"; };
+		74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewModel.swift; sourceTree = "<group>"; };
+		74ABCA24308D0E0000E22417 /* UserProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		74ABC9A2308D0E0000E22417 /* AppearanceSettingsSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsSectionView.swift; sourceTree = "<group>"; };
 		74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldAnalyticsItem.swift; sourceTree = "<group>"; };
 		74ABCA03308D0E0000E22417 /* HapticFeedback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldComparisonChartView.swift; sourceTree = "<group>"; };
@@ -358,6 +366,7 @@
 		74ABC9E1308D0D0000E22417 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */,
 				74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */,
 				74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */,
 				74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */,
@@ -579,6 +588,7 @@
 		74ABC7BC308D053100E22417 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */,
 				74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */,
 				74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */,
 				74ABC7BD308D053100E22417 /* TodayTasksViewModel.swift */,
@@ -591,9 +601,18 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		74ABC7C0308D053100E22417 /* Views */ = {
+				74ABCA25308D0E0000E22417 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA24308D0E0000E22417 /* UserProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+74ABC7C0308D053100E22417 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCA25308D0E0000E22417 /* Profile */,
 				74ABC806308D070100E22417 /* Onboarding */,
 				74ABC7C1308D053100E22417 /* Auth */,
 				74ABC7C3308D053100E22417 /* Root */,
@@ -669,6 +688,7 @@
 		74ABC7C7308D053100E22417 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC9A2308D0E0000E22417 /* AppearanceSettingsSectionView.swift */,
 				74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */,
 				74ABC7C9308D053100E22417 /* TaskCardView.swift */,
 				74ABC821308D080100E22417 /* OfficerProfileCardView.swift */,
@@ -907,6 +927,9 @@
 				74ABC831308D080100E22417 /* OfficerProfileCardView.swift in Sources */,
 				74ABC832308D080100E22417 /* DataStorageSectionView.swift in Sources */,
 				74ABC833308D080100E22417 /* SecuritySettingsSectionView.swift in Sources */,
+				74ABCA21308D0E0000E22417 /* UserProfileViewModel.swift in Sources */,
+				74ABCA23308D0E0000E22417 /* UserProfileView.swift in Sources */,
+				74ABC9A1308D0E0000E22417 /* AppearanceSettingsSectionView.swift in Sources */,
 				74ABC834308D080100E22417 /* NotificationSettingsSectionView.swift in Sources */,
 				74ABC835308D080100E22417 /* AppInfoSectionView.swift in Sources */,
 				74ABC836308D080100E22417 /* LeafScannerPlaceholderView.swift in Sources */,
@@ -930,6 +953,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCA26308D0E0000E22417 /* UserProfileViewModelTests.swift in Sources */,
 				74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */,
 				74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */,
 				74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */,

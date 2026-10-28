@@ -72,6 +72,7 @@ struct HarvestWeighingFormView: View {
                 Text(viewModel.errorMessage ?? "Failed to save record.")
             }
         }
+        .applyAppTheme()
     }
 
     // MARK: - Sections
@@ -170,7 +171,7 @@ struct HarvestWeighingFormView: View {
 
                 Text(String(format: "%.2f kg", viewModel.netWeight))
                     .font(.system(size: 22, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(red: 0.02, green: 0.59, blue: 0.41))
+                    .foregroundColor(AppTheme.emerald)
             }
             .padding(.vertical, 4)
         }
@@ -187,11 +188,11 @@ struct HarvestWeighingFormView: View {
 
                     Text(String(format: "%.0f%%", viewModel.fineLeafRatio * 100.0))
                         .font(.headline)
-                        .foregroundColor(viewModel.isQualityExportGrade ? Color(red: 0.02, green: 0.59, blue: 0.41) : .orange)
+                        .foregroundColor(viewModel.isQualityExportGrade ? AppTheme.emerald : AppTheme.amber)
                 }
 
                 Slider(value: $viewModel.fineLeafRatio, in: 0.50...1.0, step: 0.05)
-                    .tint(viewModel.isQualityExportGrade ? Color(red: 0.02, green: 0.59, blue: 0.41) : .orange)
+                    .tint(viewModel.isQualityExportGrade ? AppTheme.emerald : AppTheme.amber)
 
                 HStack(spacing: 6) {
                     Image(systemName: viewModel.isQualityExportGrade ? "checkmark.seal.fill" : "exclamationmark.triangle.fill")
@@ -199,7 +200,7 @@ struct HarvestWeighingFormView: View {
                     Text(viewModel.isQualityExportGrade ? "Meets 85% Auction Benchmark (Two Leaves & A Bud)" : "Below 85% - High Coarse Leaf Ratio")
                         .font(.caption)
                 }
-                .foregroundColor(viewModel.isQualityExportGrade ? Color(red: 0.02, green: 0.59, blue: 0.41) : .orange)
+                .foregroundColor(viewModel.isQualityExportGrade ? AppTheme.emerald : AppTheme.amber)
             }
             .padding(.vertical, 4)
         }
@@ -223,8 +224,8 @@ struct HarvestWeighingFormView: View {
                         .font(.system(size: 10, weight: .bold))
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(Color(red: 0.02, green: 0.59, blue: 0.41).opacity(0.12))
-                        .foregroundColor(Color(red: 0.02, green: 0.59, blue: 0.41))
+                        .background(AppTheme.emerald.opacity(0.12))
+                        .foregroundColor(AppTheme.emerald)
                         .cornerRadius(4)
                 } else {
                     Text("Field Coordinates Pending Selection")

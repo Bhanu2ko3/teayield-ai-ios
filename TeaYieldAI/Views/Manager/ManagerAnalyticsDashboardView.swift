@@ -24,6 +24,7 @@ struct ManagerAnalyticsDashboardView: View {
         .background(Color(uiColor: .systemGroupedBackground))
         .navigationTitle("Harvest Analytics")
         .navigationBarTitleDisplayMode(.inline)
+        .applyAppTheme()
     }
 
     // MARK: - Subviews

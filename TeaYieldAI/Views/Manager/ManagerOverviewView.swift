@@ -5,6 +5,8 @@ struct ManagerOverviewView: View {
 
     @StateObject private var viewModel: ManagerOverviewViewModel
     private let container: AppContainerProtocol
+    @AppStorage("appThemeMode") private var appThemeMode: String = AppThemeMode.system.rawValue
+    @State private var showingFullProfileSheet: Bool = false
 
     init(container: AppContainerProtocol) {
         self.container = container
@@ -18,6 +20,10 @@ struct ManagerOverviewView: View {
         )
     }
 
+    private var currentThemeMode: AppThemeMode {
+        AppThemeMode(rawValue: appThemeMode) ?? .system
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -27,6 +33,7 @@ struct ManagerOverviewView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         managerProfileHeader
+                        AppearanceSettingsSectionView()
                         FactoryIntakeCardView(
                             currentIntakeKg: viewModel.totalHarvestTodayKg,
                             capacityCapKg: viewModel.factoryIntakeCapKg,
@@ -76,6 +83,10 @@ struct ManagerOverviewView: View {
             .navigationTitle("Executive Overview")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    themeMenuButton
+                }
+
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Log Out") {
                         viewModel.showingLogoutConfirmation = true
@@ -103,7 +114,34 @@ struct ManagerOverviewView: View {
             .task {
                 await viewModel.loadEstateTelemetry()
             }
+            .sheet(isPresented: $showingFullProfileSheet) {
+                UserProfileView(
+                    authService: container.authService,
+                    apiService: container.apiService,
+                    harvestRepository: container.harvestRepository,
+                    fieldRepository: container.fieldRepository
+                )
+            }
+            .applyAppTheme()
         }
+    }
+
+    private var themeMenuButton: some View {
+        Menu {
+            ForEach(AppThemeMode.allCases) { mode in
+                Button {
+                    HapticFeedback.selection()
+                    appThemeMode = mode.rawValue
+                } label: {
+                    Label(mode.title, systemImage: mode.iconName)
+                }
+            }
+        } label: {
+            Image(systemName: currentThemeMode.iconName)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(AppTheme.emerald)
+        }
+        .accessibilityLabel("Appearance Theme Switcher")
     }
 
     // MARK: - Subviews
@@ -157,6 +195,26 @@ struct ManagerOverviewView: View {
                         .foregroundColor(.secondary)
                 }
             }
+
+            Button {
+                showingFullProfileSheet = true
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "person.crop.circle.badge.checkmark")
+                        .font(.system(size: 13))
+                    Text("View Full Manager Profile")
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 11, weight: .bold))
+                }
+                .foregroundColor(AppTheme.emerald)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(AppTheme.emerald.opacity(0.08))
+                .cornerRadius(AppTheme.radiusSmall)
+            }
+            .accessibilityLabel("View full manager profile")
         }
         .padding(14)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)

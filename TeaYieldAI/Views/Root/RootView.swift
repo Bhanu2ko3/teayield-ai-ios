@@ -30,6 +30,7 @@ struct RootView: View {
                 LoginView(viewModel: AuthViewModel(authService: container.authService))
             }
         }
+        .applyAppTheme()
         .animation(.easeInOut(duration: 0.25), value: authService.isAuthenticated)
         .animation(.easeInOut(duration: 0.25), value: hasCompletedOnboarding)
     }

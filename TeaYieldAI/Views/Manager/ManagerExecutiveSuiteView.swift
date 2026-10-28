@@ -10,6 +10,7 @@ struct ManagerExecutiveSuiteView: View {
     @State private var selectedNavigationItem: ExecutiveNavDestination? = .overview
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var expandedFieldId: UUID? = nil
+    @AppStorage("appThemeMode") private var appThemeMode: String = AppThemeMode.system.rawValue
     @Namespace private var fieldCardAnimation
 
     enum ExecutiveNavDestination: String, CaseIterable, Identifiable {
@@ -17,6 +18,7 @@ struct ManagerExecutiveSuiteView: View {
         case spatialMap = "Estate Spatial GIS"
         case yieldAnalytics = "Harvest Analytics"
         case fieldRoster = "Division Blocks"
+        case profile = "Officer Profile"
         case diagnostics = "Offline & Diagnostics"
 
         var id: String { rawValue }
@@ -27,6 +29,7 @@ struct ManagerExecutiveSuiteView: View {
             case .spatialMap: return "map.fill"
             case .yieldAnalytics: return "chart.bar.xaxis"
             case .fieldRoster: return "leaf.fill"
+            case .profile: return "person.crop.circle.fill"
             case .diagnostics: return "gearshape.fill"
             }
         }
@@ -54,6 +57,7 @@ struct ManagerExecutiveSuiteView: View {
         .task {
             await viewModel.loadEstateTelemetry()
         }
+        .applyAppTheme()
     }
 
     // MARK: - Sidebar
@@ -93,6 +97,15 @@ struct ManagerExecutiveSuiteView: View {
                 }
             }
 
+            Section(header: Text("APPEARANCE")) {
+                Picker("Theme", selection: $appThemeMode) {
+                    ForEach(AppThemeMode.allCases) { mode in
+                        Text(mode.shortTitle).tag(mode.rawValue)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+
             Section {
                 ambientConnectionStatus
             }
@@ -106,25 +119,31 @@ struct ManagerExecutiveSuiteView: View {
     }
 
     private var sidebarManagerHeader: some View {
-        HStack(spacing: 12) {
-            ZStack {
-                Circle()
-                    .fill(AppTheme.emerald.opacity(0.15))
-                    .frame(width: 44, height: 44)
-                Image(systemName: "briefcase.fill")
-                    .foregroundColor(AppTheme.emerald)
-                    .font(.system(size: 18))
-            }
+        Button {
+            selectedNavigationItem = .profile
+            HapticFeedback.selection()
+        } label: {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(AppTheme.emerald.opacity(0.15))
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "briefcase.fill")
+                        .foregroundColor(AppTheme.emerald)
+                        .font(.system(size: 18))
+                }
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(viewModel.managerName.isEmpty ? "Estate Manager" : viewModel.managerName)
-                    .font(.appHeadline)
-                    .foregroundColor(.primary)
-                Text(viewModel.estateDisplayName)
-                    .font(.appCaption)
-                    .foregroundColor(.secondary)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(viewModel.managerName.isEmpty ? "Estate Manager" : viewModel.managerName)
+                        .font(.appHeadline)
+                        .foregroundColor(.primary)
+                    Text(viewModel.estateDisplayName)
+                        .font(.appCaption)
+                        .foregroundColor(.secondary)
+                }
             }
         }
+        .buttonStyle(.plain)
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
     }
@@ -154,6 +173,13 @@ struct ManagerExecutiveSuiteView: View {
             ManagerAnalyticsDashboardView(viewModel: viewModel)
         case .fieldRoster:
             divisionRosterGrid
+        case .profile:
+            UserProfileView(
+                authService: container.authService,
+                apiService: container.apiService,
+                harvestRepository: container.harvestRepository,
+                fieldRepository: container.fieldRepository
+            )
         case .diagnostics:
             SupervisorSettingsView(container: container)
         }

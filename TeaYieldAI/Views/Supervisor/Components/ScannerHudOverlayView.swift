@@ -17,7 +17,7 @@ struct ScannerHudOverlayView: View {
                 telemetryPill(icon: "bolt.fill", title: String(format: "%.1f ms", latencyMs))
                 telemetryPill(icon: "camera.filters", title: "Samples: \(sampleCount)")
                 Spacer()
-                telemetryPill(icon: "wifi.slash", title: "Neural Engine")
+                telemetryPill(icon: "cpu.fill", title: "Neural Engine")
             }
             .padding(.horizontal, 16)
             .padding(.top, 12)
@@ -27,7 +27,7 @@ struct ScannerHudOverlayView: View {
             // Viewfinder reticle with targeting corner brackets
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(reticleColor.opacity(0.35), lineWidth: 1.5)
+                    .stroke(reticleColor.opacity(0.4), lineWidth: 1.5)
                     .frame(width: 260, height: 260)
 
                 // 4 Corner targeting brackets
@@ -37,7 +37,7 @@ struct ScannerHudOverlayView: View {
 
                 // Central crosshair dot
                 Circle()
-                    .fill(reticleColor.opacity(0.6))
+                    .fill(reticleColor.opacity(0.8))
                     .frame(width: 6, height: 6)
 
                 // Dominant stage pill inside reticle
@@ -62,20 +62,25 @@ struct ScannerHudOverlayView: View {
             // Bottom live quality telemetry banner
             VStack(spacing: 8) {
                 HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(qualityGrade)
-                            .font(.system(size: 13, weight: .bold, design: .rounded))
-                            .foregroundColor(reticleColor)
+                    VStack(alignment: .leading, spacing: 3) {
+                        HStack(spacing: 6) {
+                            Circle()
+                                .fill(reticleColor)
+                                .frame(width: 8, height: 8)
+                            Text(qualityGrade)
+                                .font(.system(size: 13, weight: .bold, design: .rounded))
+                                .foregroundColor(reticleColor)
+                        }
 
                         Text("Fine Leaf Export Standard (85%)")
                             .font(.system(size: 11, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.8))
+                            .foregroundColor(.white.opacity(0.85))
                     }
 
                     Spacer()
 
-                    Text(String(format: "%.1f%%", fineLeafRatio * 100.0))
-                        .font(.system(size: 26, weight: .heavy, design: .rounded))
+                    Text(sampleCount == 0 ? "READY" : String(format: "%.1f%%", fineLeafRatio * 100.0))
+                        .font(.system(size: sampleCount == 0 ? 20 : 26, weight: .heavy, design: .rounded))
                         .foregroundColor(reticleColor)
                 }
 
@@ -100,12 +105,13 @@ struct ScannerHudOverlayView: View {
                 .frame(height: 14)
             }
             .padding(14)
-            .background(Color.black.opacity(0.75))
+            .background(Color.black.opacity(0.7))
             .cornerRadius(16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(reticleColor.opacity(0.4), lineWidth: 1)
+                    .stroke(reticleColor.opacity(0.4), lineWidth: 1.2)
             )
+            .shadow(color: Color.black.opacity(0.3), radius: 8, y: 4)
             .padding(.horizontal, 16)
             .padding(.bottom, 16)
             .accessibilityElement(children: .combine)
@@ -115,7 +121,9 @@ struct ScannerHudOverlayView: View {
     }
 
     private var reticleColor: Color {
-        if fineLeafRatio >= AppConfiguration.fineLeafTargetRatio {
+        if sampleCount == 0 || dominantStage == nil {
+            return AppTheme.emeraldLight
+        } else if fineLeafRatio >= AppConfiguration.fineLeafTargetRatio {
             return AppTheme.emeraldLight
         } else if fineLeafRatio >= 0.70 {
             return AppTheme.amberLight
@@ -125,17 +133,22 @@ struct ScannerHudOverlayView: View {
     }
 
     private func telemetryPill(icon: String, title: String) -> some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 5) {
             Image(systemName: icon)
                 .font(.system(size: 10, weight: .bold))
+                .foregroundColor(AppTheme.emeraldLight)
             Text(title)
                 .font(.system(size: 11, weight: .semibold, design: .rounded))
+                .foregroundColor(.white)
         }
-        .foregroundColor(.white)
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
         .background(Color.black.opacity(0.55))
-        .cornerRadius(8)
+        .clipShape(Capsule())
+        .overlay(
+            Capsule()
+                .stroke(Color.white.opacity(0.18), lineWidth: 0.8)
+        )
     }
 }
 

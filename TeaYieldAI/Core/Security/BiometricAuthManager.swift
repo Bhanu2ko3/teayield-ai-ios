@@ -33,7 +33,7 @@ enum BiometricError: LocalizedError {
 }
 
 /// Manages biometric authentication policies utilizing Apple LocalAuthentication framework.
-final class BiometricAuthManager {
+final class BiometricAuthManager: @unchecked Sendable {
 
     static let shared = BiometricAuthManager()
 

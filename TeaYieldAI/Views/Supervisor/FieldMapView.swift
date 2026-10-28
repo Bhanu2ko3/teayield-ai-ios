@@ -96,6 +96,7 @@ struct FieldMapView: View {
                 await viewModel.loadFields()
             }
             .animation(.spring(response: 0.35, dampingFraction: 0.8), value: viewModel.selectedField)
+            .applyAppTheme()
         }
     }
 
@@ -139,11 +140,9 @@ struct FieldMapView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
         }
-        .background(Color(uiColor: .systemBackground).opacity(0.85))
-        .cornerRadius(AppTheme.radiusMedium)
+        .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
         .padding(.horizontal, 16)
         .padding(.top, 8)
-        .shadow(color: Color.black.opacity(0.08), radius: 6, y: 2)
     }
 
     private func filterPill(title: String, isSelected: Bool, color: Color, action: @escaping () -> Void) -> some View {

@@ -126,7 +126,7 @@ struct FieldDetailBottomSheetView: View {
             if let onSimulateGeofenceTap = onSimulateGeofenceTap {
                 Button(action: { onSimulateGeofenceTap(field) }) {
                     HStack(spacing: 6) {
-                        Image(systemName: isCurrentlyGeofenced ? "checkmark.circle.fill" : "location.radiowaves.left.and.right")
+                        Image(systemName: isCurrentlyGeofenced ? "checkmark.circle.fill" : "dot.radiowaves.left.and.right")
                             .font(.system(size: 13))
                         Text(isCurrentlyGeofenced ? "Geofence Active (Boundary Triggered)" : "Simulate Geofence Arrival (Viva Test)")
                             .font(.system(size: 13, weight: .semibold, design: .rounded))
@@ -143,9 +143,7 @@ struct FieldDetailBottomSheetView: View {
         }
         .padding(.horizontal, 20)
         .padding(.bottom, 24)
-        .background(AppTheme.surfaceCard)
-        .cornerRadius(AppTheme.radiusLarge)
-        .shadow(color: Color.black.opacity(0.12), radius: 16, y: -4)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 
     private var statusBadge: some View {

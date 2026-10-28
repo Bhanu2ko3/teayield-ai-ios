@@ -10,10 +10,19 @@ final class CloudAPIService: APIServiceProtocol {
 
     init(
         baseURL: URL = AppConfiguration.apiBaseURL,
-        session: URLSession = .shared
+        session: URLSession? = nil
     ) {
         self.baseURL = baseURL
-        self.session = session
+        if let session = session {
+            self.session = session
+        } else {
+            let config = URLSessionConfiguration.default
+            config.timeoutIntervalForRequest = AppConfiguration.timeoutInterval
+            config.timeoutIntervalForResource = AppConfiguration.timeoutInterval
+            config.waitsForConnectivity = false
+            config.requestCachePolicy = .reloadIgnoringLocalCacheData
+            self.session = URLSession(configuration: config)
+        }
         self.decoder = JSONDecoder()
     }
 

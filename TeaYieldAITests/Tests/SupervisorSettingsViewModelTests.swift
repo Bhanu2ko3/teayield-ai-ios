@@ -140,6 +140,34 @@ struct SupervisorSettingsViewModelTests {
         #expect(auth.logoutCallCount == 1)
         #expect(auth.currentUser == nil)
     }
+
+    @Test("Verifies switching theme mode updates view model state and persistence")
+    func themeSelection() {
+        let user = createSampleUser()
+        let auth = MockAuthService(initialUser: user)
+        let sync = MockSyncManager()
+        let fieldRepo = MockFieldRepository()
+        let harvestRepo = MockHarvestRepository()
+
+        let viewModel = SupervisorSettingsViewModel(
+            authService: auth,
+            syncManager: sync,
+            fieldRepository: fieldRepo,
+            harvestRepository: harvestRepo
+        )
+
+        viewModel.setThemeMode(.dark)
+        #expect(viewModel.selectedThemeMode == .dark)
+        #expect(UserDefaults.standard.string(forKey: "appThemeMode") == AppThemeMode.dark.rawValue)
+
+        viewModel.setThemeMode(.light)
+        #expect(viewModel.selectedThemeMode == .light)
+        #expect(UserDefaults.standard.string(forKey: "appThemeMode") == AppThemeMode.light.rawValue)
+
+        viewModel.setThemeMode(.system)
+        #expect(viewModel.selectedThemeMode == .system)
+        #expect(UserDefaults.standard.string(forKey: "appThemeMode") == AppThemeMode.system.rawValue)
+    }
 }
 
 #else
@@ -275,6 +303,33 @@ final class SupervisorSettingsViewModelTests: XCTestCase {
 
         XCTAssertEqual(auth.logoutCallCount, 1)
         XCTAssertNil(auth.currentUser)
+    }
+
+    func testThemeSelection() {
+        let user = createSampleUser()
+        let auth = MockAuthService(initialUser: user)
+        let sync = MockSyncManager()
+        let fieldRepo = MockFieldRepository()
+        let harvestRepo = MockHarvestRepository()
+
+        let viewModel = SupervisorSettingsViewModel(
+            authService: auth,
+            syncManager: sync,
+            fieldRepository: fieldRepo,
+            harvestRepository: harvestRepo
+        )
+
+        viewModel.setThemeMode(.dark)
+        XCTAssertEqual(viewModel.selectedThemeMode, .dark)
+        XCTAssertEqual(UserDefaults.standard.string(forKey: "appThemeMode"), AppThemeMode.dark.rawValue)
+
+        viewModel.setThemeMode(.light)
+        XCTAssertEqual(viewModel.selectedThemeMode, .light)
+        XCTAssertEqual(UserDefaults.standard.string(forKey: "appThemeMode"), AppThemeMode.light.rawValue)
+
+        viewModel.setThemeMode(.system)
+        XCTAssertEqual(viewModel.selectedThemeMode, .system)
+        XCTAssertEqual(UserDefaults.standard.string(forKey: "appThemeMode"), AppThemeMode.system.rawValue)
     }
 }
 #endif

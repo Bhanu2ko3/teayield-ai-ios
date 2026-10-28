@@ -15,9 +15,7 @@ struct TaskCardView: View {
             actionFooterRow
         }
         .padding(16)
-        .background(Color(uiColor: .secondarySystemGroupedBackground))
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 3)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 
     // MARK: - Subviews
@@ -115,7 +113,7 @@ struct TaskCardView: View {
 
             if let onSimulateArrivalTap = onSimulateArrivalTap {
                 Button(action: onSimulateArrivalTap) {
-                    Image(systemName: isGeofenced ? "location.fill" : "location.radiowaves.left.and.right")
+                    Image(systemName: isGeofenced ? "location.fill" : "dot.radiowaves.left.and.right")
                         .font(.caption)
                         .foregroundColor(isGeofenced ? AppTheme.emerald : .secondary)
                         .padding(7)
@@ -136,7 +134,7 @@ struct TaskCardView: View {
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
-                .background(Color(red: 0.02, green: 0.59, blue: 0.41))
+                .background(AppTheme.emerald)
                 .foregroundColor(.white)
                 .cornerRadius(8)
             }
@@ -146,6 +144,6 @@ struct TaskCardView: View {
     // MARK: - Helpers
 
     private var statusColor: Color {
-        task.isCompleted ? Color(red: 0.02, green: 0.59, blue: 0.41) : Color.blue
+        task.isCompleted ? AppTheme.emerald : Color.blue
     }
 }

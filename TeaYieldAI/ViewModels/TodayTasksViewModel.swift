@@ -86,7 +86,9 @@ final class TodayTasksViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            self?.activeGeofencedField = notification.object as? TeaField
+            Task { @MainActor [weak self] in
+                self?.activeGeofencedField = notification.object as? TeaField
+            }
         }
 
         NotificationCenter.default.addObserver(
@@ -94,7 +96,9 @@ final class TodayTasksViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            self?.activeGeofencedField = nil
+            Task { @MainActor [weak self] in
+                self?.activeGeofencedField = nil
+            }
         }
     }
 

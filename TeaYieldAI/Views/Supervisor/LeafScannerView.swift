@@ -10,6 +10,7 @@ struct LeafScannerView: View {
 
     @State private var selectedPickerItem: PhotosPickerItem?
     @State private var showingDetailSheet = false
+    @Environment(\.colorScheme) private var colorScheme
 
     init(
         viewModel: LeafScannerViewModel,
@@ -22,22 +23,13 @@ struct LeafScannerView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.black.ignoresSafeArea()
+                // Adaptive root surface matching active inspection mode and system theme
+                (viewModel.scanMode == .liveCamera ? Color.black : AppTheme.backgroundGrouped)
+                    .ignoresSafeArea()
 
                 VStack(spacing: 0) {
-                    // Top Mode Selector
-                    Picker("Scan Mode", selection: $viewModel.scanMode) {
-                        ForEach(LeafScanMode.allCases) { mode in
-                            Text(mode.rawValue).tag(mode)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Color.black.opacity(0.85))
-                    .onChange(of: viewModel.scanMode) { newMode in
-                        viewModel.switchScanMode(newMode)
-                    }
+                    // Top Mode Selector with full theme contrast support
+                    modeSelectorBar
 
                     // Main Content Area
                     if viewModel.scanMode == .liveCamera {
@@ -51,9 +43,18 @@ struct LeafScannerView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: { viewModel.resetScan() }) {
+                    Button(action: {
+                        HapticFeedback.lightImpact()
+                        viewModel.resetScan()
+                    }) {
                         Image(systemName: "arrow.counterclockwise")
-                            .foregroundColor(.white)
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundColor(AppTheme.emerald)
+                            .padding(8)
+                            .background(
+                                Circle()
+                                    .fill(colorScheme == .dark ? Color.white.opacity(0.12) : AppTheme.emerald.opacity(0.12))
+                            )
                     }
                     .accessibilityLabel("Reset Scanner")
                     .accessibilityHint("Clears current leaf sample statistics and restarts scan")
@@ -65,7 +66,81 @@ struct LeafScannerView: View {
             .onDisappear {
                 viewModel.onDisappear()
             }
+            .applyAppTheme()
         }
+    }
+
+    // MARK: - Top Mode Selector Bar
+
+    private var modeSelectorBar: some View {
+        HStack(spacing: 6) {
+            ForEach(LeafScanMode.allCases) { mode in
+                Button {
+                    HapticFeedback.selection()
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        viewModel.switchScanMode(mode)
+                    }
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: mode == .liveCamera ? "viewfinder" : "photo.on.rectangle")
+                            .font(.system(size: 12, weight: .semibold))
+                        Text(mode == .liveCamera ? "Live Camera" : "Photo Gallery")
+                            .font(.system(size: 13, weight: .semibold, design: .rounded))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                    }
+                    .foregroundColor(
+                        viewModel.scanMode == mode
+                            ? .white
+                            : (viewModel.scanMode == .liveCamera ? .white.opacity(0.85) : .primary)
+                    )
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+                    .background(
+                        Group {
+                            if viewModel.scanMode == mode {
+                                RoundedRectangle(cornerRadius: AppTheme.radiusMedium - 2)
+                                    .fill(AppTheme.emerald)
+                                    .shadow(color: AppTheme.emerald.opacity(0.35), radius: 4, y: 2)
+                            } else {
+                                Color.clear
+                            }
+                        }
+                    )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(4)
+        .background(
+            RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
+                .fill(
+                    viewModel.scanMode == .liveCamera
+                        ? Color(white: 0.18)
+                        : (colorScheme == .dark ? Color(uiColor: .secondarySystemGroupedBackground) : Color.white)
+                )
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
+                .stroke(
+                    viewModel.scanMode == .liveCamera
+                        ? Color.white.opacity(0.15)
+                        : AppTheme.borderSubtle,
+                    lineWidth: 1
+                )
+        )
+        .shadow(
+            color: Color.black.opacity(colorScheme == .dark ? 0.3 : 0.05),
+            radius: 6,
+            y: 2
+        )
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(
+            viewModel.scanMode == .liveCamera
+                ? Color.black
+                : AppTheme.backgroundGrouped
+        )
     }
 
     // MARK: - Live Camera Viewfinder
@@ -73,8 +148,12 @@ struct LeafScannerView: View {
     private var liveCameraSection: some View {
         ZStack {
             if viewModel.hasCameraPermission {
+                #if targetEnvironment(simulator)
+                simulatorViewfinderBackdrop
+                #else
                 CameraPreviewView(session: viewModel.cameraService.captureSession)
                     .ignoresSafeArea(edges: .bottom)
+                #endif
 
                 ScannerHudOverlayView(
                     fineLeafRatio: viewModel.smoothedFineLeafRatio > 0 ? viewModel.smoothedFineLeafRatio : viewModel.fineLeafRatio,
@@ -85,11 +164,39 @@ struct LeafScannerView: View {
                     sampleCount: viewModel.frameSampleCount
                 )
 
+                // Simulator Interactive Demo Pill (Floating above HUD bottom gauge)
+                #if targetEnvironment(simulator)
+                VStack {
+                    Spacer()
+                    if viewModel.assessment == nil {
+                        Button {
+                            HapticFeedback.lightImpact()
+                            loadSampleFineShoot()
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "sparkles")
+                                Text("Simulate Shoot Scan")
+                                    .fontWeight(.semibold)
+                            }
+                            .font(.system(size: 12, design: .rounded))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .background(AppTheme.emerald)
+                            .clipShape(Capsule())
+                            .shadow(color: AppTheme.emerald.opacity(0.4), radius: 6, y: 2)
+                        }
+                        .padding(.bottom, 110)
+                    }
+                }
+                #endif
+
                 // Bottom Floating Action Button
                 VStack {
                     Spacer()
                     if let assessment = viewModel.assessment {
                         Button(action: {
+                            HapticFeedback.mediumImpact()
                             onRecordWeighingTap?(assessment.fineLeafRatio)
                         }) {
                             HStack(spacing: 8) {
@@ -105,7 +212,7 @@ struct LeafScannerView: View {
                             .cornerRadius(AppTheme.radiusMedium)
                             .shadow(color: Color.black.opacity(0.3), radius: 8, y: 4)
                             .padding(.horizontal, 20)
-                            .padding(.bottom, 24)
+                            .padding(.bottom, 90)
                         }
                         .accessibilityLabel("Log Weighing with fine leaf ratio \(assessment.formattedFinePercentage)")
                         .accessibilityHint("Opens weighing entry form pre-filled with this quality grade")
@@ -114,6 +221,59 @@ struct LeafScannerView: View {
             } else {
                 cameraPermissionDeniedView
             }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    // MARK: - Simulator Fallback Viewfinder
+
+    private var simulatorViewfinderBackdrop: some View {
+        GeometryReader { geo in
+            ZStack {
+                if let simImage = loadSimulatorBackdropImage() {
+                    Image(uiImage: simImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .clipped()
+                        .overlay(Color.black.opacity(0.30))
+                } else {
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.04, green: 0.18, blue: 0.11),
+                            Color(red: 0.02, green: 0.08, blue: 0.05)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    .frame(width: geo.size.width, height: geo.size.height)
+                }
+
+                // Agritech Viewfinder 3x3 Grid
+                cameraGridLines
+            }
+        }
+        .ignoresSafeArea(edges: .bottom)
+    }
+
+    private var cameraGridLines: some View {
+        GeometryReader { geo in
+            Path { path in
+                let w = geo.size.width
+                let h = geo.size.height
+                // 2 vertical lines
+                path.move(to: CGPoint(x: w / 3, y: 0))
+                path.addLine(to: CGPoint(x: w / 3, y: h))
+                path.move(to: CGPoint(x: 2 * w / 3, y: 0))
+                path.addLine(to: CGPoint(x: 2 * w / 3, y: h))
+
+                // 2 horizontal lines
+                path.move(to: CGPoint(x: 0, y: h / 3))
+                path.addLine(to: CGPoint(x: w, y: h / 3))
+                path.move(to: CGPoint(x: 0, y: 2 * h / 3))
+                path.addLine(to: CGPoint(x: w, y: 2 * h / 3))
+            }
+            .stroke(Color.white.opacity(0.12), lineWidth: 0.8)
         }
     }
 
@@ -149,30 +309,46 @@ struct LeafScannerView: View {
 
                     // Sample Images for Simulator / Offline Testing
                     HStack(spacing: 10) {
-                        Button(action: loadSampleFineShoot) {
-                            HStack(spacing: 4) {
+                        Button(action: {
+                            HapticFeedback.lightImpact()
+                            loadSampleFineShoot()
+                        }) {
+                            HStack(spacing: 6) {
                                 Image(systemName: "leaf.fill")
+                                    .foregroundColor(AppTheme.emerald)
                                 Text("Fine Shoot Sample")
+                                    .foregroundColor(.primary)
                             }
                             .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .foregroundColor(AppTheme.emeraldLight)
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
-                            .background(Color.white.opacity(0.1))
-                            .cornerRadius(8)
+                            .padding(.vertical, 10)
+                            .background(colorScheme == .dark ? Color.white.opacity(0.08) : Color.white)
+                            .cornerRadius(AppTheme.radiusMedium)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
+                                    .stroke(AppTheme.emerald.opacity(0.35), lineWidth: 1)
+                            )
                         }
 
-                        Button(action: loadSampleCoarseLeaf) {
-                            HStack(spacing: 4) {
+                        Button(action: {
+                            HapticFeedback.lightImpact()
+                            loadSampleCoarseLeaf()
+                        }) {
+                            HStack(spacing: 6) {
                                 Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(AppTheme.amber)
                                 Text("Coarse Leaf Sample")
+                                    .foregroundColor(.primary)
                             }
                             .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .foregroundColor(AppTheme.amberLight)
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
-                            .background(Color.white.opacity(0.1))
-                            .cornerRadius(8)
+                            .padding(.vertical, 10)
+                            .background(colorScheme == .dark ? Color.white.opacity(0.08) : Color.white)
+                            .cornerRadius(AppTheme.radiusMedium)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
+                                    .stroke(AppTheme.amber.opacity(0.35), lineWidth: 1)
+                            )
                         }
                     }
                     .padding(.horizontal, 20)
@@ -189,13 +365,13 @@ struct LeafScannerView: View {
                             .cornerRadius(AppTheme.radiusMedium)
                             .overlay(
                                 RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
-                                    .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                    .stroke(AppTheme.borderSubtle, lineWidth: 1)
                             )
                             .padding(.horizontal, 20)
 
                         if viewModel.isAnalyzingPhoto {
                             ProgressView("Analyzing shoot with Neural Engine...")
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                                 .padding()
                         } else if let assessment = viewModel.assessment {
                             assessmentCard(assessment)
@@ -207,7 +383,7 @@ struct LeafScannerView: View {
             }
             .padding(.bottom, 32)
         }
-        .background(Color.black.ignoresSafeArea())
+        .background(AppTheme.backgroundGrouped.ignoresSafeArea())
     }
 
     // MARK: - Assessment Details Card
@@ -219,26 +395,25 @@ struct LeafScannerView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(assessment.qualityGrade)
                         .font(.system(size: 16, weight: .bold, design: .rounded))
-                        .foregroundColor(assessment.meetsExportQuality ? AppTheme.emeraldLight : AppTheme.amberLight)
+                        .foregroundColor(assessment.meetsExportQuality ? AppTheme.emerald : AppTheme.amber)
 
                     Text(assessment.actionRecommendation)
                         .font(.system(size: 12, weight: .regular, design: .rounded))
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(.secondary)
                 }
                 Spacer()
                 Text(assessment.formattedFinePercentage)
                     .font(.system(size: 32, weight: .heavy, design: .rounded))
-                    .foregroundColor(assessment.meetsExportQuality ? AppTheme.emeraldLight : AppTheme.amberLight)
+                    .foregroundColor(assessment.meetsExportQuality ? AppTheme.emerald : AppTheme.amber)
             }
             .padding()
-            .background(Color.white.opacity(0.08))
-            .cornerRadius(12)
+            .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
 
             // Maturity Stage Breakdown
             VStack(alignment: .leading, spacing: 10) {
                 Text("Maturity Age Composition")
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .foregroundColor(.white.opacity(0.7))
+                    .foregroundColor(.primary)
 
                 ForEach(LeafMaturityStage.allCases, id: \.self) { stage in
                     let prob = assessment.maturityProbabilities[stage.rawValue] ?? 0.0
@@ -246,24 +421,24 @@ struct LeafScannerView: View {
                 }
             }
             .padding()
-            .background(Color.white.opacity(0.06))
-            .cornerRadius(12)
+            .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
 
             // Latency Telemetry
             HStack {
                 Label(assessment.formattedLatency, systemImage: "bolt.fill")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.6))
+                    .foregroundColor(.secondary)
                 Spacer()
                 Label("Apple Neural Engine", systemImage: "cpu.fill")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.6))
+                    .foregroundColor(.secondary)
             }
             .padding(.horizontal, 4)
 
             // Apply Button
             if let onRecordWeighingTap = onRecordWeighingTap {
                 Button(action: {
+                    HapticFeedback.mediumImpact()
                     onRecordWeighingTap(assessment.fineLeafRatio)
                 }) {
                     HStack(spacing: 8) {
@@ -288,20 +463,20 @@ struct LeafScannerView: View {
             HStack {
                 Text(stage.displayTitle)
                     .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                 Spacer()
                 Text(String(format: "%.1f%%", probability * 100.0))
                     .font(.system(size: 13, weight: .bold, design: .rounded))
-                    .foregroundColor(stage.isFineLeaf ? AppTheme.emeraldLight : .white.opacity(0.7))
+                    .foregroundColor(stage.isFineLeaf ? AppTheme.emerald : .secondary)
             }
 
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     Capsule()
-                        .fill(Color.white.opacity(0.15))
+                        .fill(Color.primary.opacity(0.08))
                         .frame(height: 6)
                     Capsule()
-                        .fill(stage.isFineLeaf ? AppTheme.emeraldLight : AppTheme.crimsonLight)
+                        .fill(stage.isFineLeaf ? AppTheme.emerald : AppTheme.crimson)
                         .frame(width: max(geo.size.width * CGFloat(probability), 0), height: 6)
                 }
             }
@@ -315,23 +490,22 @@ struct LeafScannerView: View {
         VStack(spacing: 12) {
             Image(systemName: "photo.badge.plus")
                 .font(.system(size: 48, weight: .light))
-                .foregroundColor(.white.opacity(0.4))
+                .foregroundColor(AppTheme.emerald.opacity(0.6))
                 .padding(.top, 40)
 
             Text("No Photograph Selected")
                 .font(.appHeadline)
-                .foregroundColor(.white)
+                .foregroundColor(.primary)
 
             Text("Select an image from your device library or tap a sample shoot above to inspect leaf quality 100% offline.")
                 .font(.appFootnote)
-                .foregroundColor(.white.opacity(0.6))
+                .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
                 .padding(.bottom, 40)
         }
         .frame(maxWidth: .infinity)
-        .background(Color.white.opacity(0.04))
-        .cornerRadius(AppTheme.radiusLarge)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
         .padding(.horizontal, 20)
     }
 
@@ -343,11 +517,11 @@ struct LeafScannerView: View {
 
             Text("Camera Access Required")
                 .font(.appTitle)
-                .foregroundColor(.white)
+                .foregroundColor(.primary)
 
             Text("TeaYield AI requires camera permission to scan tea shoots at 60fps in field weighing sheds.")
                 .font(.appBody)
-                .foregroundColor(.white.opacity(0.7))
+                .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
 
@@ -358,9 +532,20 @@ struct LeafScannerView: View {
             .tint(AppTheme.emerald)
         }
         .padding()
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+        .padding(.horizontal, 20)
     }
 
     // MARK: - Sample Helpers
+
+    private func loadSimulatorBackdropImage() -> UIImage? {
+        if let url = Bundle.main.url(forResource: "sample_fine_shoot", withExtension: "jpg"),
+           let data = try? Data(contentsOf: url),
+           let img = UIImage(data: data) {
+            return img
+        }
+        return UIImage(named: "sample_fine_shoot")
+    }
 
     private func loadSampleFineShoot() {
         if let url = Bundle.main.url(forResource: "sample_fine_shoot", withExtension: "jpg"),

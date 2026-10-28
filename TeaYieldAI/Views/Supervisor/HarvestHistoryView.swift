@@ -35,6 +35,7 @@ struct HarvestHistoryView: View {
         .task {
             await viewModel.loadRecords()
         }
+        .applyAppTheme()
     }
 
     // MARK: - Subviews
