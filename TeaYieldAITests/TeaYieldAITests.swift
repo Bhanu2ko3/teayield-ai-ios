@@ -12,6 +12,9 @@ struct TeaYieldAISmokeTests {
         #expect(AppConfiguration.fineLeafTargetRatio == 0.85)
         #expect(AppConfiguration.benchmarkYieldPerAcreKg == 195.0)
         #expect(AppConfiguration.timeoutInterval == 15.0)
+        #expect(AppConfiguration.productionBaseURL.scheme == "https")
+        #expect(AppConfiguration.productionBaseURL.host == "teayield-api.codebroai.com")
+        #expect(AppConfiguration.productionBaseURL.path == "/api/v1")
     }
 
     @Test("Verifies AppContainer dependency injection wiring")
@@ -38,6 +41,9 @@ final class TeaYieldAITests: XCTestCase {
         XCTAssertEqual(AppConfiguration.fineLeafTargetRatio, 0.85)
         XCTAssertEqual(AppConfiguration.benchmarkYieldPerAcreKg, 195.0)
         XCTAssertEqual(AppConfiguration.timeoutInterval, 15.0)
+        XCTAssertEqual(AppConfiguration.productionBaseURL.scheme, "https")
+        XCTAssertEqual(AppConfiguration.productionBaseURL.host, "teayield-api.codebroai.com")
+        XCTAssertEqual(AppConfiguration.productionBaseURL.path, "/api/v1")
     }
 
     @MainActor

@@ -138,7 +138,7 @@ public actor CloudAPIService: APIServiceProtocol {
     private let keychain: KeychainServiceProtocol
 
     public init(
-        baseURL: URL = URL(string: "http://127.0.0.1:8000/api/v1")!,
+        baseURL: URL = AppConfiguration.apiBaseURL,
         session: URLSession = .shared,
         keychain: KeychainServiceProtocol = KeychainService.shared
     ) {
