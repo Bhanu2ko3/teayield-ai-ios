@@ -60,6 +60,12 @@ enum AppTheme {
     static let crimson = Color(red: 0.86, green: 0.15, blue: 0.15) // #DC2626
     static let crimsonLight = Color(red: 0.94, green: 0.27, blue: 0.27) // #EF4444
 
+    /// Deep forest canopy token for agronomic viewfinder backgrounds and deep foliage accents.
+    static let forest = Color(red: 0.04, green: 0.20, blue: 0.13) // #0A3321
+
+    /// Subtle sand token for soil moisture priors and neutral warm backgrounds.
+    static let sand = Color(red: 0.96, green: 0.95, blue: 0.92) // #F5F2EA
+
     /// Deep executive navy token for enterprise administrative headers and dark contrast accents.
     static let navyDark = Color(red: 0.08, green: 0.12, blue: 0.20) // #141F33
 
@@ -89,6 +95,8 @@ enum AppTheme {
 extension Color {
     static let emerald = AppTheme.emerald
     static let emeraldLight = AppTheme.emeraldLight
+    static let forest = AppTheme.forest
+    static let sand = AppTheme.sand
     static let amberGold = AppTheme.amber
     static let crimsonRest = AppTheme.crimson
 }
