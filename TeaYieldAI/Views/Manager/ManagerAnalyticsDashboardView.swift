@@ -45,6 +45,11 @@ struct ManagerAnalyticsDashboardView: View {
         .task {
             await viewModel.loadEstateTelemetry()
         }
+        .alert("Analytics & Optimization Error", isPresented: $viewModel.showErrorAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(viewModel.errorMessage ?? "An unexpected analytics error occurred.")
+        }
         .applyAppTheme()
     }
 
@@ -242,6 +247,20 @@ struct ManagerAnalyticsDashboardView: View {
                 }
 
                 Spacer()
+            }
+
+            if let successMsg = viewModel.optimizationSuccessMessage {
+                HStack(spacing: 8) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(AppTheme.emerald)
+                    Text(successMsg)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.primary)
+                }
+                .padding(10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(AppTheme.emerald.opacity(0.12))
+                .cornerRadius(AppTheme.radiusSmall)
             }
 
             // Dynamic Plucker Labor Input

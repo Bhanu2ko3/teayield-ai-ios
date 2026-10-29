@@ -423,7 +423,7 @@ final class ManagerOverviewViewModel: ObservableObject {
             weekStartDate: mondayDateString,
             totalAvailablePluckers: availablePluckersCount,
             dailyFactoryCapacityKg: factoryIntakeCapKg,
-            minimumRestCycleDays: 6
+            minimumRestCycleDays: 7
         )
 
         do {
