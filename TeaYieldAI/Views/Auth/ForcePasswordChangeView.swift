@@ -59,7 +59,8 @@ struct ForcePasswordChangeView: View {
         HStack {
             Text("Security Verification")
                 .font(.appHeadline)
-                .foregroundColor(.secondary)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
 
             Spacer()
 

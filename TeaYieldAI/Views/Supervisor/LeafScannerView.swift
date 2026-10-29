@@ -28,6 +28,12 @@ struct LeafScannerView: View {
                     .ignoresSafeArea()
 
                 VStack(spacing: 0) {
+                    topHeaderBar
+                        .padding(.horizontal, 20)
+                        .padding(.top, 12)
+                        .padding(.bottom, 8)
+                        .background(viewModel.scanMode == .liveCamera ? Color.black : Color(uiColor: .systemGroupedBackground))
+
                     // Top Mode Selector with full theme contrast support
                     modeSelectorBar
 
@@ -39,27 +45,7 @@ struct LeafScannerView: View {
                     }
                 }
             }
-            .navigationTitle("Shoot Scanner")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        HapticFeedback.lightImpact()
-                        viewModel.resetScan()
-                    }) {
-                        Image(systemName: "arrow.counterclockwise")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(AppTheme.emerald)
-                            .padding(8)
-                            .background(
-                                Circle()
-                                    .fill(colorScheme == .dark ? Color.white.opacity(0.12) : AppTheme.emerald.opacity(0.12))
-                            )
-                    }
-                    .accessibilityLabel("Reset Scanner")
-                    .accessibilityHint("Clears current leaf sample statistics and restarts scan")
-                }
-            }
+            .navigationBarHidden(true)
             .onAppear {
                 viewModel.onAppear()
             }
@@ -67,6 +53,35 @@ struct LeafScannerView: View {
                 viewModel.onDisappear()
             }
             .applyAppTheme()
+        }
+    }
+
+    // MARK: - Top Header Bar
+
+    private var topHeaderBar: some View {
+        HStack(spacing: 10) {
+            Text("Shoot Scanner")
+                .font(.appHeadline)
+                .fontWeight(.bold)
+                .foregroundColor(viewModel.scanMode == .liveCamera ? .white : .primary)
+
+            Spacer()
+
+            ThemeToggleView(style: .circle)
+
+            Button(action: {
+                HapticFeedback.lightImpact()
+                viewModel.resetScan()
+            }) {
+                Image(systemName: "arrow.counterclockwise")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(AppTheme.emerald)
+                    .frame(width: 36, height: 36)
+                    .background(viewModel.scanMode == .liveCamera ? Color.white.opacity(0.15) : Color.secondary.opacity(0.12))
+                    .clipShape(Circle())
+            }
+            .accessibilityLabel("Reset Scanner")
+            .accessibilityHint("Clears current leaf sample statistics and restarts scan")
         }
     }
 
@@ -164,33 +179,6 @@ struct LeafScannerView: View {
                     sampleCount: viewModel.frameSampleCount
                 )
 
-                // Simulator Interactive Demo Pill (Floating above HUD bottom gauge)
-                #if targetEnvironment(simulator)
-                VStack {
-                    Spacer()
-                    if viewModel.assessment == nil {
-                        Button {
-                            HapticFeedback.lightImpact()
-                            loadSampleFineShoot()
-                        } label: {
-                            HStack(spacing: 6) {
-                                Image(systemName: "sparkles")
-                                Text("Simulate Shoot Scan")
-                                    .fontWeight(.semibold)
-                            }
-                            .font(.system(size: 12, design: .rounded))
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 7)
-                            .background(AppTheme.emerald)
-                            .clipShape(Capsule())
-                            .shadow(color: AppTheme.emerald.opacity(0.4), radius: 6, y: 2)
-                        }
-                        .padding(.bottom, 110)
-                    }
-                }
-                #endif
-
                 // Bottom Floating Action Button
                 VStack {
                     Spacer()
@@ -223,6 +211,15 @@ struct LeafScannerView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        #if targetEnvironment(simulator)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if viewModel.assessment == nil {
+                HapticFeedback.lightImpact()
+                loadSampleFineShoot()
+            }
+        }
+        #endif
     }
 
     // MARK: - Simulator Fallback Viewfinder
@@ -283,77 +280,29 @@ struct LeafScannerView: View {
         ScrollView {
             VStack(spacing: 20) {
                 // Photo Picker Header
-                VStack(spacing: 12) {
-                    PhotosPicker(selection: $selectedPickerItem, matching: .images) {
-                        HStack(spacing: 8) {
-                            Image(systemName: "photo.on.rectangle.angled")
-                            Text("Select Shoot from Photo Library")
-                                .fontWeight(.semibold)
-                        }
-                        .font(.appHeadline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 48)
-                        .background(AppTheme.emerald)
-                        .cornerRadius(AppTheme.radiusMedium)
+                PhotosPicker(selection: $selectedPickerItem, matching: .images) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "photo.on.rectangle.angled")
+                        Text("Select Shoot from Photo Library")
+                            .fontWeight(.semibold)
                     }
-                    .padding(.horizontal, 20)
-                    .onChange(of: selectedPickerItem) { newItem in
-                        Task {
-                            if let data = try? await newItem?.loadTransferable(type: Data.self),
-                               let image = UIImage(data: data) {
-                                viewModel.analyzeSelectedImage(image)
-                            }
-                        }
-                    }
-
-                    // Sample Images for Simulator / Offline Testing
-                    HStack(spacing: 10) {
-                        Button(action: {
-                            HapticFeedback.lightImpact()
-                            loadSampleFineShoot()
-                        }) {
-                            HStack(spacing: 6) {
-                                Image(systemName: "leaf.fill")
-                                    .foregroundColor(AppTheme.emerald)
-                                Text("Fine Shoot Sample")
-                                    .foregroundColor(.primary)
-                            }
-                            .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 10)
-                            .background(colorScheme == .dark ? Color.white.opacity(0.08) : Color.white)
-                            .cornerRadius(AppTheme.radiusMedium)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
-                                    .stroke(AppTheme.emerald.opacity(0.35), lineWidth: 1)
-                            )
-                        }
-
-                        Button(action: {
-                            HapticFeedback.lightImpact()
-                            loadSampleCoarseLeaf()
-                        }) {
-                            HStack(spacing: 6) {
-                                Image(systemName: "exclamationmark.triangle.fill")
-                                    .foregroundColor(AppTheme.amber)
-                                Text("Coarse Leaf Sample")
-                                    .foregroundColor(.primary)
-                            }
-                            .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 10)
-                            .background(colorScheme == .dark ? Color.white.opacity(0.08) : Color.white)
-                            .cornerRadius(AppTheme.radiusMedium)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
-                                    .stroke(AppTheme.amber.opacity(0.35), lineWidth: 1)
-                            )
-                        }
-                    }
-                    .padding(.horizontal, 20)
+                    .font(.appHeadline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
+                    .background(AppTheme.emerald)
+                    .cornerRadius(AppTheme.radiusMedium)
                 }
+                .padding(.horizontal, 20)
                 .padding(.top, 16)
+                .onChange(of: selectedPickerItem) { newItem in
+                    Task {
+                        if let data = try? await newItem?.loadTransferable(type: Data.self),
+                           let image = UIImage(data: data) {
+                            viewModel.analyzeSelectedImage(image)
+                        }
+                    }
+                }
 
                 // Image Preview Card
                 if let image = viewModel.selectedImage {
@@ -489,7 +438,7 @@ struct LeafScannerView: View {
                 .font(.appHeadline)
                 .foregroundColor(.primary)
 
-            Text("Select an image from your device library or tap a sample shoot above to inspect leaf quality 100% offline.")
+            Text("Select a tea shoot photograph from your photo library to inspect fine leaf quality ratio (Two Leaves and a Bud benchmark) offline.")
                 .font(.appFootnote)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)

@@ -48,8 +48,9 @@ struct FieldMapView: View {
                 )
                 .ignoresSafeArea(edges: .all)
 
-                // Top Floating Control Bar
+                // Top Floating Header & Filter Control Bar
                 VStack(spacing: 8) {
+                    topHeaderBar
                     topFilterBar
                     Spacer()
                 }
@@ -83,27 +84,65 @@ struct FieldMapView: View {
                         .padding(.bottom, 60)
                 }
             }
-            .navigationTitle("Estate GIS Map")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    ThemeToggleView(style: .iconOnly)
-
-                    Button(action: { viewModel.resetCameraToEstate() }) {
-                        Image(systemName: "location.fill")
-                    }
-
-                    Button(action: { viewModel.toggleMapType() }) {
-                        Image(systemName: viewModel.mapType == .hybrid ? "map" : "globe.americas.fill")
-                    }
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 await viewModel.loadFields()
             }
             .animation(.spring(response: 0.35, dampingFraction: 0.8), value: viewModel.selectedField)
             .applyAppTheme()
         }
+    }
+
+    // MARK: - Top Header Bar
+
+    private var topHeaderBar: some View {
+        HStack {
+            Text("Estate GIS Map")
+                .font(.appHeadline)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(AppTheme.surfaceGlass)
+                .cornerRadius(AppTheme.radiusMedium)
+                .shadow(color: Color.black.opacity(0.08), radius: 4, y: 2)
+
+            Spacer()
+
+            HStack(spacing: 8) {
+                ThemeToggleView(style: .circle)
+
+                Button(action: {
+                    HapticFeedback.lightImpact()
+                    viewModel.resetCameraToEstate()
+                }) {
+                    Image(systemName: "location.fill")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundColor(AppTheme.emerald)
+                        .frame(width: 36, height: 36)
+                        .background(Color(uiColor: .secondarySystemGroupedBackground))
+                        .clipShape(Circle())
+                        .shadow(color: Color.black.opacity(0.12), radius: 4, y: 2)
+                }
+                .accessibilityLabel("Center map on estate")
+
+                Button(action: {
+                    HapticFeedback.selection()
+                    viewModel.toggleMapType()
+                }) {
+                    Image(systemName: viewModel.mapType == .hybrid ? "map.fill" : "globe.americas.fill")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundColor(AppTheme.emerald)
+                        .frame(width: 36, height: 36)
+                        .background(Color(uiColor: .secondarySystemGroupedBackground))
+                        .clipShape(Circle())
+                        .shadow(color: Color.black.opacity(0.12), radius: 4, y: 2)
+                }
+                .accessibilityLabel("Toggle satellite or standard map layer")
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 10)
     }
 
     // MARK: - Top Floating Filter Bar

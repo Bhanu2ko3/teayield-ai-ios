@@ -14,10 +14,10 @@ final class UserProfileViewModel: ObservableObject {
     @Published var showingLogoutConfirmation: Bool = false
 
     @Published var estateName: String = ""
-    @Published var divisionName: String = "Upper Division (Blocks A & B)"
+    @Published var divisionName: String = ""
     @Published var cachedRecordsCount: Int = 0
     @Published var totalHarvestedWeightKg: Double = 0.0
-    @Published var averageFineLeafPercentage: Double = 88.0
+    @Published var averageFineLeafPercentage: Double = 0.0
     @Published var cachedFieldsCount: Int = 0
     @Published var profileImage: UIImage? = nil
 
@@ -56,7 +56,7 @@ final class UserProfileViewModel: ObservableObject {
     }
 
     var fullName: String {
-        user?.fullName.isEmpty == false ? user!.fullName : "Enterprise Officer"
+        user?.fullName.isEmpty == false ? user!.fullName : (isManager ? "Estate Manager" : "Field Supervisor")
     }
 
     var roleTitle: String {
@@ -68,16 +68,22 @@ final class UserProfileViewModel: ObservableObject {
     }
 
     var employeeId: String {
-        user?.employeeId.isEmpty == false ? user!.employeeId : "SUP-402"
+        if let empId = user?.employeeId, !empId.isEmpty {
+            return empId
+        }
+        if let id = user?.id {
+            return "ID-\(id.uuidString.prefix(6).uppercased())"
+        }
+        return "ID-001"
     }
 
     var email: String {
-        user?.email.isEmpty == false ? user!.email : "officer@nuwaraeliya.estate.lk"
+        user?.email.isEmpty == false ? user!.email : "No email registered"
     }
 
     var avatarInitials: String {
         guard let name = user?.fullName, !name.isEmpty else {
-            return "OF"
+            return isManager ? "EM" : "FS"
         }
         let parts = name.split(separator: " ")
         if let first = parts.first?.first, let last = parts.last?.first {
@@ -91,9 +97,20 @@ final class UserProfileViewModel: ObservableObject {
             return estateName
         }
         if let estateId = user?.estateId {
-            return "Pedro Estate (Nuwara Eliya) • Block #\(estateId.uuidString.prefix(4).uppercased())"
+            return "Estate #\(estateId.uuidString.prefix(6).uppercased())"
         }
-        return "Pedro Estate, Nuwara Eliya"
+        return "Estate Not Assigned"
+    }
+
+    var divisionDisplayName: String {
+        divisionName.isEmpty ? "All Assigned Divisions" : divisionName
+    }
+
+    var formattedExportQuality: String {
+        if cachedRecordsCount == 0 {
+            return "—"
+        }
+        return String(format: "%.1f%%", averageFineLeafPercentage)
     }
 
     var biometryDescription: String {

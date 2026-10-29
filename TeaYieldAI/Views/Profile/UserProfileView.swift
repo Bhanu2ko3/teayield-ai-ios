@@ -36,55 +36,31 @@ struct UserProfileView: View {
                 Color(uiColor: .systemGroupedBackground)
                     .ignoresSafeArea()
 
-                ScrollView {
-                    VStack(spacing: 20) {
-                        heroProfileCard
-                        operationalTelemetryGrid
-                        plantationAffiliationSection
-                        deviceSecuritySection
-                        AppearanceSettingsSectionView()
-                        accountActionsSection
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 16)
-                }
-                .refreshable {
-                    await viewModel.refreshProfileFromCloud()
-                }
-            }
-            .navigationTitle("Officer Profile")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 16))
-                            .foregroundColor(.secondary)
-                    }
-                    .accessibilityLabel("Dismiss profile screen")
-                }
+                VStack(spacing: 0) {
+                    topHeaderBar
+                        .padding(.horizontal, 20)
+                        .padding(.top, 12)
+                        .padding(.bottom, 12)
+                        .background(Color(uiColor: .systemGroupedBackground))
 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        Task {
-                            await viewModel.refreshProfileFromCloud()
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            heroProfileCard
+                            operationalTelemetryGrid
+                            plantationAffiliationSection
+                            accountSecuritySection
+                            appearancePreferencesSection
+                            accountActionsSection
                         }
-                    } label: {
-                        if viewModel.isRefreshing {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: AppTheme.emerald))
-                                .scaleEffect(0.8)
-                        } else {
-                            Image(systemName: "arrow.clockwise")
-                                .font(.system(size: 15, weight: .semibold))
-                                .foregroundColor(AppTheme.emerald)
-                        }
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 24)
                     }
-                    .accessibilityLabel("Refresh profile from cloud API")
+                    .refreshable {
+                        await viewModel.refreshProfileFromCloud()
+                    }
                 }
             }
+            .navigationBarHidden(true)
             .confirmationDialog(
                 "Are you sure you want to log out?",
                 isPresented: $viewModel.showingLogoutConfirmation,
@@ -104,6 +80,33 @@ struct UserProfileView: View {
                 Text(viewModel.errorMessage ?? "An unexpected error occurred while communicating with the cloud backend.")
             }
             .applyAppTheme()
+        }
+    }
+
+    // MARK: - Subviews
+
+    private var topHeaderBar: some View {
+        HStack(spacing: 10) {
+            Text("Officer Profile")
+                .font(.appHeadline)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+
+            Spacer()
+
+            ThemeToggleView(style: .circle)
+
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(.secondary)
+                    .frame(width: 36, height: 36)
+                    .background(Color.secondary.opacity(0.12))
+                    .clipShape(Circle())
+            }
+            .accessibilityLabel("Dismiss profile screen")
         }
     }
 
@@ -297,14 +300,14 @@ struct UserProfileView: View {
             HStack(spacing: 10) {
                 metricCard(
                     title: "Export Quality",
-                    value: String(format: "%.1f%%", viewModel.averageFineLeafPercentage),
+                    value: viewModel.formattedExportQuality,
                     icon: "rosette",
                     tint: AppTheme.emerald
                 )
 
                 metricCard(
                     title: "Active Blocks",
-                    value: "\(viewModel.cachedFieldsCount) Plots",
+                    value: "\(viewModel.cachedFieldsCount) Fields",
                     icon: "map.fill",
                     tint: AppTheme.amber
                 )
@@ -334,11 +337,11 @@ struct UserProfileView: View {
         .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
     }
 
-    // MARK: - Plantation Affiliation Section
+    // MARK: - Estate Affiliation Section
 
     private var plantationAffiliationSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("ENTERPRISE PLANTATION ASSIGNMENT")
+            Text("ESTATE ASSIGNMENT")
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .foregroundColor(.secondary)
                 .padding(.horizontal, 8)
@@ -357,36 +360,18 @@ struct UserProfileView: View {
                     icon: "square.split.2x2.fill",
                     tint: .blue,
                     label: "Division Sector",
-                    value: viewModel.divisionName
-                )
-
-                Divider().padding(.leading, 46)
-
-                infoRow(
-                    icon: "mountain.2.fill",
-                    tint: AppTheme.amber,
-                    label: "Agro-Climatic Zone",
-                    value: "Nuwara Eliya High-Grown (1,890m MSL)"
-                )
-
-                Divider().padding(.leading, 46)
-
-                infoRow(
-                    icon: "checkmark.seal.fill",
-                    tint: AppTheme.emerald,
-                    label: "Tea Board License",
-                    value: "SLTB Lion Logo Certified (CE-TRI-2026)"
+                    value: viewModel.divisionDisplayName
                 )
             }
             .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
         }
     }
 
-    // MARK: - Device Security Tier Section
+    // MARK: - Security & Access Section
 
-    private var deviceSecuritySection: some View {
+    private var accountSecuritySection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("DEVICE HARDWARE & CRYPTOGRAPHY")
+            Text("SECURITY & HARDWARE")
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .foregroundColor(.secondary)
                 .padding(.horizontal, 8)
@@ -402,30 +387,46 @@ struct UserProfileView: View {
                 Divider().padding(.leading, 46)
 
                 infoRow(
-                    icon: "lock.shield.fill",
-                    tint: .purple,
-                    label: "Key Store",
-                    value: "Apple Secure Enclave (AES-256)"
-                )
-
-                Divider().padding(.leading, 46)
-
-                infoRow(
-                    icon: "key.fill",
-                    tint: .blue,
-                    label: "Authorization",
-                    value: "JWT 24-Hour Rolling Bearer"
-                )
-
-                Divider().padding(.leading, 46)
-
-                infoRow(
-                    icon: "cylinder.split.1x2.fill",
+                    icon: "internaldrive.fill",
                     tint: AppTheme.emerald,
-                    label: "Local Storage",
-                    value: "Encrypted Core Data SQLite"
+                    label: "Local Storage Mode",
+                    value: "Offline Store-and-Forward Active"
                 )
             }
+            .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+        }
+    }
+
+    // MARK: - Appearance Preferences Section
+
+    private var appearancePreferencesSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("APP PREFERENCES")
+                .font(.system(size: 11, weight: .bold, design: .rounded))
+                .foregroundColor(.secondary)
+                .padding(.horizontal, 8)
+
+            HStack {
+                Image(systemName: "circle.lefthalf.filled")
+                    .font(.system(size: 16))
+                    .foregroundColor(AppTheme.emerald)
+                    .frame(width: 22)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Appearance Theme")
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        .foregroundColor(.primary)
+
+                    Text("System Default, Light, or Dark Mode")
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundColor(.secondary)
+                }
+
+                Spacer()
+
+                ThemeToggleView(style: .pill)
+            }
+            .padding(14)
             .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
         }
     }

@@ -82,19 +82,6 @@ final class AuthViewModel: ObservableObject {
 
     // MARK: - Actions
 
-    /// Selects pre-configured enterprise demonstration accounts for testing and viva evaluation.
-    func selectDemoProfile(role: UserRole) {
-        errorMessage = nil
-        switch role {
-        case .fieldSupervisor:
-            email = "supervisor@nuwaraeliya.estate.lk"
-            password = "Password123!"
-        case .estateManager:
-            email = "manager@nuwaraeliya.estate.lk"
-            password = "Password123!"
-        }
-    }
-
     /// Authenticates the user with email and password against the FastAPI backend.
     func login() async {
         guard isFormValid else {

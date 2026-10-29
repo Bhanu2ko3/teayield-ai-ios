@@ -55,7 +55,8 @@ struct EstateOnboardingView: View {
         HStack {
             Text("Estate Setup")
                 .font(.appHeadline)
-                .foregroundColor(.secondary)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
 
             Spacer()
 

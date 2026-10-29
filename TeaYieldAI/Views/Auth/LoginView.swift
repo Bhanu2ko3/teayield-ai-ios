@@ -69,7 +69,8 @@ struct LoginView: View {
         HStack {
             Text(viewModel.authMode == .signUp ? "Manager Registration" : "Sign In")
                 .font(.appHeadline)
-                .foregroundColor(.secondary)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
                 .animation(.easeInOut(duration: 0.2), value: viewModel.authMode)
 
             Spacer()
@@ -456,7 +457,7 @@ struct LoginView: View {
                 TeaYieldButton(
                     title: "Sign in with \(viewModel.biometricType.rawValue)",
                     icon: viewModel.biometricType == .faceID ? "faceid" : "touchid",
-                    style: .tonal,
+                    style: .secondary,
                     isLoading: false,
                     isDisabled: viewModel.isLoading,
                     action: {
