@@ -155,6 +155,10 @@ struct EstateOnboardingView: View {
 
                     TextField("Elevation in meters", text: $viewModel.elevationInput)
                         .keyboardType(.numberPad)
+                        .disableAutocorrection(true)
+                        .onChange(of: viewModel.elevationInput) { newValue in
+                            viewModel.elevationInput = InputSanitizer.sanitizeInteger(newValue)
+                        }
 
                     Text("m a.s.l.")
                         .font(.system(size: 12, weight: .semibold, design: .rounded))
@@ -163,6 +167,12 @@ struct EstateOnboardingView: View {
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
                 .cornerRadius(AppTheme.radiusMedium)
+
+                if !viewModel.elevationInput.isEmpty && !viewModel.isElevationValid {
+                    Text("Elevation must be between 50m and 2,600m above sea level.")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(AppTheme.crimson)
+                }
             }
 
             // Total Acreage
@@ -187,6 +197,10 @@ struct EstateOnboardingView: View {
 
                     TextField("Total acres", text: $viewModel.totalAcresInput)
                         .keyboardType(.decimalPad)
+                        .disableAutocorrection(true)
+                        .onChange(of: viewModel.totalAcresInput) { newValue in
+                            viewModel.totalAcresInput = InputSanitizer.sanitizeDecimal(newValue)
+                        }
 
                     Text("Acres")
                         .font(.system(size: 12, weight: .semibold, design: .rounded))
@@ -195,6 +209,12 @@ struct EstateOnboardingView: View {
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
                 .cornerRadius(AppTheme.radiusMedium)
+
+                if !viewModel.totalAcresInput.isEmpty && !viewModel.isAcresValid {
+                    Text("Acreage must be between 1.0 and 50,000.0 acres.")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(AppTheme.crimson)
+                }
             }
 
             // Factory Intake Capacity
@@ -219,6 +239,10 @@ struct EstateOnboardingView: View {
 
                     TextField("Max kg per day", text: $viewModel.dailyFactoryCapacityInput)
                         .keyboardType(.decimalPad)
+                        .disableAutocorrection(true)
+                        .onChange(of: viewModel.dailyFactoryCapacityInput) { newValue in
+                            viewModel.dailyFactoryCapacityInput = InputSanitizer.sanitizeDecimal(newValue)
+                        }
 
                     Text("kg / day")
                         .font(.system(size: 12, weight: .semibold, design: .rounded))
@@ -227,6 +251,12 @@ struct EstateOnboardingView: View {
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
                 .cornerRadius(AppTheme.radiusMedium)
+
+                if !viewModel.dailyFactoryCapacityInput.isEmpty && !viewModel.isCapacityValid {
+                    Text("Daily factory intake capacity must be between 1.0 and 200,000 kg.")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(AppTheme.crimson)
+                }
             }
         }
         .padding(18)

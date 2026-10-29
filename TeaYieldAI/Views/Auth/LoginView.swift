@@ -246,10 +246,21 @@ struct LoginView: View {
 
                         TextField("e.g. +94 77 123 4567", text: $viewModel.signUpPhoneNumber)
                             .keyboardType(.phonePad)
+                            .textContentType(.telephoneNumber)
+                            .disableAutocorrection(true)
+                            .onChange(of: viewModel.signUpPhoneNumber) { newValue in
+                                viewModel.signUpPhoneNumber = InputSanitizer.sanitizePhoneNumber(newValue)
+                            }
                     }
                     .padding(14)
                     .background(Color(uiColor: .tertiarySystemGroupedBackground))
                     .cornerRadius(AppTheme.radiusMedium)
+
+                    if !viewModel.signUpPhoneNumber.isEmpty && !InputSanitizer.isValidPhoneNumber(viewModel.signUpPhoneNumber) {
+                        Text("Phone number must contain 9 to 15 digits.")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(AppTheme.crimson)
+                    }
                 }
             }
 

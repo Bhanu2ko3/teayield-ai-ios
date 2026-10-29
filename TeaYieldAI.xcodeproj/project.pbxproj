@@ -33,6 +33,7 @@
 		74ABCA0E308D0E0000E22417 /* ManagerExecutiveSuiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */; };
 		74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */; };
 		74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */; };
+		74ABCB31308D0F0000E22417 /* InputSanitizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB30308D0F0000E22417 /* InputSanitizerTests.swift */; };
 		74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */; };
 		74ABC944308D0D0000E22417 /* ManagerOverviewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */; };
 		74ABC946308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */; };
@@ -124,6 +125,7 @@
 		74ABC7F7308D053200E22417 /* HarvestWeighingFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */; };
 		74ABC7F8308D053200E22417 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7CC308D053100E22417 /* MockData.swift */; };
 		74ABC811308D070100E22417 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC801308D070100E22417 /* AppTheme.swift */; };
+		74ABCB21308D0F0000E22417 /* InputSanitizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB20308D0F0000E22417 /* InputSanitizer.swift */; };
 		74ABC812308D070100E22417 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC802308D070100E22417 /* OnboardingView.swift */; };
 		74ABC813308D070100E22417 /* SupervisorMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC803308D070100E22417 /* SupervisorMainTabView.swift */; };
 		74ABC814308D070100E22417 /* SupervisorSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC804308D070100E22417 /* SupervisorSettingsView.swift */; };
@@ -193,6 +195,7 @@
 		74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerExecutiveSuiteView.swift; sourceTree = "<group>"; };
 		74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldAnalyticsTests.swift; sourceTree = "<group>"; };
 		74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModelTests.swift; sourceTree = "<group>"; };
+		74ABCB30308D0F0000E22417 /* InputSanitizerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSanitizerTests.swift; sourceTree = "<group>"; };
 		74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestHistoryViewModelTests.swift; sourceTree = "<group>"; };
 		74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerOverviewViewModelTests.swift; sourceTree = "<group>"; };
 		74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorSettingsViewModelTests.swift; sourceTree = "<group>"; };
@@ -287,6 +290,7 @@
 		74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestWeighingFormView.swift; sourceTree = "<group>"; };
 		74ABC7CC308D053100E22417 /* MockData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		74ABC801308D070100E22417 /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		74ABCB20308D0F0000E22417 /* InputSanitizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSanitizer.swift; sourceTree = "<group>"; };
 		74ABC802308D070100E22417 /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		74ABC803308D070100E22417 /* SupervisorMainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorMainTabView.swift; sourceTree = "<group>"; };
 		74ABC804308D070100E22417 /* SupervisorSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorSettingsView.swift; sourceTree = "<group>"; };
@@ -405,6 +409,7 @@
 				74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */,
 				74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */,
 				74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */,
+				74ABCB30308D0F0000E22417 /* InputSanitizerTests.swift */,
 				74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */,
 				74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */,
 				74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */,
@@ -585,6 +590,7 @@
 				74ABC881308D0B0100E22417 /* GeoJSONParser.swift */,
 				74ABC7B2308D053100E22417 /* AppConfiguration.swift */,
 				74ABC801308D070100E22417 /* AppTheme.swift */,
+				74ABCB20308D0F0000E22417 /* InputSanitizer.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -979,6 +985,7 @@
 				74ABC7D5308D053200E22417 /* NDVILogEntity.swift in Sources */,
 				74ABC7EF308D053200E22417 /* TodayTasksViewModel.swift in Sources */,
 				74ABC811308D070100E22417 /* AppTheme.swift in Sources */,
+				74ABCB21308D0F0000E22417 /* InputSanitizer.swift in Sources */,
 				74ABC812308D070100E22417 /* OnboardingView.swift in Sources */,
 				74ABC813308D070100E22417 /* SupervisorMainTabView.swift in Sources */,
 				74ABC814308D070100E22417 /* SupervisorSettingsView.swift in Sources */,
@@ -1016,6 +1023,7 @@
 				74ABCA26308D0E0000E22417 /* UserProfileViewModelTests.swift in Sources */,
 				74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */,
 				74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */,
+				74ABCB31308D0F0000E22417 /* InputSanitizerTests.swift in Sources */,
 				74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */,
 				74ABC944308D0D0000E22417 /* ManagerOverviewViewModelTests.swift in Sources */,
 				74ABC946308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift in Sources */,

@@ -26,11 +26,11 @@ final class HarvestWeighingViewModel: ObservableObject {
     @Published var savedSummary: String?
 
     var grossWeight: Double {
-        Double(grossWeightInput.replacingOccurrences(of: ",", with: ".")) ?? 0.0
+        Double(InputSanitizer.sanitizeDecimal(grossWeightInput)) ?? 0.0
     }
 
     var bagTareWeight: Double {
-        Double(bagTareWeightInput.replacingOccurrences(of: ",", with: ".")) ?? 1.5
+        Double(InputSanitizer.sanitizeDecimal(bagTareWeightInput)) ?? 1.5
     }
 
     var netWeight: Double {
@@ -46,6 +46,7 @@ final class HarvestWeighingViewModel: ObservableObject {
         !pluckerId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         grossWeight > bagTareWeight &&
         grossWeight > 0.0 &&
+        grossWeight <= 250.0 &&
         bagTareWeight >= 0.0 &&
         fineLeafRatio >= 0.0 &&
         fineLeafRatio <= 1.0
@@ -229,6 +230,11 @@ final class HarvestWeighingViewModel: ObservableObject {
 
         if grossWeight <= 0.0 {
             validationMessage = "Gross weight must be greater than 0 kg."
+            return false
+        }
+
+        if grossWeight > 250.0 {
+            validationMessage = "Gross weight exceeds maximum plucking bag capacity (250 kg)."
             return false
         }
 

@@ -27,18 +27,25 @@ final class EstateOnboardingViewModel: ObservableObject {
     /// Validates estate parameters against physical agronomic boundaries.
     var isFormValid: Bool {
         let nameTrimmed = estateName.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard nameTrimmed.count >= 2 && nameTrimmed.count <= 150 else { return false }
+        return nameTrimmed.count >= 2 && nameTrimmed.count <= 150 &&
+               isElevationValid &&
+               isAcresValid &&
+               isCapacityValid
+    }
 
-        guard let elevation = Int(elevationInput.trimmingCharacters(in: .whitespacesAndNewlines)),
-              elevation >= 50 && elevation <= 2600 else { return false }
+    var isElevationValid: Bool {
+        guard let elevation = Int(InputSanitizer.sanitizeInteger(elevationInput)) else { return false }
+        return elevation >= 50 && elevation <= 2600
+    }
 
-        guard let acres = Double(totalAcresInput.trimmingCharacters(in: .whitespacesAndNewlines)),
-              acres > 0.0 && acres <= 50000.0 else { return false }
+    var isAcresValid: Bool {
+        guard let acres = Double(InputSanitizer.sanitizeDecimal(totalAcresInput)) else { return false }
+        return acres >= 1.0 && acres <= 50000.0
+    }
 
-        guard let capacity = Double(dailyFactoryCapacityInput.trimmingCharacters(in: .whitespacesAndNewlines)),
-              capacity > 0.0 && capacity <= 200000.0 else { return false }
-
-        return true
+    var isCapacityValid: Bool {
+        guard let capacity = Double(InputSanitizer.sanitizeDecimal(dailyFactoryCapacityInput)) else { return false }
+        return capacity >= 1.0 && capacity <= 200000.0
     }
 
     /// Automatically synchronizes the elevation estimate when the district selection updates.

@@ -119,6 +119,9 @@ struct HarvestWeighingFormView: View {
                 TextField("Enter plucker ID", text: $viewModel.pluckerId)
                     .autocapitalization(.allCharacters)
                     .disableAutocorrection(true)
+                    .onChange(of: viewModel.pluckerId) { newValue in
+                        viewModel.pluckerId = InputSanitizer.sanitizePluckerId(newValue)
+                    }
             }
 
             HStack {
@@ -128,7 +131,7 @@ struct HarvestWeighingFormView: View {
 
                 TextField("Enter plucker name", text: $viewModel.pluckerName)
                     .autocapitalization(.words)
-                    .disableAutocorrection(true)
+                    .disableAutocorrection(false)
             }
         }
     }
@@ -142,6 +145,10 @@ struct HarvestWeighingFormView: View {
 
                 TextField("Enter gross weight", text: $viewModel.grossWeightInput)
                     .keyboardType(.decimalPad)
+                    .disableAutocorrection(true)
+                    .onChange(of: viewModel.grossWeightInput) { newValue in
+                        viewModel.grossWeightInput = InputSanitizer.sanitizeDecimal(newValue)
+                    }
 
                 Text("kg")
                     .foregroundColor(.secondary)
@@ -155,6 +162,10 @@ struct HarvestWeighingFormView: View {
 
                     TextField("Enter tare weight", text: $viewModel.bagTareWeightInput)
                         .keyboardType(.decimalPad)
+                        .disableAutocorrection(true)
+                        .onChange(of: viewModel.bagTareWeightInput) { newValue in
+                            viewModel.bagTareWeightInput = InputSanitizer.sanitizeDecimal(newValue)
+                        }
 
                     Text("kg")
                         .foregroundColor(.secondary)

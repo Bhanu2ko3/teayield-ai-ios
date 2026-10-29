@@ -174,10 +174,21 @@ struct InviteSupervisorSheetView: View {
 
                         TextField("e.g. +94 77 987 6543", text: $viewModel.phoneNumber)
                             .keyboardType(.phonePad)
+                            .textContentType(.telephoneNumber)
+                            .disableAutocorrection(true)
+                            .onChange(of: viewModel.phoneNumber) { newValue in
+                                viewModel.phoneNumber = InputSanitizer.sanitizePhoneNumber(newValue)
+                            }
                     }
                     .padding(14)
                     .background(Color(uiColor: .tertiarySystemGroupedBackground))
                     .cornerRadius(AppTheme.radiusMedium)
+
+                    if !viewModel.phoneNumber.isEmpty && !InputSanitizer.isValidPhoneNumber(viewModel.phoneNumber) {
+                        Text("Phone number must contain 9 to 15 digits.")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(AppTheme.crimson)
+                    }
                 }
             }
 

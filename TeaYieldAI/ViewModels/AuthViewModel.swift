@@ -37,11 +37,13 @@ final class AuthViewModel: ObservableObject {
     var isFormValid: Bool {
         switch authMode {
         case .signIn:
-            return isValidEmail(email) && password.count >= 6
+            return InputSanitizer.isValidEmail(email) && password.count >= 6
         case .signUp:
-            return signUpFullName.trimmingCharacters(in: .whitespaces).count >= 2 &&
-                   isValidEmail(email) &&
-                   password.count >= 8
+            let nameValid = signUpFullName.trimmingCharacters(in: .whitespacesAndNewlines).count >= 2
+            let emailValid = InputSanitizer.isValidEmail(email)
+            let passwordValid = password.count >= 8
+            let phoneValid = signUpPhoneNumber.isEmpty || InputSanitizer.isValidPhoneNumber(signUpPhoneNumber)
+            return nameValid && emailValid && passwordValid && phoneValid
         }
     }
 
@@ -102,7 +104,17 @@ final class AuthViewModel: ObservableObject {
     /// Registers a new estate manager account with tenant administrator privileges.
     func signUpManager() async {
         guard isFormValid else {
-            errorMessage = "Please enter your full legal name, a valid corporate email, and a password with at least 8 characters."
+            if signUpFullName.trimmingCharacters(in: .whitespacesAndNewlines).count < 2 {
+                errorMessage = "Please enter your full legal name (at least 2 characters)."
+            } else if !InputSanitizer.isValidEmail(email) {
+                errorMessage = "Please enter a valid corporate email address."
+            } else if password.count < 8 {
+                errorMessage = "Password must contain at least 8 characters for cryptographic isolation."
+            } else if !signUpPhoneNumber.isEmpty && !InputSanitizer.isValidPhoneNumber(signUpPhoneNumber) {
+                errorMessage = "Please enter a valid phone number with 9-15 digits."
+            } else {
+                errorMessage = "Please verify all required registration fields."
+            }
             showErrorAlert = true
             return
         }
@@ -110,8 +122,8 @@ final class AuthViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        let trimmedPhone = signUpPhoneNumber.trimmingCharacters(in: .whitespacesAndNewlines)
-        let phoneParam: String? = trimmedPhone.isEmpty ? nil : trimmedPhone
+        let sanitizedPhone = InputSanitizer.sanitizePhoneNumber(signUpPhoneNumber)
+        let phoneParam: String? = sanitizedPhone.isEmpty ? nil : sanitizedPhone
 
         let request = ManagerSignUpRequestDTO(
             fullName: signUpFullName.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -187,8 +199,6 @@ final class AuthViewModel: ObservableObject {
     // MARK: - Private Helpers
 
     private func isValidEmail(_ candidate: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let predicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-        return predicate.evaluate(with: candidate.trimmingCharacters(in: .whitespacesAndNewlines))
+        InputSanitizer.isValidEmail(candidate)
     }
 }

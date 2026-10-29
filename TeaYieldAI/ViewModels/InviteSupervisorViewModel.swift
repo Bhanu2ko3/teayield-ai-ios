@@ -24,9 +24,11 @@ final class InviteSupervisorViewModel: ObservableObject {
     }
 
     var isFormValid: Bool {
-        fullName.trimmingCharacters(in: .whitespacesAndNewlines).count >= 2 &&
-        isValidEmail(email) &&
-        temporaryPassword.count >= 8
+        let nameValid = fullName.trimmingCharacters(in: .whitespacesAndNewlines).count >= 2
+        let emailValid = InputSanitizer.isValidEmail(email)
+        let passwordValid = temporaryPassword.count >= 8
+        let phoneValid = phoneNumber.isEmpty || InputSanitizer.isValidPhoneNumber(phoneNumber)
+        return nameValid && emailValid && passwordValid && phoneValid
     }
 
     /// Generates a human-readable high-entropy temporary password for initial supervisor dispatch.
@@ -45,7 +47,17 @@ final class InviteSupervisorViewModel: ObservableObject {
     /// Dispatches the invitation payload to the remote API.
     func inviteSupervisor() async {
         guard isFormValid else {
-            errorMessage = "Please enter the supervisor's full legal name, a valid corporate email, and a temporary password with at least 8 characters."
+            if fullName.trimmingCharacters(in: .whitespacesAndNewlines).count < 2 {
+                errorMessage = "Please enter the supervisor's full legal name (at least 2 characters)."
+            } else if !InputSanitizer.isValidEmail(email) {
+                errorMessage = "Please enter a valid corporate email address."
+            } else if temporaryPassword.count < 8 {
+                errorMessage = "The temporary password must contain at least 8 characters."
+            } else if !phoneNumber.isEmpty && !InputSanitizer.isValidPhoneNumber(phoneNumber) {
+                errorMessage = "Please enter a valid phone number with 9 to 15 digits."
+            } else {
+                errorMessage = "Please verify all required fields."
+            }
             showErrorAlert = true
             return
         }
@@ -53,8 +65,8 @@ final class InviteSupervisorViewModel: ObservableObject {
         isSubmitting = true
         errorMessage = nil
 
-        let trimmedPhone = phoneNumber.trimmingCharacters(in: .whitespacesAndNewlines)
-        let phoneParam: String? = trimmedPhone.isEmpty ? nil : trimmedPhone
+        let sanitizedPhone = InputSanitizer.sanitizePhoneNumber(phoneNumber)
+        let phoneParam: String? = sanitizedPhone.isEmpty ? nil : sanitizedPhone
 
         let request = SupervisorInviteRequestDTO(
             fullName: fullName.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -92,9 +104,7 @@ final class InviteSupervisorViewModel: ObservableObject {
     }
 
     private func isValidEmail(_ candidate: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let predicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-        return predicate.evaluate(with: candidate.trimmingCharacters(in: .whitespacesAndNewlines))
+        InputSanitizer.isValidEmail(candidate)
     }
 }
 
