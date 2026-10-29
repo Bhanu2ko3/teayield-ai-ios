@@ -70,7 +70,7 @@ struct YieldComparisonChartView: View {
                         .padding(.horizontal, 4)
                         .padding(.vertical, 2)
                         .background(Color(uiColor: .secondarySystemGroupedBackground).opacity(0.9))
-                        .cornerRadius(4)
+                        .cornerRadius(AppTheme.radiusSmall)
                 }
         }
         .chartYAxis {

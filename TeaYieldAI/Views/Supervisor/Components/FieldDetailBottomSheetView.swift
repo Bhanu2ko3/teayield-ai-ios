@@ -159,7 +159,7 @@ struct FieldDetailBottomSheetView: View {
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
         .background(statusColor.opacity(0.12))
-        .cornerRadius(12)
+        .cornerRadius(AppTheme.radiusSmall)
     }
 
     private var statusColor: Color {

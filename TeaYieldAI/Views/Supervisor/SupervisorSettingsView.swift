@@ -89,27 +89,14 @@ struct SupervisorSettingsView: View {
     // MARK: - Subviews
 
     private var logoutButton: some View {
-        Button {
-            viewModel.showingLogoutConfirmation = true
-        } label: {
-            HStack(spacing: 8) {
-                Image(systemName: "rectangle.portrait.and.arrow.right")
-                Text("Log Out of Enterprise Account")
-                    .fontWeight(.bold)
+        TeaYieldButton(
+            title: "Log Out of Enterprise Account",
+            icon: "rectangle.portrait.and.arrow.right",
+            style: .destructive,
+            action: {
+                viewModel.showingLogoutConfirmation = true
             }
-            .font(.appHeadline)
-            .foregroundColor(.red)
-            .frame(maxWidth: .infinity)
-            .frame(height: 50)
-            .background(Color.red.opacity(0.08))
-            .cornerRadius(AppTheme.radiusMedium)
-            .overlay(
-                RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
-                    .stroke(Color.red.opacity(0.2), lineWidth: 1)
-            )
-        }
-        .accessibilityLabel("Log Out of Enterprise Account")
-        .accessibilityHint("Prompts confirmation to sign out of supervisor account")
+        )
         .padding(.top, 8)
         .padding(.bottom, 24)
     }

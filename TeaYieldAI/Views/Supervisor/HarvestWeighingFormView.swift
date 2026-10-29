@@ -243,7 +243,7 @@ struct HarvestWeighingFormView: View {
                         .padding(.vertical, 2)
                         .background(AppTheme.emerald.opacity(0.12))
                         .foregroundColor(AppTheme.emerald)
-                        .cornerRadius(4)
+                        .cornerRadius(AppTheme.radiusSmall)
                 } else {
                     Text("Field Coordinates Pending Selection")
                         .font(.caption)

@@ -68,7 +68,7 @@ struct OnboardingView: View {
                 }
             } label: {
                 Image(systemName: currentThemeMode.iconName)
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(.system(size: 15, weight: .semibold))
                     .foregroundColor(AppTheme.emerald)
                     .padding(6)
             }
@@ -142,22 +142,12 @@ struct OnboardingView: View {
 
     private var bottomActionControls: some View {
         VStack(spacing: 12) {
-            Button(action: nextSlideOrFinish) {
-                HStack(spacing: 8) {
-                    Text(currentSlide == slides.count - 1 ? "Get Started" : "Continue")
-                        .font(.appHeadline)
-                        .foregroundColor(.white)
-
-                    Image(systemName: "arrow.right")
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.white)
-                }
-                .frame(maxWidth: .infinity)
-                .frame(height: 52)
-                .background(AppTheme.emerald)
-                .cornerRadius(AppTheme.radiusMedium)
-                .shadow(color: AppTheme.emerald.opacity(0.3), radius: 8, x: 0, y: 4)
-            }
+            TeaYieldButton(
+                title: currentSlide == slides.count - 1 ? "Get Started" : "Continue",
+                icon: "arrow.right",
+                style: .primary,
+                action: nextSlideOrFinish
+            )
 
             Button(action: completeOnboarding) {
                 HStack(spacing: 4) {

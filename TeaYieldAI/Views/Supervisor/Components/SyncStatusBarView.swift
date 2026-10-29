@@ -47,7 +47,7 @@ struct SyncStatusBarView: View {
                     .padding(.vertical, 6)
                     .background(buttonBackgroundColor)
                     .foregroundColor(buttonTextColor)
-                    .cornerRadius(8)
+                    .cornerRadius(AppTheme.radiusSmall)
                 }
                 .accessibilityLabel("Synchronize \(unsyncedCount) queued weighing records now")
                 .accessibilityHint("Uploads local offline harvest logs to estate cloud")
@@ -56,9 +56,9 @@ struct SyncStatusBarView: View {
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
         .background(bannerBackgroundColor)
-        .cornerRadius(12)
+        .cornerRadius(AppTheme.radiusMedium)
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
                 .stroke(borderColor, lineWidth: 1)
         )
         .accessibilityElement(children: .contain)

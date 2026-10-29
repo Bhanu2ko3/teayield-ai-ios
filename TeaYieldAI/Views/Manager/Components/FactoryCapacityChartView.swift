@@ -66,7 +66,7 @@ struct FactoryCapacityChartView: View {
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
                 .background(utilizationColor.opacity(0.12))
-                .cornerRadius(6)
+                .cornerRadius(AppTheme.radiusSmall)
         }
     }
 

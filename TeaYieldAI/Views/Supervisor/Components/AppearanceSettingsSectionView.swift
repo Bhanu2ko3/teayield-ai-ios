@@ -21,7 +21,7 @@ struct AppearanceSettingsSectionView: View {
                     .padding(.vertical, 2)
                     .background(AppTheme.emerald.opacity(0.15))
                     .foregroundColor(AppTheme.emerald)
-                    .cornerRadius(4)
+                    .cornerRadius(AppTheme.radiusSmall)
             }
             .padding(.horizontal, 8)
 

@@ -49,7 +49,7 @@ struct OfficerProfileCardView: View {
                                 .padding(.vertical, 1)
                                 .background(AppTheme.emerald.opacity(0.15))
                                 .foregroundColor(AppTheme.emerald)
-                                .cornerRadius(4)
+                                .cornerRadius(AppTheme.radiusSmall)
                         }
                     }
                 }

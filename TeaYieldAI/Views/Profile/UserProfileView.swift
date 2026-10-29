@@ -190,7 +190,7 @@ struct UserProfileView: View {
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
                     .background(AppTheme.emerald.opacity(0.10))
-                    .cornerRadius(8)
+                    .cornerRadius(AppTheme.radiusSmall)
                 }
 
                 if hasCustomPhoto {
@@ -206,7 +206,7 @@ struct UserProfileView: View {
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
                         .background(AppTheme.crimson.opacity(0.10))
-                        .cornerRadius(8)
+                        .cornerRadius(AppTheme.radiusSmall)
                     }
                 }
             }
@@ -457,56 +457,26 @@ struct UserProfileView: View {
 
     private var accountActionsSection: some View {
         VStack(spacing: 12) {
-            Button {
-                Task {
-                    await viewModel.refreshProfileFromCloud()
-                }
-            } label: {
-                HStack(spacing: 8) {
-                    if viewModel.isRefreshing {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: AppTheme.emerald))
-                    } else {
-                        Image(systemName: "arrow.triangle.2.circlepath")
+            TeaYieldButton(
+                title: "Sync Profile with Cloud API",
+                icon: "arrow.triangle.2.circlepath",
+                style: .secondary,
+                isLoading: viewModel.isRefreshing,
+                action: {
+                    Task {
+                        await viewModel.refreshProfileFromCloud()
                     }
-                    Text("Sync Profile with Cloud API")
-                        .fontWeight(.semibold)
                 }
-                .font(.appHeadline)
-                .foregroundColor(AppTheme.emerald)
-                .frame(maxWidth: .infinity)
-                .frame(height: 50)
-                .background(AppTheme.emerald.opacity(0.10))
-                .cornerRadius(AppTheme.radiusMedium)
-                .overlay(
-                    RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
-                        .stroke(AppTheme.emerald.opacity(0.25), lineWidth: 1)
-                )
-            }
-            .disabled(viewModel.isRefreshing)
-            .accessibilityLabel("Sync profile with cloud API")
+            )
 
-            Button {
-                viewModel.showingLogoutConfirmation = true
-            } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: "rectangle.portrait.and.arrow.right")
-                    Text("Log Out of Enterprise Account")
-                        .fontWeight(.bold)
+            TeaYieldButton(
+                title: "Log Out of Enterprise Account",
+                icon: "rectangle.portrait.and.arrow.right",
+                style: .destructive,
+                action: {
+                    viewModel.showingLogoutConfirmation = true
                 }
-                .font(.appHeadline)
-                .foregroundColor(.red)
-                .frame(maxWidth: .infinity)
-                .frame(height: 50)
-                .background(Color.red.opacity(0.08))
-                .cornerRadius(AppTheme.radiusMedium)
-                .overlay(
-                    RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
-                        .stroke(Color.red.opacity(0.2), lineWidth: 1)
-                )
-            }
-            .accessibilityLabel("Log Out of Enterprise Account")
-            .accessibilityHint("Prompts confirmation to sign out of the account")
+            )
         }
         .padding(.top, 4)
         .padding(.bottom, 24)

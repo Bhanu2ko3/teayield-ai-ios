@@ -46,7 +46,7 @@ struct TaskCardView: View {
                     .padding(.vertical, 3)
                     .background(AppTheme.emerald.opacity(0.15))
                     .foregroundColor(AppTheme.emerald)
-                    .cornerRadius(6)
+                    .cornerRadius(AppTheme.radiusSmall)
                 }
 
                 statusBadge
@@ -61,7 +61,7 @@ struct TaskCardView: View {
             .padding(.vertical, 4)
             .background(statusColor.opacity(0.12))
             .foregroundColor(statusColor)
-            .cornerRadius(6)
+            .cornerRadius(AppTheme.radiusSmall)
     }
 
     private var quotaProgressSection: some View {
@@ -86,7 +86,7 @@ struct TaskCardView: View {
                         .frame(height: 8)
 
                     Capsule()
-                        .fill(Color(red: 0.02, green: 0.59, blue: 0.41))
+                        .fill(AppTheme.emerald)
                         .frame(
                             width: max(0, min(proxy.size.width, proxy.size.width * CGFloat(task.progressRatio))),
                             height: 8
@@ -118,7 +118,7 @@ struct TaskCardView: View {
                         .foregroundColor(isGeofenced ? AppTheme.emerald : .secondary)
                         .padding(7)
                         .background(isGeofenced ? AppTheme.emerald.opacity(0.12) : Color.secondary.opacity(0.08))
-                        .cornerRadius(8)
+                        .cornerRadius(AppTheme.radiusSmall)
                 }
                 .accessibilityLabel(isGeofenced ? "Simulate Geofence Exit" : "Simulate Geofence Arrival")
                 .accessibilityHint("Triggers on-device CoreLocation boundary event for Viva testing")
@@ -133,10 +133,10 @@ struct TaskCardView: View {
                         .fontWeight(.semibold)
                 }
                 .padding(.horizontal, 12)
-                .padding(.vertical, 6)
+                .padding(.vertical, 7)
                 .background(AppTheme.emerald)
                 .foregroundColor(.white)
-                .cornerRadius(8)
+                .cornerRadius(AppTheme.radiusSmall)
             }
         }
     }

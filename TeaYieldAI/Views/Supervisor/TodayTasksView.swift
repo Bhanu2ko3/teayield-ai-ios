@@ -164,18 +164,13 @@ struct TodayTasksView: View {
 
     private var taskListSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            HStack {
-                Text("Assigned Fields")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-
-                Spacer()
-
-                if viewModel.isLoading {
-                    ProgressView()
-                        .scaleEffect(0.8)
-                }
-            }
+            SectionHeaderView(
+                title: "ASSIGNED HARVEST BLOCKS",
+                subtitle: "Daily plucking tasks optimized by Genetic Algorithm",
+                icon: "leaf.fill",
+                badge: viewModel.isLoading ? "SYNCING..." : "\(viewModel.tasks.count) FIELDS",
+                badgeColor: AppTheme.emerald
+            )
 
             if viewModel.tasks.isEmpty && !viewModel.isLoading {
                 VStack(spacing: 12) {

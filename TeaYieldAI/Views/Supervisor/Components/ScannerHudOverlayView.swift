@@ -50,7 +50,7 @@ struct ScannerHudOverlayView: View {
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
                             .background(Color.black.opacity(0.65))
-                            .cornerRadius(12)
+                            .cornerRadius(AppTheme.radiusSmall)
                             .padding(.bottom, 12)
                     }
                     .frame(width: 260, height: 260)
@@ -106,9 +106,9 @@ struct ScannerHudOverlayView: View {
             }
             .padding(14)
             .background(Color.black.opacity(0.7))
-            .cornerRadius(16)
+            .cornerRadius(AppTheme.radiusLarge)
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: AppTheme.radiusLarge)
                     .stroke(reticleColor.opacity(0.4), lineWidth: 1.2)
             )
             .shadow(color: Color.black.opacity(0.3), radius: 8, y: 4)

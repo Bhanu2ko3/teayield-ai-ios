@@ -56,7 +56,7 @@ struct DataStorageSectionView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
                     .background(AppTheme.emerald.opacity(0.12))
-                    .cornerRadius(6)
+                    .cornerRadius(AppTheme.radiusSmall)
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
@@ -94,31 +94,13 @@ struct DataStorageSectionView: View {
 
                 Divider().padding(.leading, 50)
 
-                Button {
+                TeaYieldButton(
+                    title: viewModel.isSyncing ? "Syncing..." : "Manual Sync with Supabase",
+                    icon: "arrow.triangle.2.circlepath",
+                    style: .tonal,
+                    isLoading: viewModel.isSyncing
+                ) {
                     viewModel.triggerManualSync()
-                } label: {
-                    HStack(spacing: 8) {
-                        if viewModel.isSyncing {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: AppTheme.emerald))
-                                .scaleEffect(0.8)
-                        } else {
-                            Image(systemName: "arrow.triangle.2.circlepath")
-                                .font(.system(size: 14, weight: .bold))
-                        }
-
-                        Text(viewModel.isSyncing ? "Syncing..." : "Manual Sync with Supabase")
-                            .font(.appHeadline)
-                    }
-                    .foregroundColor(AppTheme.emerald)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 44)
-                    .background(AppTheme.emerald.opacity(0.08))
-                    .cornerRadius(AppTheme.radiusMedium)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
-                            .stroke(AppTheme.emerald.opacity(0.3), lineWidth: 1)
-                    )
                 }
                 .accessibilityLabel("Manual Sync with Supabase")
                 .accessibilityHint("Uploads queued offline weighing logs to estate server")

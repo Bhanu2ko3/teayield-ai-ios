@@ -102,9 +102,9 @@ struct ForcePasswordChangeView: View {
         }
         .padding(14)
         .background(AppTheme.amber.opacity(0.08))
-        .cornerRadius(12)
+        .cornerRadius(AppTheme.radiusMedium)
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
                 .stroke(AppTheme.amber.opacity(0.20), lineWidth: 1)
         )
     }
@@ -142,7 +142,7 @@ struct ForcePasswordChangeView: View {
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(AppTheme.radiusMedium)
             }
 
             // New Password
@@ -177,7 +177,7 @@ struct ForcePasswordChangeView: View {
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(AppTheme.radiusMedium)
             }
 
             // Confirm Password
@@ -212,7 +212,7 @@ struct ForcePasswordChangeView: View {
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(AppTheme.radiusMedium)
             }
         }
         .padding(18)
@@ -260,29 +260,18 @@ struct ForcePasswordChangeView: View {
     }
 
     private var actionButtonSection: some View {
-        Button {
-            Task {
-                await viewModel.changePassword()
-            }
-        } label: {
-            HStack {
-                if viewModel.isSubmitting {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .padding(.trailing, 8)
+        TeaYieldButton(
+            title: "Update Password & Unlock",
+            icon: "lock.rotation",
+            style: .primary,
+            isLoading: viewModel.isSubmitting,
+            isDisabled: !viewModel.isFormValid,
+            action: {
+                Task {
+                    await viewModel.changePassword()
                 }
-                Text(viewModel.isSubmitting ? "Updating Password..." : "Update Password & Unlock")
-                    .font(.appHeadline)
-                    .foregroundColor(.white)
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 52)
-            .background(viewModel.isFormValid ? AppTheme.emerald : AppTheme.emerald.opacity(0.4))
-            .cornerRadius(14)
-        }
-        .disabled(!viewModel.isFormValid || viewModel.isSubmitting)
-        .accessibilityLabel("Update Password and Unlock")
-        .accessibilityHint("Rotates temporary credentials and opens supervisor workspace")
+        )
     }
 
     private var logoutSection: some View {

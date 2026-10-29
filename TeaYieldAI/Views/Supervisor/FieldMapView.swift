@@ -79,7 +79,7 @@ struct FieldMapView: View {
                     ProgressView("Loading Estate GIS...")
                         .padding()
                         .background(AppTheme.surfaceGlass)
-                        .cornerRadius(12)
+                        .cornerRadius(AppTheme.radiusMedium)
                         .padding(.bottom, 60)
                 }
             }
@@ -150,14 +150,17 @@ struct FieldMapView: View {
     }
 
     private func filterPill(title: String, isSelected: Bool, color: Color, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
+        Button {
+            HapticFeedback.selection()
+            action()
+        } label: {
             Text(title)
                 .font(.system(size: 12, weight: isSelected ? .bold : .medium, design: .rounded))
                 .foregroundColor(isSelected ? .white : .primary)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(isSelected ? color : Color.secondary.opacity(0.12))
-                .cornerRadius(14)
+                .cornerRadius(AppTheme.radiusPill)
         }
     }
 }

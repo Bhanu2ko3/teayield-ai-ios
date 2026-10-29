@@ -55,18 +55,12 @@ struct LeafScannerPlaceholderView: View {
                     Spacer()
 
                     if let onRecordWeighingTap = onRecordWeighingTap {
-                        Button(action: onRecordWeighingTap) {
-                            HStack(spacing: 8) {
-                                Image(systemName: "scalemass.fill")
-                                Text("Open Leaf Weighing Form")
-                                    .font(.appHeadline)
-                            }
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 50)
-                            .background(AppTheme.emerald)
-                            .cornerRadius(AppTheme.radiusMedium)
-                        }
+                        TeaYieldButton(
+                            title: "Open Leaf Weighing Form",
+                            icon: "scalemass.fill",
+                            style: .primary,
+                            action: onRecordWeighingTap
+                        )
                         .padding(.horizontal, 24)
                         .padding(.bottom, 24)
                     }

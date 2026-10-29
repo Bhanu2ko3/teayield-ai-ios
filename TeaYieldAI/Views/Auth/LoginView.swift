@@ -166,9 +166,9 @@ struct LoginView: View {
             .padding(.horizontal, 12)
             .frame(maxWidth: .infinity)
             .background(isSelected ? AppTheme.emerald : AppTheme.emerald.opacity(0.10))
-            .cornerRadius(10)
+            .cornerRadius(AppTheme.radiusMedium)
             .overlay(
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
                     .stroke(isSelected ? AppTheme.emerald : AppTheme.emerald.opacity(0.25), lineWidth: 1)
             )
         }
@@ -195,7 +195,7 @@ struct LoginView: View {
                     }
                     .padding(14)
                     .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(12)
+                    .cornerRadius(AppTheme.radiusMedium)
                 }
             }
 
@@ -229,7 +229,7 @@ struct LoginView: View {
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(AppTheme.radiusMedium)
             }
 
             if viewModel.authMode == .signUp {
@@ -249,7 +249,7 @@ struct LoginView: View {
                     }
                     .padding(14)
                     .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(12)
+                    .cornerRadius(AppTheme.radiusMedium)
                 }
             }
 
@@ -285,7 +285,7 @@ struct LoginView: View {
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(AppTheme.radiusMedium)
 
                 if viewModel.authMode == .signUp {
                     Text("Minimum 8 characters required for cryptographic tenant isolation.")
@@ -310,7 +310,7 @@ struct LoginView: View {
                 }
                 .padding(10)
                 .background(Color.red.opacity(0.08))
-                .cornerRadius(8)
+                .cornerRadius(AppTheme.radiusSmall)
             }
         }
         .padding(18)
@@ -319,29 +319,17 @@ struct LoginView: View {
 
     private var actionButtonsSection: some View {
         VStack(spacing: 12) {
-            Button {
-                Task {
-                    await viewModel.submit()
-                }
-            } label: {
-                HStack {
-                    if viewModel.isLoading {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .padding(.trailing, 8)
+            TeaYieldButton(
+                title: submitButtonTitle,
+                icon: viewModel.authMode == .signUp ? "person.crop.circle.badge.plus" : "lock.open.fill",
+                style: .primary,
+                isLoading: viewModel.isLoading,
+                action: {
+                    Task {
+                        await viewModel.submit()
                     }
-                    Text(submitButtonTitle)
-                        .font(.appHeadline)
-                        .foregroundColor(.white)
                 }
-                .frame(maxWidth: .infinity)
-                .frame(height: 50)
-                .background(AppTheme.emerald)
-                .cornerRadius(12)
-            }
-            .disabled(viewModel.isLoading)
-            .accessibilityLabel(submitButtonTitle)
-            .accessibilityHint(viewModel.authMode == .signUp ? "Registers new estate manager tenant account" : "Authenticates credentials with estate server")
+            )
 
             if viewModel.authMode == .signIn && viewModel.isBiometricAvailable {
                 Button {
@@ -365,14 +353,14 @@ struct LoginView: View {
                             .padding(.vertical, 2)
                             .background(AppTheme.emerald.opacity(0.18))
                             .foregroundColor(AppTheme.emerald)
-                            .cornerRadius(4)
+                            .cornerRadius(AppTheme.radiusSmall)
                     }
                     .foregroundColor(AppTheme.emerald)
                     .padding(.horizontal, 16)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 48)
+                    .frame(height: 50)
                     .background(AppTheme.emerald.opacity(0.10))
-                    .cornerRadius(12)
+                    .cornerRadius(AppTheme.radiusMedium)
                 }
                 .disabled(viewModel.isLoading)
                 .accessibilityLabel("Sign in with \(viewModel.biometricType.rawValue)")

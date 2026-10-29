@@ -93,7 +93,7 @@ struct InviteSupervisorSheetView: View {
                     }
                     .padding(14)
                     .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(12)
+                    .cornerRadius(AppTheme.radiusMedium)
                 }
 
                 // Email
@@ -115,7 +115,7 @@ struct InviteSupervisorSheetView: View {
                     }
                     .padding(14)
                     .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(12)
+                    .cornerRadius(AppTheme.radiusMedium)
                 }
 
                 // Temporary Password
@@ -153,7 +153,7 @@ struct InviteSupervisorSheetView: View {
                     }
                     .padding(14)
                     .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(12)
+                    .cornerRadius(AppTheme.radiusMedium)
 
                     Text("The supervisor must rotate this password upon their first sign-in.")
                         .font(.system(size: 10, weight: .regular))
@@ -177,29 +177,19 @@ struct InviteSupervisorSheetView: View {
                     }
                     .padding(14)
                     .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(12)
+                    .cornerRadius(AppTheme.radiusMedium)
                 }
             }
 
-            Button {
+            TeaYieldButton(
+                title: "Send Staff Credentials",
+                icon: "paperplane.fill",
+                style: .primary,
+                isLoading: viewModel.isSubmitting
+            ) {
                 Task {
                     await viewModel.inviteSupervisor()
                 }
-            } label: {
-                HStack {
-                    if viewModel.isSubmitting {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .padding(.trailing, 8)
-                    }
-                    Text(viewModel.isSubmitting ? "Provisioning..." : "Send Staff Credentials")
-                        .font(.appHeadline)
-                        .foregroundColor(.white)
-                }
-                .frame(maxWidth: .infinity)
-                .frame(height: 50)
-                .background(viewModel.isFormValid ? AppTheme.emerald : AppTheme.emerald.opacity(0.4))
-                .cornerRadius(12)
             }
             .disabled(!viewModel.isFormValid || viewModel.isSubmitting)
             .accessibilityLabel("Send Staff Credentials")
@@ -242,13 +232,17 @@ struct InviteSupervisorSheetView: View {
             }
             .padding(16)
             .background(Color(uiColor: .secondarySystemGroupedBackground))
-            .cornerRadius(12)
+            .cornerRadius(AppTheme.radiusMedium)
             .overlay(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
                     .stroke(AppTheme.borderSubtle, lineWidth: 1)
             )
 
-            Button {
+            TeaYieldButton(
+                title: hasCopiedCredentials ? "Credentials Copied to Clipboard" : "Copy Credentials",
+                icon: hasCopiedCredentials ? "checkmark" : "doc.on.doc.fill",
+                style: .primary
+            ) {
                 let shareText = """
                 TeaYield AI Supervisor Credentials
                 Name: \(viewModel.fullName)
@@ -259,17 +253,6 @@ struct InviteSupervisorSheetView: View {
                 UIPasteboard.general.string = shareText
                 hasCopiedCredentials = true
                 HapticFeedback.success()
-            } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: hasCopiedCredentials ? "checkmark" : "doc.on.doc.fill")
-                    Text(hasCopiedCredentials ? "Credentials Copied to Clipboard" : "Copy Credentials")
-                }
-                .font(.appHeadline)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 50)
-                .background(hasCopiedCredentials ? AppTheme.emeraldDark : AppTheme.emerald)
-                .cornerRadius(12)
             }
 
             Button {

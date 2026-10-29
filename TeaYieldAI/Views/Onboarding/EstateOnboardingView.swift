@@ -99,9 +99,9 @@ struct EstateOnboardingView: View {
         }
         .padding(14)
         .background(AppTheme.emerald.opacity(0.08))
-        .cornerRadius(12)
+        .cornerRadius(AppTheme.radiusMedium)
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
                 .stroke(AppTheme.emerald.opacity(0.20), lineWidth: 1)
         )
     }
@@ -125,7 +125,7 @@ struct EstateOnboardingView: View {
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(AppTheme.radiusMedium)
             }
 
             // District Picker
@@ -162,7 +162,7 @@ struct EstateOnboardingView: View {
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(AppTheme.radiusMedium)
             }
 
             // Total Acreage
@@ -194,7 +194,7 @@ struct EstateOnboardingView: View {
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(AppTheme.radiusMedium)
             }
 
             // Factory Intake Capacity
@@ -226,7 +226,7 @@ struct EstateOnboardingView: View {
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(AppTheme.radiusMedium)
             }
         }
         .padding(18)
@@ -234,29 +234,18 @@ struct EstateOnboardingView: View {
     }
 
     private var submitButtonSection: some View {
-        Button {
-            Task {
-                await viewModel.onboardEstate()
-            }
-        } label: {
-            HStack {
-                if viewModel.isSubmitting {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .padding(.trailing, 8)
+        TeaYieldButton(
+            title: "Complete Estate Onboarding",
+            icon: "checkmark.shield.fill",
+            style: .primary,
+            isLoading: viewModel.isSubmitting,
+            isDisabled: !viewModel.isFormValid,
+            action: {
+                Task {
+                    await viewModel.onboardEstate()
                 }
-                Text(viewModel.isSubmitting ? "Registering Estate..." : "Complete Estate Onboarding")
-                    .font(.appHeadline)
-                    .foregroundColor(.white)
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 52)
-            .background(AppTheme.emerald)
-            .cornerRadius(14)
-        }
-        .disabled(viewModel.isSubmitting)
-        .accessibilityLabel("Complete Estate Onboarding")
-        .accessibilityHint("Submits plantation parameters and initializes AI engines")
+        )
     }
 
     private var cancelSection: some View {

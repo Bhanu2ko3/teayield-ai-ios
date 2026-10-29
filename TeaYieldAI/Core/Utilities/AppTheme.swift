@@ -69,12 +69,19 @@ enum AppTheme {
     static let surfaceGlass = Color(uiColor: .secondarySystemGroupedBackground).opacity(0.85)
     static let borderSubtle = Color.primary.opacity(0.08)
 
-    // MARK: - Radius Tokens
+    // MARK: - Radius Tokens (Crisp Industrial Hierarchy)
 
-    static let radiusSmall: CGFloat = 8
-    static let radiusMedium: CGFloat = 12
-    static let radiusLarge: CGFloat = 16
-    static let radiusPill: CGFloat = 24
+    /// Subtle radius for badges, telemetry chips, and status tags (4pt - 6pt).
+    static let radiusSmall: CGFloat = 6
+
+    /// Standard touch radius for action buttons, form inputs, and text fields (8pt - 10pt).
+    static let radiusMedium: CGFloat = 10
+
+    /// Controlled card and container boundary radius maintaining a crisp industrial aesthetic (12pt - 14pt max).
+    static let radiusLarge: CGFloat = 14
+
+    /// Subtle pill radius for small category chips.
+    static let radiusPill: CGFloat = 16
 }
 
 // MARK: - Color Extension Helpers
@@ -84,6 +91,12 @@ extension Color {
     static let emeraldLight = AppTheme.emeraldLight
     static let amberGold = AppTheme.amber
     static let crimsonRest = AppTheme.crimson
+}
+
+extension UIColor {
+    static let teaEmerald = UIColor(red: 0.02, green: 0.59, blue: 0.41, alpha: 1.0)
+    static let teaAmber = UIColor(red: 0.85, green: 0.47, blue: 0.02, alpha: 1.0)
+    static let teaCrimson = UIColor(red: 0.86, green: 0.15, blue: 0.15, alpha: 1.0)
 }
 
 // MARK: - Typography & Font Helpers (Native Dynamic Type Scaling)
@@ -174,5 +187,10 @@ extension View {
 
     func applyAppTheme() -> some View {
         modifier(AppThemeModifier())
+    }
+
+    /// Smooth enterprise fade-in animation for page transitions and tab shifts.
+    func appFadeTransition() -> some View {
+        self.transition(.opacity.animation(.easeInOut(duration: 0.25)))
     }
 }

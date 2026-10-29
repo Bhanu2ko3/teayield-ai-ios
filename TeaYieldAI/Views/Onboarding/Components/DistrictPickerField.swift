@@ -92,7 +92,7 @@ struct DistrictPickerField: View {
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(AppTheme.radiusMedium)
             }
             .accessibilityLabel("Agro-Ecological District: currently \(selectedDistrict)")
             .accessibilityHint("Double tap to select from Sri Lankan tea cultivation zones")

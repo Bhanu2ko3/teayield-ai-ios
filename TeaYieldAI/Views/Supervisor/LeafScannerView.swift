@@ -240,8 +240,8 @@ struct LeafScannerView: View {
                 } else {
                     LinearGradient(
                         colors: [
-                            Color(red: 0.04, green: 0.18, blue: 0.11),
-                            Color(red: 0.02, green: 0.08, blue: 0.05)
+                            AppTheme.forest,
+                            AppTheme.navyDark
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
@@ -437,22 +437,14 @@ struct LeafScannerView: View {
 
             // Apply Button
             if let onRecordWeighingTap = onRecordWeighingTap {
-                Button(action: {
-                    HapticFeedback.mediumImpact()
-                    onRecordWeighingTap(assessment.fineLeafRatio)
-                }) {
-                    HStack(spacing: 8) {
-                        Image(systemName: "scalemass.fill")
-                        Text("Apply to Harvest Weighing Sheet")
-                            .fontWeight(.bold)
+                TeaYieldButton(
+                    title: "Apply to Harvest Weighing Sheet",
+                    icon: "scalemass.fill",
+                    style: assessment.meetsExportQuality ? .primary : .tonal,
+                    action: {
+                        onRecordWeighingTap(assessment.fineLeafRatio)
                     }
-                    .font(.appHeadline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 50)
-                    .background(assessment.meetsExportQuality ? AppTheme.emerald : AppTheme.amber)
-                    .cornerRadius(AppTheme.radiusMedium)
-                }
+                )
             }
         }
         .padding(.horizontal, 20)

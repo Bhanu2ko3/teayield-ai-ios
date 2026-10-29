@@ -20,7 +20,7 @@ struct NotificationSettingsSectionView: View {
                     .padding(.vertical, 2)
                     .background((viewModel.notificationsAuthorized ? AppTheme.emerald : AppTheme.amber).opacity(0.15))
                     .foregroundColor(viewModel.notificationsAuthorized ? AppTheme.emerald : AppTheme.amber)
-                    .cornerRadius(4)
+                    .cornerRadius(AppTheme.radiusSmall)
             }
             .padding(.horizontal, 8)
 

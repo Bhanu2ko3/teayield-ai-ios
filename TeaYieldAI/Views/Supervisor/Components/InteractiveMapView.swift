@@ -111,22 +111,22 @@ struct InteractiveMapView: UIViewRepresentable {
         func strokeColor(for field: TeaField) -> UIColor {
             switch field.status {
             case .ready:
-                return UIColor(red: 0.02, green: 0.59, blue: 0.41, alpha: 0.95)
+                return UIColor.teaEmerald.withAlphaComponent(0.95)
             case .growing:
-                return UIColor(red: 0.85, green: 0.47, blue: 0.02, alpha: 0.95)
+                return UIColor.teaAmber.withAlphaComponent(0.95)
             case .resting:
-                return UIColor(red: 0.86, green: 0.15, blue: 0.15, alpha: 0.95)
+                return UIColor.teaCrimson.withAlphaComponent(0.95)
             }
         }
 
         func fillColor(for field: TeaField) -> UIColor {
             switch field.status {
             case .ready:
-                return UIColor(red: 0.02, green: 0.59, blue: 0.41, alpha: 0.45)
+                return UIColor.teaEmerald.withAlphaComponent(0.45)
             case .growing:
-                return UIColor(red: 0.85, green: 0.47, blue: 0.02, alpha: 0.45)
+                return UIColor.teaAmber.withAlphaComponent(0.45)
             case .resting:
-                return UIColor(red: 0.86, green: 0.15, blue: 0.15, alpha: 0.45)
+                return UIColor.teaCrimson.withAlphaComponent(0.45)
             }
         }
 
@@ -168,11 +168,11 @@ struct InteractiveMapView: UIViewRepresentable {
             let field = fieldAnnotation.field
             switch field.status {
             case .ready:
-                view?.markerTintColor = UIColor(red: 0.02, green: 0.59, blue: 0.41, alpha: 1.0)
+                view?.markerTintColor = UIColor.teaEmerald
             case .growing:
-                view?.markerTintColor = UIColor(red: 0.85, green: 0.47, blue: 0.02, alpha: 1.0)
+                view?.markerTintColor = UIColor.teaAmber
             case .resting:
-                view?.markerTintColor = UIColor(red: 0.86, green: 0.15, blue: 0.15, alpha: 1.0)
+                view?.markerTintColor = UIColor.teaCrimson
             }
 
             view?.glyphImage = UIImage(systemName: "leaf.fill")

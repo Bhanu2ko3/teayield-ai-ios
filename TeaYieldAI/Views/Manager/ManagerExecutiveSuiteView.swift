@@ -88,7 +88,7 @@ struct ManagerExecutiveSuiteView: View {
                                         .padding(.vertical, 2)
                                         .background(AppTheme.emerald.opacity(0.18))
                                         .foregroundColor(AppTheme.emerald)
-                                        .cornerRadius(4)
+                                        .cornerRadius(AppTheme.radiusSmall)
                                 }
                             }
                         } icon: {
@@ -287,9 +287,11 @@ struct ManagerExecutiveSuiteView: View {
 
     private var divisionStatusSummaryCard: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Estate Division Balance")
-                .font(.appHeadline)
-                .foregroundColor(.primary)
+            SectionHeaderView(
+                title: "ESTATE DIVISION BALANCE",
+                subtitle: "Optimal harvesting equilibrium for continuous factory intake",
+                icon: "leaf.fill"
+            )
 
             HStack(spacing: 8) {
                 statusPill(title: "Ready (\(viewModel.readyFieldsCount))", color: AppTheme.emerald)
@@ -312,7 +314,7 @@ struct ManagerExecutiveSuiteView: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
             .background(color.opacity(0.12))
-            .cornerRadius(8)
+            .cornerRadius(AppTheme.radiusSmall)
     }
 
     // MARK: - Division Inventory Grid with Matched Geometry
@@ -350,7 +352,7 @@ struct ManagerExecutiveSuiteView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(statusColor(for: field.status).opacity(0.15))
-                    .cornerRadius(6)
+                    .cornerRadius(AppTheme.radiusSmall)
             }
 
             Divider()

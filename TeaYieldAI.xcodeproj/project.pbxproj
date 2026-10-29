@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABCB11308D0E0000E22417 /* TeaYieldButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */; };
+		74ABCB13308D0E0000E22417 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB14308D0E0000E22417 /* SectionHeaderView.swift */; };
 		74ABCB01308D0E0000E22417 /* DistrictPickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB02308D0E0000E22417 /* DistrictPickerField.swift */; };
 		74ABCB03308D0E0000E22417 /* EstateOnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */; };
 		74ABCB05308D0E0000E22417 /* EstateOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */; };
@@ -165,6 +167,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaYieldButton.swift; sourceTree = "<group>"; };
+		74ABCB14308D0E0000E22417 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		74ABCB02308D0E0000E22417 /* DistrictPickerField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Components/DistrictPickerField.swift; sourceTree = "<group>"; };
 		74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstateOnboardingViewModel.swift; sourceTree = "<group>"; };
 		74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstateOnboardingView.swift; sourceTree = "<group>"; };
@@ -333,6 +337,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		74ABCB15308D0E0000E22417 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */,
+				74ABCB14308D0E0000E22417 /* SectionHeaderView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		74ABC755308D036400E22417 = {
 			isa = PBXGroup;
 			children = (
@@ -641,6 +654,7 @@
 74ABC7C0308D053100E22417 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCB15308D0E0000E22417 /* Common */,
 				74ABCA25308D0E0000E22417 /* Profile */,
 				74ABC806308D070100E22417 /* Onboarding */,
 				74ABC7C1308D053100E22417 /* Auth */,
@@ -882,6 +896,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCB11308D0E0000E22417 /* TeaYieldButton.swift in Sources */,
+				74ABCB13308D0E0000E22417 /* SectionHeaderView.swift in Sources */,
 				74ABCB0D308D0E0000E22417 /* InviteSupervisorSheetView.swift in Sources */,
 				74ABCB0B308D0E0000E22417 /* InviteSupervisorViewModel.swift in Sources */,
 				74ABCB09308D0E0000E22417 /* ForcePasswordChangeView.swift in Sources */,

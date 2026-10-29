@@ -74,23 +74,13 @@ struct FieldMapPlaceholderView: View {
 
     private var divisionsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text("CACHED FIELD DIVISIONS (CORE DATA)")
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal, 4)
-
-                Spacer()
-
-                if isLoading {
-                    ProgressView()
-                        .scaleEffect(0.7)
-                } else {
-                    Text("\(fields.count) Blocks")
-                        .font(.appBadge)
-                        .foregroundColor(.secondary)
-                }
-            }
+            SectionHeaderView(
+                title: "CACHED FIELD DIVISIONS (CORE DATA)",
+                subtitle: "Spatial boundary coordinates stored locally",
+                icon: "cylinder.split.1x2.fill",
+                badge: isLoading ? "LOADING..." : "\(fields.count) BLOCKS",
+                badgeColor: .blue
+            )
 
             if fields.isEmpty && !isLoading {
                 emptyDatabasePlaceholder
@@ -150,7 +140,7 @@ struct FieldMapPlaceholderView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
                     .background(statusColor(for: field.status).opacity(0.12))
-                    .cornerRadius(6)
+                    .cornerRadius(AppTheme.radiusSmall)
 
                 Text("NDVI \(field.formattedNDVI)")
                     .font(.system(size: 10, weight: .semibold, design: .rounded))

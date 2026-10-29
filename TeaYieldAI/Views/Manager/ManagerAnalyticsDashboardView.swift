@@ -129,7 +129,7 @@ struct ManagerAnalyticsDashboardView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(10)
                         .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                        .cornerRadius(8)
+                        .cornerRadius(AppTheme.radiusMedium)
 
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Target Week")
@@ -142,7 +142,7 @@ struct ManagerAnalyticsDashboardView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(10)
                         .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                        .cornerRadius(8)
+                        .cornerRadius(AppTheme.radiusMedium)
                     }
 
                     if !batch.predictions.isEmpty {
@@ -176,7 +176,7 @@ struct ManagerAnalyticsDashboardView: View {
                                 .padding(.vertical, 4)
                                 .padding(.horizontal, 8)
                                 .background(Color(uiColor: .tertiarySystemGroupedBackground).opacity(0.5))
-                                .cornerRadius(6)
+                                .cornerRadius(AppTheme.radiusSmall)
                             }
                         }
                     }
@@ -187,30 +187,15 @@ struct ManagerAnalyticsDashboardView: View {
                     .foregroundColor(.secondary)
             }
 
-            Button {
-                HapticFeedback.mediumImpact()
+            TeaYieldButton(
+                title: viewModel.isPredictingYield ? "Running LSTM Inference..." : (viewModel.activePredictionBatch == nil ? "Generate AI Crop Forecast" : "Refresh AI Forecast"),
+                icon: "sparkles",
+                style: .primary,
+                isLoading: viewModel.isPredictingYield
+            ) {
                 Task {
                     await viewModel.generateAICropForecast()
                 }
-            } label: {
-                HStack(spacing: 8) {
-                    if viewModel.isPredictingYield {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .scaleEffect(0.8)
-                    } else {
-                        Image(systemName: "sparkles")
-                            .font(.system(size: 13, weight: .semibold))
-                    }
-
-                    Text(viewModel.isPredictingYield ? "Running LSTM Inference..." : (viewModel.activePredictionBatch == nil ? "Generate AI Crop Forecast" : "Refresh AI Forecast"))
-                        .font(.system(size: 13, weight: .semibold, design: .rounded))
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 11)
-                .background(viewModel.isPredictingYield ? Color.gray : Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(AppTheme.radiusMedium)
             }
             .disabled(viewModel.isPredictingYield)
         }
@@ -261,7 +246,7 @@ struct ManagerAnalyticsDashboardView: View {
             }
             .padding(10)
             .background(Color(uiColor: .tertiarySystemGroupedBackground))
-            .cornerRadius(8)
+            .cornerRadius(AppTheme.radiusMedium)
 
             if let roster = viewModel.activeRoster {
                 VStack(spacing: 12) {
@@ -277,7 +262,7 @@ struct ManagerAnalyticsDashboardView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(10)
                         .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                        .cornerRadius(8)
+                        .cornerRadius(AppTheme.radiusMedium)
 
                         VStack(alignment: .leading, spacing: 4) {
                             Text("6-Day Planned Yield")
@@ -290,7 +275,7 @@ struct ManagerAnalyticsDashboardView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(10)
                         .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                        .cornerRadius(8)
+                        .cornerRadius(AppTheme.radiusMedium)
                     }
 
                     if !roster.days.isEmpty {
@@ -318,7 +303,7 @@ struct ManagerAnalyticsDashboardView: View {
                                 .padding(.vertical, 4)
                                 .padding(.horizontal, 8)
                                 .background(Color(uiColor: .tertiarySystemGroupedBackground).opacity(0.5))
-                                .cornerRadius(6)
+                                .cornerRadius(AppTheme.radiusSmall)
                             }
                         }
                     }
@@ -329,30 +314,15 @@ struct ManagerAnalyticsDashboardView: View {
                     .foregroundColor(.secondary)
             }
 
-            Button {
-                HapticFeedback.mediumImpact()
+            TeaYieldButton(
+                title: viewModel.isOptimizingRoster ? "Optimizing Schedule..." : (viewModel.activeRoster == nil ? "Run Genetic Algorithm Optimization" : "Re-run Roster Optimization"),
+                icon: "cpu.fill",
+                style: .primary,
+                isLoading: viewModel.isOptimizingRoster
+            ) {
                 Task {
                     await viewModel.optimizeWorkforceRoster()
                 }
-            } label: {
-                HStack(spacing: 8) {
-                    if viewModel.isOptimizingRoster {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .scaleEffect(0.8)
-                    } else {
-                        Image(systemName: "arrow.triangle.2.circlepath")
-                            .font(.system(size: 13, weight: .semibold))
-                    }
-
-                    Text(viewModel.isOptimizingRoster ? "Optimizing Schedule..." : (viewModel.activeRoster == nil ? "Run Genetic Algorithm Roster Optimization" : "Re-run Roster Optimization"))
-                        .font(.system(size: 13, weight: .semibold, design: .rounded))
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 11)
-                .background(viewModel.isOptimizingRoster ? Color.gray : AppTheme.emerald)
-                .foregroundColor(.white)
-                .cornerRadius(AppTheme.radiusMedium)
             }
             .disabled(viewModel.isOptimizingRoster)
         }

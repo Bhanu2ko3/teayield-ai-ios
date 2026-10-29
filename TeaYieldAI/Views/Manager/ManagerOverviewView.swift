@@ -263,10 +263,11 @@ struct ManagerOverviewView: View {
 
     private var ndviDistributionSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("VEGETATIVE HEALTH DISTRIBUTION (SENTINEL-2 NDVI)")
-                .font(.system(size: 11, weight: .bold, design: .rounded))
-                .foregroundColor(.secondary)
-                .padding(.horizontal, 4)
+            SectionHeaderView(
+                title: "CANOPY HEALTH DISTRIBUTION (SENTINEL-2 NDVI)",
+                subtitle: "Chlorophyll reflectance spectrum across active fields",
+                icon: "chart.pie.fill"
+            )
 
             HStack(spacing: 10) {
                 statusPill(title: "Ready", count: viewModel.readyFieldsCount, color: AppTheme.emerald)
@@ -278,18 +279,13 @@ struct ManagerOverviewView: View {
 
     private var estateDivisionsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Text("ESTATE DIVISIONS & NDVI SATELLITE STATUS")
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal, 4)
-
-                Spacer()
-
-                Text("\(viewModel.fields.count) Divisions")
-                    .font(.appBadge)
-                    .foregroundColor(.secondary)
-            }
+            SectionHeaderView(
+                title: "ESTATE DIVISIONS & NDVI STATUS",
+                subtitle: "Sentinel-2 vegetative canopy health across plantation blocks",
+                icon: "leaf.fill",
+                badge: "\(viewModel.fields.count) DIVISIONS",
+                badgeColor: AppTheme.emerald
+            )
 
             if viewModel.fields.isEmpty && !viewModel.isLoading {
                 VStack(spacing: 12) {
@@ -383,7 +379,7 @@ struct ManagerOverviewView: View {
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
                     .background(AppTheme.emerald)
-                    .cornerRadius(8)
+                    .cornerRadius(AppTheme.radiusSmall)
                 }
                 .accessibilityLabel("Invite subordinate field supervisor")
             }
