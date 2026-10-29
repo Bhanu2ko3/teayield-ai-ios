@@ -221,6 +221,16 @@ struct HarvestWeighingFormView: View {
                     }
                     .accessibilityLabel("Estate Plucker Roster: \(viewModel.selectedPlucker?.displayName ?? "Not selected")")
                 }
+            } else {
+                HStack(spacing: 8) {
+                    Image(systemName: "info.circle")
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
+                    Text("No pluckers registered on estate database. Enter plucker details manually below.")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.secondary)
+                }
+                .padding(.vertical, 4)
             }
 
             HStack(spacing: 12) {

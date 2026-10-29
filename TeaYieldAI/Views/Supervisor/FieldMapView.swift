@@ -87,6 +87,24 @@ struct FieldMapView: View {
                         .background(AppTheme.surfaceGlass)
                         .cornerRadius(AppTheme.radiusMedium)
                         .padding(.bottom, 60)
+                } else if viewModel.fields.isEmpty {
+                    VStack(spacing: 8) {
+                        Image(systemName: "map.circle")
+                            .font(.system(size: 32))
+                            .foregroundColor(.secondary)
+                        Text("No Field Divisions Found")
+                            .font(.appHeadline)
+                            .fontWeight(.semibold)
+                        Text("No spatial polygon boundaries registered for this estate on the database.")
+                            .font(.appCaption)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding(20)
+                    .background(AppTheme.surfaceGlass)
+                    .cornerRadius(AppTheme.radiusLarge)
+                    .padding(.horizontal, 32)
+                    .padding(.bottom, 60)
                 }
             }
             .navigationBarHidden(true)

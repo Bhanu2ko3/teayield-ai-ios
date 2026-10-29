@@ -94,10 +94,10 @@ final class HarvestWeighingViewModel: ObservableObject {
         do {
             let dtos = try await apiService.fetchPluckers(estateId: estateId)
             let domainPluckers = dtos.map { $0.toDomain() }
-            self.availablePluckers = domainPluckers.isEmpty ? MockData.samplePluckers : domainPluckers
+            self.availablePluckers = domainPluckers
         } catch {
-            // Graceful fallback to cached mock workforce during offline operations
-            self.availablePluckers = MockData.samplePluckers
+            self.availablePluckers = []
+            self.errorMessage = "Could not synchronize estate plucker workforce from server: \(error.localizedDescription)"
         }
     }
 

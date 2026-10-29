@@ -20,7 +20,7 @@ final class FieldMapViewModel: ObservableObject {
     @Published var activeGeofencedField: TeaField? = nil
 
     @Published var cameraRegion: MKCoordinateRegion = MKCoordinateRegion(
-        center: MockData.nuwaraEliyaEstateCentroid,
+        center: CLLocationCoordinate2D(latitude: 6.9642, longitude: 80.7932),
         span: MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)
     )
 
@@ -116,18 +116,9 @@ final class FieldMapViewModel: ObservableObject {
                 fetched = try await fieldRepository.fetchCachedFields()
             }
 
-            // Cold boot fallback if unseeded
-            if fetched.isEmpty {
-                let initial = [MockData.fieldBlockA, MockData.fieldBlockB, MockData.fieldBlockC]
-                for field in initial {
-                    try? await fieldRepository.saveField(field)
-                }
-                fetched = initial
-            }
-
             self.fields = fetched
 
-            // Center camera bounding box around estate centroid
+            // Center camera bounding box around estate centroid if fields exist
             if let first = fields.first {
                 self.cameraRegion = MKCoordinateRegion(
                     center: first.centroidCoordinate,
@@ -135,8 +126,8 @@ final class FieldMapViewModel: ObservableObject {
                 )
             }
         } catch {
-            self.errorMessage = "Failed to load cached field divisions: \(error.localizedDescription)"
-            self.fields = [MockData.fieldBlockA, MockData.fieldBlockB, MockData.fieldBlockC]
+            self.errorMessage = "Failed to load field divisions: \(error.localizedDescription)"
+            self.fields = (try? await fieldRepository.fetchCachedFields()) ?? []
         }
 
         isLoading = false
