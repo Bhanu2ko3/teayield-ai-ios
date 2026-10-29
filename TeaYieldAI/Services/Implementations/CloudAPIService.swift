@@ -50,6 +50,10 @@ final class CloudAPIService: APIServiceProtocol {
         try await execute(.getFields(estateId: estateId))
     }
 
+    func createField(request: FieldCreateRequestDTO) async throws -> FieldResponseDTO {
+        try await execute(.createField(request))
+    }
+
     func fetchFieldNDVI(fieldId: UUID, limit: Int? = 12) async throws -> [NDVILogResponseDTO] {
         try await execute(.getFieldNDVI(fieldId: fieldId, limit: limit))
     }

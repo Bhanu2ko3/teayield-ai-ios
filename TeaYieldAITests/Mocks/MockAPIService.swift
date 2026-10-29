@@ -90,6 +90,27 @@ final class MockAPIService: APIServiceProtocol {
         return mockFields
     }
 
+    func createField(request: FieldCreateRequestDTO) async throws -> FieldResponseDTO {
+        if shouldFailRequests {
+            throw simulatedNetworkError ?? NetworkError.serverError(500, "Internal error")
+        }
+        let created = FieldResponseDTO(
+            id: UUID(),
+            estateId: request.estateId,
+            name: request.name,
+            areaAcres: request.areaAcres,
+            boundaryGeojson: request.boundaryGeojson,
+            centroidLatitude: 6.95,
+            centroidLongitude: 80.77,
+            currentNdvi: 0.75,
+            daysSinceLastHarvest: 7,
+            harvestStatus: "READY",
+            createdAt: ISO8601DateFormatter().string(from: Date())
+        )
+        mockFields.append(created)
+        return created
+    }
+
     func fetchFieldNDVI(fieldId: UUID, limit: Int?) async throws -> [NDVILogResponseDTO] {
         if shouldFailRequests {
             throw simulatedNetworkError ?? NetworkError.serverError(500, "Internal error")

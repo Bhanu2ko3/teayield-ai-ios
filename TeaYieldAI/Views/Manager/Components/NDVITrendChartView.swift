@@ -5,6 +5,7 @@ import Charts
 struct NDVITrendChartView: View {
 
     let data: [NDVITrendPoint]
+    var fields: [TeaField] = []
     @State private var selectedPoint: NDVITrendPoint?
 
     var body: some View {
@@ -48,87 +49,146 @@ struct NDVITrendChartView: View {
         }
     }
 
+    @ViewBuilder
     private var chartContainer: some View {
-        Chart {
-            ForEach(data) { point in
-                AreaMark(
-                    x: .value("Week", point.weekLabel),
-                    y: .value("NDVI", point.ndviScore)
-                )
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [AppTheme.emerald.opacity(0.35), AppTheme.emerald.opacity(0.02)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .interpolationMethod(.monotone)
+        if data.isEmpty {
+            VStack(alignment: .leading, spacing: 8) {
+                if !fields.isEmpty {
+                    Text("Field-by-Field Canopy Vigor")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundColor(.secondary)
 
-                LineMark(
-                    x: .value("Week", point.weekLabel),
-                    y: .value("NDVI", point.ndviScore)
-                )
-                .foregroundStyle(AppTheme.emerald)
-                .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
-                .interpolationMethod(.monotone)
-
-                PointMark(
-                    x: .value("Week", point.weekLabel),
-                    y: .value("NDVI", point.ndviScore)
-                )
-                .foregroundStyle(point.isHarvestReady ? AppTheme.emerald : AppTheme.amber)
-                .symbolSize(selectedPoint?.id == point.id ? 70 : 35)
-            }
-
-            RuleMark(y: .value("Readiness Threshold", 0.75))
-                .lineStyle(StrokeStyle(lineWidth: 1.5, dash: [4, 4]))
-                .foregroundStyle(AppTheme.emerald.opacity(0.8))
-                .annotation(position: .top, alignment: .leading) {
-                    Text("Harvest Ready 0.75")
-                        .font(.system(size: 9, weight: .bold, design: .rounded))
-                        .foregroundColor(AppTheme.emerald)
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 2)
-                        .background(Color(uiColor: .secondarySystemGroupedBackground).opacity(0.9))
-                        .cornerRadius(AppTheme.radiusSmall)
-                }
-        }
-        .chartYScale(domain: 0.40...0.95)
-        .chartYAxis {
-            AxisMarks(position: .leading) { value in
-                AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5, dash: [2, 2]))
-                AxisValueLabel {
-                    if let doubleValue = value.as(Double.self) {
-                        Text(String(format: "%.2f", doubleValue))
-                            .font(.system(size: 10, design: .rounded))
-                            .foregroundColor(.secondary)
-                    }
-                }
-            }
-        }
-        .chartXAxis {
-            AxisMarks { value in
-                AxisValueLabel {
-                    if let stringValue = value.as(String.self) {
-                        Text(stringValue)
-                            .font(.system(size: 10, weight: .semibold, design: .rounded))
-                            .foregroundColor(.secondary)
-                    }
-                }
-            }
-        }
-        .frame(height: 180)
-        .chartOverlay { proxy in
-            GeometryReader { geometry in
-                Rectangle()
-                    .fill(Color.clear)
-                    .contentShape(Rectangle())
-                    .gesture(
-                        SpatialTapGesture()
-                            .onEnded { location in
-                                handleChartTap(at: location.location, proxy: proxy, geometry: geometry)
+                    ForEach(fields) { field in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(field.name)
+                                    .font(.system(size: 12, weight: .semibold))
+                                Text(String(format: "%.1f Acres", field.acreage))
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.secondary)
                             }
+
+                            Spacer()
+
+                            HStack(spacing: 6) {
+                                Text(field.status == .ready ? "PEAK FLUSH" : (field.status == .growing ? "MODERATE" : "RESTING"))
+                                    .font(.system(size: 9, weight: .bold, design: .rounded))
+                                    .foregroundColor(field.status == .ready ? AppTheme.emerald : (field.status == .growing ? AppTheme.amber : .secondary))
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background((field.status == .ready ? AppTheme.emerald : (field.status == .growing ? AppTheme.amber : Color.secondary)).opacity(0.12))
+                                    .cornerRadius(AppTheme.radiusSmall)
+
+                                Text(String(format: "%.2f", field.currentNDVI))
+                                    .font(.system(size: 13, weight: .bold, design: .monospaced))
+                                    .foregroundColor(field.currentNDVI >= 0.75 ? AppTheme.emerald : .primary)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
+                        .background(Color(uiColor: .tertiarySystemGroupedBackground).opacity(0.5))
+                        .cornerRadius(AppTheme.radiusSmall)
+                    }
+                } else {
+                    HStack(spacing: 10) {
+                        Image(systemName: "satellite.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(AppTheme.emerald)
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Awaiting Sentinel-2 Satellite Pass")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundColor(.primary)
+                            Text("Orbital multi-spectral data calibrates weekly.")
+                                .font(.system(size: 10))
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .padding(10)
+                }
+            }
+        } else {
+            Chart {
+                ForEach(data) { point in
+                    AreaMark(
+                        x: .value("Week", point.weekLabel),
+                        y: .value("NDVI", point.ndviScore)
                     )
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [AppTheme.emerald.opacity(0.35), AppTheme.emerald.opacity(0.02)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .interpolationMethod(.monotone)
+
+                    LineMark(
+                        x: .value("Week", point.weekLabel),
+                        y: .value("NDVI", point.ndviScore)
+                    )
+                    .foregroundStyle(AppTheme.emerald)
+                    .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
+                    .interpolationMethod(.monotone)
+
+                    PointMark(
+                        x: .value("Week", point.weekLabel),
+                        y: .value("NDVI", point.ndviScore)
+                    )
+                    .foregroundStyle(point.isHarvestReady ? AppTheme.emerald : AppTheme.amber)
+                    .symbolSize(selectedPoint?.id == point.id ? 70 : 35)
+                }
+
+                RuleMark(y: .value("Readiness Threshold", 0.75))
+                    .lineStyle(StrokeStyle(lineWidth: 1.5, dash: [4, 4]))
+                    .foregroundStyle(AppTheme.emerald.opacity(0.8))
+                    .annotation(position: .top, alignment: .leading) {
+                        Text("Harvest Ready 0.75")
+                            .font(.system(size: 9, weight: .bold, design: .rounded))
+                            .foregroundColor(AppTheme.emerald)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(Color(uiColor: .secondarySystemGroupedBackground).opacity(0.9))
+                            .cornerRadius(AppTheme.radiusSmall)
+                    }
+            }
+            .chartYScale(domain: 0.40...0.95)
+            .chartYAxis {
+                AxisMarks(position: .leading) { value in
+                    AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5, dash: [2, 2]))
+                    AxisValueLabel {
+                        if let doubleValue = value.as(Double.self) {
+                            Text(String(format: "%.2f", doubleValue))
+                                .font(.system(size: 10, design: .rounded))
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+            }
+            .chartXAxis {
+                AxisMarks { value in
+                    AxisValueLabel {
+                        if let stringValue = value.as(String.self) {
+                            Text(stringValue)
+                                .font(.system(size: 10, weight: .semibold, design: .rounded))
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+            }
+            .frame(height: 180)
+            .chartOverlay { proxy in
+                GeometryReader { geometry in
+                    Rectangle()
+                        .fill(Color.clear)
+                        .contentShape(Rectangle())
+                        .gesture(
+                            SpatialTapGesture()
+                                .onEnded { location in
+                                    handleChartTap(at: location.location, proxy: proxy, geometry: geometry)
+                                }
+                        )
+                }
             }
         }
     }

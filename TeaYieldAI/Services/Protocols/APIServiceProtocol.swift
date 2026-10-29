@@ -20,6 +20,9 @@ protocol APIServiceProtocol: AnyObject {
     /// Fetches all registered tea field plots with spatial polygon coordinates for an estate.
     func fetchFields(estateId: UUID) async throws -> [FieldResponseDTO]
 
+    /// Registers a new spatial tea field polygon in the cloud database.
+    func createField(request: FieldCreateRequestDTO) async throws -> FieldResponseDTO
+
     /// Fetches historical Sentinel-2 NDVI multispectral satellite observations for a field.
     func fetchFieldNDVI(fieldId: UUID, limit: Int?) async throws -> [NDVILogResponseDTO]
 

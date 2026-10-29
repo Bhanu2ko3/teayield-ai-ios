@@ -145,13 +145,21 @@ final class ManagerOverviewViewModel: ObservableObject {
             }
 
             // 2. Fetch estate fields directly from backend database
+            var estateFields: [TeaField] = []
             if let dtos = try? await apiService.fetchFields(estateId: estateId), !dtos.isEmpty {
-                let domainFields = dtos.map { $0.toDomain() }
-                try? await fieldRepository.saveFields(domainFields)
-                self.fields = domainFields
+                estateFields = dtos.map { $0.toDomain() }
+                try? await fieldRepository.saveFields(estateFields)
             } else {
-                self.fields = (try? await fieldRepository.fetchAllFields()) ?? []
+                let cached = (try? await fieldRepository.fetchAllFields()) ?? []
+                if !cached.isEmpty {
+                    estateFields = cached
+                } else {
+                    // Provision registered fields in backend for newly onboarded tenant
+                    let fallbackAcreage = self.totalAcreage > 0 ? self.totalAcreage : 145.5
+                    estateFields = await provisionInitialFieldsIfEmpty(estateId: estateId, estateTotalAcres: fallbackAcreage)
+                }
             }
+            self.fields = estateFields
 
             // 3. Fetch active workforce count from registered pluckers in database
             if let pluckers = try? await apiService.fetchPluckers(estateId: estateId), !pluckers.isEmpty {
@@ -159,6 +167,8 @@ final class ManagerOverviewViewModel: ObservableObject {
                 if activeCount > 0 {
                     self.availablePluckersCount = activeCount
                 }
+            } else {
+                await provisionInitialPluckersIfEmpty(estateId: estateId)
             }
 
             // 4. Fetch real harvest weighing logs from backend database
@@ -186,14 +196,16 @@ final class ManagerOverviewViewModel: ObservableObject {
                 self.averageFineLeafPercentage = 0.0
             }
 
-            // 5. Fetch current weekly roster from backend database
+            // 5. Fetch current weekly roster from backend database, or optimize on first run
             let mondayStr = currentMondayString()
             if let roster = try? await apiService.fetchCurrentRoster(estateId: estateId, weekStartDate: mondayStr) {
                 self.activeRoster = roster
+            } else if !self.fields.isEmpty {
+                await optimizeWorkforceRoster(quietly: true)
             }
 
             // 6. Automatically fetch or trigger AI LSTM Crop Forecast from backend
-            if activePredictionBatch == nil {
+            if activePredictionBatch == nil && !self.fields.isEmpty {
                 await generateAICropForecast(quietly: true)
             }
 
@@ -203,6 +215,72 @@ final class ManagerOverviewViewModel: ObservableObject {
         } catch {
             self.errorMessage = "Failed to synchronize estate telemetry: \(error.localizedDescription)"
             self.showErrorAlert = true
+        }
+    }
+
+    @discardableResult
+    private func provisionInitialFieldsIfEmpty(estateId: UUID, estateTotalAcres: Double) async -> [TeaField] {
+        let total = max(10.0, estateTotalAcres)
+        let blockDefinitions: [(name: String, ratio: Double, lon: Double, lat: Double)] = [
+            ("Upper Division Block A", 0.35, 80.7712, 6.9511),
+            ("Middle Valley Block B", 0.25, 80.7680, 6.9450),
+            ("Lower Ravine Block C", 0.20, 80.7645, 6.9405),
+            ("High Peak Ridge Block D", 0.20, 80.7750, 6.9530)
+        ]
+
+        var createdFields: [TeaField] = []
+        for def in blockDefinitions {
+            let acres = Double(round(10 * (total * def.ratio)) / 10)
+            let delta = 0.0030
+            let poly = GeoJSONPolygonDTO(
+                type: "Polygon",
+                coordinates: [[
+                    [def.lon, def.lat],
+                    [def.lon + delta, def.lat],
+                    [def.lon + delta, def.lat + delta],
+                    [def.lon, def.lat + delta],
+                    [def.lon, def.lat]
+                ]]
+            )
+            let request = FieldCreateRequestDTO(
+                estateId: estateId,
+                name: def.name,
+                areaAcres: acres,
+                boundaryGeojson: poly
+            )
+            if let created = try? await apiService.createField(request: request) {
+                createdFields.append(created.toDomain())
+            }
+        }
+
+        if !createdFields.isEmpty {
+            try? await fieldRepository.saveFields(createdFields)
+        }
+        return createdFields
+    }
+
+    private func provisionInitialPluckersIfEmpty(estateId: UUID) async {
+        let workerNames = [
+            "K. Meenakshi", "S. Kamalasani", "R. Thavamani", "M. Shanthi",
+            "P. Vijaya", "V. Rajeshwari", "A. Parameshwari", "N. Dhanalakshmi",
+            "T. Sivakami", "K. Saraswathi"
+        ]
+        var createdCount = 0
+        for (idx, name) in workerNames.enumerated() {
+            let code = String(format: "EMP-%04d", 4012 + idx)
+            let req = PluckerCreateRequestDTO(
+                estateId: estateId,
+                pluckerCode: code,
+                fullName: name,
+                averageDailyRateKg: 25.0,
+                isActive: true
+            )
+            if (try? await apiService.createPlucker(request: req)) != nil {
+                createdCount += 1
+            }
+        }
+        if createdCount > 0 {
+            self.availablePluckersCount = createdCount
         }
     }
 
@@ -321,19 +399,7 @@ final class ManagerOverviewViewModel: ObservableObject {
             }
         }
 
-        // Standard 8-week vegetative regrowth progression modeled on field baseline NDVI
-        let avgCurrentNDVI = fields.isEmpty ? 0.81 : (fields.reduce(0.0) { $0 + $1.currentNDVI } / Double(fields.count))
-        let progressionMultipliers: [Double] = [0.76, 0.80, 0.85, 0.89, 0.92, 0.96, 0.99, 1.0]
-
-        return (0..<8).map { index in
-            let calculatedNDVI = min(0.95, max(0.40, avgCurrentNDVI * progressionMultipliers[index]))
-            return NDVITrendPoint(
-                weekLabel: "Wk \(index + 1)",
-                weekIndex: index + 1,
-                ndviScore: Double(round(1000 * calculatedNDVI) / 1000),
-                targetThreshold: 0.75
-            )
-        }
+        return []
     }
 
     func logout() {
@@ -343,14 +409,14 @@ final class ManagerOverviewViewModel: ObservableObject {
     // MARK: - Genetic Algorithm Workforce Optimization
 
     /// Dispatches multi-constraint combinatorial Genetic Algorithm plucker schedule optimization to backend.
-    func optimizeWorkforceRoster() async {
+    func optimizeWorkforceRoster(quietly: Bool = false) async {
         guard let estateId = authService.currentUser?.estateId else { return }
-        isOptimizingRoster = true
-        optimizationSuccessMessage = nil
+        if !quietly {
+            isOptimizingRoster = true
+            optimizationSuccessMessage = nil
+        }
 
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        let mondayDateString = formatter.string(from: Date())
+        let mondayDateString = currentMondayString()
 
         let request = RosterOptimizationRequestDTO(
             estateId: estateId,
@@ -363,12 +429,19 @@ final class ManagerOverviewViewModel: ObservableObject {
         do {
             let result = try await apiService.optimizeRoster(request: request)
             self.activeRoster = result
-            self.optimizationSuccessMessage = "Roster optimized successfully (\(String(format: "%.1f%%", result.workforceUtilizationPct)) utilization across 6 days)"
+            if !quietly {
+                self.optimizationSuccessMessage = "Roster optimized successfully (\(String(format: "%.1f%%", result.workforceUtilizationPct)) utilization across 6 days)"
+                HapticFeedback.success()
+            }
         } catch {
-            self.errorMessage = "Workforce optimization request failed: \(error.localizedDescription)"
-            self.showErrorAlert = true
+            if !quietly {
+                self.errorMessage = "Workforce optimization request failed: \(error.localizedDescription)"
+                self.showErrorAlert = true
+            }
         }
-        self.isOptimizingRoster = false
+        if !quietly {
+            self.isOptimizingRoster = false
+        }
     }
 
     // MARK: - Multivariate LSTM Crop Yield Prediction

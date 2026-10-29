@@ -20,7 +20,10 @@ struct ManagerAnalyticsDashboardView: View {
                     utilizationRatio: viewModel.factoryUtilizationRatio,
                     remainingCapacityKg: viewModel.remainingCapacityKg
                 )
-                NDVITrendChartView(data: viewModel.ndviTrendData)
+                NDVITrendChartView(
+                    data: viewModel.ndviTrendData,
+                    fields: viewModel.fields
+                )
                 geneticOptimizerSection
             }
             .padding(.horizontal, 16)
@@ -34,6 +37,8 @@ struct ManagerAnalyticsDashboardView: View {
                 ThemeToggleView(style: .circle)
             }
         }
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarBackground(Color(uiColor: .systemGroupedBackground), for: .navigationBar)
         .refreshable {
             await viewModel.loadEstateTelemetry()
         }

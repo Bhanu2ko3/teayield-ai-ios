@@ -51,6 +51,8 @@ struct TodayTasksView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 12) {
+                        ThemeToggleView(style: .circle)
+
                         NavigationLink {
                             HarvestHistoryView(harvestRepository: container.harvestRepository)
                         } label: {
@@ -72,6 +74,8 @@ struct TodayTasksView: View {
                     }
                 }
             }
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(Color(uiColor: .systemGroupedBackground), for: .navigationBar)
             .sheet(isPresented: $showingWeighingSheet) {
                 weighingSheetContent
             }

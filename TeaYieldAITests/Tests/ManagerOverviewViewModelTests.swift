@@ -120,6 +120,19 @@ struct ManagerOverviewViewModelTests {
         let user = createSampleUser()
         let auth = MockAuthService(initialUser: user)
         let api = MockAPIService()
+        api.mockNDVILogs = (1...8).map { idx in
+            NDVILogResponseDTO(
+                id: UUID(),
+                fieldId: sampleFields[0].id,
+                weekStartDate: String(format: "2026-09-%02d", idx * 3),
+                ndviValue: 0.65 + Double(idx) * 0.03,
+                redBandReflectance: 0.08,
+                nirBandReflectance: 0.52,
+                validPixelRatio: 1.0,
+                satelliteSource: "Sentinel-2 MSI Level-2A",
+                capturedAt: "2026-09-01T00:00:00Z"
+            )
+        }
 
         let viewModel = ManagerOverviewViewModel(
             fieldRepository: fieldRepo,
@@ -179,6 +192,19 @@ struct ManagerOverviewViewModelTests {
         let user = createSampleUser()
         let auth = MockAuthService(initialUser: user)
         let api = MockAPIService()
+        api.mockNDVILogs = (1...8).map { idx in
+            NDVILogResponseDTO(
+                id: UUID(),
+                fieldId: sampleFields[0].id,
+                weekStartDate: String(format: "2026-09-%02d", idx * 3),
+                ndviValue: 0.65 + Double(idx) * 0.03,
+                redBandReflectance: 0.08,
+                nirBandReflectance: 0.52,
+                validPixelRatio: 1.0,
+                satelliteSource: "Sentinel-2 MSI Level-2A",
+                capturedAt: "2026-09-01T00:00:00Z"
+            )
+        }
 
         let viewModel = ManagerOverviewViewModel(
             fieldRepository: fieldRepo,
@@ -316,6 +342,19 @@ final class ManagerOverviewViewModelTests: XCTestCase {
         let user = createSampleUser()
         let auth = MockAuthService(initialUser: user)
         let api = MockAPIService()
+        api.mockNDVILogs = (1...8).map { idx in
+            NDVILogResponseDTO(
+                id: UUID(),
+                fieldId: sampleFields[0].id,
+                weekStartDate: String(format: "2026-09-%02d", idx * 3),
+                ndviValue: 0.65 + Double(idx) * 0.03,
+                redBandReflectance: 0.08,
+                nirBandReflectance: 0.52,
+                validPixelRatio: 1.0,
+                satelliteSource: "Sentinel-2 MSI Level-2A",
+                capturedAt: "2026-09-01T00:00:00Z"
+            )
+        }
 
         let viewModel = ManagerOverviewViewModel(
             fieldRepository: fieldRepo,
@@ -373,6 +412,19 @@ final class ManagerOverviewViewModelTests: XCTestCase {
         let user = createSampleUser()
         let auth = MockAuthService(initialUser: user)
         let api = MockAPIService()
+        api.mockNDVILogs = (1...8).map { idx in
+            NDVILogResponseDTO(
+                id: UUID(),
+                fieldId: sampleFields[0].id,
+                weekStartDate: String(format: "2026-09-%02d", idx * 3),
+                ndviValue: 0.65 + Double(idx) * 0.03,
+                redBandReflectance: 0.08,
+                nirBandReflectance: 0.52,
+                validPixelRatio: 1.0,
+                satelliteSource: "Sentinel-2 MSI Level-2A",
+                capturedAt: "2026-09-01T00:00:00Z"
+            )
+        }
 
         let viewModel = ManagerOverviewViewModel(
             fieldRepository: fieldRepo,
