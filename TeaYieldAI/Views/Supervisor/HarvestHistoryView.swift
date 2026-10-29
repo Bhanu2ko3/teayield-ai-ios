@@ -35,21 +35,12 @@ struct HarvestHistoryView: View {
         .navigationTitle("Weighing History")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    HStack(spacing: 4) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 14, weight: .semibold))
-                        Text("Back")
-                            .font(.appBody)
-                    }
-                    .foregroundColor(AppTheme.emerald)
-                }
-                .accessibilityLabel("Navigate back")
+            ToolbarItem(placement: .navigationBarTrailing) {
+                ThemeToggleView(style: .circle)
             }
         }
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarBackground(Color(uiColor: .systemGroupedBackground), for: .navigationBar)
         .task {
             await viewModel.loadRecords()
         }

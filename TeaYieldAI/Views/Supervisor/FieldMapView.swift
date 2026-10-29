@@ -125,20 +125,18 @@ struct FieldMapView: View {
                     HapticFeedback.lightImpact()
                     onBackTap()
                 }) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 13, weight: .bold))
-                        Text("Overview")
-                            .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    }
-                    .foregroundColor(.primary)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(AppTheme.surfaceGlass)
-                    .cornerRadius(AppTheme.radiusMedium)
-                    .shadow(color: Color.black.opacity(0.08), radius: 4, y: 2)
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(AppTheme.emerald)
+                        .frame(width: 36, height: 36)
+                        .background(Color(uiColor: .secondarySystemGroupedBackground))
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+                        )
                 }
-                .accessibilityLabel("Back to Overview")
+                .accessibilityLabel("Navigate back")
             }
 
             Text("Estate GIS Map")
