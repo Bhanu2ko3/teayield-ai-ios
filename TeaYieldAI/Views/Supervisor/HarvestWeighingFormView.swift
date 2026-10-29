@@ -94,6 +94,23 @@ struct HarvestWeighingFormView: View {
 
     private var pluckerIdentitySection: some View {
         Section(header: Text("Plucker Details")) {
+            if !viewModel.availablePluckers.isEmpty {
+                Picker("Registered Plucker", selection: Binding(
+                    get: { viewModel.selectedPlucker },
+                    set: { plucker in
+                        if let plucker = plucker {
+                            viewModel.selectPlucker(plucker)
+                        }
+                    }
+                )) {
+                    Text("Select from estate roster").tag(nil as Plucker?)
+                    ForEach(viewModel.availablePluckers) { plucker in
+                        Text("\(plucker.displayName) (\(plucker.formattedAverageRate))")
+                            .tag(plucker as Plucker?)
+                    }
+                }
+            }
+
             HStack {
                 Text("Plucker ID")
                     .foregroundColor(.secondary)

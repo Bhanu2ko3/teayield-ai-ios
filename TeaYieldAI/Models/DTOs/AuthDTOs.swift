@@ -37,6 +37,7 @@ struct UserProfileDTO: Codable {
     let fullName: String
     let role: String
     let phoneNumber: String?
+    let mustChangePassword: Bool?
     let createdAt: String
     let updatedAt: String
     
@@ -47,6 +48,7 @@ struct UserProfileDTO: Codable {
         case fullName = "full_name"
         case role
         case phoneNumber = "phone_number"
+        case mustChangePassword = "must_change_password"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
     }
@@ -63,7 +65,55 @@ struct UserProfileDTO: Codable {
             fullName: fullName,
             role: domainRole,
             employeeId: derivedEmployeeId,
-            estateId: resolvedEstateId
+            estateId: resolvedEstateId,
+            mustChangePassword: mustChangePassword ?? false
         )
     }
+}
+
+/// Request payload for estate manager self-service onboarding registration.
+struct ManagerSignUpRequestDTO: Codable {
+    let fullName: String
+    let email: String
+    let password: String
+    let phoneNumber: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case fullName = "full_name"
+        case email
+        case password
+        case phoneNumber = "phone_number"
+    }
+}
+
+/// Request payload for estate manager provisioning a subordinate field supervisor.
+struct SupervisorInviteRequestDTO: Codable {
+    let fullName: String
+    let email: String
+    let temporaryPassword: String
+    let phoneNumber: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case fullName = "full_name"
+        case email
+        case temporaryPassword = "temporary_password"
+        case phoneNumber = "phone_number"
+    }
+}
+
+/// Request payload for credential rotation.
+struct PasswordChangeRequestDTO: Codable {
+    let currentPassword: String
+    let newPassword: String
+    
+    enum CodingKeys: String, CodingKey {
+        case currentPassword = "current_password"
+        case newPassword = "new_password"
+    }
+}
+
+/// Standard status response for operation acknowledgments.
+struct StatusResponseDTO: Codable {
+    let status: String
+    let message: String
 }

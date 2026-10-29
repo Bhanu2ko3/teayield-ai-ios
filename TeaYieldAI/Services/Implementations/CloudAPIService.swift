@@ -70,6 +70,44 @@ final class CloudAPIService: APIServiceProtocol {
         try await execute(.getHarvestLogs(fieldId: fieldId, limit: limit, offset: offset))
     }
 
+    func signupManager(request: ManagerSignUpRequestDTO) async throws -> TokenResponseDTO {
+        let tokenResponse: TokenResponseDTO = try await execute(.signupManager(request))
+        self.authToken = tokenResponse.accessToken
+        return tokenResponse
+    }
+
+    func inviteSupervisor(request: SupervisorInviteRequestDTO) async throws -> UserProfileDTO {
+        try await execute(.inviteSupervisor(request))
+    }
+
+    func changePassword(request: PasswordChangeRequestDTO) async throws -> StatusResponseDTO {
+        try await execute(.changePassword(request))
+    }
+
+    func onboardEstate(request: EstateOnboardRequestDTO) async throws -> EstateResponseDTO {
+        try await execute(.onboardEstate(request))
+    }
+
+    func fetchPluckers(estateId: UUID) async throws -> [PluckerResponseDTO] {
+        try await execute(.listPluckers(estateId: estateId))
+    }
+
+    func createPlucker(request: PluckerCreateRequestDTO) async throws -> PluckerResponseDTO {
+        try await execute(.createPlucker(request))
+    }
+
+    func triggerYieldPrediction(request: PredictionTriggerDTO) async throws -> YieldPredictionBatchResponseDTO {
+        try await execute(.triggerYieldPrediction(request))
+    }
+
+    func optimizeRoster(request: RosterOptimizationRequestDTO) async throws -> RosterOptimizationResponseDTO {
+        try await execute(.optimizeRoster(request))
+    }
+
+    func fetchCurrentRoster(estateId: UUID, weekStartDate: String) async throws -> RosterOptimizationResponseDTO {
+        try await execute(.getCurrentRoster(estateId: estateId, weekStartDate: weekStartDate))
+    }
+
     // MARK: - Private Request Executor
 
     private func execute<T: Decodable>(_ endpoint: APIEndpoint) async throws -> T {

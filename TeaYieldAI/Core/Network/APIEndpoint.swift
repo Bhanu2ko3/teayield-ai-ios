@@ -11,13 +11,22 @@ enum HTTPMethod: String {
 /// Type-safe endpoint builder for FastAPI backend microservices.
 enum APIEndpoint {
     case login(LoginRequestDTO)
+    case signupManager(ManagerSignUpRequestDTO)
+    case inviteSupervisor(SupervisorInviteRequestDTO)
+    case changePassword(PasswordChangeRequestDTO)
     case getMe
     case listEstates
+    case onboardEstate(EstateOnboardRequestDTO)
     case getEstate(id: UUID)
     case getFields(estateId: UUID)
     case getFieldNDVI(fieldId: UUID, limit: Int?)
     case getFieldWeather(fieldId: UUID, limit: Int?)
+    case listPluckers(estateId: UUID)
+    case createPlucker(PluckerCreateRequestDTO)
     case getDailyTasks(estateId: UUID, dayIndex: Int?)
+    case triggerYieldPrediction(PredictionTriggerDTO)
+    case optimizeRoster(RosterOptimizationRequestDTO)
+    case getCurrentRoster(estateId: UUID, weekStartDate: String)
     case syncHarvest(HarvestSyncBatchDTO)
     case getHarvestLogs(fieldId: UUID?, limit: Int?, offset: Int?)
 
@@ -25,10 +34,18 @@ enum APIEndpoint {
         switch self {
         case .login:
             return "auth/login"
+        case .signupManager:
+            return "auth/signup-manager"
+        case .inviteSupervisor:
+            return "auth/invite-supervisor"
+        case .changePassword:
+            return "auth/change-password"
         case .getMe:
             return "auth/me"
         case .listEstates:
             return "estates"
+        case .onboardEstate:
+            return "estates/onboard"
         case .getEstate(let id):
             return "estates/\(id.uuidString)"
         case .getFields:
@@ -37,8 +54,16 @@ enum APIEndpoint {
             return "fields/\(fieldId.uuidString)/ndvi"
         case .getFieldWeather(let fieldId, _):
             return "fields/\(fieldId.uuidString)/weather"
+        case .listPluckers, .createPlucker:
+            return "pluckers"
         case .getDailyTasks:
             return "tasks/daily"
+        case .triggerYieldPrediction:
+            return "yield/predict"
+        case .optimizeRoster:
+            return "roster/optimize"
+        case .getCurrentRoster:
+            return "roster/current"
         case .syncHarvest:
             return "harvest/sync"
         case .getHarvestLogs:
@@ -48,9 +73,9 @@ enum APIEndpoint {
 
     var method: HTTPMethod {
         switch self {
-        case .login, .syncHarvest:
+        case .login, .signupManager, .inviteSupervisor, .changePassword, .onboardEstate, .createPlucker, .triggerYieldPrediction, .optimizeRoster, .syncHarvest:
             return .post
-        case .getMe, .listEstates, .getEstate, .getFields, .getFieldNDVI, .getFieldWeather, .getDailyTasks, .getHarvestLogs:
+        case .getMe, .listEstates, .getEstate, .getFields, .getFieldNDVI, .getFieldWeather, .listPluckers, .getDailyTasks, .getCurrentRoster, .getHarvestLogs:
             return .get
         }
     }
@@ -65,12 +90,19 @@ enum APIEndpoint {
         case .getFieldWeather(_, let limit):
             guard let limit = limit else { return nil }
             return [URLQueryItem(name: "limit", value: String(limit))]
+        case .listPluckers(let estateId):
+            return [URLQueryItem(name: "estate_id", value: estateId.uuidString)]
         case .getDailyTasks(let estateId, let dayIndex):
             var items = [URLQueryItem(name: "estate_id", value: estateId.uuidString)]
             if let dayIndex = dayIndex {
                 items.append(URLQueryItem(name: "day_index", value: String(dayIndex)))
             }
             return items
+        case .getCurrentRoster(let estateId, let weekStartDate):
+            return [
+                URLQueryItem(name: "estate_id", value: estateId.uuidString),
+                URLQueryItem(name: "week_start_date", value: weekStartDate)
+            ]
         case .getHarvestLogs(let fieldId, let limit, let offset):
             var items: [URLQueryItem] = []
             if let fieldId = fieldId {
@@ -93,6 +125,20 @@ enum APIEndpoint {
         switch self {
         case .login(let payload):
             return try? encoder.encode(payload)
+        case .signupManager(let payload):
+            return try? encoder.encode(payload)
+        case .inviteSupervisor(let payload):
+            return try? encoder.encode(payload)
+        case .changePassword(let payload):
+            return try? encoder.encode(payload)
+        case .onboardEstate(let payload):
+            return try? encoder.encode(payload)
+        case .createPlucker(let payload):
+            return try? encoder.encode(payload)
+        case .triggerYieldPrediction(let payload):
+            return try? encoder.encode(payload)
+        case .optimizeRoster(let payload):
+            return try? encoder.encode(payload)
         case .syncHarvest(let batch):
             return try? encoder.encode(batch)
         default:
@@ -102,7 +148,7 @@ enum APIEndpoint {
 
     var requiresAuth: Bool {
         switch self {
-        case .login:
+        case .login, .signupManager:
             return false
         default:
             return true

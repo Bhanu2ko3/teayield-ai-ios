@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABCA30308D0E0000E22417 /* Plucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA31308D0E0000E22417 /* Plucker.swift */; };
+		74ABCA32308D0E0000E22417 /* PluckerDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA33308D0E0000E22417 /* PluckerDTOs.swift */; };
+		74ABCA34308D0E0000E22417 /* OptimizationDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA35308D0E0000E22417 /* OptimizationDTOs.swift */; };
 		74ABCA26308D0E0000E22417 /* UserProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */; };
 		74ABCA21308D0E0000E22417 /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */; };
 		74ABCA23308D0E0000E22417 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA24308D0E0000E22417 /* UserProfileView.swift */; };
@@ -467,6 +470,8 @@
 		74ABC79B308D053100E22417 /* DTOs */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA35308D0E0000E22417 /* OptimizationDTOs.swift */,
+				74ABCA33308D0E0000E22417 /* PluckerDTOs.swift */,
 				74ABC79C308D053100E22417 /* EstateDTOs.swift */,
 				74ABC79D308D053100E22417 /* AuthDTOs.swift */,
 				74ABC79E308D053100E22417 /* TaskDTOs.swift */,
@@ -480,6 +485,7 @@
 		74ABC7A2308D053100E22417 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA31308D0E0000E22417 /* Plucker.swift */,
 				74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */,
 				74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */,
 				74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */,
@@ -849,6 +855,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCA30308D0E0000E22417 /* Plucker.swift in Sources */,
+				74ABCA32308D0E0000E22417 /* PluckerDTOs.swift in Sources */,
+				74ABCA34308D0E0000E22417 /* OptimizationDTOs.swift in Sources */,
 				74ABCA02308D0E0000E22417 /* YieldAnalyticsItem.swift in Sources */,
 				74ABCA04308D0E0000E22417 /* HapticFeedback.swift in Sources */,
 				74ABCA06308D0E0000E22417 /* YieldComparisonChartView.swift in Sources */,

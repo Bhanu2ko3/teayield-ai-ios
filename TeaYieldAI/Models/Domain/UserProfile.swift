@@ -21,6 +21,25 @@ struct UserProfile: Identifiable, Hashable, Codable {
     let role: UserRole
     let employeeId: String
     let estateId: UUID
+    let mustChangePassword: Bool
+    
+    init(
+        id: UUID,
+        email: String,
+        fullName: String,
+        role: UserRole,
+        employeeId: String,
+        estateId: UUID,
+        mustChangePassword: Bool = false
+    ) {
+        self.id = id
+        self.email = email
+        self.fullName = fullName
+        self.role = role
+        self.employeeId = employeeId
+        self.estateId = estateId
+        self.mustChangePassword = mustChangePassword
+    }
     
     var isManager: Bool {
         role == .estateManager

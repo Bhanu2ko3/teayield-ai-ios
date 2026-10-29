@@ -155,4 +155,44 @@ enum MockData {
     )
     
     static let sampleHarvestRecords: [HarvestRecord] = [harvestRecord1, harvestRecord2]
+
+    // MARK: - Plucker Workforce
+    
+    static let plucker1 = Plucker(
+        id: UUID(uuidString: "11111111-aaaa-bbbb-cccc-000000000001")!,
+        estateId: nuwaraEliyaEstateId,
+        pluckerCode: "EMP-4012",
+        fullName: "K. Meenakshi",
+        averageDailyRateKg: 28.5,
+        isActive: true
+    )
+    
+    static let plucker2 = Plucker(
+        id: UUID(uuidString: "11111111-aaaa-bbbb-cccc-000000000002")!,
+        estateId: nuwaraEliyaEstateId,
+        pluckerCode: "EMP-4013",
+        fullName: "S. Kamalasani",
+        averageDailyRateKg: 26.2,
+        isActive: true
+    )
+    
+    static let plucker3 = Plucker(
+        id: UUID(uuidString: "11111111-aaaa-bbbb-cccc-000000000003")!,
+        estateId: nuwaraEliyaEstateId,
+        pluckerCode: "EMP-4018",
+        fullName: "P. Loganathan",
+        averageDailyRateKg: 31.0,
+        isActive: true
+    )
+    
+    static let plucker4 = Plucker(
+        id: UUID(uuidString: "11111111-aaaa-bbbb-cccc-000000000004")!,
+        estateId: nuwaraEliyaEstateId,
+        pluckerCode: "EMP-4022",
+        fullName: "M. Saraswathi",
+        averageDailyRateKg: 27.8,
+        isActive: true
+    )
+
+    static let samplePluckers: [Plucker] = [plucker1, plucker2, plucker3, plucker4]
 }

@@ -165,6 +165,93 @@ struct DomainModelAndDTOTests {
         #expect(abs(field.centroidLatitude - 6.965) < 0.001)
         #expect(abs(field.centroidLongitude - 80.793) < 0.001)
     }
+
+    @Test("Verifies PluckerResponseDTO decoding and domain conversion")
+    func pluckerDTOAndDomainMapping() throws {
+        let pluckerId = UUID()
+        let estateId = UUID()
+        let json = """
+        {
+            "id": "\(pluckerId.uuidString)",
+            "estate_id": "\(estateId.uuidString)",
+            "plucker_code": "EMP-4012",
+            "full_name": "K. Meenakshi",
+            "average_daily_rate_kg": 28.5,
+            "is_active": true,
+            "created_at": "2026-10-28T04:00:00Z",
+            "updated_at": "2026-10-28T04:00:00Z"
+        }
+        """.data(using: .utf8)!
+
+        let dto = try JSONDecoder().decode(PluckerResponseDTO.self, from: json)
+        #expect(dto.pluckerCode == "EMP-4012")
+        #expect(dto.fullName == "K. Meenakshi")
+        #expect(dto.averageDailyRateKg == 28.5)
+        #expect(dto.isActive == true)
+
+        let domain = dto.toDomain()
+        #expect(domain.displayName == "EMP-4012 - K. Meenakshi")
+        #expect(domain.formattedAverageRate == "28.5 kg/day")
+    }
+
+    @Test("Verifies RosterOptimizationResponseDTO JSON decoding")
+    func rosterOptimizationDTO() throws {
+        let json = """
+        {
+            "roster_id": "ROSTER-2026-W44",
+            "estate_id": "3b241101-5231-4822-a982-f87c126d4001",
+            "week_start_date": "2026-10-26",
+            "total_planned_yield_kg": 18450.0,
+            "workforce_utilization_pct": 95.2,
+            "days": [
+                {
+                    "day_index": 1,
+                    "day_name": "Monday",
+                    "total_assigned_pluckers": 42,
+                    "estimated_daily_intake_kg": 3120.0,
+                    "field_assignments": [
+                        {
+                            "field_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+                            "field_name": "Upper Division Block A",
+                            "assigned_pluckers": 22,
+                            "target_harvest_kg": 1650.0
+                        }
+                    ]
+                }
+            ]
+        }
+        """.data(using: .utf8)!
+
+        let roster = try JSONDecoder().decode(RosterOptimizationResponseDTO.self, from: json)
+        #expect(roster.rosterId == "ROSTER-2026-W44")
+        #expect(roster.workforceUtilizationPct == 95.2)
+        #expect(roster.totalPlannedYieldKg == 18450.0)
+        #expect(roster.days.count == 1)
+        #expect(roster.days[0].dayName == "Monday")
+        #expect(roster.days[0].fieldAssignments.count == 1)
+    }
+
+    @Test("Verifies ManagerSignUpRequestDTO and PasswordChangeRequestDTO encoding")
+    func managerSignUpAndCredentialRotationDTOs() throws {
+        let signUp = ManagerSignUpRequestDTO(
+            fullName: "Bhanuka Bandara",
+            email: "manager@nuwaraeliya.estate.lk",
+            password: "SecurePassword123",
+            phoneNumber: "+94771234567"
+        )
+        let signUpData = try JSONEncoder().encode(signUp)
+        let decodedSignUp = try JSONDecoder().decode(ManagerSignUpRequestDTO.self, from: signUpData)
+        #expect(decodedSignUp.fullName == "Bhanuka Bandara")
+        #expect(decodedSignUp.email == "manager@nuwaraeliya.estate.lk")
+
+        let passChange = PasswordChangeRequestDTO(
+            currentPassword: "OldPassword123",
+            newPassword: "NewSecurePassword456"
+        )
+        let passData = try JSONEncoder().encode(passChange)
+        let decodedPass = try JSONDecoder().decode(PasswordChangeRequestDTO.self, from: passData)
+        #expect(decodedPass.newPassword == "NewSecurePassword456")
+    }
 }
 
 #else
@@ -319,6 +406,90 @@ final class DomainModelAndDTOTests: XCTestCase {
         XCTAssertEqual(field.polygonCoordinates.count, 4)
         XCTAssertEqual(field.centroidLatitude, 6.965, accuracy: 0.001)
         XCTAssertEqual(field.centroidLongitude, 80.793, accuracy: 0.001)
+    }
+
+    func testPluckerDTOAndDomainMapping() throws {
+        let pluckerId = UUID()
+        let estateId = UUID()
+        let json = """
+        {
+            "id": "\(pluckerId.uuidString)",
+            "estate_id": "\(estateId.uuidString)",
+            "plucker_code": "EMP-4012",
+            "full_name": "K. Meenakshi",
+            "average_daily_rate_kg": 28.5,
+            "is_active": true,
+            "created_at": "2026-10-28T04:00:00Z",
+            "updated_at": "2026-10-28T04:00:00Z"
+        }
+        """.data(using: .utf8)!
+
+        let dto = try JSONDecoder().decode(PluckerResponseDTO.self, from: json)
+        XCTAssertEqual(dto.pluckerCode, "EMP-4012")
+        XCTAssertEqual(dto.fullName, "K. Meenakshi")
+        XCTAssertEqual(dto.averageDailyRateKg, 28.5)
+        XCTAssertTrue(dto.isActive)
+
+        let domain = dto.toDomain()
+        XCTAssertEqual(domain.displayName, "EMP-4012 - K. Meenakshi")
+        XCTAssertEqual(domain.formattedAverageRate, "28.5 kg/day")
+    }
+
+    func testRosterOptimizationDTO() throws {
+        let json = """
+        {
+            "roster_id": "ROSTER-2026-W44",
+            "estate_id": "3b241101-5231-4822-a982-f87c126d4001",
+            "week_start_date": "2026-10-26",
+            "total_planned_yield_kg": 18450.0,
+            "workforce_utilization_pct": 95.2,
+            "days": [
+                {
+                    "day_index": 1,
+                    "day_name": "Monday",
+                    "total_assigned_pluckers": 42,
+                    "estimated_daily_intake_kg": 3120.0,
+                    "field_assignments": [
+                        {
+                            "field_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+                            "field_name": "Upper Division Block A",
+                            "assigned_pluckers": 22,
+                            "target_harvest_kg": 1650.0
+                        }
+                    ]
+                }
+            ]
+        }
+        """.data(using: .utf8)!
+
+        let roster = try JSONDecoder().decode(RosterOptimizationResponseDTO.self, from: json)
+        XCTAssertEqual(roster.rosterId, "ROSTER-2026-W44")
+        XCTAssertEqual(roster.workforceUtilizationPct, 95.2)
+        XCTAssertEqual(roster.totalPlannedYieldKg, 18450.0)
+        XCTAssertEqual(roster.days.count, 1)
+        XCTAssertEqual(roster.days[0].dayName, "Monday")
+        XCTAssertEqual(roster.days[0].fieldAssignments.count, 1)
+    }
+
+    func testManagerSignUpAndCredentialRotationDTOs() throws {
+        let signUp = ManagerSignUpRequestDTO(
+            fullName: "Bhanuka Bandara",
+            email: "manager@nuwaraeliya.estate.lk",
+            password: "SecurePassword123",
+            phoneNumber: "+94771234567"
+        )
+        let signUpData = try JSONEncoder().encode(signUp)
+        let decodedSignUp = try JSONDecoder().decode(ManagerSignUpRequestDTO.self, from: signUpData)
+        XCTAssertEqual(decodedSignUp.fullName, "Bhanuka Bandara")
+        XCTAssertEqual(decodedSignUp.email, "manager@nuwaraeliya.estate.lk")
+
+        let passChange = PasswordChangeRequestDTO(
+            currentPassword: "OldPassword123",
+            newPassword: "NewSecurePassword456"
+        )
+        let passData = try JSONEncoder().encode(passChange)
+        let decodedPass = try JSONDecoder().decode(PasswordChangeRequestDTO.self, from: passData)
+        XCTAssertEqual(decodedPass.newPassword, "NewSecurePassword456")
     }
 }
 #endif

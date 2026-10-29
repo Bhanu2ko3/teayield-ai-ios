@@ -15,6 +15,9 @@ final class ManagerOverviewViewModel: ObservableObject {
     @Published var estateName: String = ""
     @Published var factoryIntakeCapKg: Double = 3000.0
     @Published var harvestRecords: [HarvestRecord] = []
+    @Published var activeRoster: RosterOptimizationResponseDTO? = nil
+    @Published var isOptimizingRoster: Bool = false
+    @Published var optimizationSuccessMessage: String? = nil
 
     private let fieldRepository: FieldRepositoryProtocol
     private let harvestRepository: HarvestRepositoryProtocol
@@ -205,5 +208,36 @@ final class ManagerOverviewViewModel: ObservableObject {
 
     func logout() {
         authService.logout()
+    }
+
+    // MARK: - Genetic Algorithm Workforce Optimization
+
+    /// Dispatches multi-constraint combinatorial Genetic Algorithm plucker schedule optimization to backend.
+    func optimizeWorkforceRoster() async {
+        guard let user = authService.currentUser else { return }
+        isOptimizingRoster = true
+        optimizationSuccessMessage = nil
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let mondayDateString = formatter.string(from: Date())
+
+        let request = RosterOptimizationRequestDTO(
+            estateId: user.estateId,
+            weekStartDate: mondayDateString,
+            totalAvailablePluckers: 45,
+            dailyFactoryCapacityKg: factoryIntakeCapKg,
+            minimumRestCycleDays: 6
+        )
+
+        do {
+            let result = try await apiService.optimizeRoster(request: request)
+            self.activeRoster = result
+            self.optimizationSuccessMessage = "Roster optimized successfully (\(String(format: "%.1f%%", result.workforceUtilizationPct)) utilization across 6 days)"
+        } catch {
+            self.errorMessage = "Workforce optimization request failed: \(error.localizedDescription)"
+            self.showErrorAlert = true
+        }
+        self.isOptimizingRoster = false
     }
 }

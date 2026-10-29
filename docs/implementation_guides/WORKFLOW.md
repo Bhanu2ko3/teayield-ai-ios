@@ -303,3 +303,17 @@ Before any feature branch merges into `develop`:
 |  Charts & Clean POP       |                    |  A+ Distinction (100%)    |
 +───────────────────────────+                    +───────────────────────────+
 ```
+
+---
+
+## 7. API 2.0 Contract Synchronization & Edge Client Integration
+
+- **Live Production Endpoint:** `https://teayield-api.codebroai.com/api/v1` (Cloudflare Zero Trust Edge Gateway)
+- **Scope of Synchronization:**
+  - Integrated 34 OpenAPI endpoints across 10 modules into Swift client architecture.
+  - Implemented `PluckerResponseDTO`, `PluckerCreateRequestDTO`, and `Plucker` domain model.
+  - Connected interactive plucker roster selection into `HarvestWeighingViewModel` and `HarvestWeighingFormView`.
+  - Implemented `RosterOptimizationRequestDTO`, `RosterOptimizationResponseDTO`, and `PredictionTriggerDTO`.
+  - Embedded AI Genetic Algorithm schedule optimization canvas into `ManagerAnalyticsDashboardView`.
+  - Synchronized authentication credential rotation (`PasswordChangeRequestDTO`, `mustChangePassword`) and self-service manager registration DTOs.
+  - Expanded Apple Swift Testing coverage across all new domain models and Codable DTOs.
