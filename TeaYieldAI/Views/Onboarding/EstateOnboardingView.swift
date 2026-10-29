@@ -240,7 +240,7 @@ struct EstateOnboardingView: View {
 
                     Spacer()
 
-                    Text("Max Withering Cap")
+                    Text("100 – 100,000 kg")
                         .font(.system(size: 10, weight: .medium))
                         .foregroundColor(.secondary)
                 }
@@ -266,7 +266,7 @@ struct EstateOnboardingView: View {
                 .cornerRadius(AppTheme.radiusMedium)
 
                 if !viewModel.dailyFactoryCapacityInput.isEmpty && !viewModel.isCapacityValid {
-                    Text("Daily factory intake capacity must be between 1.0 and 200,000 kg.")
+                    Text("Daily factory intake capacity must be between 100 and 100,000 kg.")
                         .font(.system(size: 10, weight: .medium))
                         .foregroundColor(AppTheme.crimson)
                 }

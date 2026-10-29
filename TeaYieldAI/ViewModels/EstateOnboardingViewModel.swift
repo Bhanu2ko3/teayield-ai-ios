@@ -50,7 +50,7 @@ final class EstateOnboardingViewModel: ObservableObject {
 
     var isCapacityValid: Bool {
         guard let capacity = Double(InputSanitizer.sanitizeDecimal(dailyFactoryCapacityInput)) else { return false }
-        return capacity >= 1.0 && capacity <= 200000.0
+        return capacity >= 100.0 && capacity <= 100000.0
     }
 
     /// Retained for compatibility; does not overwrite user entered elevation values.
@@ -61,7 +61,7 @@ final class EstateOnboardingViewModel: ObservableObject {
     /// Dispatches the estate onboarding payload to the backend and updates the user tenant session.
     func onboardEstate() async {
         guard isFormValid else {
-            errorMessage = "Please enter an estate name, valid elevation (50m - 2,600m), acreage (1 - 50,000), and factory capacity (up to 200,000 kg/day)."
+            errorMessage = "Please enter an estate name, valid elevation (50m - 2,600m), acreage (1 - 50,000), and factory capacity (100 - 100,000 kg/day)."
             showErrorAlert = true
             return
         }
