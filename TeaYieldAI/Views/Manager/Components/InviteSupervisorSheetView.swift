@@ -268,7 +268,7 @@ struct InviteSupervisorSheetView: View {
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 50)
-                .background(hasCopiedCredentials ? AppTheme.navyDark : AppTheme.emerald)
+                .background(hasCopiedCredentials ? AppTheme.emeraldDark : AppTheme.emerald)
                 .cornerRadius(12)
             }
 
