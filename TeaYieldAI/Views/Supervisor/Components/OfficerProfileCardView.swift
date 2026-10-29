@@ -28,7 +28,7 @@ struct OfficerProfileCardView: View {
                     }
                 }
 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text(viewModel.officerName)
                         .font(.appHeadline)
                         .foregroundColor(.primary)
@@ -37,19 +37,15 @@ struct OfficerProfileCardView: View {
                         .font(.appCaption)
                         .foregroundColor(.secondary)
 
-                    HStack(spacing: 4) {
-                        Text(viewModel.officerEmail)
-                            .font(.system(size: 11, weight: .medium, design: .rounded))
-                            .foregroundColor(.secondary)
+                    if !viewModel.officerEmail.isEmpty {
+                        HStack(spacing: 5) {
+                            Image(systemName: "envelope.fill")
+                                .font(.system(size: 10))
+                                .foregroundColor(.secondary)
 
-                        if viewModel.isAccountVerified {
-                            Text("VERIFIED")
-                                .font(.system(size: 9, weight: .bold, design: .rounded))
-                                .padding(.horizontal, 5)
-                                .padding(.vertical, 1)
-                                .background(AppTheme.emerald.opacity(0.15))
-                                .foregroundColor(AppTheme.emerald)
-                                .cornerRadius(AppTheme.radiusSmall)
+                            Text(viewModel.officerEmail)
+                                .font(.system(size: 11, weight: .medium, design: .rounded))
+                                .foregroundColor(.secondary)
                         }
                     }
                 }
@@ -60,34 +56,42 @@ struct OfficerProfileCardView: View {
             Divider()
                 .padding(.vertical, 2)
 
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
+            VStack(spacing: 8) {
+                HStack {
                     Text("Assigned Estate")
-                        .font(.system(size: 10, weight: .semibold, design: .rounded))
+                        .font(.system(size: 11, weight: .medium))
                         .foregroundColor(.secondary)
+                    Spacer()
                     Text(viewModel.estateName)
-                        .font(.appCallout)
+                        .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(.primary)
+                        .lineLimit(1)
                 }
 
-                Spacer()
+                Divider()
 
-                VStack(alignment: .trailing, spacing: 2) {
+                HStack {
                     Text("Division Access")
-                        .font(.system(size: 10, weight: .semibold, design: .rounded))
+                        .font(.system(size: 11, weight: .medium))
                         .foregroundColor(.secondary)
+                    Spacer()
                     Text(viewModel.divisionAssignment)
-                        .font(.appCallout)
+                        .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(AppTheme.emerald)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
             }
+            .padding(10)
+            .background(Color(uiColor: .tertiarySystemGroupedBackground).opacity(0.6))
+            .cornerRadius(AppTheme.radiusMedium)
 
             if let onViewFullProfileTap = onViewFullProfileTap {
                 Button(action: onViewFullProfileTap) {
                     HStack(spacing: 6) {
-                        Image(systemName: "person.crop.circle.badge.checkmark")
+                        Image(systemName: "person.crop.circle")
                             .font(.system(size: 13))
-                        Text("View Complete Enterprise Profile")
+                        Text("View Full Profile")
                             .font(.system(size: 12, weight: .semibold, design: .rounded))
                         Spacer()
                         Image(systemName: "chevron.right")
@@ -99,7 +103,7 @@ struct OfficerProfileCardView: View {
                     .background(AppTheme.emerald.opacity(0.08))
                     .cornerRadius(AppTheme.radiusSmall)
                 }
-                .accessibilityLabel("View complete enterprise profile")
+                .accessibilityLabel("View full profile")
             }
         }
         .padding(16)

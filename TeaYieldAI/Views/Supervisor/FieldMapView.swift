@@ -6,13 +6,16 @@ struct FieldMapView: View {
 
     @StateObject private var viewModel: FieldMapViewModel
     var onRecordWeighingTap: ((TeaField) -> Void)?
+    var onBackTap: (() -> Void)?
 
     init(
         viewModel: FieldMapViewModel,
-        onRecordWeighingTap: ((TeaField) -> Void)? = nil
+        onRecordWeighingTap: ((TeaField) -> Void)? = nil,
+        onBackTap: (() -> Void)? = nil
     ) {
         self._viewModel = StateObject(wrappedValue: viewModel)
         self.onRecordWeighingTap = onRecordWeighingTap
+        self.onBackTap = onBackTap
     }
 
     init(
@@ -20,7 +23,8 @@ struct FieldMapView: View {
         locationService: LocationServiceProtocol,
         apiService: APIServiceProtocol? = nil,
         authService: AuthServiceProtocol? = nil,
-        onRecordWeighingTap: ((TeaField) -> Void)? = nil
+        onRecordWeighingTap: ((TeaField) -> Void)? = nil,
+        onBackTap: (() -> Void)? = nil
     ) {
         self._viewModel = StateObject(
             wrappedValue: FieldMapViewModel(
@@ -31,6 +35,7 @@ struct FieldMapView: View {
             )
         )
         self.onRecordWeighingTap = onRecordWeighingTap
+        self.onBackTap = onBackTap
     }
 
     var body: some View {
@@ -96,7 +101,28 @@ struct FieldMapView: View {
     // MARK: - Top Header Bar
 
     private var topHeaderBar: some View {
-        HStack {
+        HStack(spacing: 8) {
+            if let onBackTap = onBackTap {
+                Button(action: {
+                    HapticFeedback.lightImpact()
+                    onBackTap()
+                }) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 13, weight: .bold))
+                        Text("Overview")
+                            .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    }
+                    .foregroundColor(.primary)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(AppTheme.surfaceGlass)
+                    .cornerRadius(AppTheme.radiusMedium)
+                    .shadow(color: Color.black.opacity(0.08), radius: 4, y: 2)
+                }
+                .accessibilityLabel("Back to Overview")
+            }
+
             Text("Estate GIS Map")
                 .font(.appHeadline)
                 .fontWeight(.bold)

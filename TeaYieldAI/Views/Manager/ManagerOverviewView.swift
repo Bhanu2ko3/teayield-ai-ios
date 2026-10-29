@@ -8,16 +8,20 @@ struct ManagerOverviewView: View {
     @State private var showingFullProfileSheet: Bool = false
     @State private var isShowingInviteSupervisorSheet: Bool = false
 
-    init(container: AppContainerProtocol) {
+    init(container: AppContainerProtocol, viewModel: ManagerOverviewViewModel? = nil) {
         self.container = container
-        _viewModel = StateObject(
-            wrappedValue: ManagerOverviewViewModel(
-                fieldRepository: container.fieldRepository,
-                harvestRepository: container.harvestRepository,
-                authService: container.authService,
-                apiService: container.apiService
+        if let vm = viewModel {
+            _viewModel = StateObject(wrappedValue: vm)
+        } else {
+            _viewModel = StateObject(
+                wrappedValue: ManagerOverviewViewModel(
+                    fieldRepository: container.fieldRepository,
+                    harvestRepository: container.harvestRepository,
+                    authService: container.authService,
+                    apiService: container.apiService
+                )
             )
-        )
+        }
     }
 
     var body: some View {
@@ -48,7 +52,7 @@ struct ManagerOverviewView: View {
                                     Text("Harvest & Yield Analytics")
                                         .font(.appHeadline)
                                         .foregroundColor(.primary)
-                                    Text("Interactive 7-Day predictions & NDVI trends")
+                                    Text("7-Day yield forecast & Sentinel-2 NDVI trends")
                                         .font(.appCaption)
                                         .foregroundColor(.secondary)
                                 }
@@ -82,15 +86,15 @@ struct ManagerOverviewView: View {
                 InviteSupervisorSheetView(apiService: container.apiService)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    ThemeToggleView(style: .iconOnly)
-                }
-
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Log Out") {
-                        viewModel.showingLogoutConfirmation = true
+                    Button {
+                        showingFullProfileSheet = true
+                    } label: {
+                        Image(systemName: "person.crop.circle")
+                            .font(.system(size: 16))
+                            .foregroundColor(AppTheme.emerald)
                     }
-                    .foregroundColor(.red)
+                    .accessibilityLabel("View full manager profile")
                 }
             }
             .confirmationDialog(

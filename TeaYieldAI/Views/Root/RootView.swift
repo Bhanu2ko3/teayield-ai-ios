@@ -31,12 +31,12 @@ struct RootView: View {
                     authService: container.authService,
                     apiService: container.apiService
                 )
-            } else if horizontalSizeClass == .regular {
+            } else if UIDevice.current.userInterfaceIdiom == .pad && authService.currentUser?.isManager == true {
                 // iPad Desktop-class NavigationSplitView Executive Suite
                 ManagerExecutiveSuiteView(container: container)
             } else if authService.currentUser?.isManager == true {
-                // iPhone Compact Executive Overview
-                ManagerOverviewView(container: container)
+                // iPhone Executive 4-Tab Workspace
+                ManagerMainTabView(container: container)
             } else {
                 // iPhone Field Superintendent 4-Tab Workspace
                 SupervisorMainTabView(container: container)

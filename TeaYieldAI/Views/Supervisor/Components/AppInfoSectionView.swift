@@ -7,7 +7,7 @@ struct AppInfoSectionView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("APP INFO & SUPPORT")
+            Text("APPLICATION INFO")
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .foregroundColor(.secondary)
                 .padding(.horizontal, 8)
@@ -15,10 +15,10 @@ struct AppInfoSectionView: View {
             VStack(spacing: 0) {
                 HStack {
                     Text("App Version")
-                        .font(.appBody)
+                        .font(.system(size: 14, weight: .medium))
                     Spacer()
                     Text(viewModel.appVersionDisplay)
-                        .font(.appCallout)
+                        .font(.system(size: 13, weight: .medium))
                         .foregroundColor(.secondary)
                 }
                 .padding(.horizontal, 16)
@@ -27,12 +27,25 @@ struct AppInfoSectionView: View {
                 Divider().padding(.horizontal, 16)
 
                 HStack {
-                    Text("Environment")
-                        .font(.appBody)
+                    Text("API Gateway")
+                        .font(.system(size: 14, weight: .medium))
                     Spacer()
                     Text(viewModel.environmentName)
-                        .font(.appCallout)
+                        .font(.system(size: 13, weight: .medium))
                         .foregroundColor(AppTheme.emerald)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+
+                Divider().padding(.horizontal, 16)
+
+                HStack {
+                    Text("On-Device ML Engine")
+                        .font(.system(size: 14, weight: .medium))
+                    Spacer()
+                    Text("Apple Neural Engine CoreML")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundColor(.secondary)
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)

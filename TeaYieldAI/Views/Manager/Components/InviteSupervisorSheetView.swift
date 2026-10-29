@@ -7,8 +7,10 @@ struct InviteSupervisorSheetView: View {
     @StateObject private var viewModel: InviteSupervisorViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var hasCopiedCredentials: Bool = false
+    private let showsDismissButton: Bool
 
-    init(apiService: APIServiceProtocol) {
+    init(apiService: APIServiceProtocol, showsDismissButton: Bool = true) {
+        self.showsDismissButton = showsDismissButton
         _viewModel = StateObject(wrappedValue: InviteSupervisorViewModel(apiService: apiService))
     }
 
@@ -26,15 +28,19 @@ struct InviteSupervisorSheetView: View {
                             invitationFormCard
                         }
                     }
+                    .frame(maxWidth: 600)
                     .padding(20)
+                    .frame(maxWidth: .infinity)
                 }
             }
             .navigationTitle("Provision Supervisor")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(viewModel.invitationSuccess ? "Close" : "Cancel") {
-                        dismiss()
+                if showsDismissButton {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(viewModel.invitationSuccess ? "Close" : "Cancel") {
+                            dismiss()
+                        }
                     }
                 }
             }
@@ -88,7 +94,7 @@ struct InviteSupervisorSheetView: View {
                             .foregroundColor(.secondary)
                             .frame(width: 20)
 
-                        TextField("e.g. Kasun Jayawardena", text: $viewModel.fullName)
+                        TextField("Full legal name", text: $viewModel.fullName)
                             .autocapitalization(.words)
                     }
                     .padding(14)
@@ -108,10 +114,11 @@ struct InviteSupervisorSheetView: View {
                             .foregroundColor(.secondary)
                             .frame(width: 20)
 
-                        TextField("e.g. kasun@nuwaraeliya.estate.lk", text: $viewModel.email)
+                        TextField("Supervisor corporate email", text: $viewModel.email)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
                             .keyboardType(.emailAddress)
+                            .foregroundColor(.primary)
                     }
                     .padding(14)
                     .background(Color(uiColor: .tertiarySystemGroupedBackground))
@@ -167,25 +174,36 @@ struct InviteSupervisorSheetView: View {
                         .fontWeight(.medium)
                         .foregroundColor(.secondary)
 
-                    HStack {
+                    HStack(spacing: 8) {
                         Image(systemName: "phone.fill")
                             .foregroundColor(.secondary)
                             .frame(width: 20)
 
-                        TextField("e.g. +94 77 987 6543", text: $viewModel.phoneNumber)
-                            .keyboardType(.phonePad)
-                            .textContentType(.telephoneNumber)
+                        HStack(spacing: 6) {
+                            Text("+94")
+                                .font(.appBody)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.primary)
+
+                            Rectangle()
+                                .fill(Color.primary.opacity(0.15))
+                                .frame(width: 1, height: 18)
+                        }
+
+                        TextField("77 123 4567", text: $viewModel.phoneNumber)
+                            .keyboardType(.numberPad)
                             .disableAutocorrection(true)
+                            .foregroundColor(.primary)
                             .onChange(of: viewModel.phoneNumber) { newValue in
-                                viewModel.phoneNumber = InputSanitizer.sanitizePhoneNumber(newValue)
+                                viewModel.phoneNumber = InputSanitizer.sanitizeInteger(newValue)
                             }
                     }
                     .padding(14)
                     .background(Color(uiColor: .tertiarySystemGroupedBackground))
                     .cornerRadius(AppTheme.radiusMedium)
 
-                    if !viewModel.phoneNumber.isEmpty && !InputSanitizer.isValidPhoneNumber(viewModel.phoneNumber) {
-                        Text("Phone number must contain 9 to 15 digits.")
+                    if !viewModel.phoneNumber.isEmpty && !viewModel.isPhoneValid {
+                        Text("Please enter a valid 9-digit Sri Lankan phone number (e.g. 77 123 4567).")
                             .font(.system(size: 10, weight: .medium))
                             .foregroundColor(AppTheme.crimson)
                     }

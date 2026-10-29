@@ -42,9 +42,9 @@ struct ManagerAnalyticsDashboardView: View {
             )
 
             analyticsKpiCard(
-                title: "AI Forecast Accuracy",
+                title: "LSTM Accuracy",
                 value: String(format: "%.1f%%", viewModel.forecastAccuracyPercentage),
-                subtext: "LSTM Deep Engine",
+                subtext: "Temporal LSTM Model",
                 icon: "bolt.badge.clock.fill",
                 tint: .blue
             )
@@ -98,16 +98,16 @@ struct ManagerAnalyticsDashboardView: View {
     private var aiForecastSection: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 8) {
-                Image(systemName: "bolt.badge.clock.fill")
+                Image(systemName: "chart.line.uptrend.xyaxis")
                     .foregroundColor(.blue)
                     .font(.system(size: 16))
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Deep Learning Crop Forecast (LSTM)")
+                    Text("Harvest Yield Forecast (LSTM)")
                         .font(.appHeadline)
                         .foregroundColor(.primary)
 
-                    Text("Multivariate temporal LSTM engine with Sentinel-2 NDVI telemetry")
+                    Text("Multivariate temporal LSTM model with Sentinel-2 NDVI telemetry")
                         .font(.appCaption)
                         .foregroundColor(.secondary)
                 }
@@ -188,8 +188,8 @@ struct ManagerAnalyticsDashboardView: View {
             }
 
             TeaYieldButton(
-                title: viewModel.isPredictingYield ? "Running LSTM Inference..." : (viewModel.activePredictionBatch == nil ? "Generate AI Crop Forecast" : "Refresh AI Forecast"),
-                icon: "sparkles",
+                title: viewModel.isPredictingYield ? "Running LSTM Inference..." : (viewModel.activePredictionBatch == nil ? "Generate Crop Forecast" : "Refresh Forecast"),
+                icon: "chart.line.uptrend.xyaxis",
                 style: .primary,
                 isLoading: viewModel.isPredictingYield
             ) {
@@ -213,11 +213,11 @@ struct ManagerAnalyticsDashboardView: View {
                     .font(.system(size: 16))
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("AI Workforce Schedule Optimizer")
+                    Text("Plucking Schedule Optimizer (Genetic Algorithm)")
                         .font(.appHeadline)
                         .foregroundColor(.primary)
 
-                    Text("Multi-constraint combinatorial Genetic Algorithm")
+                    Text("Multi-constraint combinatorial plucker allocation engine")
                         .font(.appCaption)
                         .foregroundColor(.secondary)
                 }
@@ -315,8 +315,8 @@ struct ManagerAnalyticsDashboardView: View {
             }
 
             TeaYieldButton(
-                title: viewModel.isOptimizingRoster ? "Optimizing Schedule..." : (viewModel.activeRoster == nil ? "Run Genetic Algorithm Optimization" : "Re-run Roster Optimization"),
-                icon: "cpu.fill",
+                title: viewModel.isOptimizingRoster ? "Optimizing Schedule..." : (viewModel.activeRoster == nil ? "Generate Plucking Schedule" : "Re-optimize Plucking Schedule"),
+                icon: "calendar.badge.clock",
                 style: .primary,
                 isLoading: viewModel.isOptimizingRoster
             ) {

@@ -41,8 +41,8 @@ enum AppConfiguration {
     /// Runtime deployment environment label.
     static var environmentName: String {
         if apiBaseURL == localDevelopmentBaseURL {
-            return "Development Localhost"
+            return "Local Edge Network"
         }
-        return "Oracle Cloudflare Edge"
+        return "Production Cloud API"
     }
 }

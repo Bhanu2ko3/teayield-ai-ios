@@ -8,7 +8,7 @@ struct DataStorageSectionView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("DATA & OFFLINE STORAGE (CORE DATA)")
+            Text("DATA & OFFLINE STORAGE")
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .foregroundColor(.secondary)
                 .padding(.horizontal, 8)
@@ -19,8 +19,8 @@ struct DataStorageSectionView: View {
                         Image(systemName: "externaldrive.fill")
                             .foregroundColor(AppTheme.emerald)
                             .frame(width: 22)
-                        Text("Offline Core Data Sync")
-                            .font(.appBody)
+                        Text("Offline Storage Sync")
+                            .font(.system(size: 14, weight: .medium))
                     }
                 }
                 .padding(.horizontal, 16)
@@ -34,10 +34,10 @@ struct DataStorageSectionView: View {
                             .foregroundColor(AppTheme.emerald)
                             .frame(width: 22)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Local Database Storage")
-                                .font(.appBody)
-                            Text("SQLite Relational Persistence")
-                                .font(.appCaption)
+                            Text("Cached Offline Records")
+                                .font(.system(size: 14, weight: .medium))
+                            Text("Encrypted local storage")
+                                .font(.system(size: 11))
                                 .foregroundColor(.secondary)
                         }
                     }
@@ -72,11 +72,11 @@ struct DataStorageSectionView: View {
                             .frame(width: 22)
 
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("View Weighing History")
-                                .font(.appBody)
+                            Text("Weighing Log History")
+                                .font(.system(size: 14, weight: .medium))
                                 .foregroundColor(.primary)
                             Text("Inspect locally cached harvest logs")
-                                .font(.appCaption)
+                                .font(.system(size: 11))
                                 .foregroundColor(.secondary)
                         }
 
@@ -87,7 +87,7 @@ struct DataStorageSectionView: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                .accessibilityLabel("View Weighing History")
+                .accessibilityLabel("Weighing Log History")
                 .accessibilityHint("Opens screen showing all locally recorded green leaf weigh-ins")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
@@ -95,14 +95,14 @@ struct DataStorageSectionView: View {
                 Divider().padding(.leading, 50)
 
                 TeaYieldButton(
-                    title: viewModel.isSyncing ? "Syncing..." : "Manual Sync with Supabase",
+                    title: viewModel.isSyncing ? "Syncing..." : "Synchronize Database",
                     icon: "arrow.triangle.2.circlepath",
                     style: .tonal,
                     isLoading: viewModel.isSyncing
                 ) {
                     viewModel.triggerManualSync()
                 }
-                .accessibilityLabel("Manual Sync with Supabase")
+                .accessibilityLabel("Synchronize Database")
                 .accessibilityHint("Uploads queued offline weighing logs to estate server")
                 .padding(14)
                 .disabled(viewModel.isSyncing)

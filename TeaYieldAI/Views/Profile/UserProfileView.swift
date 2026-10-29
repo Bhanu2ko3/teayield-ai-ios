@@ -9,13 +9,16 @@ struct UserProfileView: View {
     @StateObject private var viewModel: UserProfileViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var selectedPhotoItem: PhotosPickerItem? = nil
+    private var onDismissTap: (() -> Void)? = nil
 
     init(
         authService: AuthServiceProtocol,
         apiService: APIServiceProtocol? = nil,
         harvestRepository: HarvestRepositoryProtocol? = nil,
-        fieldRepository: FieldRepositoryProtocol? = nil
+        fieldRepository: FieldRepositoryProtocol? = nil,
+        onDismissTap: (() -> Void)? = nil
     ) {
+        self.onDismissTap = onDismissTap
         _viewModel = StateObject(
             wrappedValue: UserProfileViewModel(
                 authService: authService,
@@ -26,7 +29,8 @@ struct UserProfileView: View {
         )
     }
 
-    init(viewModel: UserProfileViewModel) {
+    init(viewModel: UserProfileViewModel, onDismissTap: (() -> Void)? = nil) {
+        self.onDismissTap = onDismissTap
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
@@ -94,7 +98,11 @@ struct UserProfileView: View {
             Spacer()
 
             Button {
-                dismiss()
+                if let onDismissTap = onDismissTap {
+                    onDismissTap()
+                } else {
+                    dismiss()
+                }
             } label: {
                 Image(systemName: "xmark")
                     .font(.system(size: 13, weight: .bold))

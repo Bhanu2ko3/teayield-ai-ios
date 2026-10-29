@@ -23,11 +23,25 @@ final class InviteSupervisorViewModel: ObservableObject {
         self.temporaryPassword = Self.generateTemporaryPassword()
     }
 
+    var isPhoneValid: Bool {
+        if phoneNumber.isEmpty { return true }
+        let digits = phoneNumber.filter { $0.isNumber }
+        let normalized = digits.hasPrefix("0") ? String(digits.dropFirst()) : digits
+        return normalized.count == 9
+    }
+
+    var fullInternationalPhoneNumber: String? {
+        let digits = phoneNumber.filter { $0.isNumber }
+        if digits.isEmpty { return nil }
+        let normalized = digits.hasPrefix("0") ? String(digits.dropFirst()) : digits
+        return "+94\(normalized)"
+    }
+
     var isFormValid: Bool {
         let nameValid = fullName.trimmingCharacters(in: .whitespacesAndNewlines).count >= 2
         let emailValid = InputSanitizer.isValidEmail(email)
         let passwordValid = temporaryPassword.count >= 8
-        let phoneValid = phoneNumber.isEmpty || InputSanitizer.isValidPhoneNumber(phoneNumber)
+        let phoneValid = isPhoneValid
         return nameValid && emailValid && passwordValid && phoneValid
     }
 
@@ -53,8 +67,8 @@ final class InviteSupervisorViewModel: ObservableObject {
                 errorMessage = "Please enter a valid corporate email address."
             } else if temporaryPassword.count < 8 {
                 errorMessage = "The temporary password must contain at least 8 characters."
-            } else if !phoneNumber.isEmpty && !InputSanitizer.isValidPhoneNumber(phoneNumber) {
-                errorMessage = "Please enter a valid phone number with 9 to 15 digits."
+            } else if !phoneNumber.isEmpty && !isPhoneValid {
+                errorMessage = "Please enter a valid 9-digit Sri Lankan phone number (e.g. 77 123 4567)."
             } else {
                 errorMessage = "Please verify all required fields."
             }
@@ -65,8 +79,7 @@ final class InviteSupervisorViewModel: ObservableObject {
         isSubmitting = true
         errorMessage = nil
 
-        let sanitizedPhone = InputSanitizer.sanitizePhoneNumber(phoneNumber)
-        let phoneParam: String? = sanitizedPhone.isEmpty ? nil : sanitizedPhone
+        let phoneParam: String? = fullInternationalPhoneNumber
 
         let request = SupervisorInviteRequestDTO(
             fullName: fullName.trimmingCharacters(in: .whitespacesAndNewlines),

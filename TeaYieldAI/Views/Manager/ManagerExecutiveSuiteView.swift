@@ -10,7 +10,6 @@ struct ManagerExecutiveSuiteView: View {
     @State private var selectedNavigationItem: ExecutiveNavDestination? = .overview
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var expandedFieldId: UUID? = nil
-    @AppStorage("appThemeMode") private var appThemeMode: String = AppThemeMode.system.rawValue
     @Namespace private var fieldCardAnimation
 
     enum ExecutiveNavDestination: String, CaseIterable, Identifiable {
@@ -20,7 +19,7 @@ struct ManagerExecutiveSuiteView: View {
         case fieldRoster = "Division Blocks"
         case teamDelegation = "Staff Delegation"
         case profile = "Officer Profile"
-        case diagnostics = "Offline & Diagnostics"
+        case diagnostics = "Settings & Diagnostics"
 
         var id: String { rawValue }
 
@@ -98,20 +97,6 @@ struct ManagerExecutiveSuiteView: View {
                     }
                 }
             }
-
-            Section(header: Text("APPEARANCE")) {
-                Picker("Theme", selection: $appThemeMode) {
-                    ForEach(AppThemeMode.allCases) { mode in
-                        Text(mode.shortTitle).tag(mode.rawValue)
-                    }
-                }
-                .pickerStyle(.segmented)
-            }
-
-            Section {
-                ambientConnectionStatus
-            }
-            .listRowBackground(Color.clear)
         }
         .listStyle(.sidebar)
         .navigationTitle("TeaYield Executive")
@@ -150,18 +135,6 @@ struct ManagerExecutiveSuiteView: View {
         .padding(.vertical, 12)
     }
 
-    private var ambientConnectionStatus: some View {
-        HStack(spacing: 8) {
-            Circle()
-                .fill(AppTheme.emerald)
-                .frame(width: 8, height: 8)
-            Text("Edge Engine Connected • Local SQLite Active")
-                .font(.system(size: 10, weight: .medium, design: .rounded))
-                .foregroundColor(.secondary)
-        }
-        .padding(.vertical, 8)
-    }
-
     // MARK: - Detail Canvas (Adaptive iPad Wide Screen)
 
     @ViewBuilder
@@ -174,88 +147,125 @@ struct ManagerExecutiveSuiteView: View {
                 fieldRepository: container.fieldRepository,
                 locationService: container.locationService,
                 apiService: container.apiService,
-                authService: container.authService
+                authService: container.authService,
+                onBackTap: {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        columnVisibility = .all
+                        selectedNavigationItem = .overview
+                    }
+                }
             )
         case .yieldAnalytics:
             ManagerAnalyticsDashboardView(viewModel: viewModel)
         case .fieldRoster:
             divisionRosterGrid
         case .teamDelegation:
-            InviteSupervisorSheetView(apiService: container.apiService)
+            InviteSupervisorSheetView(apiService: container.apiService, showsDismissButton: false)
         case .profile:
             UserProfileView(
                 authService: container.authService,
                 apiService: container.apiService,
                 harvestRepository: container.harvestRepository,
-                fieldRepository: container.fieldRepository
+                fieldRepository: container.fieldRepository,
+                onDismissTap: {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        columnVisibility = .all
+                        selectedNavigationItem = .overview
+                    }
+                }
             )
         case .diagnostics:
             SupervisorSettingsView(container: container)
         }
     }
 
-    // MARK: - Executive Overview Canvas (Side-by-Side iPad Layout)
+    // MARK: - Executive Overview Canvas (Adaptive iPad Responsive Layout)
 
     private var executiveOverviewCanvas: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                // Top Executive KPI Row
-                HStack(spacing: 14) {
-                    kpiMetricCard(
-                        title: "Total Acreage",
-                        value: String(format: "%.1f ac", viewModel.totalAcreage),
-                        subtext: "\(viewModel.fields.count) Commercial Blocks",
-                        icon: "square.dashed",
-                        color: .blue
-                    )
-
-                    kpiMetricCard(
-                        title: "Today's Intake",
-                        value: String(format: "%.0f kg", viewModel.totalHarvestTodayKg),
-                        subtext: "\(String(format: "%.0f%%", viewModel.factoryUtilizationRatio * 100.0)) Withering Cap",
-                        icon: "scalemass.fill",
-                        color: AppTheme.emerald
-                    )
-
-                    kpiMetricCard(
-                        title: "Harvest-Ready",
-                        value: "\(viewModel.readyFieldsCount)",
-                        subtext: "\(viewModel.growingFieldsCount) Growing • \(viewModel.restingFieldsCount) Resting",
-                        icon: "leaf.fill",
-                        color: AppTheme.amber
-                    )
-
-                    kpiMetricCard(
-                        title: "Export Quality",
-                        value: String(format: "%.1f%%", viewModel.averageFineLeafPercentage),
-                        subtext: "TRI Standard (85%)",
-                        icon: "rosette",
-                        color: AppTheme.emerald
-                    )
-                }
-
-                // Two-Column Side-by-Side iPad Analytics Layout
-                HStack(alignment: .top, spacing: 20) {
-                    VStack(spacing: 20) {
-                        FactoryCapacityChartView(
-                            currentIntakeKg: viewModel.totalHarvestTodayKg,
-                            capacityCapKg: viewModel.factoryIntakeCapKg,
-                            utilizationRatio: viewModel.factoryUtilizationRatio,
-                            remainingCapacityKg: viewModel.remainingCapacityKg
+        GeometryReader { geometry in
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Top Executive KPI Grid
+                    LazyVGrid(
+                        columns: [
+                            GridItem(.adaptive(minimum: 155), spacing: 14)
+                        ],
+                        spacing: 14
+                    ) {
+                        kpiMetricCard(
+                            title: "Total Acreage",
+                            value: String(format: "%.1f ac", viewModel.totalAcreage),
+                            subtext: "\(viewModel.fields.count) Commercial Blocks",
+                            icon: "square.dashed",
+                            color: .blue
                         )
 
-                        // Quick division readiness summary
-                        divisionStatusSummaryCard
-                    }
-                    .frame(maxWidth: .infinity)
+                        kpiMetricCard(
+                            title: "Today's Intake",
+                            value: String(format: "%.0f kg", viewModel.totalHarvestTodayKg),
+                            subtext: "\(String(format: "%.0f%%", viewModel.factoryUtilizationRatio * 100.0)) Withering Cap",
+                            icon: "scalemass.fill",
+                            color: AppTheme.emerald
+                        )
 
-                    VStack(spacing: 20) {
-                        YieldComparisonChartView(data: viewModel.weeklyYieldComparisons)
+                        kpiMetricCard(
+                            title: "Harvest-Ready",
+                            value: "\(viewModel.readyFieldsCount)",
+                            subtext: "\(viewModel.growingFieldsCount) Growing • \(viewModel.restingFieldsCount) Resting",
+                            icon: "leaf.fill",
+                            color: AppTheme.amber
+                        )
+
+                        kpiMetricCard(
+                            title: "Export Quality",
+                            value: String(format: "%.1f%%", viewModel.averageFineLeafPercentage),
+                            subtext: "TRI Standard (85%)",
+                            icon: "rosette",
+                            color: AppTheme.emerald
+                        )
                     }
-                    .frame(maxWidth: .infinity)
+
+                    if geometry.size.width > 700 {
+                        // Wide Screen / Landscape: Side-by-Side Analytics
+                        HStack(alignment: .top, spacing: 20) {
+                            VStack(spacing: 20) {
+                                FactoryCapacityChartView(
+                                    currentIntakeKg: viewModel.totalHarvestTodayKg,
+                                    capacityCapKg: viewModel.factoryIntakeCapKg,
+                                    utilizationRatio: viewModel.factoryUtilizationRatio,
+                                    remainingCapacityKg: viewModel.remainingCapacityKg
+                                )
+
+                                divisionStatusSummaryCard
+                            }
+                            .frame(maxWidth: .infinity)
+
+                            VStack(spacing: 20) {
+                                YieldComparisonChartView(data: viewModel.weeklyYieldComparisons)
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                    } else {
+                        // Compact / Portrait Detail Pane: Clean Vertical Stack
+                        VStack(spacing: 18) {
+                            FactoryCapacityChartView(
+                                currentIntakeKg: viewModel.totalHarvestTodayKg,
+                                capacityCapKg: viewModel.factoryIntakeCapKg,
+                                utilizationRatio: viewModel.factoryUtilizationRatio,
+                                remainingCapacityKg: viewModel.remainingCapacityKg
+                            )
+
+                            YieldComparisonChartView(data: viewModel.weeklyYieldComparisons)
+
+                            divisionStatusSummaryCard
+                        }
+                    }
+
+                    // Division Blocks Summary
+                    divisionInventoryPreviewSection
                 }
+                .padding(20)
             }
-            .padding(20)
         }
         .background(Color(uiColor: .systemGroupedBackground))
         .navigationTitle("Executive Overview")
@@ -273,12 +283,15 @@ struct ManagerExecutiveSuiteView: View {
             Text(value)
                 .font(.system(size: 20, weight: .bold, design: .rounded))
                 .foregroundColor(.primary)
+                .lineLimit(1)
             Text(title)
                 .font(.system(size: 11, weight: .semibold, design: .rounded))
                 .foregroundColor(.secondary)
+                .lineLimit(1)
             Text(subtext)
                 .font(.system(size: 10, design: .rounded))
                 .foregroundColor(color)
+                .lineLimit(1)
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -311,10 +324,56 @@ struct ManagerExecutiveSuiteView: View {
         Text(title)
             .font(.system(size: 11, weight: .bold, design: .rounded))
             .foregroundColor(color)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 6)
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 8)
             .background(color.opacity(0.12))
             .cornerRadius(AppTheme.radiusSmall)
+    }
+
+    private var divisionInventoryPreviewSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("ESTATE DIVISIONS & HARVEST READINESS")
+                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .foregroundColor(.secondary)
+
+                Spacer()
+
+                Button {
+                    selectedNavigationItem = .fieldRoster
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("View All \(viewModel.fields.count) Blocks")
+                            .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 10, weight: .bold))
+                    }
+                    .foregroundColor(AppTheme.emerald)
+                }
+            }
+
+            if viewModel.fields.isEmpty {
+                VStack(spacing: 8) {
+                    Image(systemName: "leaf.fill")
+                        .foregroundColor(AppTheme.emerald.opacity(0.5))
+                        .font(.system(size: 24))
+                    Text("No estate divisions synced yet.")
+                        .font(.appCaption)
+                        .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(20)
+                .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+            } else {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 12)], spacing: 12) {
+                    ForEach(viewModel.fields.prefix(4)) { field in
+                        ManagerFieldRowView(field: field)
+                    }
+                }
+            }
+        }
     }
 
     // MARK: - Division Inventory Grid with Matched Geometry
@@ -411,6 +470,7 @@ struct ManagerExecutiveSuiteView: View {
 struct ManagerExecutiveSuiteView_Previews: PreviewProvider {
     static var previews: some View {
         ManagerExecutiveSuiteView(container: AppContainer.shared)
+            .previewDevice(PreviewDevice(rawValue: "iPad Pro (11-inch) (4th generation)"))
             .previewInterfaceOrientation(.landscapeLeft)
     }
 }

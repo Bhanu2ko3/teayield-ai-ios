@@ -8,13 +8,13 @@ struct NotificationSettingsSectionView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("SYSTEM NOTIFICATIONS (USERNOTIFICATIONS)")
+                Text("FIELD ALERTS & NOTIFICATIONS")
                     .font(.system(size: 11, weight: .bold, design: .rounded))
                     .foregroundColor(.secondary)
 
                 Spacer()
 
-                Text(viewModel.notificationsAuthorized ? "AUTHORIZED" : "PERMISSION REQUIRED")
+                Text(viewModel.notificationsAuthorized ? "ENABLED" : "NOT AUTHORIZED")
                     .font(.system(size: 9, weight: .bold, design: .rounded))
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
@@ -31,7 +31,7 @@ struct NotificationSettingsSectionView: View {
                             .foregroundColor(.blue)
                             .frame(width: 22)
                         Text("Rainfall & Hazard Alerts")
-                            .font(.appBody)
+                            .font(.system(size: 14, weight: .medium))
                     }
                 }
                 .accessibilityLabel("Rainfall and hazard alerts")
@@ -50,7 +50,7 @@ struct NotificationSettingsSectionView: View {
                             .foregroundColor(AppTheme.amber)
                             .frame(width: 22)
                         Text("Factory Overload Warnings")
-                            .font(.appBody)
+                            .font(.system(size: 14, weight: .medium))
                     }
                 }
                 .accessibilityLabel("Factory overload warnings")
@@ -69,7 +69,7 @@ struct NotificationSettingsSectionView: View {
                             .foregroundColor(AppTheme.emerald)
                             .frame(width: 22)
                         Text("Field Rest Period Notifications")
-                            .font(.appBody)
+                            .font(.system(size: 14, weight: .medium))
                     }
                 }
                 .accessibilityLabel("Field rest period notifications")

@@ -47,21 +47,24 @@ struct FactoryCapacityChartView: View {
     // MARK: - Subviews
 
     private var headerSection: some View {
-        HStack {
+        HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Factory Withering Capacity")
                     .font(.appHeadline)
                     .foregroundColor(.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
 
                 Text("Central Trough Aeration Line Intake")
                     .font(.appCaption)
                     .foregroundColor(.secondary)
+                    .lineLimit(1)
             }
 
             Spacer()
 
             Text(String(format: "%.0f%% Cap", utilizationRatio * 100.0))
-                .font(.system(size: 14, weight: .heavy, design: .rounded))
+                .font(.system(size: 13, weight: .bold, design: .rounded))
                 .foregroundColor(utilizationColor)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)

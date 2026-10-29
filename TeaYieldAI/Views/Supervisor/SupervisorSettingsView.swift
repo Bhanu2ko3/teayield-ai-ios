@@ -23,46 +23,30 @@ struct SupervisorSettingsView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color(uiColor: .systemGroupedBackground)
-                    .ignoresSafeArea()
-
-                ScrollView {
-                    VStack(spacing: 20) {
-                        OfficerProfileCardView(
-                            viewModel: viewModel,
-                            onViewFullProfileTap: {
-                                showingFullProfileSheet = true
-                            }
-                        )
-                        AppearanceSettingsSectionView(viewModel: viewModel)
-                        DataStorageSectionView(
-                            viewModel: viewModel,
-                            harvestRepository: container.harvestRepository
-                        )
-                        SecuritySettingsSectionView(viewModel: viewModel)
-                        NotificationSettingsSectionView(viewModel: viewModel)
-                        AppInfoSectionView(viewModel: viewModel)
-                        logoutButton
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 16)
+            ScrollView {
+                VStack(spacing: 20) {
+                    OfficerProfileCardView(
+                        viewModel: viewModel,
+                        onViewFullProfileTap: {
+                            showingFullProfileSheet = true
+                        }
+                    )
+                    AppearanceSettingsSectionView(viewModel: viewModel)
+                    DataStorageSectionView(
+                        viewModel: viewModel,
+                        harvestRepository: container.harvestRepository
+                    )
+                    SecuritySettingsSectionView(viewModel: viewModel)
+                    NotificationSettingsSectionView(viewModel: viewModel)
+                    AppInfoSectionView(viewModel: viewModel)
+                    logoutButton
                 }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 16)
             }
-            .navigationTitle("Settings & Profile")
+            .background(Color(uiColor: .systemGroupedBackground).ignoresSafeArea())
+            .navigationTitle("Settings & System")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showingFullProfileSheet = true
-                    } label: {
-                        Image(systemName: "person.crop.circle")
-                            .font(.system(size: 16))
-                            .foregroundColor(AppTheme.emerald)
-                    }
-                    .accessibilityLabel("View full officer profile")
-                }
-            }
             .sheet(isPresented: $showingFullProfileSheet) {
                 UserProfileView(
                     authService: container.authService,
@@ -90,7 +74,7 @@ struct SupervisorSettingsView: View {
 
     private var logoutButton: some View {
         TeaYieldButton(
-            title: "Log Out of Enterprise Account",
+            title: "Sign Out of Enterprise Account",
             icon: "rectangle.portrait.and.arrow.right",
             style: .destructive,
             action: {

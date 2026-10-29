@@ -8,28 +8,14 @@ struct AppearanceSettingsSectionView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Text("APPEARANCE & THEME")
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
-                    .foregroundColor(.secondary)
+            Text("APPEARANCE & DISPLAY")
+                .font(.system(size: 11, weight: .bold, design: .rounded))
+                .foregroundColor(.secondary)
+                .padding(.horizontal, 8)
 
-                Spacer()
-
-                Text(currentMode.title.uppercased())
-                    .font(.system(size: 9, weight: .bold, design: .rounded))
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 2)
-                    .background(AppTheme.emerald.opacity(0.15))
-                    .foregroundColor(AppTheme.emerald)
-                    .cornerRadius(AppTheme.radiusSmall)
-            }
-            .padding(.horizontal, 8)
-
-            VStack(spacing: 12) {
-                HStack(spacing: 10) {
-                    ForEach(AppThemeMode.allCases) { mode in
-                        themeOptionButton(for: mode)
-                    }
+            HStack(spacing: 10) {
+                ForEach(AppThemeMode.allCases) { mode in
+                    themeOptionButton(for: mode)
                 }
             }
             .padding(14)

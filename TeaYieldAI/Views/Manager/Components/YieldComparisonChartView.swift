@@ -24,21 +24,39 @@ struct YieldComparisonChartView: View {
     // MARK: - Subviews
 
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                Text("7-Day Yield Performance")
-                    .font(.appHeadline)
-                    .foregroundColor(.primary)
+        VStack(alignment: .leading, spacing: 6) {
+            ViewThatFits(in: .horizontal) {
+                HStack(alignment: .center) {
+                    Text("7-Day Yield Performance")
+                        .font(.appHeadline)
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
 
-                Spacer()
+                    Spacer()
 
-                legendPill(title: "LSTM Forecast", color: .blue)
-                legendPill(title: "Actual Intake", color: AppTheme.emerald)
+                    HStack(spacing: 8) {
+                        legendPill(title: "LSTM Forecast", color: .blue)
+                        legendPill(title: "Actual Intake", color: AppTheme.emerald)
+                    }
+                }
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("7-Day Yield Performance")
+                        .font(.appHeadline)
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
+
+                    HStack(spacing: 8) {
+                        legendPill(title: "LSTM Forecast", color: .blue)
+                        legendPill(title: "Actual Intake", color: AppTheme.emerald)
+                    }
+                }
             }
 
             Text("Comparison of LSTM daily predictions against verified weigh-in records")
                 .font(.appCaption)
                 .foregroundColor(.secondary)
+                .lineLimit(2)
         }
     }
 
@@ -89,8 +107,8 @@ struct YieldComparisonChartView: View {
             AxisMarks { value in
                 AxisValueLabel {
                     if let stringValue = value.as(String.self) {
-                        Text(stringValue)
-                            .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        Text(String(stringValue.prefix(3)))
+                            .font(.system(size: 10, weight: .semibold, design: .rounded))
                             .foregroundColor(.primary)
                     }
                 }

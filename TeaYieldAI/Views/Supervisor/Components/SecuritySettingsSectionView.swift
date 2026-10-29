@@ -7,7 +7,7 @@ struct SecuritySettingsSectionView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("SECURITY & AUTHENTICATION")
+            Text("SECURITY & HARDWARE")
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .foregroundColor(.secondary)
                 .padding(.horizontal, 8)
@@ -19,7 +19,7 @@ struct SecuritySettingsSectionView: View {
                             .foregroundColor(AppTheme.emerald)
                             .frame(width: 22)
                         Text("Require Face ID on Launch")
-                            .font(.appBody)
+                            .font(.system(size: 14, weight: .medium))
                     }
                 }
                 .accessibilityLabel("Require Face ID on Launch")
@@ -31,18 +31,18 @@ struct SecuritySettingsSectionView: View {
 
                 HStack {
                     HStack(spacing: 12) {
-                        Image(systemName: "lock.shield.fill")
+                        Image(systemName: "checkmark.shield.fill")
                             .foregroundColor(AppTheme.emerald)
                             .frame(width: 22)
-                        Text("Biometric Vault Tier")
-                            .font(.appBody)
+                        Text("Biometric Authentication")
+                            .font(.system(size: 14, weight: .medium))
                     }
 
                     Spacer()
 
-                    Text("TrueDepth Face ID")
-                        .font(.appCallout)
-                        .foregroundColor(.secondary)
+                    Text("Face ID Enrolled")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundColor(AppTheme.emerald)
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
