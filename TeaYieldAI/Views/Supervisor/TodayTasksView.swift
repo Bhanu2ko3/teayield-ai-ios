@@ -29,7 +29,8 @@ struct TodayTasksView: View {
                     .ignoresSafeArea()
 
                 ScrollView {
-                    VStack(spacing: 20) {
+                    VStack(spacing: 16) {
+                        estateContextBar
                         syncStatusSection
                         KpiSummaryRowView(
                             targetKg: viewModel.totalTargetKg,
@@ -39,7 +40,7 @@ struct TodayTasksView: View {
                         taskListSection
                     }
                     .padding(.horizontal, 16)
-                    .padding(.vertical, 16)
+                    .padding(.vertical, 14)
                 }
                 .refreshable {
                     await viewModel.loadTodayTasks()
@@ -48,47 +49,26 @@ struct TodayTasksView: View {
             .navigationTitle("Today's Operations")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        showingProfileSheet = true
-                    } label: {
-                        HStack(spacing: 6) {
-                            Image(systemName: "leaf.fill")
-                                .font(.system(size: 12))
-                                .foregroundColor(AppTheme.emerald)
-                            Text(viewModel.estateDisplayName)
-                                .font(.appCallout)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                    .accessibilityLabel("View enterprise officer profile")
-                }
-
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 12) {
                         NavigationLink {
                             HarvestHistoryView(harvestRepository: container.harvestRepository)
                         } label: {
                             Image(systemName: "clock.arrow.circlepath")
-                                .font(.system(size: 15, weight: .semibold))
+                                .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(AppTheme.emerald)
                         }
                         .accessibilityLabel("Weighing History")
-                        .accessibilityHint("View locally cached green leaf weigh-in records from Core Data")
+                        .accessibilityHint("View locally cached green leaf weigh-in records from verified repository")
 
                         Button {
-                            selectedFieldForWeighing = viewModel.tasks.first?.fieldId
-                            showingWeighingSheet = true
+                            showingProfileSheet = true
                         } label: {
-                            HStack(spacing: 4) {
-                                Image(systemName: "plus.circle.fill")
-                                Text("Weigh Leaf")
-                                    .font(.appCallout)
-                                    .fontWeight(.semibold)
-                            }
-                            .foregroundColor(AppTheme.emerald)
+                            Image(systemName: "person.crop.circle")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(AppTheme.emerald)
                         }
+                        .accessibilityLabel("View enterprise officer profile")
                     }
                 }
             }
@@ -115,6 +95,45 @@ struct TodayTasksView: View {
     }
 
     // MARK: - Subviews
+
+    private var estateContextBar: some View {
+        HStack {
+            HStack(spacing: 6) {
+                Image(systemName: "leaf.fill")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(AppTheme.emerald)
+
+                Text(viewModel.estateDisplayName)
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(AppTheme.emerald.opacity(0.12))
+            .cornerRadius(AppTheme.radiusSmall)
+
+            Spacer()
+
+            Button {
+                selectedFieldForWeighing = viewModel.tasks.first?.fieldId
+                showingWeighingSheet = true
+            } label: {
+                HStack(spacing: 5) {
+                    Image(systemName: "plus")
+                        .font(.system(size: 11, weight: .bold))
+                    Text("Weigh Leaf")
+                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(AppTheme.emerald)
+                .cornerRadius(AppTheme.radiusSmall)
+            }
+            .accessibilityLabel("Record Leaf Weighing")
+        }
+        .padding(.horizontal, 2)
+    }
 
     private var syncStatusSection: some View {
         VStack(spacing: 12) {
@@ -150,7 +169,7 @@ struct TodayTasksView: View {
                         .font(.system(size: 11, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
                     Spacer()
-                    Text("CoreLocation")
+                    Text("GPS Geofence")
                         .font(.system(size: 10, weight: .bold, design: .rounded))
                         .foregroundColor(.secondary.opacity(0.8))
                 }
@@ -186,23 +205,43 @@ struct TodayTasksView: View {
                 .padding(.vertical, 36)
                 .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
             } else if viewModel.tasks.isEmpty {
-                VStack(spacing: 12) {
+                VStack(spacing: 14) {
                     Image(systemName: "calendar.badge.clock")
-                        .font(.system(size: 40))
+                        .font(.system(size: 38))
                         .foregroundColor(.secondary)
 
-                    Text("No plucking tasks assigned for today.")
-                        .font(.appHeadline)
-                        .foregroundColor(.primary)
+                    VStack(spacing: 4) {
+                        Text("No plucking tasks assigned for today.")
+                            .font(.appHeadline)
+                            .foregroundColor(.primary)
 
-                    Text("Daily harvesting tasks scheduled by the Genetic Algorithm optimizer will populate here.")
-                        .font(.appCaption)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 24)
+                        Text("Daily harvesting tasks scheduled by the Genetic Algorithm optimizer will populate here.")
+                            .font(.appCaption)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 24)
+                    }
+
+                    Button {
+                        selectedFieldForWeighing = nil
+                        showingWeighingSheet = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "scalemass.fill")
+                            Text("Record Field Weigh-In")
+                                .fontWeight(.semibold)
+                        }
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        .foregroundColor(AppTheme.emerald)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 9)
+                        .background(AppTheme.emerald.opacity(0.12))
+                        .cornerRadius(AppTheme.radiusMedium)
+                    }
+                    .padding(.top, 2)
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 36)
+                .padding(.vertical, 28)
                 .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
             } else {
                 ForEach(viewModel.tasks) { task in

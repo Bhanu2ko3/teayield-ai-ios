@@ -1,6 +1,7 @@
 import SwiftUI
 
 /// Executive summary row displaying total target yield, harvested weight, and assigned plucker counts.
+/// Strictly conforms to Section 5 Design System and unified semantic palette.
 struct KpiSummaryRowView: View {
 
     let targetKg: Double
@@ -8,12 +9,12 @@ struct KpiSummaryRowView: View {
     let pluckersTotal: Int
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 10) {
             kpiCard(
                 title: "Target Yield",
                 value: String(format: "%.0f kg", targetKg),
                 icon: "target",
-                tintColor: .blue
+                tintColor: AppTheme.forest
             )
 
             kpiCard(
@@ -27,26 +28,26 @@ struct KpiSummaryRowView: View {
                 title: "Pluckers",
                 value: "\(pluckersTotal)",
                 icon: "person.2.fill",
-                tintColor: .purple
+                tintColor: AppTheme.amber
             )
         }
     }
 
     private func kpiCard(title: String, value: String, icon: String, tintColor: Color) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Image(systemName: icon)
-                    .font(.caption)
+                    .font(.system(size: 13, weight: .semibold))
                     .foregroundColor(tintColor)
                 Spacer()
             }
 
             Text(value)
-                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .font(.system(size: 19, weight: .bold, design: .rounded))
                 .foregroundColor(.primary)
 
             Text(title)
-                .font(.caption2)
+                .font(.system(size: 11, weight: .medium, design: .rounded))
                 .foregroundColor(.secondary)
         }
         .padding(12)
@@ -70,4 +71,3 @@ struct KpiSummaryRowView_Previews: PreviewProvider {
         .previewLayout(.sizeThatFits)
     }
 }
-

@@ -125,31 +125,55 @@ final class TodayTasksViewModel: ObservableObject {
             return
         }
 
+        // Fetch estate enterprise profile dynamically
+        if let estate = try? await apiService.fetchEstate(id: estateId) {
+            self.estateName = estate.name
+        }
+
+        // Fetch and cache estate fields in background for offline persistence
+        if let fieldDTOs = try? await apiService.fetchFields(estateId: estateId) {
+            let domainFields = fieldDTOs.map { $0.toDomain() }
+            try? await fieldRepository.saveFields(domainFields)
+        }
+
         do {
             let response = try await apiService.fetchDailyTasks(estateId: estateId, dayIndex: dayIndex)
             let domainTasks = response.assignedFields.map { $0.toDomain(shiftDate: Date()) }
             self.tasks = domainTasks
             self.isOffline = false
+            self.statusBannerMessage = "All field plucking tasks synchronized"
 
             // Persist the official server schedule locally for offline mountain field access
             if let data = try? JSONEncoder().encode(domainTasks) {
                 UserDefaults.standard.set(data, forKey: tasksCacheKey)
             }
 
-            // Fetch and cache estate fields in background for offline persistence
-            if let fieldDTOs = try? await apiService.fetchFields(estateId: estateId) {
-                let domainFields = fieldDTOs.map { $0.toDomain() }
-                try? await fieldRepository.saveFields(domainFields)
-            }
-
-            // Fetch estate enterprise profile dynamically
-            if let estate = try? await apiService.fetchEstate(id: estateId) {
-                self.estateName = estate.name
-            }
-
             self.isLoading = false
+        } catch let networkError as NetworkError {
+            switch networkError {
+            case .notFound:
+                // Server is online, but no field blocks registered yet for this estate
+                self.isOffline = false
+                self.tasks = []
+                self.statusBannerMessage = "Cloud API Connected • All records synchronized"
+                self.isLoading = false
+            case .connectionFailure:
+                // Genuinely offline: load cached schedule
+                self.isOffline = true
+                self.statusBannerMessage = "Offline mode. Connect to estate network to sync."
+                loadTasksFromOfflineCache()
+                self.isLoading = false
+            case .unauthorized:
+                self.isOffline = false
+                self.errorMessage = "Session expired. Please log in again."
+                self.showErrorAlert = true
+                self.isLoading = false
+            default:
+                self.isOffline = false
+                loadTasksFromOfflineCache()
+                self.isLoading = false
+            }
         } catch {
-            // Offline fallback: load cached official schedule
             self.isOffline = true
             loadTasksFromOfflineCache()
             self.isLoading = false

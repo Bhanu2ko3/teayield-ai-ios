@@ -53,7 +53,7 @@ struct FactoryCapacityChartView: View {
                     .font(.appHeadline)
                     .foregroundColor(.primary)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.85)
+                    .minimumScaleFactor(0.75)
 
                 Text("Central Trough Aeration Line Intake")
                     .font(.appCaption)

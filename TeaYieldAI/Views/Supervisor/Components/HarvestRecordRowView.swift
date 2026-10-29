@@ -1,6 +1,7 @@
 import SwiftUI
 
 /// Card row rendering individual green leaf harvest weigh-ins with quality grade and sync badges.
+/// Strictly conforms to Section 5 Design System and crisp industrial styling.
 struct HarvestRecordRowView: View {
 
     let record: HarvestRecord
@@ -13,20 +14,30 @@ struct HarvestRecordRowView: View {
                         .font(.appHeadline)
                         .foregroundColor(.primary)
 
-                    Text("ID: \(record.pluckerId)")
-                        .font(.appCaption)
-                        .foregroundColor(.secondary)
+                    HStack(spacing: 6) {
+                        Text("ID: \(record.pluckerId)")
+                            .font(.system(size: 11, weight: .medium, design: .monospaced))
+                            .foregroundColor(.secondary)
+
+                        Text("•")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+
+                        Text(record.timestamp.formatted(date: .abbreviated, time: .shortened))
+                            .font(.system(size: 11, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
                 }
 
                 Spacer()
 
-                VStack(alignment: .trailing, spacing: 3) {
+                VStack(alignment: .trailing, spacing: 2) {
                     Text(record.formattedNetWeight)
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(.system(size: 17, weight: .bold, design: .rounded))
                         .foregroundColor(AppTheme.emerald)
 
-                    Text("Net Weight")
-                        .font(.system(size: 10, weight: .medium, design: .rounded))
+                    Text("Net Intake")
+                        .font(.system(size: 10, weight: .semibold, design: .rounded))
                         .foregroundColor(.secondary)
                 }
             }
@@ -53,7 +64,7 @@ struct HarvestRecordRowView: View {
                 HStack(spacing: 4) {
                     Image(systemName: record.isSynced ? "checkmark.circle.fill" : "arrow.triangle.2.circlepath")
                         .font(.system(size: 11))
-                    Text(record.isSynced ? "Synced" : "Offline")
+                    Text(record.isSynced ? "Cloud Synced" : "Pending Sync")
                         .font(.system(size: 10, weight: .semibold, design: .rounded))
                 }
                 .foregroundColor(record.isSynced ? AppTheme.emerald : AppTheme.amber)
@@ -62,7 +73,7 @@ struct HarvestRecordRowView: View {
         .padding(14)
         .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(record.pluckerName), Employee ID \(record.pluckerId), Net Weight \(record.formattedNetWeight), Quality Grade \(record.qualityGrade), Fine leaf ratio \(record.formattedFineLeafPercentage), Status \(record.isSynced ? "Synced" : "Pending Sync")")
+        .accessibilityLabel("\(record.pluckerName), Employee ID \(record.pluckerId), Net Weight \(record.formattedNetWeight), Quality Grade \(record.qualityGrade), Fine leaf ratio \(record.formattedFineLeafPercentage), Status \(record.isSynced ? "Cloud Synced" : "Pending Sync")")
     }
 
     private var qualityBadgeColor: Color {
@@ -85,4 +96,3 @@ struct HarvestRecordRowView_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-

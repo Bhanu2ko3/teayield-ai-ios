@@ -115,3 +115,33 @@ struct HarvestLogRecordResponseDTO: Codable {
         case syncedAt = "synced_at"
     }
 }
+
+extension HarvestLogRecordResponseDTO {
+    /// Converts a server harvest log into a domain harvest record.
+    func toDomain() -> HarvestRecord {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        var parsedDate = formatter.date(from: weighingTimestamp)
+        if parsedDate == nil {
+            let standardFormatter = ISO8601DateFormatter()
+            parsedDate = standardFormatter.date(from: weighingTimestamp)
+        }
+        let recordDate = parsedDate ?? Date()
+        let recordId = UUID(uuidString: localLogId) ?? id
+
+        return HarvestRecord(
+            id: recordId,
+            fieldId: fieldId,
+            pluckerId: pluckerId ?? "EMP-UNKNOWN",
+            pluckerName: pluckerName ?? "Estate Worker",
+            grossWeightKg: netWeightKg + 0.8,
+            tareWeightKg: 0.8,
+            netWeightKg: netWeightKg,
+            fineLeafRatio: coremlLeafQualityScore,
+            timestamp: recordDate,
+            latitude: gpsLatitude,
+            longitude: gpsLongitude,
+            isSynced: true
+        )
+    }
+}

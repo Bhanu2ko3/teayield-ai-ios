@@ -10,7 +10,10 @@ struct ManagerAnalyticsDashboardView: View {
             VStack(spacing: 20) {
                 kpiSummaryRow
                 aiForecastSection
-                YieldComparisonChartView(data: viewModel.weeklyYieldComparisons)
+                YieldComparisonChartView(
+                    data: viewModel.weeklyYieldComparisons,
+                    targetBenchmarkKg: viewModel.dailyIntakeTargetBenchmarkKg
+                )
                 FactoryCapacityChartView(
                     currentIntakeKg: viewModel.totalHarvestTodayKg,
                     capacityCapKg: viewModel.factoryIntakeCapKg,
@@ -26,6 +29,17 @@ struct ManagerAnalyticsDashboardView: View {
         .background(Color(uiColor: .systemGroupedBackground))
         .navigationTitle("Harvest Analytics")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                ThemeToggleView(style: .circle)
+            }
+        }
+        .refreshable {
+            await viewModel.loadEstateTelemetry()
+        }
+        .task {
+            await viewModel.loadEstateTelemetry()
+        }
         .applyAppTheme()
     }
 
@@ -36,15 +50,15 @@ struct ManagerAnalyticsDashboardView: View {
             analyticsKpiCard(
                 title: "Weekly Intake",
                 value: String(format: "%.0f kg", viewModel.weeklyTotalHarvestKg),
-                subtext: "TRI Estate Cycle",
+                subtext: viewModel.weeklyTotalHarvestKg > 0 ? "Verified Intake" : "TRI Estate Cycle",
                 icon: "scalemass.fill",
                 tint: AppTheme.emerald
             )
 
             analyticsKpiCard(
-                title: "LSTM Accuracy",
+                title: viewModel.hasVerifiedWeighIns ? "LSTM Accuracy" : "Model Confidence",
                 value: String(format: "%.1f%%", viewModel.forecastAccuracyPercentage),
-                subtext: "Temporal LSTM Model",
+                subtext: viewModel.hasVerifiedWeighIns ? "Evaluated vs Intake" : "Temporal Sequence",
                 icon: "bolt.badge.clock.fill",
                 tint: .blue
             )

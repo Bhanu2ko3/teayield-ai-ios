@@ -77,7 +77,7 @@ struct SyncStatusBarView: View {
         if isOffline {
             return "Offline Mode (Using Local Cache)"
         }
-        return "All Harvest Logs Synchronized"
+        return "Estate Cloud Synchronized"
     }
 
     @ViewBuilder

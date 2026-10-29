@@ -5,6 +5,7 @@ import Charts
 struct YieldComparisonChartView: View {
 
     let data: [DailyYieldComparison]
+    var targetBenchmarkKg: Double = 750.0
     @State private var selectedDay: DailyYieldComparison?
 
     var body: some View {
@@ -78,18 +79,20 @@ struct YieldComparisonChartView: View {
                 .position(by: .value("Type", "Actual"))
             }
 
-            RuleMark(y: .value("TRI Target", 750.0))
-                .lineStyle(StrokeStyle(lineWidth: 1.5, dash: [4, 4]))
-                .foregroundStyle(Color.orange.opacity(0.8))
-                .annotation(position: .top, alignment: .trailing) {
-                    Text("Target 750 kg")
-                        .font(.system(size: 9, weight: .bold, design: .rounded))
-                        .foregroundColor(.orange)
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 2)
-                        .background(Color(uiColor: .secondarySystemGroupedBackground).opacity(0.9))
-                        .cornerRadius(AppTheme.radiusSmall)
-                }
+            if targetBenchmarkKg > 0 {
+                RuleMark(y: .value("Target", targetBenchmarkKg))
+                    .lineStyle(StrokeStyle(lineWidth: 1.5, dash: [4, 4]))
+                    .foregroundStyle(Color.orange.opacity(0.8))
+                    .annotation(position: .top, alignment: .trailing) {
+                        Text(String(format: "Target %.0f kg", targetBenchmarkKg))
+                            .font(.system(size: 9, weight: .bold, design: .rounded))
+                            .foregroundColor(.orange)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(Color(uiColor: .secondarySystemGroupedBackground).opacity(0.9))
+                            .cornerRadius(AppTheme.radiusSmall)
+                    }
+            }
         }
         .chartYAxis {
             AxisMarks(position: .leading) { value in
