@@ -28,6 +28,8 @@ final class FieldMapViewModel: ObservableObject {
 
     private let fieldRepository: FieldRepositoryProtocol
     let locationService: LocationServiceProtocol
+    private let apiService: APIServiceProtocol?
+    private let authService: AuthServiceProtocol?
 
     // MARK: - Computed Properties
 
@@ -52,10 +54,14 @@ final class FieldMapViewModel: ObservableObject {
 
     init(
         fieldRepository: FieldRepositoryProtocol,
-        locationService: LocationServiceProtocol = LocationService()
+        locationService: LocationServiceProtocol = LocationService(),
+        apiService: APIServiceProtocol? = nil,
+        authService: AuthServiceProtocol? = nil
     ) {
         self.fieldRepository = fieldRepository
         self.locationService = locationService
+        self.apiService = apiService
+        self.authService = authService
         setupGeofenceObservers()
     }
 
@@ -93,17 +99,33 @@ final class FieldMapViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            let fetched = try await fieldRepository.fetchCachedFields()
+            var fetched: [TeaField] = []
+
+            // If online and estate is bound, fetch fresh remote field polygon boundaries
+            if let api = apiService,
+               let estateId = authService?.currentUser?.estateId {
+                if let dtos = try? await api.fetchFields(estateId: estateId), !dtos.isEmpty {
+                    let domainFields = dtos.map { $0.toDomain() }
+                    try? await fieldRepository.saveFields(domainFields)
+                    fetched = domainFields
+                }
+            }
+
+            // Fallback to local offline Core Data persistence
             if fetched.isEmpty {
-                // Populate initial Pedro Estate mock fields if Core Data is unseeded
+                fetched = try await fieldRepository.fetchCachedFields()
+            }
+
+            // Cold boot fallback if unseeded
+            if fetched.isEmpty {
                 let initial = [MockData.fieldBlockA, MockData.fieldBlockB, MockData.fieldBlockC]
                 for field in initial {
                     try? await fieldRepository.saveField(field)
                 }
-                self.fields = initial
-            } else {
-                self.fields = fetched
+                fetched = initial
             }
+
+            self.fields = fetched
 
             // Center camera bounding box around estate centroid
             if let first = fields.first {

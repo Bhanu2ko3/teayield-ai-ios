@@ -140,6 +140,90 @@ struct YieldAnalyticsTests {
         #expect(decoded.ndviScore == original.ndviScore)
         #expect(decoded.targetThreshold == original.targetThreshold)
     }
+
+    // MARK: - Live AI Yield Forecast & Dynamic Plucker Tests
+
+    @Test("Manager triggers live AI crop forecast successfully")
+    @MainActor
+    func managerTriggerAICropForecast() async {
+        let authService = MockAuthService(initialUser: UserProfile(
+            id: UUID(),
+            email: "manager@pedro.lk",
+            fullName: "Bhanuka Bandara",
+            role: .estateManager,
+            employeeId: "MGR-082",
+            estateId: UUID()
+        ))
+        let apiService = MockAPIService()
+        apiService.mockPredictionBatch = YieldPredictionBatchResponseDTO(
+            predictionBatchId: "BATCH-TEST-001",
+            targetWeekStart: "2026-11-02",
+            totalPredictedYieldKg: 6163.8,
+            predictions: [
+                FieldPredictionItemDTO(
+                    fieldId: UUID(),
+                    fieldName: "Block A - Lower Valley",
+                    predictedYieldKg: 2050.0,
+                    confidenceScore: 0.94,
+                    growthStatus: "PEAK_FLUSH",
+                    recentNDVI: 0.82,
+                    weatherSummary: WeatherSummaryDTO(cumulativeRainfallMm: 45.2, meanTempC: 19.5)
+                )
+            ]
+        )
+        let fieldRepo = MockFieldRepository()
+        let harvestRepo = MockHarvestRepository()
+
+        let viewModel = ManagerOverviewViewModel(
+            fieldRepository: fieldRepo,
+            harvestRepository: harvestRepo,
+            authService: authService,
+            apiService: apiService
+        )
+
+        await viewModel.generateAICropForecast()
+
+        #expect(viewModel.activePredictionBatch != nil)
+        #expect(viewModel.activePredictionBatch?.totalPredictedYieldKg == 6163.8)
+        #expect(viewModel.isPredictingYield == false)
+    }
+
+    @Test("Manager optimizes roster with dynamic plucker count")
+    @MainActor
+    func managerOptimizeRosterDynamicPluckers() async {
+        let authService = MockAuthService(initialUser: UserProfile(
+            id: UUID(),
+            email: "manager@pedro.lk",
+            fullName: "Bhanuka Bandara",
+            role: .estateManager,
+            employeeId: "MGR-082",
+            estateId: UUID()
+        ))
+        let apiService = MockAPIService()
+        apiService.mockRosterResponse = RosterOptimizationResponseDTO(
+            estateId: UUID(),
+            weekStartDate: "2026-11-02",
+            totalPlannedYieldKg: 14200.0,
+            workforceUtilizationPct: 91.5,
+            days: []
+        )
+        let fieldRepo = MockFieldRepository()
+        let harvestRepo = MockHarvestRepository()
+
+        let viewModel = ManagerOverviewViewModel(
+            fieldRepository: fieldRepo,
+            harvestRepository: harvestRepo,
+            authService: authService,
+            apiService: apiService
+        )
+
+        viewModel.availablePluckersCount = 65
+        await viewModel.optimizeWorkforceRoster()
+
+        #expect(viewModel.activeRoster != nil)
+        #expect(viewModel.activeRoster?.workforceUtilizationPct == 91.5)
+        #expect(viewModel.isOptimizingRoster == false)
+    }
 }
 #endif
 

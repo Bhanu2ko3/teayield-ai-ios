@@ -170,7 +170,12 @@ struct ManagerExecutiveSuiteView: View {
         case .overview:
             executiveOverviewCanvas
         case .spatialMap:
-            FieldMapView(fieldRepository: container.fieldRepository, locationService: container.locationService)
+            FieldMapView(
+                fieldRepository: container.fieldRepository,
+                locationService: container.locationService,
+                apiService: container.apiService,
+                authService: container.authService
+            )
         case .yieldAnalytics:
             ManagerAnalyticsDashboardView(viewModel: viewModel)
         case .fieldRoster:

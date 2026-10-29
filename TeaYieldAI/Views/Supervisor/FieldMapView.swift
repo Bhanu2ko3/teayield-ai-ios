@@ -18,12 +18,16 @@ struct FieldMapView: View {
     init(
         fieldRepository: FieldRepositoryProtocol,
         locationService: LocationServiceProtocol,
+        apiService: APIServiceProtocol? = nil,
+        authService: AuthServiceProtocol? = nil,
         onRecordWeighingTap: ((TeaField) -> Void)? = nil
     ) {
         self._viewModel = StateObject(
             wrappedValue: FieldMapViewModel(
                 fieldRepository: fieldRepository,
-                locationService: locationService
+                locationService: locationService,
+                apiService: apiService,
+                authService: authService
             )
         )
         self.onRecordWeighingTap = onRecordWeighingTap

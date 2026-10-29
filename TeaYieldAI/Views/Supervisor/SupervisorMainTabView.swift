@@ -49,7 +49,9 @@ struct SupervisorMainTabView: View {
             FieldMapView(
                 viewModel: FieldMapViewModel(
                     fieldRepository: container.fieldRepository,
-                    locationService: container.locationService
+                    locationService: container.locationService,
+                    apiService: container.apiService,
+                    authService: container.authService
                 ),
                 onRecordWeighingTap: { field in
                     self.preselectedFieldId = field.id

@@ -18,6 +18,11 @@ final class ManagerOverviewViewModel: ObservableObject {
     @Published var activeRoster: RosterOptimizationResponseDTO? = nil
     @Published var isOptimizingRoster: Bool = false
     @Published var optimizationSuccessMessage: String? = nil
+    @Published var availablePluckersCount: Int = 45
+
+    @Published var activePredictionBatch: YieldPredictionBatchResponseDTO? = nil
+    @Published var isPredictingYield: Bool = false
+    @Published var predictionSuccessMessage: String? = nil
 
     private let fieldRepository: FieldRepositoryProtocol
     private let harvestRepository: HarvestRepositoryProtocol
@@ -140,7 +145,12 @@ final class ManagerOverviewViewModel: ObservableObject {
         let dayFormatter = DateFormatter()
         dayFormatter.dateFormat = "EEE"
 
-        let baseTarget = totalAcreage > 0 ? max(400.0, (totalAcreage * AppConfiguration.benchmarkYieldPerAcreKg) / 6.0) : 750.0
+        let baseTarget: Double
+        if let batch = activePredictionBatch, batch.totalPredictedYieldKg > 0 {
+            baseTarget = batch.totalPredictedYieldKg / 6.0
+        } else {
+            baseTarget = totalAcreage > 0 ? max(400.0, (totalAcreage * AppConfiguration.benchmarkYieldPerAcreKg) / 6.0) : 750.0
+        }
         let targetVariations: [Double] = [0.96, 1.05, 1.02, 1.08, 1.15, 0.88, 0.60]
 
         return (0..<7).map { index in
@@ -235,7 +245,7 @@ final class ManagerOverviewViewModel: ObservableObject {
         let request = RosterOptimizationRequestDTO(
             estateId: estateId,
             weekStartDate: mondayDateString,
-            totalAvailablePluckers: 45,
+            totalAvailablePluckers: availablePluckersCount,
             dailyFactoryCapacityKg: factoryIntakeCapKg,
             minimumRestCycleDays: 6
         )
@@ -249,5 +259,44 @@ final class ManagerOverviewViewModel: ObservableObject {
             self.showErrorAlert = true
         }
         self.isOptimizingRoster = false
+    }
+
+    // MARK: - Multivariate LSTM Crop Yield Prediction
+
+    /// Dispatches on-demand multivariate LSTM yield forecasting to the backend core.
+    func generateAICropForecast() async {
+        guard let user = authService.currentUser, let estateId = user.estateId else { return }
+
+        isPredictingYield = true
+        predictionSuccessMessage = nil
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+
+        // Calculate target week start date (coming Monday)
+        let calendar = Calendar.current
+        let today = Date()
+        let weekday = calendar.component(.weekday, from: today)
+        let daysUntilMonday = (weekday == 2) ? 0 : ((9 - weekday) % 7)
+        let targetMonday = calendar.date(byAdding: .day, value: daysUntilMonday, to: today) ?? today
+        let mondayDateString = formatter.string(from: targetMonday)
+
+        let request = PredictionTriggerDTO(
+            estateId: estateId,
+            targetWeekStart: mondayDateString,
+            forceSatelliteRefresh: true
+        )
+
+        do {
+            let result = try await apiService.triggerYieldPrediction(request: request)
+            self.activePredictionBatch = result
+            self.predictionSuccessMessage = "AI Crop Forecast generated: \(String(format: "%.1f kg", result.totalPredictedYieldKg)) predicted for week starting \(result.targetWeekStart)"
+            self.isPredictingYield = false
+            HapticFeedback.success()
+        } catch {
+            self.isPredictingYield = false
+            self.errorMessage = "Crop prediction failed: \(error.localizedDescription)"
+            self.showErrorAlert = true
+        }
     }
 }
