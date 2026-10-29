@@ -139,6 +139,20 @@ struct ManagerAnalyticsDashboardView: View {
                 Spacer()
             }
 
+            if let predictionMsg = viewModel.predictionSuccessMessage {
+                HStack(spacing: 8) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(AppTheme.emerald)
+                    Text(predictionMsg)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.primary)
+                }
+                .padding(10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(AppTheme.emerald.opacity(0.12))
+                .cornerRadius(AppTheme.radiusSmall)
+            }
+
             if let batch = viewModel.activePredictionBatch {
                 VStack(spacing: 12) {
                     HStack(spacing: 12) {
