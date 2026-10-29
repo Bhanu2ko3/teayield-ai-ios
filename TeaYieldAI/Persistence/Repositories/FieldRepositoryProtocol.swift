@@ -10,4 +10,21 @@ protocol FieldRepositoryProtocol {
 
     /// Retrieves a single field block by its unique identifier.
     func fetchField(by id: UUID) async throws -> TeaField?
+
+    /// Convenience accessor for cached field divisions.
+    func fetchCachedFields() async throws -> [TeaField]
+
+    /// Convenience method for saving a single tea field.
+    func saveField(_ field: TeaField) async throws
 }
+
+extension FieldRepositoryProtocol {
+    func fetchCachedFields() async throws -> [TeaField] {
+        try await fetchAllFields()
+    }
+
+    func saveField(_ field: TeaField) async throws {
+        try await saveFields([field])
+    }
+}
+

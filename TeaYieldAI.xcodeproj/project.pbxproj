@@ -7,6 +7,73 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABCB01308D0E0000E22417 /* DistrictPickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB02308D0E0000E22417 /* DistrictPickerField.swift */; };
+		74ABCB03308D0E0000E22417 /* EstateOnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */; };
+		74ABCB05308D0E0000E22417 /* EstateOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */; };
+		74ABCB07308D0E0000E22417 /* ForcePasswordChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB08308D0E0000E22417 /* ForcePasswordChangeViewModel.swift */; };
+		74ABCB09308D0E0000E22417 /* ForcePasswordChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */; };
+		74ABCB0B308D0E0000E22417 /* InviteSupervisorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */; };
+		74ABCB0D308D0E0000E22417 /* InviteSupervisorSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */; };
+		74ABCB0F308D0E0000E22417 /* MultiTenantOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */; };
+		74ABCA30308D0E0000E22417 /* Plucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA31308D0E0000E22417 /* Plucker.swift */; };
+		74ABCA32308D0E0000E22417 /* PluckerDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA33308D0E0000E22417 /* PluckerDTOs.swift */; };
+		74ABCA34308D0E0000E22417 /* OptimizationDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA35308D0E0000E22417 /* OptimizationDTOs.swift */; };
+		74ABCA26308D0E0000E22417 /* UserProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */; };
+		74ABCA21308D0E0000E22417 /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */; };
+		74ABCA23308D0E0000E22417 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA24308D0E0000E22417 /* UserProfileView.swift */; };
+		74ABC9A1308D0E0000E22417 /* AppearanceSettingsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC9A2308D0E0000E22417 /* AppearanceSettingsSectionView.swift */; };
+		74ABCA02308D0E0000E22417 /* YieldAnalyticsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */; };
+		74ABCA04308D0E0000E22417 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA03308D0E0000E22417 /* HapticFeedback.swift */; };
+		74ABCA06308D0E0000E22417 /* YieldComparisonChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */; };
+		74ABCA08308D0E0000E22417 /* NDVITrendChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */; };
+		74ABCA0A308D0E0000E22417 /* FactoryCapacityChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */; };
+		74ABCA0C308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0B308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift */; };
+		74ABCA0E308D0E0000E22417 /* ManagerExecutiveSuiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */; };
+		74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */; };
+		74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */; };
+		74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */; };
+		74ABC944308D0D0000E22417 /* ManagerOverviewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */; };
+		74ABC946308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */; };
+		74ABC948308D0D0000E22417 /* CoreDataRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC949308D0D0000E22417 /* CoreDataRepositoryTests.swift */; };
+		74ABC900308D0D0000E22417 /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC901308D0D0000E22417 /* MockAPIService.swift */; };
+		74ABC902308D0D0000E22417 /* MockAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC903308D0D0000E22417 /* MockAuthService.swift */; };
+		74ABC904308D0D0000E22417 /* MockCameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC905308D0D0000E22417 /* MockCameraService.swift */; };
+		74ABC906308D0D0000E22417 /* MockFieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC907308D0D0000E22417 /* MockFieldRepository.swift */; };
+		74ABC908308D0D0000E22417 /* MockHarvestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC909308D0D0000E22417 /* MockHarvestRepository.swift */; };
+		74ABC90A308D0D0000E22417 /* MockNDVIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC90B308D0D0000E22417 /* MockNDVIRepository.swift */; };
+		74ABC90C308D0D0000E22417 /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC90D308D0D0000E22417 /* MockLocationService.swift */; };
+		74ABC90E308D0D0000E22417 /* MockSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC90F308D0D0000E22417 /* MockSyncManager.swift */; };
+		74ABC910308D0D0000E22417 /* MockVisionLeafClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC911308D0D0000E22417 /* MockVisionLeafClassifier.swift */; };
+		74ABC912308D0D0000E22417 /* MockNetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC913308D0D0000E22417 /* MockNetworkMonitor.swift */; };
+		74ABC920308D0D0000E22417 /* LeafScannerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC921308D0D0000E22417 /* LeafScannerViewModelTests.swift */; };
+		74ABC922308D0D0000E22417 /* FieldMapViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC923308D0D0000E22417 /* FieldMapViewModelTests.swift */; };
+		74ABC924308D0D0000E22417 /* TodayTasksViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC925308D0D0000E22417 /* TodayTasksViewModelTests.swift */; };
+		74ABC926308D0D0000E22417 /* HarvestWeighingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC927308D0D0000E22417 /* HarvestWeighingViewModelTests.swift */; };
+		74ABC928308D0D0000E22417 /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC929308D0D0000E22417 /* LocationServiceTests.swift */; };
+		74ABC92A308D0D0000E22417 /* GeoJSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC92B308D0D0000E22417 /* GeoJSONParserTests.swift */; };
+		74ABC92C308D0D0000E22417 /* OfflineSyncManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC92D308D0D0000E22417 /* OfflineSyncManagerTests.swift */; };
+		74ABC92E308D0D0000E22417 /* DomainModelAndDTOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC92F308D0D0000E22417 /* DomainModelAndDTOTests.swift */; };
+		74ABC890308D0C0100E22417 /* LocationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */; };
+		74ABC892308D0C0100E22417 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC893308D0C0100E22417 /* LocationService.swift */; };
+		74ABC880308D0B0100E22417 /* GeoJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC881308D0B0100E22417 /* GeoJSONParser.swift */; };
+		74ABC882308D0B0100E22417 /* TeaFieldMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */; };
+		74ABC884308D0B0100E22417 /* FieldMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */; };
+		74ABC886308D0B0100E22417 /* InteractiveMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC887308D0B0100E22417 /* InteractiveMapView.swift */; };
+		74ABC888308D0B0100E22417 /* FieldDetailBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC889308D0B0100E22417 /* FieldDetailBottomSheetView.swift */; };
+		74ABC88A308D0B0100E22417 /* FieldMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC88B308D0B0100E22417 /* FieldMapView.swift */; };
+		74ABC860308D0A0100E22417 /* LeafQualityAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */; };
+		74ABC862308D0A0100E22417 /* CameraServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC863308D0A0100E22417 /* CameraServiceProtocol.swift */; };
+		74ABC864308D0A0100E22417 /* VisionLeafClassifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC865308D0A0100E22417 /* VisionLeafClassifierProtocol.swift */; };
+		74ABC866308D0A0100E22417 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC867308D0A0100E22417 /* CameraService.swift */; };
+		74ABC868308D0A0100E22417 /* VisionLeafClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC869308D0A0100E22417 /* VisionLeafClassifier.swift */; };
+		74ABC86A308D0A0100E22417 /* LeafScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */; };
+		74ABC86C308D0A0100E22417 /* LeafScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC86D308D0A0100E22417 /* LeafScannerView.swift */; };
+		74ABC86E308D0A0100E22417 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC86F308D0A0100E22417 /* CameraPreviewView.swift */; };
+		74ABC870308D0A0100E22417 /* ScannerHudOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC871308D0A0100E22417 /* ScannerHudOverlayView.swift */; };
+		74ABC872308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC873308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel */; };
+		74ABC874308D0A0100E22417 /* TeaShootClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC875308D0A0100E22417 /* TeaShootClassifier.mlmodel */; };
+		74ABC876308D0A0100E22417 /* sample_fine_shoot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 74ABC877308D0A0100E22417 /* sample_fine_shoot.jpg */; };
+		74ABC878308D0A0100E22417 /* sample_coarse_leaf.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 74ABC879308D0A0100E22417 /* sample_coarse_leaf.jpg */; };
 		74ABC773308D036800E22417 /* TeaYieldAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC772308D036800E22417 /* TeaYieldAITests.swift */; };
 		74ABC77D308D036800E22417 /* TeaYieldAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77C308D036800E22417 /* TeaYieldAIUITests.swift */; };
 		74ABC77F308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77E308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift */; };
@@ -98,6 +165,73 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABCB02308D0E0000E22417 /* DistrictPickerField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Components/DistrictPickerField.swift; sourceTree = "<group>"; };
+		74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstateOnboardingViewModel.swift; sourceTree = "<group>"; };
+		74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstateOnboardingView.swift; sourceTree = "<group>"; };
+		74ABCB08308D0E0000E22417 /* ForcePasswordChangeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForcePasswordChangeViewModel.swift; sourceTree = "<group>"; };
+		74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForcePasswordChangeView.swift; sourceTree = "<group>"; };
+		74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteSupervisorViewModel.swift; sourceTree = "<group>"; };
+		74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteSupervisorSheetView.swift; sourceTree = "<group>"; };
+		74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTenantOnboardingTests.swift; sourceTree = "<group>"; };
+		74ABCA31308D0E0000E22417 /* Plucker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plucker.swift; sourceTree = "<group>"; };
+		74ABCA33308D0E0000E22417 /* PluckerDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluckerDTOs.swift; sourceTree = "<group>"; };
+		74ABCA35308D0E0000E22417 /* OptimizationDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptimizationDTOs.swift; sourceTree = "<group>"; };
+		74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewModelTests.swift; sourceTree = "<group>"; };
+		74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewModel.swift; sourceTree = "<group>"; };
+		74ABCA24308D0E0000E22417 /* UserProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		74ABC9A2308D0E0000E22417 /* AppearanceSettingsSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsSectionView.swift; sourceTree = "<group>"; };
+		74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldAnalyticsItem.swift; sourceTree = "<group>"; };
+		74ABCA03308D0E0000E22417 /* HapticFeedback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
+		74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldComparisonChartView.swift; sourceTree = "<group>"; };
+		74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVITrendChartView.swift; sourceTree = "<group>"; };
+		74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactoryCapacityChartView.swift; sourceTree = "<group>"; };
+		74ABCA0B308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerAnalyticsDashboardView.swift; sourceTree = "<group>"; };
+		74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerExecutiveSuiteView.swift; sourceTree = "<group>"; };
+		74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldAnalyticsTests.swift; sourceTree = "<group>"; };
+		74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestHistoryViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerOverviewViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorSettingsViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC949308D0D0000E22417 /* CoreDataRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataRepositoryTests.swift; sourceTree = "<group>"; };
+		74ABC901308D0D0000E22417 /* MockAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
+		74ABC903308D0D0000E22417 /* MockAuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuthService.swift; sourceTree = "<group>"; };
+		74ABC905308D0D0000E22417 /* MockCameraService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCameraService.swift; sourceTree = "<group>"; };
+		74ABC907308D0D0000E22417 /* MockFieldRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFieldRepository.swift; sourceTree = "<group>"; };
+		74ABC909308D0D0000E22417 /* MockHarvestRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockHarvestRepository.swift; sourceTree = "<group>"; };
+		74ABC90B308D0D0000E22417 /* MockNDVIRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNDVIRepository.swift; sourceTree = "<group>"; };
+		74ABC90D308D0D0000E22417 /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
+		74ABC90F308D0D0000E22417 /* MockSyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSyncManager.swift; sourceTree = "<group>"; };
+		74ABC911308D0D0000E22417 /* MockVisionLeafClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVisionLeafClassifier.swift; sourceTree = "<group>"; };
+		74ABC913308D0D0000E22417 /* MockNetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNetworkMonitor.swift; sourceTree = "<group>"; };
+		74ABC921308D0D0000E22417 /* LeafScannerViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC923308D0D0000E22417 /* FieldMapViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC925308D0D0000E22417 /* TodayTasksViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTasksViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC927308D0D0000E22417 /* HarvestWeighingViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestWeighingViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC929308D0D0000E22417 /* LocationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
+		74ABC92B308D0D0000E22417 /* GeoJSONParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONParserTests.swift; sourceTree = "<group>"; };
+		74ABC92D308D0D0000E22417 /* OfflineSyncManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineSyncManagerTests.swift; sourceTree = "<group>"; };
+		74ABC92F308D0D0000E22417 /* DomainModelAndDTOTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainModelAndDTOTests.swift; sourceTree = "<group>"; };
+		74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceProtocol.swift; sourceTree = "<group>"; };
+		74ABC893308D0C0100E22417 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		74ABC881308D0B0100E22417 /* GeoJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONParser.swift; sourceTree = "<group>"; };
+		74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaFieldMapItem.swift; sourceTree = "<group>"; };
+		74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapViewModel.swift; sourceTree = "<group>"; };
+		74ABC887308D0B0100E22417 /* InteractiveMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveMapView.swift; sourceTree = "<group>"; };
+		74ABC889308D0B0100E22417 /* FieldDetailBottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldDetailBottomSheetView.swift; sourceTree = "<group>"; };
+		74ABC88B308D0B0100E22417 /* FieldMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapView.swift; sourceTree = "<group>"; };
+		74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafQualityAssessment.swift; sourceTree = "<group>"; };
+		74ABC863308D0A0100E22417 /* CameraServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraServiceProtocol.swift; sourceTree = "<group>"; };
+		74ABC865308D0A0100E22417 /* VisionLeafClassifierProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionLeafClassifierProtocol.swift; sourceTree = "<group>"; };
+		74ABC867308D0A0100E22417 /* CameraService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
+		74ABC869308D0A0100E22417 /* VisionLeafClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionLeafClassifier.swift; sourceTree = "<group>"; };
+		74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerViewModel.swift; sourceTree = "<group>"; };
+		74ABC86D308D0A0100E22417 /* LeafScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerView.swift; sourceTree = "<group>"; };
+		74ABC86F308D0A0100E22417 /* CameraPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		74ABC871308D0A0100E22417 /* ScannerHudOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerHudOverlayView.swift; sourceTree = "<group>"; };
+		74ABC873308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = TeaShootClassifier_v2.mlmodel; sourceTree = "<group>"; };
+		74ABC875308D0A0100E22417 /* TeaShootClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = TeaShootClassifier.mlmodel; sourceTree = "<group>"; };
+		74ABC877308D0A0100E22417 /* sample_fine_shoot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sample_fine_shoot.jpg"; sourceTree = "<group>"; };
+		74ABC879308D0A0100E22417 /* sample_coarse_leaf.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sample_coarse_leaf.jpg"; sourceTree = "<group>"; };
 		74ABC75E308D036400E22417 /* TeaYieldAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeaYieldAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeaYieldAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		74ABC772308D036800E22417 /* TeaYieldAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAITests.swift; sourceTree = "<group>"; };
@@ -234,9 +368,51 @@
 			path = TeaYieldAI;
 			sourceTree = "<group>";
 		};
+				74ABC9E0308D0D0000E22417 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC901308D0D0000E22417 /* MockAPIService.swift */,
+				74ABC903308D0D0000E22417 /* MockAuthService.swift */,
+				74ABC905308D0D0000E22417 /* MockCameraService.swift */,
+				74ABC907308D0D0000E22417 /* MockFieldRepository.swift */,
+				74ABC909308D0D0000E22417 /* MockHarvestRepository.swift */,
+				74ABC90B308D0D0000E22417 /* MockNDVIRepository.swift */,
+				74ABC90D308D0D0000E22417 /* MockLocationService.swift */,
+				74ABC90F308D0D0000E22417 /* MockSyncManager.swift */,
+				74ABC911308D0D0000E22417 /* MockVisionLeafClassifier.swift */,
+				74ABC913308D0D0000E22417 /* MockNetworkMonitor.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		74ABC9E1308D0D0000E22417 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */,
+				74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */,
+				74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */,
+				74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */,
+				74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */,
+				74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */,
+				74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */,
+				74ABC949308D0D0000E22417 /* CoreDataRepositoryTests.swift */,
+				74ABC921308D0D0000E22417 /* LeafScannerViewModelTests.swift */,
+				74ABC923308D0D0000E22417 /* FieldMapViewModelTests.swift */,
+				74ABC925308D0D0000E22417 /* TodayTasksViewModelTests.swift */,
+				74ABC927308D0D0000E22417 /* HarvestWeighingViewModelTests.swift */,
+				74ABC929308D0D0000E22417 /* LocationServiceTests.swift */,
+				74ABC92B308D0D0000E22417 /* GeoJSONParserTests.swift */,
+				74ABC92D308D0D0000E22417 /* OfflineSyncManagerTests.swift */,
+				74ABC92F308D0D0000E22417 /* DomainModelAndDTOTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		74ABC771308D036800E22417 /* TeaYieldAITests */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC9E0308D0D0000E22417 /* Mocks */,
+				74ABC9E1308D0D0000E22417 /* Tests */,
 				74ABC772308D036800E22417 /* TeaYieldAITests.swift */,
 			);
 			path = TeaYieldAITests;
@@ -292,11 +468,21 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		74ABC79A308D053100E22417 /* Models */ = {
+				74ABC87A308D0A0100E22417 /* CoreML */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC873308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel */,
+				74ABC875308D0A0100E22417 /* TeaShootClassifier.mlmodel */,
+			);
+			path = CoreML;
+			sourceTree = "<group>";
+		};
+74ABC79A308D053100E22417 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				74ABC79B308D053100E22417 /* DTOs */,
 				74ABC7A2308D053100E22417 /* Domain */,
+				74ABC87A308D0A0100E22417 /* CoreML */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -304,6 +490,8 @@
 		74ABC79B308D053100E22417 /* DTOs */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA35308D0E0000E22417 /* OptimizationDTOs.swift */,
+				74ABCA33308D0E0000E22417 /* PluckerDTOs.swift */,
 				74ABC79C308D053100E22417 /* EstateDTOs.swift */,
 				74ABC79D308D053100E22417 /* AuthDTOs.swift */,
 				74ABC79E308D053100E22417 /* TaskDTOs.swift */,
@@ -317,6 +505,10 @@
 		74ABC7A2308D053100E22417 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA31308D0E0000E22417 /* Plucker.swift */,
+				74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */,
+				74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */,
+				74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */,
 				74ABC7A3308D053100E22417 /* HarvestRecord.swift */,
 				74ABC7A4308D053100E22417 /* TeaField.swift */,
 				74ABC7A5308D053100E22417 /* UserProfile.swift */,
@@ -376,6 +568,8 @@
 		74ABC7B1308D053100E22417 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA03308D0E0000E22417 /* HapticFeedback.swift */,
+				74ABC881308D0B0100E22417 /* GeoJSONParser.swift */,
 				74ABC7B2308D053100E22417 /* AppConfiguration.swift */,
 				74ABC801308D070100E22417 /* AppTheme.swift */,
 			);
@@ -394,6 +588,9 @@
 		74ABC7B4308D053100E22417 /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC893308D0C0100E22417 /* LocationService.swift */,
+				74ABC867308D0A0100E22417 /* CameraService.swift */,
+				74ABC869308D0A0100E22417 /* VisionLeafClassifier.swift */,
 				74ABC7B5308D053100E22417 /* OfflineSyncManager.swift */,
 				74ABC7B6308D053100E22417 /* AuthService.swift */,
 				74ABC7B7308D053100E22417 /* CloudAPIService.swift */,
@@ -404,6 +601,9 @@
 		74ABC7B8308D053100E22417 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */,
+				74ABC863308D0A0100E22417 /* CameraServiceProtocol.swift */,
+				74ABC865308D0A0100E22417 /* VisionLeafClassifierProtocol.swift */,
 				74ABC7B9308D053100E22417 /* AuthServiceProtocol.swift */,
 				74ABC7BA308D053100E22417 /* SyncManagerProtocol.swift */,
 				74ABC7BB308D053100E22417 /* APIServiceProtocol.swift */,
@@ -414,6 +614,12 @@
 		74ABC7BC308D053100E22417 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */,
+				74ABCB08308D0E0000E22417 /* ForcePasswordChangeViewModel.swift */,
+				74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */,
+				74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */,
+				74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */,
+				74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */,
 				74ABC7BD308D053100E22417 /* TodayTasksViewModel.swift */,
 				74ABC7BE308D053100E22417 /* AuthViewModel.swift */,
 				74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */,
@@ -424,9 +630,18 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		74ABC7C0308D053100E22417 /* Views */ = {
+				74ABCA25308D0E0000E22417 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA24308D0E0000E22417 /* UserProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+74ABC7C0308D053100E22417 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCA25308D0E0000E22417 /* Profile */,
 				74ABC806308D070100E22417 /* Onboarding */,
 				74ABC7C1308D053100E22417 /* Auth */,
 				74ABC7C3308D053100E22417 /* Root */,
@@ -439,6 +654,8 @@
 		74ABC848308D090100E22417 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */,
+				74ABCA0B308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift */,
 				74ABC846308D090100E22417 /* ManagerOverviewView.swift */,
 				74ABC849308D090100E22417 /* Components */,
 			);
@@ -448,6 +665,10 @@
 		74ABC849308D090100E22417 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */,
+				74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */,
+				74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */,
+				74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */,
 				74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */,
 				74ABC858308D090100E22417 /* ManagerFieldRowView.swift */,
 			);
@@ -457,6 +678,8 @@
 		74ABC806308D070100E22417 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */,
+				74ABCB02308D0E0000E22417 /* DistrictPickerField.swift */,
 				74ABC802308D070100E22417 /* OnboardingView.swift */,
 				74ABC82B308D080100E22417 /* OnboardingSlideCardView.swift */,
 			);
@@ -466,6 +689,7 @@
 		74ABC7C1308D053100E22417 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */,
 				74ABC7C2308D053100E22417 /* LoginView.swift */,
 			);
 			path = Auth;
@@ -482,6 +706,8 @@
 		74ABC7C5308D053100E22417 /* Supervisor */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC88B308D0B0100E22417 /* FieldMapView.swift */,
+				74ABC86D308D0A0100E22417 /* LeafScannerView.swift */,
 				74ABC803308D070100E22417 /* SupervisorMainTabView.swift */,
 				74ABC7C6308D053100E22417 /* TodayTasksView.swift */,
 				74ABC7C7308D053100E22417 /* Components */,
@@ -495,6 +721,7 @@
 		74ABC7C7308D053100E22417 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC9A2308D0E0000E22417 /* AppearanceSettingsSectionView.swift */,
 				74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */,
 				74ABC7C9308D053100E22417 /* TaskCardView.swift */,
 				74ABC821308D080100E22417 /* OfficerProfileCardView.swift */,
@@ -503,7 +730,11 @@
 				74ABC824308D080100E22417 /* NotificationSettingsSectionView.swift */,
 				74ABC825308D080100E22417 /* AppInfoSectionView.swift */,
 				74ABC826308D080100E22417 /* LeafScannerPlaceholderView.swift */,
+				74ABC86F308D0A0100E22417 /* CameraPreviewView.swift */,
+				74ABC871308D0A0100E22417 /* ScannerHudOverlayView.swift */,
 				74ABC827308D080100E22417 /* FieldMapPlaceholderView.swift */,
+				74ABC887308D0B0100E22417 /* InteractiveMapView.swift */,
+				74ABC889308D0B0100E22417 /* FieldDetailBottomSheetView.swift */,
 				74ABC828308D080100E22417 /* GeofenceArrivalBannerView.swift */,
 				74ABC829308D080100E22417 /* KpiSummaryRowView.swift */,
 				74ABC843308D090100E22417 /* HarvestRecordRowView.swift */,
@@ -514,6 +745,8 @@
 		74ABC7CB308D053100E22417 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				74ABC877308D0A0100E22417 /* sample_fine_shoot.jpg */,
+				74ABC879308D0A0100E22417 /* sample_coarse_leaf.jpg */,
 				74ABC7CC308D053100E22417 /* MockData.swift */,
 			);
 			path = "Preview Content";
@@ -623,6 +856,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABC876308D0A0100E22417 /* sample_fine_shoot.jpg in Resources */,
+				74ABC878308D0A0100E22417 /* sample_coarse_leaf.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,6 +882,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCB0D308D0E0000E22417 /* InviteSupervisorSheetView.swift in Sources */,
+				74ABCB0B308D0E0000E22417 /* InviteSupervisorViewModel.swift in Sources */,
+				74ABCB09308D0E0000E22417 /* ForcePasswordChangeView.swift in Sources */,
+				74ABCB07308D0E0000E22417 /* ForcePasswordChangeViewModel.swift in Sources */,
+				74ABCB05308D0E0000E22417 /* EstateOnboardingView.swift in Sources */,
+				74ABCB03308D0E0000E22417 /* EstateOnboardingViewModel.swift in Sources */,
+				74ABCB01308D0E0000E22417 /* DistrictPickerField.swift in Sources */,
+				74ABCA30308D0E0000E22417 /* Plucker.swift in Sources */,
+				74ABCA32308D0E0000E22417 /* PluckerDTOs.swift in Sources */,
+				74ABCA34308D0E0000E22417 /* OptimizationDTOs.swift in Sources */,
+				74ABCA02308D0E0000E22417 /* YieldAnalyticsItem.swift in Sources */,
+				74ABCA04308D0E0000E22417 /* HapticFeedback.swift in Sources */,
+				74ABCA06308D0E0000E22417 /* YieldComparisonChartView.swift in Sources */,
+				74ABCA08308D0E0000E22417 /* NDVITrendChartView.swift in Sources */,
+				74ABCA0A308D0E0000E22417 /* FactoryCapacityChartView.swift in Sources */,
+				74ABCA0C308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift in Sources */,
+				74ABCA0E308D0E0000E22417 /* ManagerExecutiveSuiteView.swift in Sources */,
+				74ABC890308D0C0100E22417 /* LocationServiceProtocol.swift in Sources */,
+				74ABC892308D0C0100E22417 /* LocationService.swift in Sources */,
+				74ABC880308D0B0100E22417 /* GeoJSONParser.swift in Sources */,
+				74ABC882308D0B0100E22417 /* TeaFieldMapItem.swift in Sources */,
+				74ABC884308D0B0100E22417 /* FieldMapViewModel.swift in Sources */,
+				74ABC886308D0B0100E22417 /* InteractiveMapView.swift in Sources */,
+				74ABC888308D0B0100E22417 /* FieldDetailBottomSheetView.swift in Sources */,
+				74ABC88A308D0B0100E22417 /* FieldMapView.swift in Sources */,
+				74ABC860308D0A0100E22417 /* LeafQualityAssessment.swift in Sources */,
+				74ABC862308D0A0100E22417 /* CameraServiceProtocol.swift in Sources */,
+				74ABC864308D0A0100E22417 /* VisionLeafClassifierProtocol.swift in Sources */,
+				74ABC866308D0A0100E22417 /* CameraService.swift in Sources */,
+				74ABC868308D0A0100E22417 /* VisionLeafClassifier.swift in Sources */,
+				74ABC86A308D0A0100E22417 /* LeafScannerViewModel.swift in Sources */,
+				74ABC86C308D0A0100E22417 /* LeafScannerView.swift in Sources */,
+				74ABC86E308D0A0100E22417 /* CameraPreviewView.swift in Sources */,
+				74ABC870308D0A0100E22417 /* ScannerHudOverlayView.swift in Sources */,
+				74ABC872308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel in Sources */,
+				74ABC874308D0A0100E22417 /* TeaShootClassifier.mlmodel in Sources */,
 				74ABC7DF308D053200E22417 /* TeaField.swift in Sources */,
 				74ABC7D3308D053200E22417 /* HarvestRepository.swift in Sources */,
 				74ABC7D6308D053200E22417 /* HarvestLogEntity.swift in Sources */,
@@ -699,6 +970,9 @@
 				74ABC831308D080100E22417 /* OfficerProfileCardView.swift in Sources */,
 				74ABC832308D080100E22417 /* DataStorageSectionView.swift in Sources */,
 				74ABC833308D080100E22417 /* SecuritySettingsSectionView.swift in Sources */,
+				74ABCA21308D0E0000E22417 /* UserProfileViewModel.swift in Sources */,
+				74ABCA23308D0E0000E22417 /* UserProfileView.swift in Sources */,
+				74ABC9A1308D0E0000E22417 /* AppearanceSettingsSectionView.swift in Sources */,
 				74ABC834308D080100E22417 /* NotificationSettingsSectionView.swift in Sources */,
 				74ABC835308D080100E22417 /* AppInfoSectionView.swift in Sources */,
 				74ABC836308D080100E22417 /* LeafScannerPlaceholderView.swift in Sources */,
@@ -722,6 +996,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCB0F308D0E0000E22417 /* MultiTenantOnboardingTests.swift in Sources */,
+				74ABCA26308D0E0000E22417 /* UserProfileViewModelTests.swift in Sources */,
+				74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */,
+				74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */,
+				74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */,
+				74ABC944308D0D0000E22417 /* ManagerOverviewViewModelTests.swift in Sources */,
+				74ABC946308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift in Sources */,
+				74ABC948308D0D0000E22417 /* CoreDataRepositoryTests.swift in Sources */,
+				74ABC900308D0D0000E22417 /* MockAPIService.swift in Sources */,
+				74ABC902308D0D0000E22417 /* MockAuthService.swift in Sources */,
+				74ABC904308D0D0000E22417 /* MockCameraService.swift in Sources */,
+				74ABC906308D0D0000E22417 /* MockFieldRepository.swift in Sources */,
+				74ABC908308D0D0000E22417 /* MockHarvestRepository.swift in Sources */,
+				74ABC90A308D0D0000E22417 /* MockNDVIRepository.swift in Sources */,
+				74ABC90C308D0D0000E22417 /* MockLocationService.swift in Sources */,
+				74ABC90E308D0D0000E22417 /* MockSyncManager.swift in Sources */,
+				74ABC910308D0D0000E22417 /* MockVisionLeafClassifier.swift in Sources */,
+				74ABC912308D0D0000E22417 /* MockNetworkMonitor.swift in Sources */,
+				74ABC920308D0D0000E22417 /* LeafScannerViewModelTests.swift in Sources */,
+				74ABC922308D0D0000E22417 /* FieldMapViewModelTests.swift in Sources */,
+				74ABC924308D0D0000E22417 /* TodayTasksViewModelTests.swift in Sources */,
+				74ABC926308D0D0000E22417 /* HarvestWeighingViewModelTests.swift in Sources */,
+				74ABC928308D0D0000E22417 /* LocationServiceTests.swift in Sources */,
+				74ABC92A308D0D0000E22417 /* GeoJSONParserTests.swift in Sources */,
+				74ABC92C308D0D0000E22417 /* OfflineSyncManagerTests.swift in Sources */,
+				74ABC92E308D0D0000E22417 /* DomainModelAndDTOTests.swift in Sources */,
 				74ABC773308D036800E22417 /* TeaYieldAITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -878,6 +1178,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "TeaYield AI requires camera access to scan tea shoots in real-time and analyze leaf maturity ratio.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "TeaYield AI uses Face ID to secure estate yield records and manager approvals.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TeaYield AI requires background location access to trigger proximity notifications as you arrive at assigned tea fields.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TeaYield AI requires location access to monitor field boundaries and trigger harvest alerts when entering plucking zones.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -906,6 +1210,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "TeaYield AI requires camera access to scan tea shoots in real-time and analyze leaf maturity ratio.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "TeaYield AI uses Face ID to secure estate yield records and manager approvals.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TeaYield AI requires background location access to trigger proximity notifications as you arrive at assigned tea fields.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TeaYield AI requires location access to monitor field boundaries and trigger harvest alerts when entering plucking zones.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -41,3 +41,22 @@ struct AppInfoSectionView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct AppInfoSectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        AppInfoSectionView(
+            viewModel: SupervisorSettingsViewModel(
+                authService: AppContainer.shared.authService,
+                syncManager: AppContainer.shared.syncManager,
+                fieldRepository: AppContainer.shared.fieldRepository,
+                harvestRepository: AppContainer.shared.harvestRepository,
+                apiService: AppContainer.shared.apiService
+            )
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

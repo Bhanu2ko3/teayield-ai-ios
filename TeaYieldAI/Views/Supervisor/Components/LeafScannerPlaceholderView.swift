@@ -92,3 +92,12 @@ struct LeafScannerPlaceholderView: View {
         .cornerRadius(AppTheme.radiusSmall)
     }
 }
+
+// MARK: - Previews
+
+struct LeafScannerPlaceholderView_Previews: PreviewProvider {
+    static var previews: some View {
+        LeafScannerPlaceholderView()
+    }
+}
+

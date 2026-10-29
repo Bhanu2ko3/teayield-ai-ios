@@ -22,3 +22,37 @@ struct EstateResponseDTO: Codable {
         case updatedAt = "updated_at"
     }
 }
+
+/// Request payload for onboarding a new tea estate into the system.
+struct EstateOnboardRequestDTO: Codable {
+    let name: String
+    let district: String?
+    let elevationMeters: Int?
+    let totalAreaAcres: Double
+    let dailyFactoryCapacityKg: Double?
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case district
+        case elevationMeters = "elevation_meters"
+        case totalAreaAcres = "total_area_acres"
+        case dailyFactoryCapacityKg = "daily_factory_capacity_kg"
+    }
+}
+
+/// Request payload for updating estate parameters and factory ceilings.
+struct EstateUpdateRequestDTO: Codable {
+    let name: String?
+    let district: String?
+    let elevationMeters: Int?
+    let totalAreaAcres: Double?
+    let dailyFactoryCapacityKg: Double?
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case district
+        case elevationMeters = "elevation_meters"
+        case totalAreaAcres = "total_area_acres"
+        case dailyFactoryCapacityKg = "daily_factory_capacity_kg"
+    }
+}

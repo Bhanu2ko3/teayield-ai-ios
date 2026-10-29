@@ -2,11 +2,14 @@ import SwiftUI
 
 /// Primary navigation shell for field supervisors providing the native 4-tab bottom bar.
 /// Strictly conforms to Figma Screen 04, 06, 08, 09 specifications.
+@MainActor
 struct SupervisorMainTabView: View {
 
     private let container: AppContainerProtocol
     @State private var selectedTab: Tab = .tasks
     @State private var showingWeighingSheet: Bool = false
+    @State private var scannedFineLeafRatio: Double? = nil
+    @State private var preselectedFieldId: UUID? = nil
 
     enum Tab: Hashable {
         case tasks
@@ -27,19 +30,39 @@ struct SupervisorMainTabView: View {
                 }
                 .tag(Tab.tasks)
 
-            LeafScannerPlaceholderView {
-                showingWeighingSheet = true
-            }
+            LeafScannerView(
+                viewModel: LeafScannerViewModel(
+                    cameraService: container.cameraService,
+                    classifier: container.leafClassifier
+                ),
+                onRecordWeighingTap: { ratio in
+                    self.scannedFineLeafRatio = ratio
+                    self.preselectedFieldId = nil
+                    self.showingWeighingSheet = true
+                }
+            )
             .tabItem {
                 Label("Scanner", systemImage: "viewfinder")
             }
             .tag(Tab.scanner)
 
-            FieldMapPlaceholderView(fieldRepository: container.fieldRepository)
-                .tabItem {
-                    Label("Map", systemImage: "map.fill")
+            FieldMapView(
+                viewModel: FieldMapViewModel(
+                    fieldRepository: container.fieldRepository,
+                    locationService: container.locationService,
+                    apiService: container.apiService,
+                    authService: container.authService
+                ),
+                onRecordWeighingTap: { field in
+                    self.preselectedFieldId = field.id
+                    self.scannedFineLeafRatio = nil
+                    self.showingWeighingSheet = true
                 }
-                .tag(Tab.map)
+            )
+            .tabItem {
+                Label("Map", systemImage: "map.fill")
+            }
+            .tag(Tab.map)
 
             SupervisorSettingsView(container: container)
                 .tabItem {
@@ -47,15 +70,39 @@ struct SupervisorMainTabView: View {
                 }
                 .tag(Tab.settings)
         }
-        .accentColor(AppTheme.emerald)
+        .tint(AppTheme.emerald)
+        .applyAppTheme()
+        .onChange(of: selectedTab) { _ in
+            HapticFeedback.selection()
+        }
         .sheet(isPresented: $showingWeighingSheet) {
-            HarvestWeighingFormView(viewModel: HarvestWeighingViewModel(
+            weighingSheet
+        }
+    }
+
+    @ViewBuilder
+    private var weighingSheet: some View {
+        HarvestWeighingFormView(
+            viewModel: HarvestWeighingViewModel(
                 harvestRepository: container.harvestRepository,
                 fieldRepository: container.fieldRepository,
                 syncManager: container.syncManager,
                 authService: container.authService,
-                apiService: container.apiService
-            ))
-        }
+                apiService: container.apiService,
+                initialFieldId: preselectedFieldId,
+                initialFineLeafRatio: scannedFineLeafRatio
+            )
+        )
+        .applyAppTheme()
     }
 }
+
+// MARK: - Previews
+
+struct SupervisorMainTabView_Previews: PreviewProvider {
+    static var previews: some View {
+        SupervisorMainTabView(container: AppContainer.shared)
+    }
+}
+
+

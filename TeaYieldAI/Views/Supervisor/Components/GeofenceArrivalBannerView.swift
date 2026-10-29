@@ -67,3 +67,18 @@ struct GeofenceArrivalBannerView: View {
         return "Active Shift: \(formatter.string(from: shiftDate))"
     }
 }
+
+// MARK: - Previews
+
+struct GeofenceArrivalBannerView_Previews: PreviewProvider {
+    static var previews: some View {
+        GeofenceArrivalBannerView(
+            fieldName: "Upper Division Block A",
+            shiftDate: Date(),
+            onWeighTap: {}
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

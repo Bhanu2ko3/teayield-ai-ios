@@ -135,3 +135,29 @@ struct WeatherLogResponseDTO: Codable {
         case createdAt = "created_at"
     }
 }
+
+/// Request payload for registering a new tea field block with PostGIS boundary polygon.
+struct FieldCreateRequestDTO: Codable {
+    let estateId: UUID
+    let name: String
+    let areaAcres: Double
+    let boundaryGeojson: GeoJSONPolygonDTO
+
+    enum CodingKeys: String, CodingKey {
+        case estateId = "estate_id"
+        case name
+        case areaAcres = "area_acres"
+        case boundaryGeojson = "boundary_geojson"
+    }
+}
+
+/// Request payload for updating field parameters.
+struct FieldUpdateRequestDTO: Codable {
+    let name: String?
+    let areaAcres: Double?
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case areaAcres = "area_acres"
+    }
+}

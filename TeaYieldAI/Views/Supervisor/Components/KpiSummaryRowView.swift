@@ -52,5 +52,22 @@ struct KpiSummaryRowView: View {
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
         .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title): \(value)")
     }
 }
+
+// MARK: - Previews
+
+struct KpiSummaryRowView_Previews: PreviewProvider {
+    static var previews: some View {
+        KpiSummaryRowView(
+            targetKg: 850.0,
+            harvestedKg: 780.0,
+            pluckersTotal: 30
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

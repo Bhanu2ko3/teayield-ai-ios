@@ -5,7 +5,7 @@ import CoreData
 typealias PluckingSessionEntity = HarvestLogEntity
 
 /// Manages the Core Data persistence stack, SQLite database store, and background contexts.
-final class PersistenceController {
+final class PersistenceController: @unchecked Sendable {
 
     /// Shared singleton instance for production application lifecycle.
     static let shared = PersistenceController()

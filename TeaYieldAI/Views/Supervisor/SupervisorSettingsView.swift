@@ -6,6 +6,7 @@ struct SupervisorSettingsView: View {
 
     private let container: AppContainerProtocol
     @StateObject private var viewModel: SupervisorSettingsViewModel
+    @State private var showingFullProfileSheet: Bool = false
 
     init(container: AppContainerProtocol) {
         self.container = container
@@ -28,7 +29,13 @@ struct SupervisorSettingsView: View {
 
                 ScrollView {
                     VStack(spacing: 20) {
-                        OfficerProfileCardView(viewModel: viewModel)
+                        OfficerProfileCardView(
+                            viewModel: viewModel,
+                            onViewFullProfileTap: {
+                                showingFullProfileSheet = true
+                            }
+                        )
+                        AppearanceSettingsSectionView(viewModel: viewModel)
                         DataStorageSectionView(
                             viewModel: viewModel,
                             harvestRepository: container.harvestRepository
@@ -44,6 +51,26 @@ struct SupervisorSettingsView: View {
             }
             .navigationTitle("Settings & Profile")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showingFullProfileSheet = true
+                    } label: {
+                        Image(systemName: "person.crop.circle")
+                            .font(.system(size: 16))
+                            .foregroundColor(AppTheme.emerald)
+                    }
+                    .accessibilityLabel("View full officer profile")
+                }
+            }
+            .sheet(isPresented: $showingFullProfileSheet) {
+                UserProfileView(
+                    authService: container.authService,
+                    apiService: container.apiService,
+                    harvestRepository: container.harvestRepository,
+                    fieldRepository: container.fieldRepository
+                )
+            }
             .confirmationDialog(
                 "Are you sure you want to log out?",
                 isPresented: $viewModel.showingLogoutConfirmation,
@@ -81,7 +108,18 @@ struct SupervisorSettingsView: View {
                     .stroke(Color.red.opacity(0.2), lineWidth: 1)
             )
         }
+        .accessibilityLabel("Log Out of Enterprise Account")
+        .accessibilityHint("Prompts confirmation to sign out of supervisor account")
         .padding(.top, 8)
         .padding(.bottom, 24)
     }
 }
+
+// MARK: - Previews
+
+struct SupervisorSettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SupervisorSettingsView(container: AppContainer.shared)
+    }
+}
+

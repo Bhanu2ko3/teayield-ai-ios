@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 
 /// Production implementation of NDVIRepositoryProtocol managing local Sentinel-2 cache.
-final class NDVIRepository: NDVIRepositoryProtocol {
+final class NDVIRepository: NDVIRepositoryProtocol, @unchecked Sendable {
 
     private let persistenceController: PersistenceController
 
@@ -24,6 +24,7 @@ final class NDVIRepository: NDVIRepositoryProtocol {
 
     func saveNDVILogs(_ logs: [NDVILogResponseDTO]) async throws {
         let backgroundContext = persistenceController.newBackgroundContext()
+        let controller = persistenceController
         try await backgroundContext.perform {
             for log in logs {
                 let request = NSFetchRequest<NDVILogEntity>(entityName: "NDVILogEntity")
@@ -40,7 +41,7 @@ final class NDVIRepository: NDVIRepositoryProtocol {
                 entity.update(from: log)
             }
 
-            try self.persistenceController.save(context: backgroundContext)
+            try controller.save(context: backgroundContext)
         }
     }
 }

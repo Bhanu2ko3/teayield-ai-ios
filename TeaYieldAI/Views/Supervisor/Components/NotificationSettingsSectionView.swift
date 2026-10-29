@@ -34,6 +34,8 @@ struct NotificationSettingsSectionView: View {
                             .font(.appBody)
                     }
                 }
+                .accessibilityLabel("Rainfall and hazard alerts")
+                .accessibilityHint("Enables notifications for high rainfall and monsoon hazards")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
                 .onChange(of: viewModel.rainfallAlertsEnabled) { enabled in
@@ -51,6 +53,8 @@ struct NotificationSettingsSectionView: View {
                             .font(.appBody)
                     }
                 }
+                .accessibilityLabel("Factory overload warnings")
+                .accessibilityHint("Notifies when factory withering troughs exceed 80 percent intake capacity")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
                 .onChange(of: viewModel.factoryOverloadAlertsEnabled) { enabled in
@@ -68,6 +72,8 @@ struct NotificationSettingsSectionView: View {
                             .font(.appBody)
                     }
                 }
+                .accessibilityLabel("Field rest period notifications")
+                .accessibilityHint("Notifies when field resting periods complete and fields are ready for harvest")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
                 .onChange(of: viewModel.fieldRestAlertsEnabled) { enabled in
@@ -89,7 +95,28 @@ struct NotificationSettingsSectionView: View {
                     .foregroundColor(AppTheme.amber)
                     .padding(.horizontal, 8)
                 }
+                .accessibilityLabel("Grant system notification permission")
+                .accessibilityHint("Prompts system authorization dialog to enable alerts")
             }
         }
     }
 }
+
+// MARK: - Previews
+
+struct NotificationSettingsSectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        NotificationSettingsSectionView(
+            viewModel: SupervisorSettingsViewModel(
+                authService: AppContainer.shared.authService,
+                syncManager: AppContainer.shared.syncManager,
+                fieldRepository: AppContainer.shared.fieldRepository,
+                harvestRepository: AppContainer.shared.harvestRepository,
+                apiService: AppContainer.shared.apiService
+            )
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

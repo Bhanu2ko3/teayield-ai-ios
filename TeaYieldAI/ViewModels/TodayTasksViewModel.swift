@@ -37,8 +37,8 @@ final class TodayTasksViewModel: ObservableObject {
         if !estateName.isEmpty {
             return estateName
         }
-        if let user = authService.currentUser {
-            return "Estate #\(user.estateId.uuidString.prefix(6).uppercased())"
+        if let user = authService.currentUser, let estateId = user.estateId {
+            return "Estate #\(estateId.uuidString.prefix(6).uppercased())"
         }
         return "Central Tea Plantation"
     }
@@ -47,11 +47,14 @@ final class TodayTasksViewModel: ObservableObject {
         tasks.first?.fieldName ?? "Assigned Field"
     }
 
+    @Published var activeGeofencedField: TeaField? = nil
+
     private let apiService: APIServiceProtocol
     private let syncManager: SyncManagerProtocol
     private let fieldRepository: FieldRepositoryProtocol
     private let harvestRepository: HarvestRepositoryProtocol
     private let authService: AuthServiceProtocol
+    let locationService: LocationServiceProtocol
     private let tasksCacheKey = "teayield.cache.today_tasks"
     private var hasDispatchedGeofenceNotification: Bool = false
 
@@ -60,16 +63,42 @@ final class TodayTasksViewModel: ObservableObject {
         syncManager: SyncManagerProtocol,
         fieldRepository: FieldRepositoryProtocol,
         harvestRepository: HarvestRepositoryProtocol,
-        authService: AuthServiceProtocol
+        authService: AuthServiceProtocol,
+        locationService: LocationServiceProtocol = LocationService()
     ) {
         self.apiService = apiService
         self.syncManager = syncManager
         self.fieldRepository = fieldRepository
         self.harvestRepository = harvestRepository
         self.authService = authService
+        self.locationService = locationService
+
+        setupGeofenceObservers()
 
         Task {
             await refreshPendingSyncCount()
+        }
+    }
+
+    private func setupGeofenceObservers() {
+        NotificationCenter.default.addObserver(
+            forName: .teaFieldGeofenceEntered,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            Task { @MainActor [weak self] in
+                self?.activeGeofencedField = notification.object as? TeaField
+            }
+        }
+
+        NotificationCenter.default.addObserver(
+            forName: .teaFieldGeofenceExited,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.activeGeofencedField = nil
+            }
         }
     }
 
@@ -80,7 +109,7 @@ final class TodayTasksViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        guard let user = authService.currentUser else {
+        guard authService.isAuthenticated else {
             isLoading = false
             errorMessage = "No active user session. Please log in."
             showErrorAlert = true
@@ -91,8 +120,13 @@ final class TodayTasksViewModel: ObservableObject {
         let weekday = calendar.component(.weekday, from: Date())
         let dayIndex = max(1, min(6, (weekday == 1) ? 6 : weekday - 1))
 
+        guard let estateId = authService.currentUser?.estateId else {
+            isLoading = false
+            return
+        }
+
         do {
-            let response = try await apiService.fetchDailyTasks(estateId: user.estateId, dayIndex: dayIndex)
+            let response = try await apiService.fetchDailyTasks(estateId: estateId, dayIndex: dayIndex)
             let domainTasks = response.assignedFields.map { $0.toDomain(shiftDate: Date()) }
             self.tasks = domainTasks
             self.isOffline = false
@@ -103,13 +137,13 @@ final class TodayTasksViewModel: ObservableObject {
             }
 
             // Fetch and cache estate fields in background for offline persistence
-            if let fieldDTOs = try? await apiService.fetchFields(estateId: user.estateId) {
+            if let fieldDTOs = try? await apiService.fetchFields(estateId: estateId) {
                 let domainFields = fieldDTOs.map { $0.toDomain() }
                 try? await fieldRepository.saveFields(domainFields)
             }
 
             // Fetch estate enterprise profile dynamically
-            if let estate = try? await apiService.fetchEstate(id: user.estateId) {
+            if let estate = try? await apiService.fetchEstate(id: estateId) {
                 self.estateName = estate.name
             }
 
@@ -121,12 +155,43 @@ final class TodayTasksViewModel: ObservableObject {
             self.isLoading = false
         }
 
-        if !hasDispatchedGeofenceNotification, let active = tasks.first {
-            hasDispatchedGeofenceNotification = true
-            NotificationManager.shared.sendGeofenceArrivalAlert(fieldName: active.fieldName)
+        // Start hardware geofence monitoring for harvest-ready field boundaries
+        if let cached = try? await fieldRepository.fetchCachedFields(), !cached.isEmpty {
+            locationService.startMonitoringFields(cached)
         }
 
         await refreshPendingSyncCount()
+    }
+
+    /// Simulates arriving at a specific assigned field boundary for live demonstration during the Viva exam.
+    func simulateArrival(at task: PluckingTask) {
+        Task {
+            let matchedField: TeaField
+            if let cached = try? await fieldRepository.fetchCachedFields(),
+               let existing = cached.first(where: { $0.id == task.fieldId }) {
+                matchedField = existing
+            } else {
+                matchedField = TeaField(
+                    id: task.fieldId,
+                    estateId: authService.currentUser?.estateId ?? UUID(),
+                    name: task.fieldName,
+                    blockCode: task.blockCode,
+                    acreage: 4.2,
+                    currentNDVI: 0.78,
+                    status: .ready,
+                    centroidLatitude: task.centroidLatitude,
+                    centroidLongitude: task.centroidLongitude,
+                    polygonCoordinates: [],
+                    lastHarvestedDate: nil
+                )
+            }
+            locationService.simulateArrival(at: matchedField)
+        }
+    }
+
+    /// Simulates exiting a field boundary to demonstrate geofence departure during the Viva exam.
+    func simulateExit() {
+        locationService.simulateExit()
     }
 
     /// Triggers an immediate store-and-forward batch sync of pending weighing records.

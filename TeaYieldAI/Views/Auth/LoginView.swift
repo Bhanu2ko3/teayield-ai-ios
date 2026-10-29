@@ -7,9 +7,14 @@ struct LoginView: View {
     @StateObject private var viewModel: AuthViewModel
     @State private var isPasswordVisible: Bool = false
     @State private var selectedDemoRole: UserRole? = nil
+    @AppStorage("appThemeMode") private var appThemeMode: String = AppThemeMode.system.rawValue
 
     init(viewModel: AuthViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
+    }
+
+    private var currentThemeMode: AppThemeMode {
+        AppThemeMode(rawValue: appThemeMode) ?? .system
     }
 
     var body: some View {
@@ -20,26 +25,75 @@ struct LoginView: View {
 
                 ScrollView {
                     VStack(spacing: 24) {
+                        topAppearanceBar
                         headerSection
-                        quickRoleSelectorSection
+                        authModeSegmentedPicker
+                        
+                        if viewModel.authMode == .signIn {
+                            quickRoleSelectorSection
+                        }
+                        
                         credentialFormSection
                         actionButtonsSection
                         securityFooterSection
                     }
                     .padding(.horizontal, 24)
-                    .padding(.vertical, 28)
+                    .padding(.vertical, 16)
                 }
             }
             .navigationBarHidden(true)
-            .alert("Authentication Failed", isPresented: $viewModel.showErrorAlert) {
+            .alert(viewModel.authMode == .signIn ? "Authentication Failed" : "Registration Failed", isPresented: $viewModel.showErrorAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
-                Text(viewModel.errorMessage ?? "An unexpected authentication error occurred.")
+                Text(viewModel.errorMessage ?? "An unexpected error occurred.")
             }
+            .applyAppTheme()
         }
     }
 
     // MARK: - Subviews
+
+    private var authModeSegmentedPicker: some View {
+        Picker("Authentication Mode", selection: $viewModel.authMode) {
+            ForEach(AuthViewModel.AuthMode.allCases) { mode in
+                Text(mode.rawValue).tag(mode)
+            }
+        }
+        .pickerStyle(.segmented)
+        .accessibilityLabel("Select Sign In or Register Manager mode")
+    }
+
+    private var topAppearanceBar: some View {
+        HStack {
+            Spacer()
+            Menu {
+                ForEach(AppThemeMode.allCases) { mode in
+                    Button {
+                        HapticFeedback.selection()
+                        appThemeMode = mode.rawValue
+                    } label: {
+                        Label(mode.title, systemImage: mode.iconName)
+                    }
+                }
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: currentThemeMode.iconName)
+                    Text(currentThemeMode.shortTitle)
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Color(uiColor: .secondarySystemGroupedBackground))
+                .foregroundColor(AppTheme.emerald)
+                .cornerRadius(AppTheme.radiusPill)
+                .overlay(
+                    RoundedRectangle(cornerRadius: AppTheme.radiusPill)
+                        .stroke(AppTheme.borderSubtle, lineWidth: 1)
+                )
+            }
+            .accessibilityLabel("Appearance Theme Switcher: currently \(currentThemeMode.title)")
+        }
+    }
 
     private var headerSection: some View {
         VStack(spacing: 12) {
@@ -123,8 +177,30 @@ struct LoginView: View {
 
     private var credentialFormSection: some View {
         VStack(spacing: 16) {
+            if viewModel.authMode == .signUp {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Full Legal Name")
+                        .font(.appCaption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
+
+                    HStack {
+                        Image(systemName: "person.fill")
+                            .foregroundColor(.secondary)
+                            .frame(width: 20)
+
+                        TextField("Enter manager full name", text: $viewModel.signUpFullName)
+                            .autocapitalization(.words)
+                            .disableAutocorrection(false)
+                    }
+                    .padding(14)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .cornerRadius(12)
+                }
+            }
+
             VStack(alignment: .leading, spacing: 6) {
-                Text("Enterprise Email")
+                Text(viewModel.authMode == .signUp ? "Corporate Business Email" : "Enterprise Email")
                     .font(.appCaption)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
@@ -134,7 +210,7 @@ struct LoginView: View {
                         .foregroundColor(.secondary)
                         .frame(width: 20)
 
-                    TextField("Enter your enterprise email", text: $viewModel.email)
+                    TextField(viewModel.authMode == .signUp ? "e.g. manager@plantation.lk" : "Enter your enterprise email", text: $viewModel.email)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
                         .keyboardType(.emailAddress)
@@ -148,15 +224,37 @@ struct LoginView: View {
                                 .foregroundColor(.secondary)
                                 .font(.system(size: 14))
                         }
+                        .accessibilityLabel("Clear email field")
                     }
                 }
                 .padding(14)
-                .background(Color(uiColor: .secondarySystemGroupedBackground))
+                .background(Color(uiColor: .tertiarySystemGroupedBackground))
                 .cornerRadius(12)
             }
 
+            if viewModel.authMode == .signUp {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Mobile Contact (Optional)")
+                        .font(.appCaption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
+
+                    HStack {
+                        Image(systemName: "phone.fill")
+                            .foregroundColor(.secondary)
+                            .frame(width: 20)
+
+                        TextField("e.g. +94 77 123 4567", text: $viewModel.signUpPhoneNumber)
+                            .keyboardType(.phonePad)
+                    }
+                    .padding(14)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .cornerRadius(12)
+                }
+            }
+
             VStack(alignment: .leading, spacing: 6) {
-                Text("Password")
+                Text(viewModel.authMode == .signUp ? "Account Password (min 8 characters)" : "Password")
                     .font(.appCaption)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
@@ -167,12 +265,12 @@ struct LoginView: View {
                         .frame(width: 20)
 
                     if isPasswordVisible {
-                        TextField("Enter your password", text: $viewModel.password)
+                        TextField(viewModel.authMode == .signUp ? "Create secure password" : "Enter your password", text: $viewModel.password)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
                     } else {
-                        SecureField("Enter your password", text: $viewModel.password)
-                            .textContentType(.password)
+                        SecureField(viewModel.authMode == .signUp ? "Create secure password" : "Enter your password", text: $viewModel.password)
+                            .textContentType(viewModel.authMode == .signUp ? .newPassword : .password)
                     }
 
                     Button {
@@ -186,8 +284,14 @@ struct LoginView: View {
                     .accessibilityLabel(isPasswordVisible ? "Hide password" : "Show password")
                 }
                 .padding(14)
-                .background(Color(uiColor: .secondarySystemGroupedBackground))
+                .background(Color(uiColor: .tertiarySystemGroupedBackground))
                 .cornerRadius(12)
+
+                if viewModel.authMode == .signUp {
+                    Text("Minimum 8 characters required for cryptographic tenant isolation.")
+                        .font(.system(size: 10, weight: .regular))
+                        .foregroundColor(.secondary)
+                }
             }
 
             // Inline error alert banner if authentication fails
@@ -210,16 +314,14 @@ struct LoginView: View {
             }
         }
         .padding(18)
-        .background(Color(uiColor: .secondarySystemGroupedBackground))
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 3)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 
     private var actionButtonsSection: some View {
         VStack(spacing: 12) {
             Button {
                 Task {
-                    await viewModel.login()
+                    await viewModel.submit()
                 }
             } label: {
                 HStack {
@@ -228,7 +330,7 @@ struct LoginView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                             .padding(.trailing, 8)
                     }
-                    Text(viewModel.isLoading ? "Signing In..." : "Sign In")
+                    Text(submitButtonTitle)
                         .font(.appHeadline)
                         .foregroundColor(.white)
                 }
@@ -238,8 +340,10 @@ struct LoginView: View {
                 .cornerRadius(12)
             }
             .disabled(viewModel.isLoading)
+            .accessibilityLabel(submitButtonTitle)
+            .accessibilityHint(viewModel.authMode == .signUp ? "Registers new estate manager tenant account" : "Authenticates credentials with estate server")
 
-            if viewModel.isBiometricAvailable {
+            if viewModel.authMode == .signIn && viewModel.isBiometricAvailable {
                 Button {
                     Task {
                         await viewModel.authenticateWithBiometrics()
@@ -271,8 +375,17 @@ struct LoginView: View {
                     .cornerRadius(12)
                 }
                 .disabled(viewModel.isLoading)
+                .accessibilityLabel("Sign in with \(viewModel.biometricType.rawValue)")
+                .accessibilityHint("Authenticates using device Secure Enclave biometric scan")
             }
         }
+    }
+
+    private var submitButtonTitle: String {
+        if viewModel.isLoading {
+            return viewModel.authMode == .signUp ? "Registering Account..." : "Signing In..."
+        }
+        return viewModel.authMode == .signUp ? "Create Manager Account" : "Sign In"
     }
 
     private var securityFooterSection: some View {
@@ -287,3 +400,12 @@ struct LoginView: View {
         .padding(.top, 4)
     }
 }
+
+// MARK: - Previews
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginView(viewModel: AuthViewModel(authService: AppContainer.shared.authService))
+    }
+}
+

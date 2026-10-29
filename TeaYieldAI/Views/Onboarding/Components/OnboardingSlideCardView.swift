@@ -52,3 +52,14 @@ struct OnboardingSlideCardView: View {
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 }
+
+// MARK: - Previews
+
+struct OnboardingSlideCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardingSlideCardView(slide: OnboardingSlide.defaultSlides[0])
+            .padding()
+            .previewLayout(.sizeThatFits)
+    }
+}
+

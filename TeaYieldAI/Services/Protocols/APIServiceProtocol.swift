@@ -34,4 +34,31 @@ protocol APIServiceProtocol: AnyObject {
 
     /// Fetches historical persisted green leaf intake records.
     func fetchHarvestLogs(fieldId: UUID?, limit: Int?, offset: Int?) async throws -> [HarvestLogRecordResponseDTO]
+
+    /// Registers a new estate manager via self-service onboarding.
+    func signupManager(request: ManagerSignUpRequestDTO) async throws -> TokenResponseDTO
+
+    /// Provisions a subordinate field supervisor under the authenticated manager.
+    func inviteSupervisor(request: SupervisorInviteRequestDTO) async throws -> UserProfileDTO
+
+    /// Rotates account credentials.
+    func changePassword(request: PasswordChangeRequestDTO) async throws -> StatusResponseDTO
+
+    /// Onboards a new tea estate with physical parameters and factory ceilings.
+    func onboardEstate(request: EstateOnboardRequestDTO) async throws -> EstateResponseDTO
+
+    /// Fetches the master registered plucker workforce for an estate.
+    func fetchPluckers(estateId: UUID) async throws -> [PluckerResponseDTO]
+
+    /// Registers a new tea plucker employee.
+    func createPlucker(request: PluckerCreateRequestDTO) async throws -> PluckerResponseDTO
+
+    /// Triggers on-demand multivariate LSTM deep learning yield forecast execution.
+    func triggerYieldPrediction(request: PredictionTriggerDTO) async throws -> YieldPredictionBatchResponseDTO
+
+    /// Executes DEAP Genetic Algorithm plucker roster schedule optimization.
+    func optimizeRoster(request: RosterOptimizationRequestDTO) async throws -> RosterOptimizationResponseDTO
+
+    /// Retrieves the active weekly plucking schedule.
+    func fetchCurrentRoster(estateId: UUID, weekStartDate: String) async throws -> RosterOptimizationResponseDTO
 }

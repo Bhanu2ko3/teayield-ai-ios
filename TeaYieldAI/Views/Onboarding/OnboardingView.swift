@@ -6,8 +6,13 @@ struct OnboardingView: View {
 
     @Binding var hasCompletedOnboarding: Bool
     @State private var currentSlide = 0
+    @AppStorage("appThemeMode") private var appThemeMode: String = AppThemeMode.system.rawValue
 
     private let slides: [OnboardingSlide] = OnboardingSlide.defaultSlides
+
+    private var currentThemeMode: AppThemeMode {
+        AppThemeMode(rawValue: appThemeMode) ?? .system
+    }
 
     var body: some View {
         NavigationStack {
@@ -41,6 +46,7 @@ struct OnboardingView: View {
                 }
             }
             .navigationBarHidden(true)
+            .applyAppTheme()
         }
     }
 
@@ -48,22 +54,25 @@ struct OnboardingView: View {
 
     private var topHeaderBar: some View {
         HStack {
-            HStack(spacing: 6) {
-                Circle()
-                    .fill(AppTheme.emerald)
-                    .frame(width: 8, height: 8)
-
-                Text("TEAYIELD AI • PRECISION")
-                    .font(.appBadge)
-                    .foregroundColor(.secondary)
-                    .tracking(0.5)
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(Color(uiColor: .secondarySystemGroupedBackground))
-            .cornerRadius(AppTheme.radiusPill)
-
+            
             Spacer()
+
+            Menu {
+                ForEach(AppThemeMode.allCases) { mode in
+                    Button {
+                        HapticFeedback.selection()
+                        appThemeMode = mode.rawValue
+                    } label: {
+                        Label(mode.title, systemImage: mode.iconName)
+                    }
+                }
+            } label: {
+                Image(systemName: currentThemeMode.iconName)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(AppTheme.emerald)
+                    .padding(6)
+            }
+            .accessibilityLabel("Appearance Theme Switcher")
 
             Button(action: completeOnboarding) {
                 Text("Skip")
@@ -99,7 +108,7 @@ struct OnboardingView: View {
                     .font(.appLargeTitle)
                     .foregroundColor(.primary)
 
-                Text("PRECISION AGRICULTURE • CEYLON TEA")
+                Text("PRECISION AGRICULTURE CEYLON TEA")
                     .font(.system(size: 11, weight: .bold, design: .rounded))
                     .foregroundColor(.secondary)
                     .tracking(1.2)
@@ -169,7 +178,7 @@ struct OnboardingView: View {
     // MARK: - Navigation Logic
 
     private func nextSlideOrFinish() {
-        triggerHaptic()
+        HapticFeedback.lightImpact()
         if currentSlide < slides.count - 1 {
             withAnimation(.easeInOut(duration: 0.3)) {
                 currentSlide += 1
@@ -179,17 +188,27 @@ struct OnboardingView: View {
         }
     }
 
+    private func triggerHaptic() {
+        HapticFeedback.lightImpact()
+    }
+
     private func completeOnboarding() {
-        triggerHaptic()
+        HapticFeedback.lightImpact()
         UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
+        Task {
+            _ = await NotificationManager.shared.requestAuthorization()
+        }
         withAnimation(.easeInOut(duration: 0.25)) {
             hasCompletedOnboarding = true
         }
     }
+}
+ 
+// MARK: - Previews
 
-    private func triggerHaptic() {
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.prepare()
-        generator.impactOccurred()
+struct OnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardingView(hasCompletedOnboarding: .constant(false))
     }
 }
+

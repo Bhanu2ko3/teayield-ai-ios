@@ -4,7 +4,9 @@ import SwiftUI
 struct TaskCardView: View {
 
     let task: PluckingTask
+    var isGeofenced: Bool = false
     let onRecordWeighingTap: () -> Void
+    var onSimulateArrivalTap: (() -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -13,9 +15,7 @@ struct TaskCardView: View {
             actionFooterRow
         }
         .padding(16)
-        .background(Color(uiColor: .secondarySystemGroupedBackground))
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 3)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 
     // MARK: - Subviews
@@ -34,7 +34,23 @@ struct TaskCardView: View {
 
             Spacer()
 
-            statusBadge
+            HStack(spacing: 6) {
+                if isGeofenced {
+                    HStack(spacing: 3) {
+                        Image(systemName: "location.fill")
+                            .font(.system(size: 8))
+                        Text("IN GEOFENCE")
+                            .font(.system(size: 9, weight: .bold, design: .rounded))
+                    }
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 3)
+                    .background(AppTheme.emerald.opacity(0.15))
+                    .foregroundColor(AppTheme.emerald)
+                    .cornerRadius(6)
+                }
+
+                statusBadge
+            }
         }
     }
 
@@ -95,6 +111,19 @@ struct TaskCardView: View {
 
             Spacer()
 
+            if let onSimulateArrivalTap = onSimulateArrivalTap {
+                Button(action: onSimulateArrivalTap) {
+                    Image(systemName: isGeofenced ? "location.fill" : "dot.radiowaves.left.and.right")
+                        .font(.caption)
+                        .foregroundColor(isGeofenced ? AppTheme.emerald : .secondary)
+                        .padding(7)
+                        .background(isGeofenced ? AppTheme.emerald.opacity(0.12) : Color.secondary.opacity(0.08))
+                        .cornerRadius(8)
+                }
+                .accessibilityLabel(isGeofenced ? "Simulate Geofence Exit" : "Simulate Geofence Arrival")
+                .accessibilityHint("Triggers on-device CoreLocation boundary event for Viva testing")
+            }
+
             Button(action: onRecordWeighingTap) {
                 HStack(spacing: 6) {
                     Image(systemName: "scalemass.fill")
@@ -105,7 +134,7 @@ struct TaskCardView: View {
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
-                .background(Color(red: 0.02, green: 0.59, blue: 0.41))
+                .background(AppTheme.emerald)
                 .foregroundColor(.white)
                 .cornerRadius(8)
             }
@@ -115,6 +144,21 @@ struct TaskCardView: View {
     // MARK: - Helpers
 
     private var statusColor: Color {
-        task.isCompleted ? Color(red: 0.02, green: 0.59, blue: 0.41) : Color.blue
+        task.isCompleted ? AppTheme.emerald : Color.blue
     }
 }
+
+// MARK: - Previews
+
+struct TaskCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        TaskCardView(
+            task: MockData.taskToday,
+            isGeofenced: true,
+            onRecordWeighingTap: {}
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

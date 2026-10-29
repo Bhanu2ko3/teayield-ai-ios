@@ -75,3 +75,14 @@ struct HarvestRecordRowView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct HarvestRecordRowView_Previews: PreviewProvider {
+    static var previews: some View {
+        HarvestRecordRowView(record: MockData.sampleHarvestRecords[0])
+            .padding()
+            .previewLayout(.sizeThatFits)
+    }
+}
+

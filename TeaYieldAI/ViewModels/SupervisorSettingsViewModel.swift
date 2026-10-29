@@ -18,6 +18,33 @@ final class SupervisorSettingsViewModel: ObservableObject {
     @Published var notificationsAuthorized: Bool = false
     @Published var divisionAssignmentName: String = "Division Pending"
     @Published var estateDisplayName: String = ""
+    @Published var profileImage: UIImage? = nil
+    @Published var selectedThemeMode: AppThemeMode = {
+        let saved = UserDefaults.standard.string(forKey: "appThemeMode") ?? AppThemeMode.system.rawValue
+        return AppThemeMode(rawValue: saved) ?? .system
+    }()
+
+    private static var avatarStorageURL: URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0].appendingPathComponent("officer_profile_avatar.jpg")
+    }
+
+    func loadPersistedProfileImage() {
+        let fileURL = Self.avatarStorageURL
+        if FileManager.default.fileExists(atPath: fileURL.path),
+           let data = try? Data(contentsOf: fileURL),
+           let img = UIImage(data: data) {
+            self.profileImage = img
+        } else {
+            self.profileImage = nil
+        }
+    }
+
+    func setThemeMode(_ mode: AppThemeMode) {
+        selectedThemeMode = mode
+        UserDefaults.standard.set(mode.rawValue, forKey: "appThemeMode")
+        HapticFeedback.selection()
+    }
 
     private let authService: AuthServiceProtocol
     private let syncManager: SyncManagerProtocol
@@ -37,6 +64,18 @@ final class SupervisorSettingsViewModel: ObservableObject {
         self.fieldRepository = fieldRepository
         self.harvestRepository = harvestRepository
         self.apiService = apiService
+
+        loadPersistedProfileImage()
+
+        NotificationCenter.default.addObserver(
+            forName: Notification.Name("TeaYieldProfileImageUpdated"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.loadPersistedProfileImage()
+            }
+        }
 
         Task {
             await loadCachedDetails()
@@ -82,8 +121,8 @@ final class SupervisorSettingsViewModel: ObservableObject {
         if !estateDisplayName.isEmpty {
             return estateDisplayName
         }
-        if let user = authService.currentUser {
-            return "Estate #\(user.estateId.uuidString.prefix(6).uppercased())"
+        if let user = authService.currentUser, let estateId = user.estateId {
+            return "Estate #\(estateId.uuidString.prefix(6).uppercased())"
         }
         return "Estate Not Assigned"
     }
@@ -116,8 +155,8 @@ final class SupervisorSettingsViewModel: ObservableObject {
     // MARK: - Actions
 
     func loadCachedDetails() async {
-        if let user = authService.currentUser, let api = apiService {
-            if let estate = try? await api.fetchEstate(id: user.estateId) {
+        if let user = authService.currentUser, let estateId = user.estateId, let api = apiService {
+            if let estate = try? await api.fetchEstate(id: estateId) {
                 self.estateDisplayName = estate.name
             }
         }

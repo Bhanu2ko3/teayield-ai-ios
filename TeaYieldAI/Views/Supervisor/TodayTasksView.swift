@@ -5,6 +5,7 @@ struct TodayTasksView: View {
 
     @StateObject private var viewModel: TodayTasksViewModel
     @State private var showingWeighingSheet = false
+    @State private var showingProfileSheet = false
     @State private var selectedFieldForWeighing: UUID?
 
     private let container: AppContainerProtocol
@@ -16,7 +17,8 @@ struct TodayTasksView: View {
             syncManager: container.syncManager,
             fieldRepository: container.fieldRepository,
             harvestRepository: container.harvestRepository,
-            authService: container.authService
+            authService: container.authService,
+            locationService: container.locationService
         ))
     }
 
@@ -47,15 +49,20 @@ struct TodayTasksView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    HStack(spacing: 6) {
-                        Image(systemName: "leaf.fill")
-                            .font(.system(size: 12))
-                            .foregroundColor(AppTheme.emerald)
-                        Text(viewModel.estateDisplayName)
-                            .font(.appCallout)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
+                    Button {
+                        showingProfileSheet = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "leaf.fill")
+                                .font(.system(size: 12))
+                                .foregroundColor(AppTheme.emerald)
+                            Text(viewModel.estateDisplayName)
+                                .font(.appCallout)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
+                        }
                     }
+                    .accessibilityLabel("View enterprise officer profile")
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -88,6 +95,14 @@ struct TodayTasksView: View {
             .sheet(isPresented: $showingWeighingSheet) {
                 weighingSheetContent
             }
+            .sheet(isPresented: $showingProfileSheet) {
+                UserProfileView(
+                    authService: container.authService,
+                    apiService: container.apiService,
+                    harvestRepository: container.harvestRepository,
+                    fieldRepository: container.fieldRepository
+                )
+            }
             .task {
                 await viewModel.loadTodayTasks()
             }
@@ -114,14 +129,35 @@ struct TodayTasksView: View {
                 }
             }
 
-            if let activeTask = viewModel.tasks.first {
+            if let activeField = viewModel.activeGeofencedField {
                 GeofenceArrivalBannerView(
-                    fieldName: activeTask.fieldName,
-                    shiftDate: activeTask.shiftDate
+                    fieldName: activeField.name,
+                    shiftDate: Date()
                 ) {
-                    selectedFieldForWeighing = activeTask.fieldId
+                    selectedFieldForWeighing = activeField.id
                     showingWeighingSheet = true
                 }
+                .transition(.asymmetric(
+                    insertion: .move(edge: .top).combined(with: .opacity),
+                    removal: .opacity
+                ))
+            } else if !viewModel.tasks.isEmpty {
+                HStack(spacing: 8) {
+                    Image(systemName: "location.circle.fill")
+                        .font(.system(size: 12))
+                        .foregroundColor(AppTheme.emerald)
+                    Text("Boundary Monitoring Active (\(viewModel.tasks.count) Assigned Fields)")
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text("CoreLocation")
+                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                        .foregroundColor(.secondary.opacity(0.8))
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(Color.secondary.opacity(0.06))
+                .cornerRadius(AppTheme.radiusSmall)
             }
         }
     }
@@ -155,10 +191,23 @@ struct TodayTasksView: View {
                 .padding(.vertical, 40)
             } else {
                 ForEach(viewModel.tasks) { task in
-                    TaskCardView(task: task) {
-                        selectedFieldForWeighing = task.fieldId
-                        showingWeighingSheet = true
-                    }
+                    TaskCardView(
+                        task: task,
+                        isGeofenced: viewModel.activeGeofencedField?.id == task.fieldId,
+                        onRecordWeighingTap: {
+                            selectedFieldForWeighing = task.fieldId
+                            showingWeighingSheet = true
+                        },
+                        onSimulateArrivalTap: {
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                if viewModel.activeGeofencedField?.id == task.fieldId {
+                                    viewModel.simulateExit()
+                                } else {
+                                    viewModel.simulateArrival(at: task)
+                                }
+                            }
+                        }
+                    )
                 }
             }
         }
@@ -173,6 +222,7 @@ struct TodayTasksView: View {
             apiService: container.apiService,
             initialFieldId: selectedFieldForWeighing
         ))
+        .applyAppTheme()
         .onDisappear {
             Task {
                 await viewModel.refreshPendingSyncCount()
@@ -180,3 +230,12 @@ struct TodayTasksView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct TodayTasksView_Previews: PreviewProvider {
+    static var previews: some View {
+        TodayTasksView(container: AppContainer.shared)
+    }
+}
+

@@ -11,6 +11,9 @@ protocol AppContainerProtocol {
     var ndviRepository: NDVIRepositoryProtocol { get }
     var syncManager: SyncManagerProtocol { get }
     var persistenceController: PersistenceController { get }
+    var cameraService: CameraServiceProtocol { get }
+    var leafClassifier: VisionLeafClassifierProtocol { get }
+    var locationService: LocationServiceProtocol { get }
 }
 
 /// Central dependency injection container providing singletons and service lifecycle management.
@@ -26,6 +29,9 @@ final class AppContainer: AppContainerProtocol {
     let ndviRepository: NDVIRepositoryProtocol
     let syncManager: SyncManagerProtocol
     let persistenceController: PersistenceController
+    let cameraService: CameraServiceProtocol
+    let leafClassifier: VisionLeafClassifierProtocol
+    let locationService: LocationServiceProtocol
 
     @MainActor
     private init(
@@ -50,5 +56,9 @@ final class AppContainer: AppContainerProtocol {
             apiService: apiService,
             harvestRepository: harvestRepo
         )
+
+        self.cameraService = CameraService()
+        self.leafClassifier = VisionLeafClassifier()
+        self.locationService = LocationService()
     }
 }

@@ -90,3 +90,19 @@ struct FactoryIntakeCardView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct FactoryIntakeCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        FactoryIntakeCardView(
+            currentIntakeKg: 2450.0,
+            capacityCapKg: 3500.0,
+            utilizationRatio: 0.70,
+            remainingCapacityKg: 1050.0
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

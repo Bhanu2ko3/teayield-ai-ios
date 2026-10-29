@@ -5,6 +5,9 @@ struct ManagerOverviewView: View {
 
     @StateObject private var viewModel: ManagerOverviewViewModel
     private let container: AppContainerProtocol
+    @AppStorage("appThemeMode") private var appThemeMode: String = AppThemeMode.system.rawValue
+    @State private var showingFullProfileSheet: Bool = false
+    @State private var isShowingInviteSupervisorSheet: Bool = false
 
     init(container: AppContainerProtocol) {
         self.container = container
@@ -18,6 +21,10 @@ struct ManagerOverviewView: View {
         )
     }
 
+    private var currentThemeMode: AppThemeMode {
+        AppThemeMode(rawValue: appThemeMode) ?? .system
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -27,15 +34,46 @@ struct ManagerOverviewView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         managerProfileHeader
+                        AppearanceSettingsSectionView()
                         FactoryIntakeCardView(
                             currentIntakeKg: viewModel.totalHarvestTodayKg,
                             capacityCapKg: viewModel.factoryIntakeCapKg,
                             utilizationRatio: viewModel.factoryUtilizationRatio,
                             remainingCapacityKg: viewModel.remainingCapacityKg
                         )
+
+                        NavigationLink {
+                            ManagerAnalyticsDashboardView(viewModel: viewModel)
+                        } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: "chart.bar.xaxis")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(AppTheme.emerald)
+
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Harvest & Yield Analytics")
+                                        .font(.appHeadline)
+                                        .foregroundColor(.primary)
+                                    Text("Interactive 7-Day predictions & NDVI trends")
+                                        .font(.appCaption)
+                                        .foregroundColor(.secondary)
+                                }
+
+                                Spacer()
+
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(14)
+                            .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+                        }
+                        .accessibilityLabel("Open harvest and yield analytics with interactive Swift Charts")
+
                         estateMacroKpiGrid
                         ndviDistributionSection
                         estateDivisionsSection
+                        teamDelegationSection
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 16)
@@ -46,7 +84,14 @@ struct ManagerOverviewView: View {
             }
             .navigationTitle("Executive Overview")
             .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $isShowingInviteSupervisorSheet) {
+                InviteSupervisorSheetView(apiService: container.apiService)
+            }
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    themeMenuButton
+                }
+
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Log Out") {
                         viewModel.showingLogoutConfirmation = true
@@ -74,7 +119,34 @@ struct ManagerOverviewView: View {
             .task {
                 await viewModel.loadEstateTelemetry()
             }
+            .sheet(isPresented: $showingFullProfileSheet) {
+                UserProfileView(
+                    authService: container.authService,
+                    apiService: container.apiService,
+                    harvestRepository: container.harvestRepository,
+                    fieldRepository: container.fieldRepository
+                )
+            }
+            .applyAppTheme()
         }
+    }
+
+    private var themeMenuButton: some View {
+        Menu {
+            ForEach(AppThemeMode.allCases) { mode in
+                Button {
+                    HapticFeedback.selection()
+                    appThemeMode = mode.rawValue
+                } label: {
+                    Label(mode.title, systemImage: mode.iconName)
+                }
+            }
+        } label: {
+            Image(systemName: currentThemeMode.iconName)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(AppTheme.emerald)
+        }
+        .accessibilityLabel("Appearance Theme Switcher")
     }
 
     // MARK: - Subviews
@@ -128,6 +200,26 @@ struct ManagerOverviewView: View {
                         .foregroundColor(.secondary)
                 }
             }
+
+            Button {
+                showingFullProfileSheet = true
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "person.crop.circle.badge.checkmark")
+                        .font(.system(size: 13))
+                    Text("View Full Manager Profile")
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 11, weight: .bold))
+                }
+                .foregroundColor(AppTheme.emerald)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(AppTheme.emerald.opacity(0.08))
+                .cornerRadius(AppTheme.radiusSmall)
+            }
+            .accessibilityLabel("View full manager profile")
         }
         .padding(14)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
@@ -264,5 +356,53 @@ struct ManagerOverviewView: View {
         .padding(.vertical, 12)
         .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
     }
+
+    private var teamDelegationSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: "person.badge.shield.checkmark.fill")
+                    .foregroundColor(AppTheme.emerald)
+                    .font(.system(size: 16))
+
+                Text("Team & Staff Delegation")
+                    .font(.appHeadline)
+                    .foregroundColor(.primary)
+
+                Spacer()
+
+                Button {
+                    isShowingInviteSupervisorSheet = true
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: 12))
+                        Text("Invite")
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(AppTheme.emerald)
+                    .cornerRadius(8)
+                }
+                .accessibilityLabel("Invite subordinate field supervisor")
+            }
+
+            Text("Provision field supervisors with manager-issued temporary passwords to coordinate weighing and leaf quality scans.")
+                .font(.appCaption)
+                .foregroundColor(.secondary)
+        }
+        .padding(16)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+    }
 }
+
+// MARK: - Previews
+
+struct ManagerOverviewView_Previews: PreviewProvider {
+    static var previews: some View {
+        ManagerOverviewView(container: AppContainer.shared)
+    }
+}
+
 

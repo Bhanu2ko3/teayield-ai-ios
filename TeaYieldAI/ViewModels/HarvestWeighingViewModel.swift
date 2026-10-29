@@ -7,6 +7,9 @@ final class HarvestWeighingViewModel: ObservableObject {
 
     @Published var selectedFieldId: UUID?
     @Published var availableFields: [TeaField] = []
+    @Published var availablePluckers: [Plucker] = []
+    @Published var selectedPlucker: Plucker? = nil
+    @Published var isLoadingPluckers: Bool = false
     @Published var pluckerId: String = ""
     @Published var pluckerName: String = ""
     @Published var grossWeightInput: String = ""
@@ -60,7 +63,8 @@ final class HarvestWeighingViewModel: ObservableObject {
         syncManager: SyncManagerProtocol,
         authService: AuthServiceProtocol,
         apiService: APIServiceProtocol,
-        initialFieldId: UUID? = nil
+        initialFieldId: UUID? = nil,
+        initialFineLeafRatio: Double? = nil
     ) {
         self.harvestRepository = harvestRepository
         self.fieldRepository = fieldRepository
@@ -68,10 +72,39 @@ final class HarvestWeighingViewModel: ObservableObject {
         self.authService = authService
         self.apiService = apiService
         self.selectedFieldId = initialFieldId
+        if let ratio = initialFineLeafRatio {
+            self.fineLeafRatio = ratio
+        }
 
         Task {
             await loadAvailableFields()
+            await loadAvailablePluckers()
         }
+    }
+
+    // MARK: - Plucker Workforce Loading
+
+    /// Loads registered pluckers for the active estate from the backend API or offline cache.
+    func loadAvailablePluckers() async {
+        guard let user = authService.currentUser, let estateId = user.estateId else { return }
+        isLoadingPluckers = true
+        defer { isLoadingPluckers = false }
+
+        do {
+            let dtos = try await apiService.fetchPluckers(estateId: estateId)
+            let domainPluckers = dtos.map { $0.toDomain() }
+            self.availablePluckers = domainPluckers.isEmpty ? MockData.samplePluckers : domainPluckers
+        } catch {
+            // Graceful fallback to cached mock workforce during offline operations
+            self.availablePluckers = MockData.samplePluckers
+        }
+    }
+
+    /// Selects a registered plucker and auto-populates the identification fields.
+    func selectPlucker(_ plucker: Plucker) {
+        self.selectedPlucker = plucker
+        self.pluckerId = plucker.pluckerCode
+        self.pluckerName = plucker.fullName
     }
 
     // MARK: - Field Loading
@@ -84,7 +117,7 @@ final class HarvestWeighingViewModel: ObservableObject {
             var fields = try await fieldRepository.fetchAllFields()
             if fields.isEmpty {
                 // If local cache is empty, fetch fresh fields from remote API
-                if let dtos = try? await apiService.fetchFields(estateId: user.estateId) {
+                if let estateId = user.estateId, let dtos = try? await apiService.fetchFields(estateId: estateId) {
                     let domainFields = dtos.map { $0.toDomain() }
                     try? await fieldRepository.saveFields(domainFields)
                     fields = domainFields

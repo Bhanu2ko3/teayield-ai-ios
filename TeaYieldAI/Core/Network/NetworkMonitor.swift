@@ -1,8 +1,15 @@
 import Foundation
 import Network
 
+/// Defines the contract for observing real-time network reachability.
+public protocol NetworkMonitorProtocol: AnyObject {
+    var isConnected: Bool { get }
+    var isCellular: Bool { get }
+    var onConnectionRestored: (() -> Void)? { get set }
+}
+
 /// Real-time network reachability observer utilizing Apple Network framework.
-final class NetworkMonitor: ObservableObject {
+final class NetworkMonitor: ObservableObject, NetworkMonitorProtocol {
 
     static let shared = NetworkMonitor()
 
