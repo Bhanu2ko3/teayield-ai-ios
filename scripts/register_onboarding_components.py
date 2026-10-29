@@ -81,3 +81,4 @@ with open(PBX_PATH, "w", encoding="utf-8") as f:
     f.write(content)
 
 print(f"Successfully registered {len(new_files)} onboarding component and test files in project.pbxproj")
+

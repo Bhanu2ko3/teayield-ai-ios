@@ -69,7 +69,7 @@ final class ForcePasswordChangeViewModel: ObservableObject {
         do {
             _ = try await apiService.changePassword(request: request)
             authService.completePasswordChange()
-            HapticFeedback.notification(.success)
+            HapticFeedback.success()
             self.passwordChangedSuccessfully = true
             self.isSubmitting = false
         } catch let networkError as NetworkError {
@@ -88,3 +88,4 @@ final class ForcePasswordChangeViewModel: ObservableObject {
         authService.logout()
     }
 }
+

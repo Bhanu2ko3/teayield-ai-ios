@@ -203,3 +203,4 @@ struct MultiTenantOnboardingTests {
         #expect(viewModel.createdSupervisor?.role == "field_supervisor")
     }
 }
+

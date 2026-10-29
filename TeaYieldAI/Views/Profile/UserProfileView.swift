@@ -110,11 +110,15 @@ struct UserProfileView: View {
     // MARK: - Hero Profile Header
 
     private var heroProfileCard: some View {
-        VStack(spacing: 14) {
+        let currentProfileImage = viewModel.profileImage
+        let currentInitials = viewModel.avatarInitials
+        let hasCustomPhoto = currentProfileImage != nil
+
+        return VStack(spacing: 14) {
             // Interactive Avatar with Camera Upload Badge
             PhotosPicker(selection: $selectedPhotoItem, matching: .images) {
                 ZStack(alignment: .bottomTrailing) {
-                    if let image = viewModel.profileImage {
+                    if let image = currentProfileImage {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFill()
@@ -140,7 +144,7 @@ struct UserProfileView: View {
                                     .stroke(AppTheme.emerald.opacity(0.35), lineWidth: 2)
                             )
 
-                        Text(viewModel.avatarInitials)
+                        Text(currentInitials)
                             .font(.system(size: 32, weight: .bold, design: .rounded))
                             .foregroundColor(AppTheme.emerald)
                             .frame(width: 88, height: 88)
@@ -179,7 +183,7 @@ struct UserProfileView: View {
                 PhotosPicker(selection: $selectedPhotoItem, matching: .images) {
                     HStack(spacing: 5) {
                         Image(systemName: "photo.badge.plus")
-                        Text(viewModel.profileImage != nil ? "Change Photo" : "Upload Photo")
+                        Text(hasCustomPhoto ? "Change Photo" : "Upload Photo")
                     }
                     .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundColor(AppTheme.emerald)
@@ -189,7 +193,7 @@ struct UserProfileView: View {
                     .cornerRadius(8)
                 }
 
-                if viewModel.profileImage != nil {
+                if hasCustomPhoto {
                     Button {
                         viewModel.removeProfileImage()
                     } label: {

@@ -68,7 +68,7 @@ final class InviteSupervisorViewModel: ObservableObject {
             self.createdSupervisor = response
             self.invitationSuccess = true
             self.isSubmitting = false
-            HapticFeedback.notification(.success)
+            HapticFeedback.success()
         } catch let networkError as NetworkError {
             self.isSubmitting = false
             self.errorMessage = networkError.localizedDescription
@@ -97,3 +97,4 @@ final class InviteSupervisorViewModel: ObservableObject {
         return predicate.evaluate(with: candidate.trimmingCharacters(in: .whitespacesAndNewlines))
     }
 }
+

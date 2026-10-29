@@ -77,7 +77,7 @@ final class EstateOnboardingViewModel: ObservableObject {
         do {
             let response = try await apiService.onboardEstate(request: request)
             authService.updateCurrentUserEstate(estateId: response.id)
-            HapticFeedback.notification(.success)
+            HapticFeedback.success()
             self.onboardingSuccess = true
             self.isSubmitting = false
         } catch let networkError as NetworkError {
@@ -96,3 +96,4 @@ final class EstateOnboardingViewModel: ObservableObject {
         authService.logout()
     }
 }
+

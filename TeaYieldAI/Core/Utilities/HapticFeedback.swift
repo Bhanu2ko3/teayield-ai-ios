@@ -44,4 +44,11 @@ enum HapticFeedback {
         generator.prepare()
         generator.notificationOccurred(.error)
     }
+
+    /// Triggers a notification haptic pulse matching the specified feedback type.
+    static func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        generator.notificationOccurred(type)
+    }
 }

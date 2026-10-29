@@ -272,3 +272,4 @@ struct EstateOnboardingView: View {
         .accessibilityHint("Logs out of current account and returns to login screen")
     }
 }
+

@@ -258,7 +258,7 @@ struct InviteSupervisorSheetView: View {
                 """
                 UIPasteboard.general.string = shareText
                 hasCopiedCredentials = true
-                HapticFeedback.notification(.success)
+                HapticFeedback.success()
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: hasCopiedCredentials ? "checkmark" : "doc.on.doc.fill")
@@ -298,3 +298,4 @@ struct InviteSupervisorSheetView: View {
         }
     }
 }
+

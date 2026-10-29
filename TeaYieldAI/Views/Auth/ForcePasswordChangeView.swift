@@ -297,3 +297,4 @@ struct ForcePasswordChangeView: View {
         .accessibilityLabel("Sign out")
     }
 }
+
