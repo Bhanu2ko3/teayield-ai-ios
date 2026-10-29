@@ -33,7 +33,7 @@ struct OfficerProfileCardView: View {
                         .font(.appHeadline)
                         .foregroundColor(.primary)
 
-                    Text("\(viewModel.officerRole) • ID: \(viewModel.officerEmployeeId)")
+                    Text(viewModel.officerRole)
                         .font(.appCaption)
                         .foregroundColor(.secondary)
 

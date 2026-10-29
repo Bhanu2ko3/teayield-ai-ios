@@ -71,6 +71,7 @@ struct HarvestWeighingFormView: View {
             } message: {
                 Text(viewModel.errorMessage ?? "Failed to save record.")
             }
+            .scrollDismissesKeyboard(.interactively)
         }
         .applyAppTheme()
     }

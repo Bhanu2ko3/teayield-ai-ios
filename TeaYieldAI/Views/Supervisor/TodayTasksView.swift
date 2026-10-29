@@ -67,8 +67,6 @@ struct TodayTasksView: View {
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 12) {
-                        ThemeToggleView(style: .iconOnly)
-
                         NavigationLink {
                             HarvestHistoryView(harvestRepository: container.harvestRepository)
                         } label: {
@@ -174,18 +172,38 @@ struct TodayTasksView: View {
                 badgeColor: AppTheme.emerald
             )
 
-            if viewModel.tasks.isEmpty && !viewModel.isLoading {
+            if viewModel.isLoading && viewModel.tasks.isEmpty {
+                VStack(spacing: 12) {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: AppTheme.emerald))
+                        .scaleEffect(1.1)
+
+                    Text("Synchronizing Assigned Harvest Blocks...")
+                        .font(.appCallout)
+                        .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 36)
+                .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+            } else if viewModel.tasks.isEmpty {
                 VStack(spacing: 12) {
                     Image(systemName: "calendar.badge.clock")
                         .font(.system(size: 40))
                         .foregroundColor(.secondary)
 
                     Text("No plucking tasks assigned for today.")
-                        .font(.subheadline)
+                        .font(.appHeadline)
+                        .foregroundColor(.primary)
+
+                    Text("Daily harvesting tasks scheduled by the Genetic Algorithm optimizer will populate here.")
+                        .font(.appCaption)
                         .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 24)
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 40)
+                .padding(.vertical, 36)
+                .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
             } else {
                 ForEach(viewModel.tasks) { task in
                     TaskCardView(

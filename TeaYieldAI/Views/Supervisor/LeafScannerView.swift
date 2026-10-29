@@ -67,8 +67,6 @@ struct LeafScannerView: View {
 
             Spacer()
 
-            ThemeToggleView(style: .circle)
-
             Button(action: {
                 HapticFeedback.lightImpact()
                 viewModel.resetScan()

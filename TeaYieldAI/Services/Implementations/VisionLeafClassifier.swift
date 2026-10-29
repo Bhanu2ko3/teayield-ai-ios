@@ -165,33 +165,63 @@ final class VisionLeafClassifier: VisionLeafClassifierProtocol, @unchecked Senda
     // MARK: - Observations Processing
 
     private func processObservations(_ observations: [VNClassificationObservation], latencyMs: Double) -> LeafQualityAssessment {
-        var probabilities: [String: Double] = [:]
+        var rawProbabilities: [String: Double] = [:]
         for obs in observations {
-            probabilities[obs.identifier] = Double(obs.confidence)
+            rawProbabilities[obs.identifier] = Double(obs.confidence)
         }
 
+        // Apply numerically stable Softmax normalization in case model outputs raw logits
+        let normalized = normalizeToProbabilities(rawProbabilities)
+
         // Extract native 4-class probabilities
-        let pT1 = probabilities["1-2 Days"] ?? 0.0
-        let pT2 = probabilities["3-4 Days"] ?? 0.0
-        let pT3 = probabilities["5-7 Days"] ?? 0.0
-        let pT4 = probabilities["7+ Days"] ?? 0.0
+        let pT1 = normalized["1-2 Days"] ?? 0.0
+        let pT2 = normalized["3-4 Days"] ?? 0.0
+        let pT3 = normalized["5-7 Days"] ?? 0.0
+        let pT4 = normalized["7+ Days"] ?? 0.0
 
         // Composite Fine Leaf Aggregation benchmarked against Sri Lanka Tea Board 85% standard
         let fineLeaf = pT1 + pT2
         let coarseLeaf = pT3 + pT4
 
-        // Identify dominant maturity stage
-        let topObservation = observations[0]
-        let dominantStage = LeafMaturityStage(rawValue: topObservation.identifier) ?? .primeTwoLeaves
+        // Identify dominant maturity stage (highest probability class)
+        let topClass = normalized.max(by: { $0.value < $1.value })?.key ?? observations[0].identifier
+        let dominantStage = LeafMaturityStage(rawValue: topClass) ?? .primeTwoLeaves
+        let topConfidence = normalized[topClass] ?? Double(observations[0].confidence)
 
         return LeafQualityAssessment(
             dominantStage: dominantStage,
-            confidence: Double(topObservation.confidence),
+            confidence: topConfidence,
             fineLeafRatio: min(max(fineLeaf, 0.0), 1.0),
             coarseLeafRatio: min(max(coarseLeaf, 0.0), 1.0),
-            maturityProbabilities: probabilities,
+            maturityProbabilities: normalized,
             inferenceLatencyMs: latencyMs,
             timestamp: Date()
         )
+    }
+
+    /// Normalizes output logits to valid [0.0, 1.0] probabilities via numerically stable Softmax.
+    private func normalizeToProbabilities(_ rawDict: [String: Double]) -> [String: Double] {
+        let values = Array(rawDict.values)
+        let hasNegatives = values.contains { $0 < 0 }
+        let sum = values.reduce(0.0, +)
+        let isAlreadyProbabilities = !hasNegatives && abs(sum - 1.0) < 0.05
+
+        if isAlreadyProbabilities {
+            return rawDict.mapValues { min(max($0, 0.0), 1.0) }
+        }
+
+        // Numerically stable Softmax: exp(z_i - max(z))
+        let maxVal = values.max() ?? 0.0
+        var expDict: [String: Double] = [:]
+        var expSum: Double = 0.0
+
+        for (key, val) in rawDict {
+            let expVal = exp(val - maxVal)
+            expDict[key] = expVal
+            expSum += expVal
+        }
+
+        guard expSum > 0 else { return rawDict }
+        return expDict.mapValues { $0 / expSum }
     }
 }

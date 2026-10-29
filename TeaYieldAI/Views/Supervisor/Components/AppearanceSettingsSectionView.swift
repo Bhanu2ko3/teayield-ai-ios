@@ -64,27 +64,17 @@ struct AppearanceSettingsSectionView: View {
 
                 Text(mode.shortTitle)
                     .font(.system(size: 12, weight: isSelected ? .bold : .medium, design: .rounded))
-                    .foregroundColor(isSelected ? .primary : .secondary)
-
-                if isSelected {
-                    Circle()
-                        .fill(AppTheme.emerald)
-                        .frame(width: 5, height: 5)
-                } else {
-                    Circle()
-                        .fill(Color.clear)
-                        .frame(width: 5, height: 5)
-                }
+                    .foregroundColor(isSelected ? AppTheme.emerald : .secondary)
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 10)
+            .padding(.vertical, 12)
             .background(
                 RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
-                    .fill(isSelected ? AppTheme.emerald.opacity(0.08) : Color.clear)
+                    .fill(isSelected ? AppTheme.emerald.opacity(0.12) : Color.clear)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
-                    .stroke(isSelected ? AppTheme.emerald.opacity(0.4) : Color.clear, lineWidth: 1.5)
+                    .stroke(isSelected ? AppTheme.emerald : Color.clear, lineWidth: 1.5)
             )
         }
         .buttonStyle(.plain)

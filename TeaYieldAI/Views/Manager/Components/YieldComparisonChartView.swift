@@ -32,7 +32,7 @@ struct YieldComparisonChartView: View {
 
                 Spacer()
 
-                legendPill(title: "AI Predicted", color: .blue)
+                legendPill(title: "LSTM Forecast", color: .blue)
                 legendPill(title: "Actual Intake", color: AppTheme.emerald)
             }
 

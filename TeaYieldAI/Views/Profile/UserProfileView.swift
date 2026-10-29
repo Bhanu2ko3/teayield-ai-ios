@@ -49,7 +49,6 @@ struct UserProfileView: View {
                             operationalTelemetryGrid
                             plantationAffiliationSection
                             accountSecuritySection
-                            appearancePreferencesSection
                             accountActionsSection
                         }
                         .padding(.horizontal, 20)
@@ -93,8 +92,6 @@ struct UserProfileView: View {
                 .foregroundColor(.primary)
 
             Spacer()
-
-            ThemeToggleView(style: .circle)
 
             Button {
                 dismiss()
@@ -228,14 +225,6 @@ struct UserProfileView: View {
                         .background(viewModel.isManager ? Color.blue.opacity(0.14) : AppTheme.emerald.opacity(0.14))
                         .foregroundColor(viewModel.isManager ? Color.blue : AppTheme.emerald)
                         .cornerRadius(AppTheme.radiusSmall)
-
-                    Text("ID: \(viewModel.employeeId)")
-                        .font(.system(size: 11, weight: .semibold, design: .rounded))
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(Color.secondary.opacity(0.10))
-                        .foregroundColor(.secondary)
-                        .cornerRadius(AppTheme.radiusSmall)
                 }
 
                 HStack(spacing: 6) {
@@ -269,7 +258,7 @@ struct UserProfileView: View {
         .padding(20)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(viewModel.fullName), \(viewModel.roleTitle), Employee ID \(viewModel.employeeId), Email \(viewModel.email)")
+        .accessibilityLabel("\(viewModel.fullName), \(viewModel.roleTitle), Email \(viewModel.email)")
     }
 
     // MARK: - Agronomic Telemetry Grid
@@ -397,39 +386,6 @@ struct UserProfileView: View {
         }
     }
 
-    // MARK: - Appearance Preferences Section
-
-    private var appearancePreferencesSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("APP PREFERENCES")
-                .font(.system(size: 11, weight: .bold, design: .rounded))
-                .foregroundColor(.secondary)
-                .padding(.horizontal, 8)
-
-            HStack {
-                Image(systemName: "circle.lefthalf.filled")
-                    .font(.system(size: 16))
-                    .foregroundColor(AppTheme.emerald)
-                    .frame(width: 22)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Appearance Theme")
-                        .font(.system(size: 13, weight: .semibold, design: .rounded))
-                        .foregroundColor(.primary)
-
-                    Text("System Default, Light, or Dark Mode")
-                        .font(.system(size: 11, weight: .medium, design: .rounded))
-                        .foregroundColor(.secondary)
-                }
-
-                Spacer()
-
-                ThemeToggleView(style: .pill)
-            }
-            .padding(14)
-            .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
-        }
-    }
 
     private func infoRow(icon: String, tint: Color, label: String, value: String) -> some View {
         HStack(spacing: 12) {

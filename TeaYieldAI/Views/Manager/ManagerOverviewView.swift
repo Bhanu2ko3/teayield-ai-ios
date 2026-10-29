@@ -29,7 +29,6 @@ struct ManagerOverviewView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         managerProfileHeader
-                        AppearanceSettingsSectionView()
                         FactoryIntakeCardView(
                             currentIntakeKg: viewModel.totalHarvestTodayKg,
                             capacityCapKg: viewModel.factoryIntakeCapKg,

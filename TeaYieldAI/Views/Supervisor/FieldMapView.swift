@@ -110,8 +110,6 @@ struct FieldMapView: View {
             Spacer()
 
             HStack(spacing: 8) {
-                ThemeToggleView(style: .circle)
-
                 Button(action: {
                     HapticFeedback.lightImpact()
                     viewModel.resetCameraToEstate()
