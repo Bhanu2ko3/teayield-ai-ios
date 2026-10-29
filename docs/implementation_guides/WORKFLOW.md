@@ -317,3 +317,4 @@ Before any feature branch merges into `develop`:
   - Embedded AI Genetic Algorithm schedule optimization canvas into `ManagerAnalyticsDashboardView`.
   - Synchronized authentication credential rotation (`PasswordChangeRequestDTO`, `mustChangePassword`) and self-service manager registration DTOs.
   - Expanded Apple Swift Testing coverage across all new domain models and Codable DTOs.
+  - Formulated [Specification 11: Multi-Tenant SaaS Mobile Client Onboarding & Progressive Lifecycle Specification](../teayield_ai_specs/11_MultiTenant_SaaS_Mobile_Onboarding_Spec.md) mapping the 3-phase onboarding state machine, password rotation gating, and autonomous supervisor delegation onto native SwiftUI flows.
