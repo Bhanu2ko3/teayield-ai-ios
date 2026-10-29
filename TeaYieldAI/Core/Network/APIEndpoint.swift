@@ -18,6 +18,7 @@ enum APIEndpoint {
     case listEstates
     case onboardEstate(EstateOnboardRequestDTO)
     case getEstate(id: UUID)
+    case updateEstate(id: UUID, payload: EstateUpdateRequestDTO)
     case getFields(estateId: UUID)
     case createField(FieldCreateRequestDTO)
     case getFieldNDVI(fieldId: UUID, limit: Int?)
@@ -47,7 +48,7 @@ enum APIEndpoint {
             return "estates"
         case .onboardEstate:
             return "estates/onboard"
-        case .getEstate(let id):
+        case .getEstate(let id), .updateEstate(let id, _):
             return "estates/\(id.uuidString)"
         case .getFields, .createField:
             return "fields"
@@ -76,6 +77,8 @@ enum APIEndpoint {
         switch self {
         case .login, .signupManager, .inviteSupervisor, .changePassword, .onboardEstate, .createPlucker, .createField, .triggerYieldPrediction, .optimizeRoster, .syncHarvest:
             return .post
+        case .updateEstate:
+            return .put
         case .getMe, .listEstates, .getEstate, .getFields, .getFieldNDVI, .getFieldWeather, .listPluckers, .getDailyTasks, .getCurrentRoster, .getHarvestLogs:
             return .get
         }
@@ -133,6 +136,8 @@ enum APIEndpoint {
         case .changePassword(let payload):
             return try? encoder.encode(payload)
         case .onboardEstate(let payload):
+            return try? encoder.encode(payload)
+        case .updateEstate(_, let payload):
             return try? encoder.encode(payload)
         case .createPlucker(let payload):
             return try? encoder.encode(payload)

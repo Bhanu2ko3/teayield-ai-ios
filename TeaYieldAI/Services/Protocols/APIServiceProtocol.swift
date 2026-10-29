@@ -50,6 +50,12 @@ protocol APIServiceProtocol: AnyObject {
     /// Onboards a new tea estate with physical parameters and factory ceilings.
     func onboardEstate(request: EstateOnboardRequestDTO) async throws -> EstateResponseDTO
 
+    /// Updates existing tea estate configuration and factory intake limits.
+    func updateEstate(id: UUID, request: EstateUpdateRequestDTO) async throws -> EstateResponseDTO
+
+    /// Registers a new spatial tea field block.
+    func createField(request: FieldCreateRequestDTO) async throws -> FieldResponseDTO
+
     /// Fetches the master registered plucker workforce for an estate.
     func fetchPluckers(estateId: UUID) async throws -> [PluckerResponseDTO]
 

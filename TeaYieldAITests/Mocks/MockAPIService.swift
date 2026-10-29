@@ -214,6 +214,41 @@ final class MockAPIService: APIServiceProtocol {
         )
     }
 
+    func updateEstate(id: UUID, request: EstateUpdateRequestDTO) async throws -> EstateResponseDTO {
+        if shouldFailRequests {
+            throw simulatedNetworkError ?? NetworkError.serverError(500, "Update estate failure")
+        }
+        return EstateResponseDTO(
+            id: id,
+            name: request.name ?? "Updated Estate",
+            district: request.district ?? "Nuwara Eliya",
+            elevationMeters: request.elevationMeters ?? 1868,
+            totalAreaAcres: request.totalAreaAcres ?? 150.0,
+            dailyFactoryCapacityKg: request.dailyFactoryCapacityKg ?? 12000.0,
+            createdAt: ISO8601DateFormatter().string(from: Date()),
+            updatedAt: ISO8601DateFormatter().string(from: Date())
+        )
+    }
+
+    func createField(request: FieldCreateRequestDTO) async throws -> FieldResponseDTO {
+        if shouldFailRequests {
+            throw simulatedNetworkError ?? NetworkError.serverError(500, "Field creation failure")
+        }
+        return FieldResponseDTO(
+            id: UUID(),
+            estateId: request.estateId,
+            name: request.name,
+            areaAcres: request.areaAcres,
+            boundaryGeojson: request.boundaryGeojson,
+            centroidLatitude: 6.9642,
+            centroidLongitude: 80.7932,
+            currentNdvi: 0.78,
+            daysSinceLastHarvest: 0,
+            harvestStatus: "READY",
+            createdAt: ISO8601DateFormatter().string(from: Date())
+        )
+    }
+
     func fetchPluckers(estateId: UUID) async throws -> [PluckerResponseDTO] {
         if shouldFailRequests {
             throw simulatedNetworkError ?? NetworkError.serverError(500, "Pluckers fetch failure")

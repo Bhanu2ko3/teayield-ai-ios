@@ -7,6 +7,9 @@ struct ManagerOverviewView: View {
     private let container: AppContainerProtocol
     @State private var showingFullProfileSheet: Bool = false
     @State private var isShowingInviteSupervisorSheet: Bool = false
+    @State private var isShowingEditEstateSheet: Bool = false
+    @State private var isShowingAddFieldSheet: Bool = false
+    @State private var isShowingAddPluckerSheet: Bool = false
 
     init(container: AppContainerProtocol, viewModel: ManagerOverviewViewModel? = nil) {
         self.container = container
@@ -84,6 +87,48 @@ struct ManagerOverviewView: View {
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $isShowingInviteSupervisorSheet) {
                 InviteSupervisorSheetView(apiService: container.apiService)
+            }
+            .sheet(isPresented: $isShowingEditEstateSheet) {
+                if let estateId = container.authService.currentUser?.estateId {
+                    EditEstateSheetView(
+                        apiService: container.apiService,
+                        estateId: estateId,
+                        currentName: viewModel.estateName,
+                        currentAcres: viewModel.totalAcreage,
+                        currentCapacityKg: viewModel.factoryIntakeCapKg,
+                        onUpdated: {
+                            Task {
+                                await viewModel.loadEstateTelemetry()
+                            }
+                        }
+                    )
+                }
+            }
+            .sheet(isPresented: $isShowingAddFieldSheet) {
+                if let estateId = container.authService.currentUser?.estateId {
+                    AddFieldDivisionSheetView(
+                        apiService: container.apiService,
+                        estateId: estateId,
+                        onCreated: {
+                            Task {
+                                await viewModel.loadEstateTelemetry()
+                            }
+                        }
+                    )
+                }
+            }
+            .sheet(isPresented: $isShowingAddPluckerSheet) {
+                if let estateId = container.authService.currentUser?.estateId {
+                    AddPluckerSheetView(
+                        apiService: container.apiService,
+                        estateId: estateId,
+                        onCreated: {
+                            Task {
+                                await viewModel.loadEstateTelemetry()
+                            }
+                        }
+                    )
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -181,25 +226,43 @@ struct ManagerOverviewView: View {
                 }
             }
 
-            Button {
-                showingFullProfileSheet = true
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "person.crop.circle.badge.checkmark")
-                        .font(.system(size: 13))
-                    Text("View Full Manager Profile")
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 11, weight: .bold))
+            HStack(spacing: 8) {
+                Button {
+                    showingFullProfileSheet = true
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "person.crop.circle.badge.checkmark")
+                            .font(.system(size: 13))
+                        Text("Profile")
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    }
+                    .foregroundColor(AppTheme.emerald)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+                    .background(AppTheme.emerald.opacity(0.08))
+                    .cornerRadius(AppTheme.radiusSmall)
                 }
-                .foregroundColor(AppTheme.emerald)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(AppTheme.emerald.opacity(0.08))
-                .cornerRadius(AppTheme.radiusSmall)
+                .accessibilityLabel("View full manager profile")
+
+                if let user = container.authService.currentUser, user.estateId != nil {
+                    Button {
+                        isShowingEditEstateSheet = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "slider.horizontal.3")
+                                .font(.system(size: 13))
+                            Text("Edit Estate")
+                                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        }
+                        .foregroundColor(.blue)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                        .background(Color.blue.opacity(0.08))
+                        .cornerRadius(AppTheme.radiusSmall)
+                    }
+                    .accessibilityLabel("Edit estate configuration")
+                }
             }
-            .accessibilityLabel("View full manager profile")
         }
         .padding(14)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
@@ -259,13 +322,36 @@ struct ManagerOverviewView: View {
 
     private var estateDivisionsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            SectionHeaderView(
-                title: "ESTATE DIVISIONS & NDVI STATUS",
-                subtitle: "Sentinel-2 vegetative canopy health across plantation blocks",
-                icon: "leaf.fill",
-                badge: "\(viewModel.fields.count) DIVISIONS",
-                badgeColor: AppTheme.emerald
-            )
+            HStack {
+                SectionHeaderView(
+                    title: "ESTATE DIVISIONS & NDVI STATUS",
+                    subtitle: "Sentinel-2 vegetative canopy health across plantation blocks",
+                    icon: "leaf.fill",
+                    badge: "\(viewModel.fields.count) DIVISIONS",
+                    badgeColor: AppTheme.emerald
+                )
+
+                Spacer()
+
+                if let user = container.authService.currentUser, user.estateId != nil {
+                    Button {
+                        isShowingAddFieldSheet = true
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 12))
+                            Text("Add Division")
+                                .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        }
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(AppTheme.emerald)
+                        .cornerRadius(AppTheme.radiusSmall)
+                    }
+                    .accessibilityLabel("Add new field division block")
+                }
+            }
 
             if viewModel.fields.isEmpty && !viewModel.isLoading {
                 VStack(spacing: 12) {
@@ -346,22 +432,43 @@ struct ManagerOverviewView: View {
 
                 Spacer()
 
-                Button {
-                    isShowingInviteSupervisorSheet = true
-                } label: {
-                    HStack(spacing: 4) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 12))
-                        Text("Invite")
-                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                HStack(spacing: 8) {
+                    if let user = container.authService.currentUser, user.estateId != nil {
+                        Button {
+                            isShowingAddPluckerSheet = true
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: "person.badge.plus")
+                                    .font(.system(size: 11))
+                                Text("Add Plucker")
+                                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                            }
+                            .foregroundColor(.blue)
+                            .padding(.horizontal, 9)
+                            .padding(.vertical, 6)
+                            .background(Color.blue.opacity(0.12))
+                            .cornerRadius(AppTheme.radiusSmall)
+                        }
+                        .accessibilityLabel("Enroll new plucker worker")
                     }
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(AppTheme.emerald)
-                    .cornerRadius(AppTheme.radiusSmall)
+
+                    Button {
+                        isShowingInviteSupervisorSheet = true
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 11))
+                            Text("Invite")
+                                .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        }
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 9)
+                        .padding(.vertical, 6)
+                        .background(AppTheme.emerald)
+                        .cornerRadius(AppTheme.radiusSmall)
+                    }
+                    .accessibilityLabel("Invite subordinate field supervisor")
                 }
-                .accessibilityLabel("Invite subordinate field supervisor")
             }
 
             Text("Provision field supervisors with manager-issued temporary passwords to coordinate weighing and leaf quality scans.")

@@ -92,6 +92,14 @@ final class CloudAPIService: APIServiceProtocol {
         try await execute(.onboardEstate(request))
     }
 
+    func updateEstate(id: UUID, request: EstateUpdateRequestDTO) async throws -> EstateResponseDTO {
+        try await execute(.updateEstate(id: id, payload: request))
+    }
+
+    func createField(request: FieldCreateRequestDTO) async throws -> FieldResponseDTO {
+        try await execute(.createField(request))
+    }
+
     func fetchPluckers(estateId: UUID) async throws -> [PluckerResponseDTO] {
         try await execute(.listPluckers(estateId: estateId))
     }
