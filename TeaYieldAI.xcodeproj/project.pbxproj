@@ -145,6 +145,9 @@
 		74ABCB09308D0E0000E22417 /* ForcePasswordChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */; };
 		74ABCB0B308D0E0000E22417 /* InviteSupervisorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */; };
 		74ABCB0D308D0E0000E22417 /* InviteSupervisorSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */; };
+		74ABCB20308D0E0000E22417 /* EditEstateSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB21308D0E0000E22417 /* EditEstateSheetView.swift */; };
+		74ABCB22308D0E0000E22417 /* AddFieldDivisionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB23308D0E0000E22417 /* AddFieldDivisionSheetView.swift */; };
+		74ABCB24308D0E0000E22417 /* AddPluckerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB25308D0E0000E22417 /* AddPluckerSheetView.swift */; };
 		74ABCB0F308D0E0000E22417 /* MultiTenantOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */; };
 		74ABCB11308D0E0000E22417 /* TeaYieldButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */; };
 		74ABCB13308D0E0000E22417 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB14308D0E0000E22417 /* SectionHeaderView.swift */; };
@@ -312,6 +315,9 @@
 		74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForcePasswordChangeView.swift; sourceTree = "<group>"; };
 		74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteSupervisorViewModel.swift; sourceTree = "<group>"; };
 		74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteSupervisorSheetView.swift; sourceTree = "<group>"; };
+		74ABCB21308D0E0000E22417 /* EditEstateSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEstateSheetView.swift; sourceTree = "<group>"; };
+		74ABCB23308D0E0000E22417 /* AddFieldDivisionSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFieldDivisionSheetView.swift; sourceTree = "<group>"; };
+		74ABCB25308D0E0000E22417 /* AddPluckerSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPluckerSheetView.swift; sourceTree = "<group>"; };
 		74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTenantOnboardingTests.swift; sourceTree = "<group>"; };
 		74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaYieldButton.swift; sourceTree = "<group>"; };
 		74ABCB14308D0E0000E22417 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
@@ -701,6 +707,9 @@
 			isa = PBXGroup;
 			children = (
 				74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */,
+				74ABCB21308D0E0000E22417 /* EditEstateSheetView.swift */,
+				74ABCB23308D0E0000E22417 /* AddFieldDivisionSheetView.swift */,
+				74ABCB25308D0E0000E22417 /* AddPluckerSheetView.swift */,
 				74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */,
 				74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */,
 				74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */,
@@ -912,6 +921,9 @@
 				74ABCB13308D0E0000E22417 /* SectionHeaderView.swift in Sources */,
 				74ABCB41308D0F0000E22417 /* ThemeToggleView.swift in Sources */,
 				74ABCB0D308D0E0000E22417 /* InviteSupervisorSheetView.swift in Sources */,
+				74ABCB20308D0E0000E22417 /* EditEstateSheetView.swift in Sources */,
+				74ABCB22308D0E0000E22417 /* AddFieldDivisionSheetView.swift in Sources */,
+				74ABCB24308D0E0000E22417 /* AddPluckerSheetView.swift in Sources */,
 				74ABCB0B308D0E0000E22417 /* InviteSupervisorViewModel.swift in Sources */,
 				74ABCB09308D0E0000E22417 /* ForcePasswordChangeView.swift in Sources */,
 				74ABCB07308D0E0000E22417 /* ForcePasswordChangeViewModel.swift in Sources */,

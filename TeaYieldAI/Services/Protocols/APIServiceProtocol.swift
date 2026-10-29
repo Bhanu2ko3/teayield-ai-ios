@@ -53,9 +53,6 @@ protocol APIServiceProtocol: AnyObject {
     /// Updates existing tea estate configuration and factory intake limits.
     func updateEstate(id: UUID, request: EstateUpdateRequestDTO) async throws -> EstateResponseDTO
 
-    /// Registers a new spatial tea field block.
-    func createField(request: FieldCreateRequestDTO) async throws -> FieldResponseDTO
-
     /// Fetches the master registered plucker workforce for an estate.
     func fetchPluckers(estateId: UUID) async throws -> [PluckerResponseDTO]
 
