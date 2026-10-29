@@ -251,3 +251,4 @@ TeaYieldAI/
 3. Every public struct, class, and method carries standard triple-slash (`///`) docstrings explaining agronomic and operational context.
 4. 100% VoiceOver accessibility labels and hints configured on all onboarding and password fields.
 5. Codebase compiles with zero warnings on Xcode 14.3.1 (iOS 16.4 SDK) baseline.
+

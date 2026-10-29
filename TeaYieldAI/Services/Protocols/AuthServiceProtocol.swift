@@ -12,6 +12,15 @@ protocol AuthServiceProtocol: AnyObject {
     /// Authenticates with email and password credentials via the remote API.
     func login(credentials: LoginRequestDTO) async throws -> UserProfile
 
+    /// Registers a new estate manager account with tenant administrator privileges.
+    func signupManager(request: ManagerSignUpRequestDTO) async throws -> UserProfile
+
+    /// Updates the local session and Keychain state with a newly onboarded estate identifier.
+    func updateCurrentUserEstate(estateId: UUID)
+
+    /// Marks the active user's temporary password rotation as complete.
+    func completePasswordChange()
+
     /// Performs local biometric unlock using cached credentials and restores session.
     func authenticateWithBiometrics() async throws -> UserProfile
 

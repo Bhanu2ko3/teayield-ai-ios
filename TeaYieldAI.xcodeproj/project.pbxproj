@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABCB01308D0E0000E22417 /* DistrictPickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB02308D0E0000E22417 /* DistrictPickerField.swift */; };
+		74ABCB03308D0E0000E22417 /* EstateOnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */; };
+		74ABCB05308D0E0000E22417 /* EstateOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */; };
+		74ABCB07308D0E0000E22417 /* ForcePasswordChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB08308D0E0000E22417 /* ForcePasswordChangeViewModel.swift */; };
+		74ABCB09308D0E0000E22417 /* ForcePasswordChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */; };
+		74ABCB0B308D0E0000E22417 /* InviteSupervisorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */; };
+		74ABCB0D308D0E0000E22417 /* InviteSupervisorSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */; };
+		74ABCB0F308D0E0000E22417 /* MultiTenantOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */; };
 		74ABCA30308D0E0000E22417 /* Plucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA31308D0E0000E22417 /* Plucker.swift */; };
 		74ABCA32308D0E0000E22417 /* PluckerDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA33308D0E0000E22417 /* PluckerDTOs.swift */; };
 		74ABCA34308D0E0000E22417 /* OptimizationDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA35308D0E0000E22417 /* OptimizationDTOs.swift */; };
@@ -157,6 +165,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABCB02308D0E0000E22417 /* DistrictPickerField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Components/DistrictPickerField.swift; sourceTree = "<group>"; };
+		74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstateOnboardingViewModel.swift; sourceTree = "<group>"; };
+		74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstateOnboardingView.swift; sourceTree = "<group>"; };
+		74ABCB08308D0E0000E22417 /* ForcePasswordChangeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForcePasswordChangeViewModel.swift; sourceTree = "<group>"; };
+		74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForcePasswordChangeView.swift; sourceTree = "<group>"; };
+		74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteSupervisorViewModel.swift; sourceTree = "<group>"; };
+		74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteSupervisorSheetView.swift; sourceTree = "<group>"; };
+		74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTenantOnboardingTests.swift; sourceTree = "<group>"; };
 		74ABCA31308D0E0000E22417 /* Plucker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plucker.swift; sourceTree = "<group>"; };
 		74ABCA33308D0E0000E22417 /* PluckerDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluckerDTOs.swift; sourceTree = "<group>"; };
 		74ABCA35308D0E0000E22417 /* OptimizationDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptimizationDTOs.swift; sourceTree = "<group>"; };
@@ -372,6 +388,7 @@
 		74ABC9E1308D0D0000E22417 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */,
 				74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */,
 				74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */,
 				74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */,
@@ -597,6 +614,9 @@
 		74ABC7BC308D053100E22417 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */,
+				74ABCB08308D0E0000E22417 /* ForcePasswordChangeViewModel.swift */,
+				74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */,
 				74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */,
 				74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */,
 				74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */,
@@ -645,6 +665,7 @@
 		74ABC849308D090100E22417 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */,
 				74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */,
 				74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */,
 				74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */,
@@ -657,6 +678,8 @@
 		74ABC806308D070100E22417 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */,
+				74ABCB02308D0E0000E22417 /* DistrictPickerField.swift */,
 				74ABC802308D070100E22417 /* OnboardingView.swift */,
 				74ABC82B308D080100E22417 /* OnboardingSlideCardView.swift */,
 			);
@@ -666,6 +689,7 @@
 		74ABC7C1308D053100E22417 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */,
 				74ABC7C2308D053100E22417 /* LoginView.swift */,
 			);
 			path = Auth;
@@ -858,6 +882,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCB0D308D0E0000E22417 /* InviteSupervisorSheetView.swift in Sources */,
+				74ABCB0B308D0E0000E22417 /* InviteSupervisorViewModel.swift in Sources */,
+				74ABCB09308D0E0000E22417 /* ForcePasswordChangeView.swift in Sources */,
+				74ABCB07308D0E0000E22417 /* ForcePasswordChangeViewModel.swift in Sources */,
+				74ABCB05308D0E0000E22417 /* EstateOnboardingView.swift in Sources */,
+				74ABCB03308D0E0000E22417 /* EstateOnboardingViewModel.swift in Sources */,
+				74ABCB01308D0E0000E22417 /* DistrictPickerField.swift in Sources */,
 				74ABCA30308D0E0000E22417 /* Plucker.swift in Sources */,
 				74ABCA32308D0E0000E22417 /* PluckerDTOs.swift in Sources */,
 				74ABCA34308D0E0000E22417 /* OptimizationDTOs.swift in Sources */,
@@ -965,6 +996,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCB0F308D0E0000E22417 /* MultiTenantOnboardingTests.swift in Sources */,
 				74ABCA26308D0E0000E22417 /* UserProfileViewModelTests.swift in Sources */,
 				74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */,
 				74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */,

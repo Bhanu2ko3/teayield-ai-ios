@@ -7,6 +7,7 @@ struct ManagerOverviewView: View {
     private let container: AppContainerProtocol
     @AppStorage("appThemeMode") private var appThemeMode: String = AppThemeMode.system.rawValue
     @State private var showingFullProfileSheet: Bool = false
+    @State private var isShowingInviteSupervisorSheet: Bool = false
 
     init(container: AppContainerProtocol) {
         self.container = container
@@ -72,6 +73,7 @@ struct ManagerOverviewView: View {
                         estateMacroKpiGrid
                         ndviDistributionSection
                         estateDivisionsSection
+                        teamDelegationSection
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 16)
@@ -82,6 +84,9 @@ struct ManagerOverviewView: View {
             }
             .navigationTitle("Executive Overview")
             .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $isShowingInviteSupervisorSheet) {
+                InviteSupervisorSheetView(apiService: container.apiService)
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     themeMenuButton
@@ -350,6 +355,45 @@ struct ManagerOverviewView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
         .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
+    }
+
+    private var teamDelegationSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: "person.badge.shield.checkmark.fill")
+                    .foregroundColor(AppTheme.emerald)
+                    .font(.system(size: 16))
+
+                Text("Team & Staff Delegation")
+                    .font(.appHeadline)
+                    .foregroundColor(.primary)
+
+                Spacer()
+
+                Button {
+                    isShowingInviteSupervisorSheet = true
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: 12))
+                        Text("Invite")
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(AppTheme.emerald)
+                    .cornerRadius(8)
+                }
+                .accessibilityLabel("Invite subordinate field supervisor")
+            }
+
+            Text("Provision field supervisors with manager-issued temporary passwords to coordinate weighing and leaf quality scans.")
+                .font(.appCaption)
+                .foregroundColor(.secondary)
+        }
+        .padding(16)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 }
 

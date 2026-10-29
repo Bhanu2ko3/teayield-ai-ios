@@ -27,7 +27,12 @@ struct LoginView: View {
                     VStack(spacing: 24) {
                         topAppearanceBar
                         headerSection
-                        quickRoleSelectorSection
+                        authModeSegmentedPicker
+                        
+                        if viewModel.authMode == .signIn {
+                            quickRoleSelectorSection
+                        }
+                        
                         credentialFormSection
                         actionButtonsSection
                         securityFooterSection
@@ -37,16 +42,26 @@ struct LoginView: View {
                 }
             }
             .navigationBarHidden(true)
-            .alert("Authentication Failed", isPresented: $viewModel.showErrorAlert) {
+            .alert(viewModel.authMode == .signIn ? "Authentication Failed" : "Registration Failed", isPresented: $viewModel.showErrorAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
-                Text(viewModel.errorMessage ?? "An unexpected authentication error occurred.")
+                Text(viewModel.errorMessage ?? "An unexpected error occurred.")
             }
             .applyAppTheme()
         }
     }
 
     // MARK: - Subviews
+
+    private var authModeSegmentedPicker: some View {
+        Picker("Authentication Mode", selection: $viewModel.authMode) {
+            ForEach(AuthViewModel.AuthMode.allCases) { mode in
+                Text(mode.rawValue).tag(mode)
+            }
+        }
+        .pickerStyle(.segmented)
+        .accessibilityLabel("Select Sign In or Register Manager mode")
+    }
 
     private var topAppearanceBar: some View {
         HStack {
@@ -162,8 +177,30 @@ struct LoginView: View {
 
     private var credentialFormSection: some View {
         VStack(spacing: 16) {
+            if viewModel.authMode == .signUp {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Full Legal Name")
+                        .font(.appCaption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
+
+                    HStack {
+                        Image(systemName: "person.fill")
+                            .foregroundColor(.secondary)
+                            .frame(width: 20)
+
+                        TextField("Enter manager full name", text: $viewModel.signUpFullName)
+                            .autocapitalization(.words)
+                            .disableAutocorrection(false)
+                    }
+                    .padding(14)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .cornerRadius(12)
+                }
+            }
+
             VStack(alignment: .leading, spacing: 6) {
-                Text("Enterprise Email")
+                Text(viewModel.authMode == .signUp ? "Corporate Business Email" : "Enterprise Email")
                     .font(.appCaption)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
@@ -173,7 +210,7 @@ struct LoginView: View {
                         .foregroundColor(.secondary)
                         .frame(width: 20)
 
-                    TextField("Enter your enterprise email", text: $viewModel.email)
+                    TextField(viewModel.authMode == .signUp ? "e.g. manager@plantation.lk" : "Enter your enterprise email", text: $viewModel.email)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
                         .keyboardType(.emailAddress)
@@ -195,8 +232,29 @@ struct LoginView: View {
                 .cornerRadius(12)
             }
 
+            if viewModel.authMode == .signUp {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Mobile Contact (Optional)")
+                        .font(.appCaption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
+
+                    HStack {
+                        Image(systemName: "phone.fill")
+                            .foregroundColor(.secondary)
+                            .frame(width: 20)
+
+                        TextField("e.g. +94 77 123 4567", text: $viewModel.signUpPhoneNumber)
+                            .keyboardType(.phonePad)
+                    }
+                    .padding(14)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .cornerRadius(12)
+                }
+            }
+
             VStack(alignment: .leading, spacing: 6) {
-                Text("Password")
+                Text(viewModel.authMode == .signUp ? "Account Password (min 8 characters)" : "Password")
                     .font(.appCaption)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
@@ -207,12 +265,12 @@ struct LoginView: View {
                         .frame(width: 20)
 
                     if isPasswordVisible {
-                        TextField("Enter your password", text: $viewModel.password)
+                        TextField(viewModel.authMode == .signUp ? "Create secure password" : "Enter your password", text: $viewModel.password)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
                     } else {
-                        SecureField("Enter your password", text: $viewModel.password)
-                            .textContentType(.password)
+                        SecureField(viewModel.authMode == .signUp ? "Create secure password" : "Enter your password", text: $viewModel.password)
+                            .textContentType(viewModel.authMode == .signUp ? .newPassword : .password)
                     }
 
                     Button {
@@ -228,6 +286,12 @@ struct LoginView: View {
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
                 .cornerRadius(12)
+
+                if viewModel.authMode == .signUp {
+                    Text("Minimum 8 characters required for cryptographic tenant isolation.")
+                        .font(.system(size: 10, weight: .regular))
+                        .foregroundColor(.secondary)
+                }
             }
 
             // Inline error alert banner if authentication fails
@@ -257,7 +321,7 @@ struct LoginView: View {
         VStack(spacing: 12) {
             Button {
                 Task {
-                    await viewModel.login()
+                    await viewModel.submit()
                 }
             } label: {
                 HStack {
@@ -266,7 +330,7 @@ struct LoginView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                             .padding(.trailing, 8)
                     }
-                    Text(viewModel.isLoading ? "Signing In..." : "Sign In")
+                    Text(submitButtonTitle)
                         .font(.appHeadline)
                         .foregroundColor(.white)
                 }
@@ -276,10 +340,10 @@ struct LoginView: View {
                 .cornerRadius(12)
             }
             .disabled(viewModel.isLoading)
-            .accessibilityLabel("Sign in with email and password")
-            .accessibilityHint("Authenticates credentials with estate server")
+            .accessibilityLabel(submitButtonTitle)
+            .accessibilityHint(viewModel.authMode == .signUp ? "Registers new estate manager tenant account" : "Authenticates credentials with estate server")
 
-            if viewModel.isBiometricAvailable {
+            if viewModel.authMode == .signIn && viewModel.isBiometricAvailable {
                 Button {
                     Task {
                         await viewModel.authenticateWithBiometrics()
@@ -315,6 +379,13 @@ struct LoginView: View {
                 .accessibilityHint("Authenticates using device Secure Enclave biometric scan")
             }
         }
+    }
+
+    private var submitButtonTitle: String {
+        if viewModel.isLoading {
+            return viewModel.authMode == .signUp ? "Registering Account..." : "Signing In..."
+        }
+        return viewModel.authMode == .signUp ? "Create Manager Account" : "Sign In"
     }
 
     private var securityFooterSection: some View {

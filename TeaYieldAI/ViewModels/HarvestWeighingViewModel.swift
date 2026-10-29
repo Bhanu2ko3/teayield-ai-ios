@@ -86,12 +86,12 @@ final class HarvestWeighingViewModel: ObservableObject {
 
     /// Loads registered pluckers for the active estate from the backend API or offline cache.
     func loadAvailablePluckers() async {
-        guard let user = authService.currentUser else { return }
+        guard let user = authService.currentUser, let estateId = user.estateId else { return }
         isLoadingPluckers = true
         defer { isLoadingPluckers = false }
 
         do {
-            let dtos = try await apiService.fetchPluckers(estateId: user.estateId)
+            let dtos = try await apiService.fetchPluckers(estateId: estateId)
             let domainPluckers = dtos.map { $0.toDomain() }
             self.availablePluckers = domainPluckers.isEmpty ? MockData.samplePluckers : domainPluckers
         } catch {
@@ -117,7 +117,7 @@ final class HarvestWeighingViewModel: ObservableObject {
             var fields = try await fieldRepository.fetchAllFields()
             if fields.isEmpty {
                 // If local cache is empty, fetch fresh fields from remote API
-                if let dtos = try? await apiService.fetchFields(estateId: user.estateId) {
+                if let estateId = user.estateId, let dtos = try? await apiService.fetchFields(estateId: estateId) {
                     let domainFields = dtos.map { $0.toDomain() }
                     try? await fieldRepository.saveFields(domainFields)
                     fields = domainFields

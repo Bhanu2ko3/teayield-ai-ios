@@ -52,8 +52,8 @@ final class ManagerOverviewViewModel: ObservableObject {
         if !estateName.isEmpty {
             return estateName
         }
-        if let user = authService.currentUser {
-            return "Estate #\(user.estateId.uuidString.prefix(6).uppercased())"
+        if let user = authService.currentUser, let estateId = user.estateId {
+            return "Estate #\(estateId.uuidString.prefix(6).uppercased())"
         }
         return "Estate Unassigned"
     }
@@ -94,16 +94,21 @@ final class ManagerOverviewViewModel: ObservableObject {
             return
         }
 
+        guard let estateId = user.estateId else {
+            isLoading = false
+            return
+        }
+
         do {
             // Fetch estate enterprise profile dynamically
-            if let estate = try? await apiService.fetchEstate(id: user.estateId) {
+            if let estate = try? await apiService.fetchEstate(id: estateId) {
                 self.estateName = estate.name
                 self.factoryIntakeCapKg = estate.dailyFactoryCapacityKg
             }
 
             var fetchedFields = try await fieldRepository.fetchAllFields()
             if fetchedFields.isEmpty {
-                if let dtos = try? await apiService.fetchFields(estateId: user.estateId) {
+                if let dtos = try? await apiService.fetchFields(estateId: estateId) {
                     let domainFields = dtos.map { $0.toDomain() }
                     try? await fieldRepository.saveFields(domainFields)
                     fetchedFields = domainFields
@@ -218,12 +223,17 @@ final class ManagerOverviewViewModel: ObservableObject {
         isOptimizingRoster = true
         optimizationSuccessMessage = nil
 
+        guard let user = authService.currentUser, let estateId = user.estateId else {
+            isOptimizingRoster = false
+            return
+        }
+
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let mondayDateString = formatter.string(from: Date())
 
         let request = RosterOptimizationRequestDTO(
-            estateId: user.estateId,
+            estateId: estateId,
             weekStartDate: mondayDateString,
             totalAvailablePluckers: 45,
             dailyFactoryCapacityKg: factoryIntakeCapKg,

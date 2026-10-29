@@ -1,12 +1,23 @@
 import Foundation
 import SwiftUI
 
-/// Coordinates user authentication, form validation, and biometric Face ID access.
+/// Coordinates user authentication, form validation, manager self-registration, and biometric Face ID access.
 @MainActor
 final class AuthViewModel: ObservableObject {
 
+    /// Authentication modes supported on the entry gateway.
+    enum AuthMode: String, CaseIterable, Identifiable {
+        case signIn = "Sign In"
+        case signUp = "Register Manager"
+
+        var id: String { rawValue }
+    }
+
+    @Published var authMode: AuthMode = .signIn
     @Published var email: String = ""
     @Published var password: String = ""
+    @Published var signUpFullName: String = ""
+    @Published var signUpPhoneNumber: String = ""
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var showErrorAlert: Bool = false
@@ -24,7 +35,14 @@ final class AuthViewModel: ObservableObject {
     }
 
     var isFormValid: Bool {
-        isValidEmail(email) && password.count >= 6
+        switch authMode {
+        case .signIn:
+            return isValidEmail(email) && password.count >= 6
+        case .signUp:
+            return signUpFullName.trimmingCharacters(in: .whitespaces).count >= 2 &&
+                   isValidEmail(email) &&
+                   password.count >= 8
+        }
     }
 
     private let authService: AuthServiceProtocol
@@ -78,6 +96,51 @@ final class AuthViewModel: ObservableObject {
             isLoading = false
             errorMessage = error.localizedDescription
             showErrorAlert = true
+        }
+    }
+
+    /// Registers a new estate manager account with tenant administrator privileges.
+    func signUpManager() async {
+        guard isFormValid else {
+            errorMessage = "Please enter your full legal name, a valid corporate email, and a password with at least 8 characters."
+            showErrorAlert = true
+            return
+        }
+
+        isLoading = true
+        errorMessage = nil
+
+        let trimmedPhone = signUpPhoneNumber.trimmingCharacters(in: .whitespacesAndNewlines)
+        let phoneParam: String? = trimmedPhone.isEmpty ? nil : trimmedPhone
+
+        let request = ManagerSignUpRequestDTO(
+            fullName: signUpFullName.trimmingCharacters(in: .whitespacesAndNewlines),
+            email: email.trimmingCharacters(in: .whitespacesAndNewlines),
+            password: password,
+            phoneNumber: phoneParam
+        )
+
+        do {
+            _ = try await authService.signupManager(request: request)
+            isLoading = false
+        } catch let networkError as NetworkError {
+            isLoading = false
+            errorMessage = networkError.localizedDescription
+            showErrorAlert = true
+        } catch {
+            isLoading = false
+            errorMessage = error.localizedDescription
+            showErrorAlert = true
+        }
+    }
+
+    /// Dispatches the appropriate network call according to the active auth mode.
+    func submit() async {
+        switch authMode {
+        case .signIn:
+            await login()
+        case .signUp:
+            await signUpManager()
         }
     }
 

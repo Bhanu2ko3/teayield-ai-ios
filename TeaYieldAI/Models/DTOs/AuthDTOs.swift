@@ -27,6 +27,18 @@ struct TokenResponseDTO: Codable {
         case expiresIn = "expires_in"
         case user
     }
+
+    init(
+        accessToken: String,
+        tokenType: String = "bearer",
+        expiresIn: Int = 3600,
+        user: UserProfileDTO = UserProfileDTO()
+    ) {
+        self.accessToken = accessToken
+        self.tokenType = tokenType
+        self.expiresIn = expiresIn
+        self.user = user
+    }
 }
 
 /// User profile details returned by the auth service.
@@ -52,11 +64,32 @@ struct UserProfileDTO: Codable {
         case createdAt = "created_at"
         case updatedAt = "updated_at"
     }
+
+    init(
+        id: UUID = UUID(),
+        estateId: UUID? = nil,
+        email: String? = nil,
+        fullName: String = "Enterprise User",
+        role: String = "estate_manager",
+        phoneNumber: String? = nil,
+        mustChangePassword: Bool? = false,
+        createdAt: String = "2026-01-01T00:00:00Z",
+        updatedAt: String = "2026-01-01T00:00:00Z"
+    ) {
+        self.id = id
+        self.estateId = estateId
+        self.email = email
+        self.fullName = fullName
+        self.role = role
+        self.phoneNumber = phoneNumber
+        self.mustChangePassword = mustChangePassword
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+    }
     
     /// Converts the network DTO into an internal domain entity.
     func toDomain(employeeId: String? = nil) -> UserProfile {
         let domainRole: UserRole = (role == "estate_manager") ? .estateManager : .fieldSupervisor
-        let resolvedEstateId = estateId ?? UUID()
         let derivedEmployeeId = employeeId ?? "ID-\(id.uuidString.prefix(6).uppercased())"
         
         return UserProfile(
@@ -65,7 +98,7 @@ struct UserProfileDTO: Codable {
             fullName: fullName,
             role: domainRole,
             employeeId: derivedEmployeeId,
-            estateId: resolvedEstateId,
+            estateId: estateId,
             mustChangePassword: mustChangePassword ?? false
         )
     }

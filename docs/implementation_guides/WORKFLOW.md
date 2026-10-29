@@ -318,3 +318,19 @@ Before any feature branch merges into `develop`:
   - Synchronized authentication credential rotation (`PasswordChangeRequestDTO`, `mustChangePassword`) and self-service manager registration DTOs.
   - Expanded Apple Swift Testing coverage across all new domain models and Codable DTOs.
   - Formulated [Specification 11: Multi-Tenant SaaS Mobile Client Onboarding & Progressive Lifecycle Specification](../teayield_ai_specs/11_MultiTenant_SaaS_Mobile_Onboarding_Spec.md) mapping the 3-phase onboarding state machine, password rotation gating, and autonomous supervisor delegation onto native SwiftUI flows.
+
+---
+
+## 8. Multi-Tenant SaaS Mobile Client Onboarding & Progressive Lifecycle [ COMPLETED ]
+
+- **Branch:** `feat/comp-5-ipad-suite`
+- **Specification Reference:** [Specification 11](../teayield_ai_specs/11_MultiTenant_SaaS_Mobile_Onboarding_Spec.md)
+- **Delivered Capabilities:**
+  1. **Manager Self-Service Sign Up:** Embedded segmented toggle in `LoginView` backed by `AuthViewModel` and `AuthService.signupManager(request:)`, creating unauthenticated manager profiles (`estateId == nil`).
+  2. **Estate Onboarding Wizard:** Ingests mandatory agro-ecological priors (Commercial Name, District, Elevation 50m-2600m, Total Acres, Daily Factory Intake Capacity) in `EstateOnboardingView` via `EstateOnboardingViewModel` and `DistrictPickerField`.
+  3. **Mandatory Credential Rotation:** Security-first `ForcePasswordChangeView` and `ForcePasswordChangeViewModel` intercepting subordinate accounts flagged with `mustChangePassword == true`.
+  4. **Team Staff Delegation:** `InviteSupervisorSheetView` and `InviteSupervisorViewModel` allowing estate managers to provision field supervisors with auto-generated secure temporary passwords, integrated into `ManagerOverviewView` and `ManagerExecutiveSuiteView`.
+  5. **Progressive Routing State Machine:** Enhanced `RootView.swift` orchestrating seamless transitions across unauthenticated, password rotation, estate onboarding, and operational dashboard states.
+  6. **Automated Verification:** Added 7 comprehensive test scenarios in `TeaYieldAITests/Tests/MultiTenantOnboardingTests.swift` utilizing Apple Swift Testing framework (`import Testing`).
+  7. **Xcode Project Integrity:** Fully registered all 8 new Swift source and test files in `TeaYieldAI.xcodeproj/project.pbxproj` with 100% `PBXBuildFile` and `PBXFileReference` alignment.
+

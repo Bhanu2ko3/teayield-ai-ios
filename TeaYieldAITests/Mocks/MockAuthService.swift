@@ -16,6 +16,7 @@ final class MockAuthService: AuthServiceProtocol {
     var errorToThrow: Error = NetworkError.unauthorized
 
     private(set) var loginCallCount: Int = 0
+    private(set) var signupCallCount: Int = 0
     private(set) var biometricCallCount: Int = 0
     private(set) var logoutCallCount: Int = 0
     private(set) var restoreSessionCallCount: Int = 0
@@ -31,14 +32,41 @@ final class MockAuthService: AuthServiceProtocol {
         }
         let user = UserProfile(
             id: UUID(),
-            email: credentials.username,
+            email: credentials.email,
             fullName: "Bhanuka Bandara",
-            role: .supervisor,
-            estateId: UUID(uuidString: "11111111-2222-3333-4444-555555555555")!,
-            employeeId: "SUP-082"
+            role: .fieldSupervisor,
+            employeeId: "SUP-082",
+            estateId: UUID(uuidString: "11111111-2222-3333-4444-555555555555")!
         )
         self.currentUser = user
         return user
+    }
+
+    func signupManager(request: ManagerSignUpRequestDTO) async throws -> UserProfile {
+        signupCallCount += 1
+        if shouldFailLogin {
+            throw errorToThrow
+        }
+        let user = UserProfile(
+            id: UUID(),
+            email: request.email,
+            fullName: request.fullName,
+            role: .estateManager,
+            employeeId: "MGR-082",
+            estateId: nil
+        )
+        self.currentUser = user
+        return user
+    }
+
+    func updateCurrentUserEstate(estateId: UUID) {
+        guard let user = currentUser else { return }
+        self.currentUser = user.withEstateId(estateId)
+    }
+
+    func completePasswordChange() {
+        guard let user = currentUser else { return }
+        self.currentUser = user.withPasswordChanged()
     }
 
     func authenticateWithBiometrics() async throws -> UserProfile {
@@ -53,9 +81,9 @@ final class MockAuthService: AuthServiceProtocol {
             id: UUID(),
             email: "supervisor@pedro.lk",
             fullName: "Bhanuka Bandara",
-            role: .supervisor,
-            estateId: UUID(uuidString: "11111111-2222-3333-4444-555555555555")!,
-            employeeId: "SUP-082"
+            role: .fieldSupervisor,
+            employeeId: "SUP-082",
+            estateId: UUID(uuidString: "11111111-2222-3333-4444-555555555555")!
         )
         self.currentUser = user
         return user

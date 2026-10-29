@@ -37,8 +37,8 @@ final class TodayTasksViewModel: ObservableObject {
         if !estateName.isEmpty {
             return estateName
         }
-        if let user = authService.currentUser {
-            return "Estate #\(user.estateId.uuidString.prefix(6).uppercased())"
+        if let user = authService.currentUser, let estateId = user.estateId {
+            return "Estate #\(estateId.uuidString.prefix(6).uppercased())"
         }
         return "Central Tea Plantation"
     }
@@ -120,8 +120,13 @@ final class TodayTasksViewModel: ObservableObject {
         let weekday = calendar.component(.weekday, from: Date())
         let dayIndex = max(1, min(6, (weekday == 1) ? 6 : weekday - 1))
 
+        guard let user = authService.currentUser, let estateId = user.estateId else {
+            isLoading = false
+            return
+        }
+
         do {
-            let response = try await apiService.fetchDailyTasks(estateId: user.estateId, dayIndex: dayIndex)
+            let response = try await apiService.fetchDailyTasks(estateId: estateId, dayIndex: dayIndex)
             let domainTasks = response.assignedFields.map { $0.toDomain(shiftDate: Date()) }
             self.tasks = domainTasks
             self.isOffline = false
@@ -132,13 +137,13 @@ final class TodayTasksViewModel: ObservableObject {
             }
 
             // Fetch and cache estate fields in background for offline persistence
-            if let fieldDTOs = try? await apiService.fetchFields(estateId: user.estateId) {
+            if let fieldDTOs = try? await apiService.fetchFields(estateId: estateId) {
                 let domainFields = fieldDTOs.map { $0.toDomain() }
                 try? await fieldRepository.saveFields(domainFields)
             }
 
             // Fetch estate enterprise profile dynamically
-            if let estate = try? await apiService.fetchEstate(id: user.estateId) {
+            if let estate = try? await apiService.fetchEstate(id: estateId) {
                 self.estateName = estate.name
             }
 

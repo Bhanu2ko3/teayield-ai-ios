@@ -18,6 +18,7 @@ struct ManagerExecutiveSuiteView: View {
         case spatialMap = "Estate Spatial GIS"
         case yieldAnalytics = "Harvest Analytics"
         case fieldRoster = "Division Blocks"
+        case teamDelegation = "Staff Delegation"
         case profile = "Officer Profile"
         case diagnostics = "Offline & Diagnostics"
 
@@ -29,6 +30,7 @@ struct ManagerExecutiveSuiteView: View {
             case .spatialMap: return "map.fill"
             case .yieldAnalytics: return "chart.bar.xaxis"
             case .fieldRoster: return "leaf.fill"
+            case .teamDelegation: return "person.badge.shield.checkmark.fill"
             case .profile: return "person.crop.circle.fill"
             case .diagnostics: return "gearshape.fill"
             }
@@ -173,6 +175,8 @@ struct ManagerExecutiveSuiteView: View {
             ManagerAnalyticsDashboardView(viewModel: viewModel)
         case .fieldRoster:
             divisionRosterGrid
+        case .teamDelegation:
+            InviteSupervisorSheetView(apiService: container.apiService)
         case .profile:
             UserProfileView(
                 authService: container.authService,
