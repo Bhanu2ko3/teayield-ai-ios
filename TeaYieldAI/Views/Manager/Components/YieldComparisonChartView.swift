@@ -196,3 +196,19 @@ struct YieldComparisonChartView: View {
         data.reduce(0.0) { $0 + $1.actualHarvestedKg }
     }
 }
+
+// MARK: - Previews
+
+struct YieldComparisonChartView_Previews: PreviewProvider {
+    static var previews: some View {
+        YieldComparisonChartView(data: [
+            DailyYieldComparison(dayName: "Mon", date: Date(), predictedYieldKg: 650, actualHarvestedKg: 700),
+            DailyYieldComparison(dayName: "Tue", date: Date(), predictedYieldKg: 700, actualHarvestedKg: 680),
+            DailyYieldComparison(dayName: "Wed", date: Date(), predictedYieldKg: 720, actualHarvestedKg: 750),
+            DailyYieldComparison(dayName: "Thu", date: Date(), predictedYieldKg: 690, actualHarvestedKg: 710)
+        ])
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

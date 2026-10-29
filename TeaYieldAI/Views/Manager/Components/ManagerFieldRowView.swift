@@ -51,3 +51,14 @@ struct ManagerFieldRowView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct ManagerFieldRowView_Previews: PreviewProvider {
+    static var previews: some View {
+        ManagerFieldRowView(field: MockData.fieldBlockA)
+            .padding()
+            .previewLayout(.sizeThatFits)
+    }
+}
+

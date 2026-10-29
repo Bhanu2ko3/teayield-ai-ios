@@ -110,3 +110,14 @@ struct HarvestHistoryView: View {
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 }
+
+// MARK: - Previews
+
+struct HarvestHistoryView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            HarvestHistoryView(harvestRepository: AppContainer.shared.harvestRepository)
+        }
+    }
+}
+

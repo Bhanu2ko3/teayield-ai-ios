@@ -136,3 +136,23 @@ struct DataStorageSectionView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct DataStorageSectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        DataStorageSectionView(
+            viewModel: SupervisorSettingsViewModel(
+                authService: AppContainer.shared.authService,
+                syncManager: AppContainer.shared.syncManager,
+                fieldRepository: AppContainer.shared.fieldRepository,
+                harvestRepository: AppContainer.shared.harvestRepository,
+                apiService: AppContainer.shared.apiService
+            ),
+            harvestRepository: AppContainer.shared.harvestRepository
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

@@ -97,3 +97,12 @@ struct SupervisorMainTabView: View {
     }
 }
 
+// MARK: - Previews
+
+struct SupervisorMainTabView_Previews: PreviewProvider {
+    static var previews: some View {
+        SupervisorMainTabView(container: AppContainer.shared)
+    }
+}
+
+

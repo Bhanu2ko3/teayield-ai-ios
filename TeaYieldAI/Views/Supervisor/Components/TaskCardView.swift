@@ -147,3 +147,18 @@ struct TaskCardView: View {
         task.isCompleted ? AppTheme.emerald : Color.blue
     }
 }
+
+// MARK: - Previews
+
+struct TaskCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        TaskCardView(
+            task: MockData.taskToday,
+            isGeofenced: true,
+            onRecordWeighingTap: {}
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

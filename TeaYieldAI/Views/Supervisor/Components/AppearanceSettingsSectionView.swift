@@ -92,3 +92,14 @@ struct AppearanceSettingsSectionView: View {
         .accessibilityHint(isSelected ? "Currently selected appearance" : "Double tap to switch application theme to \(mode.title)")
     }
 }
+
+// MARK: - Previews
+
+struct AppearanceSettingsSectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        AppearanceSettingsSectionView()
+            .padding()
+            .previewLayout(.sizeThatFits)
+    }
+}
+

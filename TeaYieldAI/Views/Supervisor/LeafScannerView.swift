@@ -563,3 +563,17 @@ struct LeafScannerView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct LeafScannerView_Previews: PreviewProvider {
+    static var previews: some View {
+        LeafScannerView(
+            viewModel: LeafScannerViewModel(
+                cameraService: AppContainer.shared.cameraService,
+                classifier: AppContainer.shared.leafClassifier
+            )
+        )
+    }
+}
+

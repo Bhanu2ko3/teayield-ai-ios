@@ -182,3 +182,22 @@ struct ReticleBracketShape: Shape {
         return path
     }
 }
+
+// MARK: - Previews
+
+struct ScannerHudOverlayView_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            ScannerHudOverlayView(
+                fineLeafRatio: 0.88,
+                dominantStage: .primeTwoLeaves,
+                qualityGrade: "Export Grade A",
+                meetsExportQuality: true,
+                latencyMs: 16.5,
+                sampleCount: 12
+            )
+        }
+    }
+}
+

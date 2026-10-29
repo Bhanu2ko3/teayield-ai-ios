@@ -299,3 +299,12 @@ struct InviteSupervisorSheetView: View {
     }
 }
 
+// MARK: - Previews
+
+struct InviteSupervisorSheetView_Previews: PreviewProvider {
+    static var previews: some View {
+        InviteSupervisorSheetView(apiService: AppContainer.shared.apiService)
+    }
+}
+
+

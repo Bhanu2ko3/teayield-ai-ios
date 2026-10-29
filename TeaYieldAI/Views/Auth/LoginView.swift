@@ -400,3 +400,12 @@ struct LoginView: View {
         .padding(.top, 4)
     }
 }
+
+// MARK: - Previews
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginView(viewModel: AuthViewModel(authService: AppContainer.shared.authService))
+    }
+}
+

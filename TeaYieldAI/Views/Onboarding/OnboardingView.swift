@@ -54,21 +54,7 @@ struct OnboardingView: View {
 
     private var topHeaderBar: some View {
         HStack {
-            HStack(spacing: 6) {
-                Circle()
-                    .fill(AppTheme.emerald)
-                    .frame(width: 8, height: 8)
-
-                Text("TEAYIELD AI • PRECISION")
-                    .font(.appBadge)
-                    .foregroundColor(.secondary)
-                    .tracking(0.5)
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(Color(uiColor: .secondarySystemGroupedBackground))
-            .cornerRadius(AppTheme.radiusPill)
-
+            
             Spacer()
 
             Menu {
@@ -122,7 +108,7 @@ struct OnboardingView: View {
                     .font(.appLargeTitle)
                     .foregroundColor(.primary)
 
-                Text("PRECISION AGRICULTURE • CEYLON TEA")
+                Text("PRECISION AGRICULTURE CEYLON TEA")
                     .font(.system(size: 11, weight: .bold, design: .rounded))
                     .foregroundColor(.secondary)
                     .tracking(1.2)
@@ -209,8 +195,20 @@ struct OnboardingView: View {
     private func completeOnboarding() {
         HapticFeedback.lightImpact()
         UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
+        Task {
+            _ = await NotificationManager.shared.requestAuthorization()
+        }
         withAnimation(.easeInOut(duration: 0.25)) {
             hasCompletedOnboarding = true
         }
     }
 }
+ 
+// MARK: - Previews
+
+struct OnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardingView(hasCompletedOnboarding: .constant(false))
+    }
+}
+

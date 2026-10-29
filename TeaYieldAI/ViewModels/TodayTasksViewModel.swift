@@ -109,7 +109,7 @@ final class TodayTasksViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        guard let user = authService.currentUser else {
+        guard authService.isAuthenticated else {
             isLoading = false
             errorMessage = "No active user session. Please log in."
             showErrorAlert = true
@@ -120,7 +120,7 @@ final class TodayTasksViewModel: ObservableObject {
         let weekday = calendar.component(.weekday, from: Date())
         let dayIndex = max(1, min(6, (weekday == 1) ? 6 : weekday - 1))
 
-        guard let user = authService.currentUser, let estateId = user.estateId else {
+        guard let estateId = authService.currentUser?.estateId else {
             isLoading = false
             return
         }

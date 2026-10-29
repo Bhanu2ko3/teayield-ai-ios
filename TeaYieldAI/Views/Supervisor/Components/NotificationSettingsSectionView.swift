@@ -101,3 +101,22 @@ struct NotificationSettingsSectionView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct NotificationSettingsSectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        NotificationSettingsSectionView(
+            viewModel: SupervisorSettingsViewModel(
+                authService: AppContainer.shared.authService,
+                syncManager: AppContainer.shared.syncManager,
+                fieldRepository: AppContainer.shared.fieldRepository,
+                harvestRepository: AppContainer.shared.harvestRepository,
+                apiService: AppContainer.shared.apiService
+            )
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

@@ -230,3 +230,12 @@ struct TodayTasksView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct TodayTasksView_Previews: PreviewProvider {
+    static var previews: some View {
+        TodayTasksView(container: AppContainer.shared)
+    }
+}
+

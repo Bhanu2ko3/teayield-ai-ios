@@ -183,3 +183,19 @@ struct NDVITrendChartView: View {
         return String(format: "%.2f", last.ndviScore)
     }
 }
+
+// MARK: - Previews
+
+struct NDVITrendChartView_Previews: PreviewProvider {
+    static var previews: some View {
+        NDVITrendChartView(data: [
+            NDVITrendPoint(weekLabel: "Wk 1", weekIndex: 1, ndviScore: 0.65, targetThreshold: 0.75),
+            NDVITrendPoint(weekLabel: "Wk 2", weekIndex: 2, ndviScore: 0.68, targetThreshold: 0.75),
+            NDVITrendPoint(weekLabel: "Wk 3", weekIndex: 3, ndviScore: 0.72, targetThreshold: 0.75),
+            NDVITrendPoint(weekLabel: "Wk 4", weekIndex: 4, ndviScore: 0.78, targetThreshold: 0.75)
+        ])
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

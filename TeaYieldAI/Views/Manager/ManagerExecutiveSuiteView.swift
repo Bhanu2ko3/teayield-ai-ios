@@ -403,3 +403,13 @@ struct ManagerExecutiveSuiteView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct ManagerExecutiveSuiteView_Previews: PreviewProvider {
+    static var previews: some View {
+        ManagerExecutiveSuiteView(container: AppContainer.shared)
+            .previewInterfaceOrientation(.landscapeLeft)
+    }
+}
+

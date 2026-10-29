@@ -229,14 +229,9 @@ final class ManagerOverviewViewModel: ObservableObject {
 
     /// Dispatches multi-constraint combinatorial Genetic Algorithm plucker schedule optimization to backend.
     func optimizeWorkforceRoster() async {
-        guard let user = authService.currentUser else { return }
+        guard let estateId = authService.currentUser?.estateId else { return }
         isOptimizingRoster = true
         optimizationSuccessMessage = nil
-
-        guard let user = authService.currentUser, let estateId = user.estateId else {
-            isOptimizingRoster = false
-            return
-        }
 
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -265,7 +260,7 @@ final class ManagerOverviewViewModel: ObservableObject {
 
     /// Dispatches on-demand multivariate LSTM yield forecasting to the backend core.
     func generateAICropForecast() async {
-        guard let user = authService.currentUser, let estateId = user.estateId else { return }
+        guard let estateId = authService.currentUser?.estateId else { return }
 
         isPredictingYield = true
         predictionSuccessMessage = nil

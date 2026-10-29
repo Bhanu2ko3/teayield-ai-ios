@@ -273,3 +273,15 @@ struct EstateOnboardingView: View {
     }
 }
 
+// MARK: - Previews
+
+struct EstateOnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        EstateOnboardingView(
+            authService: AppContainer.shared.authService,
+            apiService: AppContainer.shared.apiService
+        )
+    }
+}
+
+

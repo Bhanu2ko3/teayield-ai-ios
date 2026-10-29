@@ -184,3 +184,12 @@ struct FieldMapPlaceholderView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct FieldMapPlaceholderView_Previews: PreviewProvider {
+    static var previews: some View {
+        FieldMapPlaceholderView(fieldRepository: AppContainer.shared.fieldRepository)
+    }
+}
+

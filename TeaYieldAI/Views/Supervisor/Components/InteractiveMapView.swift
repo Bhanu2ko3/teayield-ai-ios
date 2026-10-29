@@ -215,3 +215,21 @@ struct InteractiveMapView: UIViewRepresentable {
         }
     }
 }
+
+// MARK: - Previews
+
+struct InteractiveMapView_Previews: PreviewProvider {
+    static var previews: some View {
+        InteractiveMapView(
+            fields: [MockData.fieldBlockA],
+            selectedField: nil,
+            mapType: .hybrid,
+            cameraRegion: MKCoordinateRegion(
+                center: MockData.nuwaraEliyaEstateCentroid,
+                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+            ),
+            onSelectField: { _ in }
+        )
+    }
+}
+

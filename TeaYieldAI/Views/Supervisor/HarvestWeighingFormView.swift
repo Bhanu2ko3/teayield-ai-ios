@@ -252,6 +252,22 @@ struct HarvestWeighingFormView: View {
             }
         }
     }
-
 }
+
+// MARK: - Previews
+
+struct HarvestWeighingFormView_Previews: PreviewProvider {
+    static var previews: some View {
+        HarvestWeighingFormView(
+            viewModel: HarvestWeighingViewModel(
+                harvestRepository: AppContainer.shared.harvestRepository,
+                fieldRepository: AppContainer.shared.fieldRepository,
+                syncManager: AppContainer.shared.syncManager,
+                authService: AppContainer.shared.authService,
+                apiService: AppContainer.shared.apiService
+            )
+        )
+    }
+}
+
 

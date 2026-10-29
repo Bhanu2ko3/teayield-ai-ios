@@ -51,3 +51,22 @@ struct SecuritySettingsSectionView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct SecuritySettingsSectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        SecuritySettingsSectionView(
+            viewModel: SupervisorSettingsViewModel(
+                authService: AppContainer.shared.authService,
+                syncManager: AppContainer.shared.syncManager,
+                fieldRepository: AppContainer.shared.fieldRepository,
+                harvestRepository: AppContainer.shared.harvestRepository,
+                apiService: AppContainer.shared.apiService
+            )
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

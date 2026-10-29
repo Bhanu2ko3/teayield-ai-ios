@@ -34,3 +34,14 @@ final class CameraPreviewUIView: UIView {
         return layer
     }
 }
+
+// MARK: - Previews
+
+struct CameraPreviewView_Previews: PreviewProvider {
+    static var previews: some View {
+        CameraPreviewView(session: AVCaptureSession())
+            .frame(height: 300)
+            .previewLayout(.sizeThatFits)
+    }
+}
+

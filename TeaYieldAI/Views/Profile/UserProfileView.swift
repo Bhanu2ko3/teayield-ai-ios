@@ -513,3 +513,17 @@ struct UserProfileView: View {
     }
 }
 
+// MARK: - Previews
+
+struct UserProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        UserProfileView(
+            authService: AppContainer.shared.authService,
+            apiService: AppContainer.shared.apiService,
+            harvestRepository: AppContainer.shared.harvestRepository,
+            fieldRepository: AppContainer.shared.fieldRepository
+        )
+    }
+}
+
+

@@ -114,3 +114,12 @@ struct SupervisorSettingsView: View {
         .padding(.bottom, 24)
     }
 }
+
+// MARK: - Previews
+
+struct SupervisorSettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SupervisorSettingsView(container: AppContainer.shared)
+    }
+}
+

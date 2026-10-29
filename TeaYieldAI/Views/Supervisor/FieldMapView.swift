@@ -161,3 +161,17 @@ struct FieldMapView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct FieldMapView_Previews: PreviewProvider {
+    static var previews: some View {
+        FieldMapView(
+            fieldRepository: AppContainer.shared.fieldRepository,
+            locationService: AppContainer.shared.locationService,
+            apiService: AppContainer.shared.apiService,
+            authService: AppContainer.shared.authService
+        )
+    }
+}
+

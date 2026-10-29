@@ -397,3 +397,12 @@ struct ManagerOverviewView: View {
     }
 }
 
+// MARK: - Previews
+
+struct ManagerOverviewView_Previews: PreviewProvider {
+    static var previews: some View {
+        ManagerOverviewView(container: AppContainer.shared)
+    }
+}
+
+

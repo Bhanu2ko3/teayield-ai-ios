@@ -360,3 +360,21 @@ struct ManagerAnalyticsDashboardView: View {
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 }
+
+// MARK: - Previews
+
+struct ManagerAnalyticsDashboardView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            ManagerAnalyticsDashboardView(
+                viewModel: ManagerOverviewViewModel(
+                    fieldRepository: AppContainer.shared.fieldRepository,
+                    harvestRepository: AppContainer.shared.harvestRepository,
+                    authService: AppContainer.shared.authService,
+                    apiService: AppContainer.shared.apiService
+                )
+            )
+        }
+    }
+}
+

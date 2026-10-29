@@ -49,3 +49,12 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.25), value: hasCompletedOnboarding)
     }
 }
+
+// MARK: - Previews
+
+struct RootView_Previews: PreviewProvider {
+    static var previews: some View {
+        RootView(container: AppContainer.shared)
+    }
+}
+

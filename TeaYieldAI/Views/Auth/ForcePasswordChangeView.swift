@@ -298,3 +298,15 @@ struct ForcePasswordChangeView: View {
     }
 }
 
+// MARK: - Previews
+
+struct ForcePasswordChangeView_Previews: PreviewProvider {
+    static var previews: some View {
+        ForcePasswordChangeView(
+            authService: AppContainer.shared.authService,
+            apiService: AppContainer.shared.apiService
+        )
+    }
+}
+
+

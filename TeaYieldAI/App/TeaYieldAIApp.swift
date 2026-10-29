@@ -21,9 +21,6 @@ struct TeaYieldAIApp: App {
             RootView(container: container)
                 .environment(\.managedObjectContext, container.persistenceController.container.viewContext)
                 .applyAppTheme()
-                .task {
-                    _ = await NotificationManager.shared.requestAuthorization()
-                }
         }
     }
 }

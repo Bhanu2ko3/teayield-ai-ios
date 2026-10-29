@@ -100,3 +100,14 @@ struct DistrictPickerField: View {
     }
 }
 
+// MARK: - Previews
+
+struct DistrictPickerField_Previews: PreviewProvider {
+    static var previews: some View {
+        DistrictPickerField(selectedDistrict: .constant("Nuwara Eliya"))
+            .padding()
+            .previewLayout(.sizeThatFits)
+    }
+}
+
+

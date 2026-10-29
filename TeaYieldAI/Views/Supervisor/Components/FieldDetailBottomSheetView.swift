@@ -190,3 +190,17 @@ struct FieldDetailBottomSheetView: View {
         .cornerRadius(AppTheme.radiusSmall)
     }
 }
+
+// MARK: - Previews
+
+struct FieldDetailBottomSheetView_Previews: PreviewProvider {
+    static var previews: some View {
+        FieldDetailBottomSheetView(
+            field: MockData.fieldBlockA,
+            isCurrentlyGeofenced: true
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

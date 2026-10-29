@@ -135,3 +135,30 @@ struct SyncStatusBarView: View {
         Color.white
     }
 }
+
+// MARK: - Previews
+
+struct SyncStatusBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 12) {
+            SyncStatusBarView(
+                unsyncedCount: 0,
+                isSyncing: false,
+                isOffline: false,
+                statusMessage: "All records synced with Supabase",
+                onSyncTap: {}
+            )
+
+            SyncStatusBarView(
+                unsyncedCount: 3,
+                isSyncing: false,
+                isOffline: false,
+                statusMessage: "3 offline records pending upload",
+                onSyncTap: {}
+            )
+        }
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+
