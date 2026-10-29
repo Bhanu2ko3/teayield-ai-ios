@@ -10,22 +10,43 @@ struct FieldDetailBottomSheetView: View {
     var onCloseTap: (() -> Void)?
 
     var body: some View {
-        VStack(spacing: 18) {
-            // Drag handle indicator
-            Capsule()
-                .fill(Color.secondary.opacity(0.3))
-                .frame(width: 40, height: 5)
-                .padding(.top, 8)
+        VStack(spacing: 14) {
+            // Drag handle and top close button bar
+            HStack {
+                Spacer()
+                Capsule()
+                    .fill(Color.secondary.opacity(0.35))
+                    .frame(width: 36, height: 4)
+                    .padding(.leading, 28) // Offset to center relative to close button
+                Spacer()
+
+                if let onCloseTap = onCloseTap {
+                    Button(action: {
+                        HapticFeedback.lightImpact()
+                        onCloseTap()
+                    }) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundColor(.secondary)
+                            .frame(width: 28, height: 28)
+                            .background(Color.secondary.opacity(0.12))
+                            .clipShape(Circle())
+                    }
+                    .accessibilityLabel("Dismiss field details")
+                }
+            }
+            .padding(.top, 4)
 
             // Header Row: Field Title, Code, and Status Badge
             HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text(field.name)
-                        .font(.appTitle)
+                        .font(.appHeadline)
+                        .fontWeight(.bold)
                         .foregroundColor(.primary)
 
                     Text("Division Block: \(field.blockCode)")
-                        .font(.appCallout)
+                        .font(.appCaption)
                         .foregroundColor(.secondary)
                 }
 
@@ -35,28 +56,27 @@ struct FieldDetailBottomSheetView: View {
             }
 
             if isCurrentlyGeofenced {
-                HStack(spacing: 6) {
+                HStack(spacing: 8) {
                     Circle()
                         .fill(AppTheme.emerald)
                         .frame(width: 8, height: 8)
-                    Text("SUPERVISOR INSIDE FIELD GEOFENCE")
-                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                    Text("Supervisor Inside Field Geofence")
+                        .font(.appCaption)
+                        .fontWeight(.semibold)
                         .foregroundColor(AppTheme.emerald)
                     Spacer()
                     Image(systemName: "location.fill")
-                        .font(.system(size: 12))
+                        .font(.system(size: 11))
                         .foregroundColor(AppTheme.emerald)
                 }
                 .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(AppTheme.emerald.opacity(0.12))
+                .padding(.vertical, 7)
+                .background(AppTheme.emerald.opacity(0.10))
                 .cornerRadius(AppTheme.radiusSmall)
             }
 
-            Divider()
-
             // 3 KPI Metric Cards
-            HStack(spacing: 10) {
+            HStack(spacing: 8) {
                 metricTile(
                     title: "Acreage",
                     value: field.formattedAcreage,
@@ -76,14 +96,15 @@ struct FieldDetailBottomSheetView: View {
             }
 
             // NDVI Satellite Health Bar
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 5) {
                 HStack {
                     Text("Sentinel-2 Chlorophyll Index")
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .font(.appCaption)
                         .foregroundColor(.secondary)
                     Spacer()
                     Text(field.status.displayName)
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                        .font(.appCaption)
+                        .fontWeight(.bold)
                         .foregroundColor(statusColor)
                 }
 
@@ -91,49 +112,55 @@ struct FieldDetailBottomSheetView: View {
                     ZStack(alignment: .leading) {
                         Capsule()
                             .fill(Color.secondary.opacity(0.15))
-                            .frame(height: 8)
+                            .frame(height: 6)
 
                         Capsule()
                             .fill(statusColor)
-                            .frame(width: max(geo.size.width * CGFloat(min(max(field.currentNDVI, 0), 1.0)), 0), height: 8)
+                            .frame(width: max(geo.size.width * CGFloat(min(max(field.currentNDVI, 0), 1.0)), 0), height: 6)
                     }
                 }
-                .frame(height: 8)
+                .frame(height: 6)
             }
-            .padding(.vertical, 2)
 
-            // Primary Action Button: "Log Harvest Weighing"
+            // Primary Action Button: "Record Harvest from Block"
             if let onWeighTap = onWeighTap {
-                Button(action: { onWeighTap(field) }) {
+                Button(action: {
+                    HapticFeedback.lightImpact()
+                    onWeighTap(field)
+                }) {
                     HStack(spacing: 8) {
                         Image(systemName: "scalemass.fill")
+                            .font(.system(size: 14, weight: .semibold))
                         Text("Record Harvest from \(field.blockCode)")
-                            .fontWeight(.bold)
+                            .font(.appHeadline)
+                            .fontWeight(.semibold)
                     }
-                    .font(.appHeadline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 50)
+                    .frame(height: 48)
                     .background(field.status == .ready ? AppTheme.emerald : AppTheme.amber)
                     .cornerRadius(AppTheme.radiusMedium)
                 }
                 .accessibilityLabel("Record harvest weighing for \(field.name), block \(field.blockCode)")
                 .accessibilityHint("Opens weighing entry form pre-selected with this field")
-                .padding(.top, 4)
             }
 
             // Secondary Viva Simulation Button: "Simulate Geofence Arrival"
             if let onSimulateGeofenceTap = onSimulateGeofenceTap {
-                Button(action: { onSimulateGeofenceTap(field) }) {
+                Button(action: {
+                    HapticFeedback.lightImpact()
+                    onSimulateGeofenceTap(field)
+                }) {
                     HStack(spacing: 6) {
                         Image(systemName: isCurrentlyGeofenced ? "checkmark.circle.fill" : "dot.radiowaves.left.and.right")
-                            .font(.system(size: 13))
+                            .font(.system(size: 12))
                         Text(isCurrentlyGeofenced ? "Geofence Active (Boundary Triggered)" : "Simulate Geofence Arrival (Viva Test)")
-                            .font(.system(size: 13, weight: .semibold, design: .rounded))
+                            .font(.appCaption)
+                            .fontWeight(.medium)
                     }
                     .foregroundColor(isCurrentlyGeofenced ? AppTheme.emerald : .secondary)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 38)
+                    .frame(height: 36)
                     .background(Color.secondary.opacity(0.08))
                     .cornerRadius(AppTheme.radiusSmall)
                 }
@@ -141,23 +168,26 @@ struct FieldDetailBottomSheetView: View {
                 .accessibilityHint("Simulates GPS hardware boundary entry for viva defense")
             }
         }
-        .padding(.horizontal, 20)
-        .padding(.bottom, 24)
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .padding(.bottom, 16)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+        .shadow(color: Color.black.opacity(0.18), radius: 16, y: 6)
     }
 
     private var statusBadge: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 5) {
             Circle()
                 .fill(statusColor)
-                .frame(width: 8, height: 8)
+                .frame(width: 7, height: 7)
 
             Text(field.status.displayName)
-                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .font(.appCaption)
+                .fontWeight(.bold)
                 .foregroundColor(statusColor)
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 6)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
         .background(statusColor.opacity(0.12))
         .cornerRadius(AppTheme.radiusSmall)
     }
@@ -171,22 +201,23 @@ struct FieldDetailBottomSheetView: View {
     }
 
     private func metricTile(title: String, value: String, icon: String, tint: Color = .primary) -> some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 3) {
             Image(systemName: icon)
-                .font(.system(size: 14))
+                .font(.system(size: 13))
                 .foregroundColor(.secondary)
 
             Text(value)
-                .font(.system(size: 15, weight: .bold, design: .rounded))
+                .font(.appHeadline)
+                .fontWeight(.bold)
                 .foregroundColor(tint)
 
             Text(title)
-                .font(.system(size: 11, weight: .regular, design: .rounded))
+                .font(.appCaption)
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 10)
-        .background(Color.secondary.opacity(0.08))
+        .padding(.vertical, 8)
+        .background(Color.secondary.opacity(0.07))
         .cornerRadius(AppTheme.radiusSmall)
     }
 }

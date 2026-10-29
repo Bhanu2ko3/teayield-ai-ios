@@ -72,12 +72,17 @@ struct FieldMapView: View {
                             viewModel.simulateGeofenceArrival(at: field)
                         },
                         onCloseTap: {
-                            viewModel.selectedField = nil
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                viewModel.selectedField = nil
+                            }
                         }
                     )
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .bottom).combined(with: .opacity),
+                        removal: .move(edge: .bottom).combined(with: .opacity)
+                    ))
                     .padding(.horizontal, 12)
-                    .padding(.bottom, 8)
+                    .padding(.bottom, 68) // Clear above custom floating bottom navigation tabs
                 }
 
                 // Loading Indicator
