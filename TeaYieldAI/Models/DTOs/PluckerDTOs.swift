@@ -64,3 +64,4 @@ struct PluckerUpdateRequestDTO: Codable {
         case isActive = "is_active"
     }
 }
+

@@ -19,3 +19,4 @@ struct Plucker: Identifiable, Hashable, Codable {
         String(format: "%.1f kg/day", averageDailyRateKg)
     }
 }
+

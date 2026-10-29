@@ -34,7 +34,7 @@ fr_anchor = "/* Begin PBXFileReference section */\n"
 fr_entries = ""
 for bf_id, fr_id, fn, gid in new_files:
     entry = f"\t\t{fr_id} /* {fn} */ = {{isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = {fn}; sourceTree = \"<group>\"; }};\n"
-    if fr_id not in content:
+    if f"{fr_id} /* {fn} */ = {{isa = PBXFileReference" not in content:
         fr_entries += entry
 
 content = content.replace(fr_anchor, fr_anchor + fr_entries)
@@ -68,3 +68,4 @@ with open(PBX_PATH, "w", encoding="utf-8") as f:
     f.write(content)
 
 print("Successfully registered API update files in project.pbxproj")
+

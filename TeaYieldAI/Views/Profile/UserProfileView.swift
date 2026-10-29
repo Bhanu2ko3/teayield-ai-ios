@@ -3,6 +3,7 @@ import PhotosUI
 
 /// Dedicated full-screen enterprise user profile view displaying officer credentials,
 /// agronomic telemetry metrics, plantation sector assignment, hardware security tiers, and session controls.
+@MainActor
 struct UserProfileView: View {
 
     @StateObject private var viewModel: UserProfileViewModel
