@@ -5,7 +5,6 @@ struct ManagerOverviewView: View {
 
     @StateObject private var viewModel: ManagerOverviewViewModel
     private let container: AppContainerProtocol
-    @AppStorage("appThemeMode") private var appThemeMode: String = AppThemeMode.system.rawValue
     @State private var showingFullProfileSheet: Bool = false
     @State private var isShowingInviteSupervisorSheet: Bool = false
 
@@ -19,10 +18,6 @@ struct ManagerOverviewView: View {
                 apiService: container.apiService
             )
         )
-    }
-
-    private var currentThemeMode: AppThemeMode {
-        AppThemeMode(rawValue: appThemeMode) ?? .system
     }
 
     var body: some View {
@@ -89,7 +84,7 @@ struct ManagerOverviewView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    themeMenuButton
+                    ThemeToggleView(style: .iconOnly)
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -129,24 +124,6 @@ struct ManagerOverviewView: View {
             }
             .applyAppTheme()
         }
-    }
-
-    private var themeMenuButton: some View {
-        Menu {
-            ForEach(AppThemeMode.allCases) { mode in
-                Button {
-                    HapticFeedback.selection()
-                    appThemeMode = mode.rawValue
-                } label: {
-                    Label(mode.title, systemImage: mode.iconName)
-                }
-            }
-        } label: {
-            Image(systemName: currentThemeMode.iconName)
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundColor(AppTheme.emerald)
-        }
-        .accessibilityLabel("Appearance Theme Switcher")
     }
 
     // MARK: - Subviews

@@ -19,27 +19,28 @@ struct EstateOnboardingView: View {
                 Color(uiColor: .systemGroupedBackground)
                     .ignoresSafeArea()
 
-                ScrollView {
-                    VStack(spacing: 20) {
-                        headerSection
-                        priorExplanationBanner
-                        formFieldsCard
-                        submitButtonSection
-                        cancelSection
+                VStack(spacing: 0) {
+                    topHeaderBar
+                        .padding(.horizontal, 20)
+                        .padding(.top, 12)
+                        .padding(.bottom, 12)
+                        .background(Color(uiColor: .systemGroupedBackground))
+
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            headerSection
+                            priorExplanationBanner
+                            formFieldsCard
+                            submitButtonSection
+                            cancelSection
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 24)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 16)
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("Estate Setup")
-                        .font(.appHeadline)
-                        .foregroundColor(.primary)
-                }
-            }
-            .alert("Onboarding Incomplete", isPresented: $viewModel.showErrorAlert) {
+            .navigationBarHidden(true)
+            .alert("Estate Setup Incomplete", isPresented: $viewModel.showErrorAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
                 Text(viewModel.errorMessage ?? "Please review all entered parameters.")
@@ -49,6 +50,18 @@ struct EstateOnboardingView: View {
     }
 
     // MARK: - Subviews
+
+    private var topHeaderBar: some View {
+        HStack {
+            Text("Estate Setup")
+                .font(.appHeadline)
+                .foregroundColor(.secondary)
+
+            Spacer()
+
+            ThemeToggleView(style: .circle)
+        }
+    }
 
     private var headerSection: some View {
         VStack(spacing: 10) {
@@ -63,13 +76,13 @@ struct EstateOnboardingView: View {
                     .frame(width: 30, height: 30)
                     .foregroundColor(AppTheme.emerald)
             }
-            .padding(.top, 8)
+            .padding(.top, 4)
 
-            Text("Register Plantation Estate")
+            Text("Register Tea Estate")
                 .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundColor(.primary)
 
-            Text("Configure your commercial plantation parameters to initialize AI yield forecasting and genetic plucking rosters.")
+            Text("Enter plantation division details and factory capacity limits to calibrate yield forecasting and harvesting rosters.")
                 .font(.appSubheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -85,11 +98,11 @@ struct EstateOnboardingView: View {
                 .padding(.top, 2)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("Mathematical Priors for AI Engines")
+                Text("Operational Calibration")
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
                     .foregroundColor(.primary)
 
-                Text("Elevation calibrates Sentinel-2 atmospheric lapse rates and NDVI decay. Factory withering capacity acts as the hard ceiling constraint in the genetic plucking scheduler.")
+                Text("Elevation calibrates vegetative growth cycles and weather patterns, while factory capacity ensures daily plucking rosters stay within safe withering limits.")
                     .font(.system(size: 11, weight: .regular))
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -110,7 +123,7 @@ struct EstateOnboardingView: View {
         VStack(spacing: 16) {
             // Estate Name
             VStack(alignment: .leading, spacing: 6) {
-                Text("Commercial Estate Name")
+                Text("Estate Name")
                     .font(.appCaption)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
@@ -120,8 +133,9 @@ struct EstateOnboardingView: View {
                         .foregroundColor(.secondary)
                         .frame(width: 20)
 
-                    TextField("e.g. Great Western Valley Estate", text: $viewModel.estateName)
+                    TextField("e.g. Radella Estate", text: $viewModel.estateName)
                         .autocapitalization(.words)
+                        .disableAutocorrection(true)
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
@@ -129,21 +143,19 @@ struct EstateOnboardingView: View {
             }
 
             // District Picker
-            DistrictPickerField(selectedDistrict: $viewModel.selectedDistrict) { district in
-                viewModel.applyDistrictDefaults(district)
-            }
+            DistrictPickerField(selectedDistrict: $viewModel.selectedDistrict)
 
             // Mean Elevation
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
-                    Text("Mean Elevation (Meters)")
+                    Text("Mean Elevation")
                         .font(.appCaption)
                         .fontWeight(.medium)
                         .foregroundColor(.secondary)
 
                     Spacer()
 
-                    Text("Valid: 50m - 2,600m")
+                    Text("Range: 50 – 2,600 m")
                         .font(.system(size: 10, weight: .medium))
                         .foregroundColor(.secondary)
                 }
@@ -153,7 +165,7 @@ struct EstateOnboardingView: View {
                         .foregroundColor(.secondary)
                         .frame(width: 20)
 
-                    TextField("Elevation in meters", text: $viewModel.elevationInput)
+                    TextField("e.g. 1850", text: $viewModel.elevationInput)
                         .keyboardType(.numberPad)
                         .disableAutocorrection(true)
                         .onChange(of: viewModel.elevationInput) { newValue in
@@ -178,14 +190,14 @@ struct EstateOnboardingView: View {
             // Total Acreage
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
-                    Text("Total Surveyed Landholding (Acres)")
+                    Text("Total Landholding")
                         .font(.appCaption)
                         .fontWeight(.medium)
                         .foregroundColor(.secondary)
 
                     Spacer()
 
-                    Text("1.0 - 50,000.0 acres")
+                    Text("Range: 1.0 – 50,000.0")
                         .font(.system(size: 10, weight: .medium))
                         .foregroundColor(.secondary)
                 }
@@ -195,7 +207,7 @@ struct EstateOnboardingView: View {
                         .foregroundColor(.secondary)
                         .frame(width: 20)
 
-                    TextField("Total acres", text: $viewModel.totalAcresInput)
+                    TextField("e.g. 450.0", text: $viewModel.totalAcresInput)
                         .keyboardType(.decimalPad)
                         .disableAutocorrection(true)
                         .onChange(of: viewModel.totalAcresInput) { newValue in
@@ -220,14 +232,14 @@ struct EstateOnboardingView: View {
             // Factory Intake Capacity
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
-                    Text("Daily Factory Capacity (Kg/Day)")
+                    Text("Daily Factory Intake Limit")
                         .font(.appCaption)
                         .fontWeight(.medium)
                         .foregroundColor(.secondary)
 
                     Spacer()
 
-                    Text("Withering Troughs Limit")
+                    Text("Max Withering Cap")
                         .font(.system(size: 10, weight: .medium))
                         .foregroundColor(.secondary)
                 }
@@ -237,7 +249,7 @@ struct EstateOnboardingView: View {
                         .foregroundColor(.secondary)
                         .frame(width: 20)
 
-                    TextField("Max kg per day", text: $viewModel.dailyFactoryCapacityInput)
+                    TextField("e.g. 25000", text: $viewModel.dailyFactoryCapacityInput)
                         .keyboardType(.decimalPad)
                         .disableAutocorrection(true)
                         .onChange(of: viewModel.dailyFactoryCapacityInput) { newValue in
@@ -265,8 +277,8 @@ struct EstateOnboardingView: View {
 
     private var submitButtonSection: some View {
         TeaYieldButton(
-            title: "Complete Estate Onboarding",
-            icon: "checkmark.shield.fill",
+            title: "Register Estate & Continue",
+            icon: "arrow.right",
             style: .primary,
             isLoading: viewModel.isSubmitting,
             isDisabled: !viewModel.isFormValid,

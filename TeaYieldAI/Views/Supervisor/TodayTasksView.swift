@@ -67,6 +67,8 @@ struct TodayTasksView: View {
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 12) {
+                        ThemeToggleView(style: .iconOnly)
+
                         NavigationLink {
                             HarvestHistoryView(harvestRepository: container.harvestRepository)
                         } label: {

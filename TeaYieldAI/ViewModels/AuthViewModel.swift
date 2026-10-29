@@ -18,6 +18,7 @@ final class AuthViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var signUpFullName: String = ""
     @Published var signUpPhoneNumber: String = ""
+    @Published var signUpConfirmPassword: String = ""
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var showErrorAlert: Bool = false
@@ -34,6 +35,32 @@ final class AuthViewModel: ObservableObject {
         authService.biometricType
     }
 
+    var hasSignUpMinLength: Bool {
+        password.count >= 8
+    }
+
+    var hasSignUpNumber: Bool {
+        password.contains(where: \.isNumber)
+    }
+
+    var doSignUpPasswordsMatch: Bool {
+        !password.isEmpty && !signUpConfirmPassword.isEmpty && password == signUpConfirmPassword
+    }
+
+    var isSignUpPhoneValid: Bool {
+        if signUpPhoneNumber.isEmpty { return true }
+        let digits = signUpPhoneNumber.filter { $0.isNumber }
+        let normalized = digits.hasPrefix("0") ? String(digits.dropFirst()) : digits
+        return normalized.count == 9
+    }
+
+    var fullInternationalPhoneNumber: String? {
+        let digits = signUpPhoneNumber.filter { $0.isNumber }
+        if digits.isEmpty { return nil }
+        let normalized = digits.hasPrefix("0") ? String(digits.dropFirst()) : digits
+        return "+94\(normalized)"
+    }
+
     var isFormValid: Bool {
         switch authMode {
         case .signIn:
@@ -41,8 +68,8 @@ final class AuthViewModel: ObservableObject {
         case .signUp:
             let nameValid = signUpFullName.trimmingCharacters(in: .whitespacesAndNewlines).count >= 2
             let emailValid = InputSanitizer.isValidEmail(email)
-            let passwordValid = password.count >= 8
-            let phoneValid = signUpPhoneNumber.isEmpty || InputSanitizer.isValidPhoneNumber(signUpPhoneNumber)
+            let passwordValid = hasSignUpMinLength && hasSignUpNumber && doSignUpPasswordsMatch
+            let phoneValid = isSignUpPhoneValid
             return nameValid && emailValid && passwordValid && phoneValid
         }
     }
@@ -51,10 +78,6 @@ final class AuthViewModel: ObservableObject {
 
     init(authService: AuthServiceProtocol) {
         self.authService = authService
-        // Restore last entered email if persisted in Keychain
-        if let lastEmail = KeychainHelper.shared.readString(forKey: KeychainHelper.Key.lastUserEmail) {
-            self.email = lastEmail
-        }
     }
 
     // MARK: - Actions
@@ -105,15 +128,19 @@ final class AuthViewModel: ObservableObject {
     func signUpManager() async {
         guard isFormValid else {
             if signUpFullName.trimmingCharacters(in: .whitespacesAndNewlines).count < 2 {
-                errorMessage = "Please enter your full legal name (at least 2 characters)."
+                errorMessage = "Please enter your full name (at least 2 characters)."
             } else if !InputSanitizer.isValidEmail(email) {
-                errorMessage = "Please enter a valid corporate email address."
-            } else if password.count < 8 {
-                errorMessage = "Password must contain at least 8 characters for cryptographic isolation."
-            } else if !signUpPhoneNumber.isEmpty && !InputSanitizer.isValidPhoneNumber(signUpPhoneNumber) {
-                errorMessage = "Please enter a valid phone number with 9-15 digits."
+                errorMessage = "Please enter a valid email address."
+            } else if !hasSignUpMinLength {
+                errorMessage = "Password must contain at least 8 characters."
+            } else if !hasSignUpNumber {
+                errorMessage = "Password must contain at least one number."
+            } else if !doSignUpPasswordsMatch {
+                errorMessage = "Passwords do not match. Please verify confirmation."
+            } else if !signUpPhoneNumber.isEmpty && !isSignUpPhoneValid {
+                errorMessage = "Please enter a valid 9-digit mobile number."
             } else {
-                errorMessage = "Please verify all required registration fields."
+                errorMessage = "Please complete all required fields."
             }
             showErrorAlert = true
             return
@@ -122,8 +149,7 @@ final class AuthViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        let sanitizedPhone = InputSanitizer.sanitizePhoneNumber(signUpPhoneNumber)
-        let phoneParam: String? = sanitizedPhone.isEmpty ? nil : sanitizedPhone
+        let phoneParam: String? = fullInternationalPhoneNumber
 
         let request = ManagerSignUpRequestDTO(
             fullName: signUpFullName.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -194,6 +220,7 @@ final class AuthViewModel: ObservableObject {
     func logout() {
         authService.logout()
         password = ""
+        signUpConfirmPassword = ""
     }
 
     // MARK: - Private Helpers

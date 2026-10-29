@@ -6,10 +6,10 @@ import SwiftUI
 final class EstateOnboardingViewModel: ObservableObject {
 
     @Published var estateName: String = ""
-    @Published var selectedDistrict: String = "Nuwara Eliya"
-    @Published var elevationInput: String = "1868"
-    @Published var totalAcresInput: String = "450.0"
-    @Published var dailyFactoryCapacityInput: String = "25000.0"
+    @Published var selectedDistrict: String = ""
+    @Published var elevationInput: String = ""
+    @Published var totalAcresInput: String = ""
+    @Published var dailyFactoryCapacityInput: String = ""
 
     @Published var isSubmitting: Bool = false
     @Published var errorMessage: String? = nil
@@ -28,9 +28,14 @@ final class EstateOnboardingViewModel: ObservableObject {
     var isFormValid: Bool {
         let nameTrimmed = estateName.trimmingCharacters(in: .whitespacesAndNewlines)
         return nameTrimmed.count >= 2 && nameTrimmed.count <= 150 &&
+               isDistrictValid &&
                isElevationValid &&
                isAcresValid &&
                isCapacityValid
+    }
+
+    var isDistrictValid: Bool {
+        !selectedDistrict.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     var isElevationValid: Bool {
@@ -48,16 +53,15 @@ final class EstateOnboardingViewModel: ObservableObject {
         return capacity >= 1.0 && capacity <= 200000.0
     }
 
-    /// Automatically synchronizes the elevation estimate when the district selection updates.
+    /// Retained for compatibility; does not overwrite user entered elevation values.
     func applyDistrictDefaults(_ district: SriLankanTeaDistrict) {
-        let defaultElevation = max(50, district.defaultElevationMeters)
-        self.elevationInput = "\(defaultElevation)"
+        // Intentionally left blank to avoid unwanted auto-suggest overrides of user inputs.
     }
 
     /// Dispatches the estate onboarding payload to the backend and updates the user tenant session.
     func onboardEstate() async {
         guard isFormValid else {
-            errorMessage = "Please enter a valid estate designation (min 2 chars), elevation between 50m and 2,600m, acreage between 1 and 50,000, and factory capacity up to 200,000 kg/day."
+            errorMessage = "Please enter an estate name, valid elevation (50m - 2,600m), acreage (1 - 50,000), and factory capacity (up to 200,000 kg/day)."
             showErrorAlert = true
             return
         }

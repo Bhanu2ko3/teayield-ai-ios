@@ -31,12 +31,19 @@ struct MultiTenantOnboardingTests {
         viewModel.signUpFullName = "Bhanuka Bandara"
         viewModel.email = "manager@plantation.lk"
         viewModel.password = "Short1"
+        viewModel.signUpConfirmPassword = "Short1"
         #expect(viewModel.isFormValid == false)
 
-        // Valid payload
+        // Passwords do not match
+        viewModel.password = "SecurePass123!"
+        viewModel.signUpConfirmPassword = "MismatchPass123!"
+        #expect(viewModel.isFormValid == false)
+
+        // Valid payload with matching passwords
         viewModel.signUpFullName = "Bhanuka Bandara"
         viewModel.email = "manager@plantation.lk"
         viewModel.password = "SecurePass123!"
+        viewModel.signUpConfirmPassword = "SecurePass123!"
         #expect(viewModel.isFormValid == true)
     }
 
@@ -48,6 +55,7 @@ struct MultiTenantOnboardingTests {
         viewModel.signUpFullName = "Bhanuka Bandara"
         viewModel.email = "manager@pedro.lk"
         viewModel.password = "SecurePass123!"
+        viewModel.signUpConfirmPassword = "SecurePass123!"
 
         await viewModel.signUpManager()
 
@@ -67,12 +75,25 @@ struct MultiTenantOnboardingTests {
         let apiService = MockAPIService()
         let viewModel = EstateOnboardingViewModel(authService: authService, apiService: apiService)
 
-        // Initial default is valid
+        // Fresh view model starts with clean empty fields and disabled submission
+        #expect(viewModel.isFormValid == false)
+        #expect(viewModel.selectedDistrict.isEmpty)
+        #expect(viewModel.elevationInput.isEmpty)
+        #expect(viewModel.totalAcresInput.isEmpty)
+        #expect(viewModel.dailyFactoryCapacityInput.isEmpty)
+
+        // Valid populated inputs pass validation
         viewModel.estateName = "Pedro Estate"
+        viewModel.selectedDistrict = "Nuwara Eliya"
         viewModel.elevationInput = "1868"
         viewModel.totalAcresInput = "450.0"
         viewModel.dailyFactoryCapacityInput = "25000.0"
         #expect(viewModel.isFormValid == true)
+
+        // Unselected district invalidates form
+        viewModel.selectedDistrict = ""
+        #expect(viewModel.isFormValid == false)
+        viewModel.selectedDistrict = "Nuwara Eliya"
 
         // Elevation below Sri Lankan minimum (50m)
         viewModel.elevationInput = "20"

@@ -22,27 +22,28 @@ struct ForcePasswordChangeView: View {
                 Color(uiColor: .systemGroupedBackground)
                     .ignoresSafeArea()
 
-                ScrollView {
-                    VStack(spacing: 20) {
-                        securityHeaderSection
-                        securityNoticeBanner
-                        passwordFieldsCard
-                        requirementsCard
-                        actionButtonSection
-                        logoutSection
+                VStack(spacing: 0) {
+                    topHeaderBar
+                        .padding(.horizontal, 20)
+                        .padding(.top, 12)
+                        .padding(.bottom, 12)
+                        .background(Color(uiColor: .systemGroupedBackground))
+
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            securityHeaderSection
+                            securityNoticeBanner
+                            passwordFieldsCard
+                            requirementsCard
+                            actionButtonSection
+                            logoutSection
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 24)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 16)
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("Security Verification")
-                        .font(.appHeadline)
-                        .foregroundColor(.primary)
-                }
-            }
+            .navigationBarHidden(true)
             .alert("Password Update Failed", isPresented: $viewModel.showErrorAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
@@ -53,6 +54,18 @@ struct ForcePasswordChangeView: View {
     }
 
     // MARK: - Subviews
+
+    private var topHeaderBar: some View {
+        HStack {
+            Text("Security Verification")
+                .font(.appHeadline)
+                .foregroundColor(.secondary)
+
+            Spacer()
+
+            ThemeToggleView(style: .circle)
+        }
+    }
 
     private var securityHeaderSection: some View {
         VStack(spacing: 10) {
@@ -69,11 +82,11 @@ struct ForcePasswordChangeView: View {
             }
             .padding(.top, 8)
 
-            Text("Password Rotation Required")
+            Text("Set Permanent Password")
                 .font(.system(size: 22, weight: .bold, design: .rounded))
                 .foregroundColor(.primary)
 
-            Text("Your account was provisioned with a manager-issued temporary password. Please establish a private permanent password to access field operations.")
+            Text("Your account was created with a temporary password. Choose a secure personal password to access your field operations.")
                 .font(.appSubheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -89,11 +102,11 @@ struct ForcePasswordChangeView: View {
                 .padding(.top, 2)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("Enterprise Tenant Security Policy")
+                Text("First-Time Security Policy")
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
                     .foregroundColor(.primary)
 
-                Text("All supervisor accounts require cryptographic password rotation on first sign-in to protect harvest telemetry and field weighing logs.")
+                Text("Temporary passwords must be updated on first sign-in to protect plucking checklists and green leaf weighing records.")
                     .font(.system(size: 11, weight: .regular))
                     .foregroundColor(.secondary)
             }
@@ -113,7 +126,7 @@ struct ForcePasswordChangeView: View {
         VStack(spacing: 16) {
             // Current Password
             VStack(alignment: .leading, spacing: 6) {
-                Text("Current Temporary Password")
+                Text("Temporary Password")
                     .font(.appCaption)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
@@ -147,7 +160,7 @@ struct ForcePasswordChangeView: View {
 
             // New Password
             VStack(alignment: .leading, spacing: 6) {
-                Text("New Permanent Password")
+                Text("New Password")
                     .font(.appCaption)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
@@ -163,7 +176,6 @@ struct ForcePasswordChangeView: View {
                             .disableAutocorrection(true)
                     } else {
                         SecureField("Enter new password", text: $viewModel.newPassword)
-                            .textContentType(.newPassword)
                     }
 
                     Button {
@@ -182,7 +194,7 @@ struct ForcePasswordChangeView: View {
 
             // Confirm Password
             VStack(alignment: .leading, spacing: 6) {
-                Text("Confirm New Password")
+                Text("Confirm Password")
                     .font(.appCaption)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
@@ -198,7 +210,6 @@ struct ForcePasswordChangeView: View {
                             .disableAutocorrection(true)
                     } else {
                         SecureField("Re-enter new password", text: $viewModel.confirmPassword)
-                            .textContentType(.newPassword)
                     }
 
                     Button {
@@ -221,7 +232,7 @@ struct ForcePasswordChangeView: View {
 
     private var requirementsCard: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Password Criteria")
+            Text("Password Requirements")
                 .font(.appCaption)
                 .fontWeight(.semibold)
                 .foregroundColor(.secondary)
@@ -261,8 +272,8 @@ struct ForcePasswordChangeView: View {
 
     private var actionButtonSection: some View {
         TeaYieldButton(
-            title: "Update Password & Unlock",
-            icon: "lock.rotation",
+            title: "Update Password & Continue",
+            icon: "checkmark.shield.fill",
             style: .primary,
             isLoading: viewModel.isSubmitting,
             isDisabled: !viewModel.isFormValid,

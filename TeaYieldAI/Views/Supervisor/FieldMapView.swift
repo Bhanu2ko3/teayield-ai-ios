@@ -87,6 +87,8 @@ struct FieldMapView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    ThemeToggleView(style: .iconOnly)
+
                     Button(action: { viewModel.resetCameraToEstate() }) {
                         Image(systemName: "location.fill")
                     }

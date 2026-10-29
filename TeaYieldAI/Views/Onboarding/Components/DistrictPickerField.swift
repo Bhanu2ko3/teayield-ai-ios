@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// Agro-ecological tea growing zones in Sri Lanka with elevation classifications.
+/// Administrative districts of Sri Lanka with agro-ecological tea zone and elevation classifications.
 enum SriLankanTeaDistrict: String, CaseIterable, Identifiable {
+    // Primary Tea Cultivating Districts (High, Mid, Low & Uva zones)
     case nuwaraEliya = "Nuwara Eliya"
     case badulla = "Badulla"
     case kandy = "Kandy"
@@ -10,8 +11,38 @@ enum SriLankanTeaDistrict: String, CaseIterable, Identifiable {
     case kegalle = "Kegalle"
     case galle = "Galle"
     case matara = "Matara"
+    case kalutara = "Kalutara"
+    case hambantota = "Hambantota"
+    case monaragala = "Monaragala"
+    case kurunegala = "Kurunegala"
+
+    // Other Administrative Districts across Sri Lanka
+    case colombo = "Colombo"
+    case gampaha = "Gampaha"
+    case ampara = "Ampara"
+    case anuradhapura = "Anuradhapura"
+    case batticaloa = "Batticaloa"
+    case jaffna = "Jaffna"
+    case kilinochchi = "Kilinochchi"
+    case mannar = "Mannar"
+    case mullaitivu = "Mullaitivu"
+    case polonnaruwa = "Polonnaruwa"
+    case puttalam = "Puttalam"
+    case trincomalee = "Trincomalee"
+    case vavuniya = "Vavuniya"
 
     var id: String { rawValue }
+
+    var isTeaCultivationDistrict: Bool {
+        switch self {
+        case .nuwaraEliya, .badulla, .kandy, .matale,
+             .ratnapura, .kegalle, .galle, .matara,
+             .kalutara, .hambantota, .monaragala, .kurunegala:
+            return true
+        default:
+            return false
+        }
+    }
 
     var elevationCategory: String {
         switch self {
@@ -25,6 +56,24 @@ enum SriLankanTeaDistrict: String, CaseIterable, Identifiable {
             return "Low-Grown Sabaragamuwa (< 600m)"
         case .galle, .matara:
             return "Low-Grown Southern (< 600m)"
+        case .kalutara:
+            return "Low-Grown Western (< 600m)"
+        case .hambantota:
+            return "Low-Grown Ruhuna (< 600m)"
+        case .monaragala:
+            return "Uva Lowlands (< 600m)"
+        case .kurunegala:
+            return "North Western Mid-to-Low (< 600m)"
+        case .colombo, .gampaha:
+            return "Western Lowlands (< 100m)"
+        case .puttalam:
+            return "North Western Lowlands (< 100m)"
+        case .anuradhapura, .polonnaruwa:
+            return "North Central Lowlands (< 150m)"
+        case .ampara, .batticaloa, .trincomalee:
+            return "Eastern Lowlands (< 100m)"
+        case .jaffna, .kilinochchi, .mannar, .vavuniya, .mullaitivu:
+            return "Northern Lowlands (< 100m)"
         }
     }
 
@@ -38,7 +87,34 @@ enum SriLankanTeaDistrict: String, CaseIterable, Identifiable {
         case .kegalle: return 180
         case .galle: return 40
         case .matara: return 35
+        case .kalutara: return 30
+        case .hambantota: return 25
+        case .monaragala: return 200
+        case .kurunegala: return 120
+        case .colombo: return 15
+        case .gampaha: return 20
+        case .puttalam: return 20
+        case .anuradhapura: return 90
+        case .polonnaruwa: return 60
+        case .ampara: return 35
+        case .batticaloa: return 10
+        case .trincomalee: return 15
+        case .jaffna: return 10
+        case .kilinochchi: return 20
+        case .mannar: return 10
+        case .vavuniya: return 100
+        case .mullaitivu: return 15
         }
+    }
+
+    /// Major commercial tea growing districts in Sri Lanka
+    static var teaDistricts: [SriLankanTeaDistrict] {
+        allCases.filter { $0.isTeaCultivationDistrict }
+    }
+
+    /// Other administrative districts across Sri Lanka
+    static var otherDistricts: [SriLankanTeaDistrict] {
+        allCases.filter { !$0.isTeaCultivationDistrict }
     }
 }
 
@@ -56,27 +132,50 @@ struct DistrictPickerField: View {
                 .foregroundColor(.secondary)
 
             Menu {
-                ForEach(SriLankanTeaDistrict.allCases) { district in
-                    Button {
-                        selectedDistrict = district.rawValue
-                        onDistrictChanged?(district)
-                    } label: {
-                        HStack {
-                            Text(district.rawValue)
-                            Spacer()
-                            Text(district.elevationCategory)
+                Section("Tea Cultivation Districts") {
+                    ForEach(SriLankanTeaDistrict.teaDistricts) { district in
+                        Button {
+                            selectedDistrict = district.rawValue
+                            onDistrictChanged?(district)
+                        } label: {
+                            HStack {
+                                Text(district.rawValue)
+                                Spacer()
+                                Text(district.elevationCategory)
+                            }
+                        }
+                    }
+                }
+
+                Section("Other Administrative Districts") {
+                    ForEach(SriLankanTeaDistrict.otherDistricts) { district in
+                        Button {
+                            selectedDistrict = district.rawValue
+                            onDistrictChanged?(district)
+                        } label: {
+                            HStack {
+                                Text(district.rawValue)
+                                Spacer()
+                                Text(district.elevationCategory)
+                            }
                         }
                     }
                 }
             } label: {
                 HStack {
                     Image(systemName: "map.fill")
-                        .foregroundColor(AppTheme.emerald)
+                        .foregroundColor(selectedDistrict.isEmpty ? .secondary : AppTheme.emerald)
                         .frame(width: 20)
 
-                    Text(selectedDistrict)
-                        .foregroundColor(.primary)
-                        .font(.appBody)
+                    if selectedDistrict.isEmpty {
+                        Text("Select District")
+                            .foregroundColor(.secondary)
+                            .font(.appBody)
+                    } else {
+                        Text(selectedDistrict)
+                            .foregroundColor(.primary)
+                            .font(.appBody)
+                    }
 
                     Spacer()
 
@@ -94,8 +193,8 @@ struct DistrictPickerField: View {
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
                 .cornerRadius(AppTheme.radiusMedium)
             }
-            .accessibilityLabel("Agro-Ecological District: currently \(selectedDistrict)")
-            .accessibilityHint("Double tap to select from Sri Lankan tea cultivation zones")
+            .accessibilityLabel("Agro-Ecological District: \(selectedDistrict.isEmpty ? "Not selected" : selectedDistrict)")
+            .accessibilityHint("Double tap to choose from Sri Lankan districts")
         }
     }
 }
@@ -104,9 +203,12 @@ struct DistrictPickerField: View {
 
 struct DistrictPickerField_Previews: PreviewProvider {
     static var previews: some View {
-        DistrictPickerField(selectedDistrict: .constant("Nuwara Eliya"))
-            .padding()
-            .previewLayout(.sizeThatFits)
+        VStack(spacing: 16) {
+            DistrictPickerField(selectedDistrict: .constant(""))
+            DistrictPickerField(selectedDistrict: .constant("Nuwara Eliya"))
+        }
+        .padding()
+        .previewLayout(.sizeThatFits)
     }
 }
 

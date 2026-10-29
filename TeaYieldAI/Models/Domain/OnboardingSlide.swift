@@ -10,32 +10,32 @@ struct OnboardingSlide: Identifiable {
 
     static let defaultSlides: [OnboardingSlide] = [
         OnboardingSlide(
-            badge: "SENTINEL-2 & PLANETSCOPE AI",
-            title: "Zero-IoT Satellite Yield Prediction & Plucking Optimization",
-            description: "Predict daily block yield, detect peak vegetative NDVI (0.82) windows, and automate plucker task allocation across tea field blocks without physical sensors.",
+            badge: "SENTINEL-2 SATELLITE TELEMETRY",
+            title: "Predict Harvest Yields Ahead of Plucking Rounds",
+            description: "Track vegetative canopy vigor across tea blocks using multispectral satellite data to forecast green leaf volume before dispatching plucking gangs.",
             pills: [
-                OnboardingPill(title: "0.82", subtitle: "Peak NDVI"),
-                OnboardingPill(title: "850 kg", subtitle: "Daily Target"),
-                OnboardingPill(title: "88%", subtitle: "Two Leaves")
+                OnboardingPill(title: "0.82", subtitle: "Harvest NDVI"),
+                OnboardingPill(title: "7 Days", subtitle: "Yield Forecast"),
+                OnboardingPill(title: "Zero-IoT", subtitle: "Remote Sensing")
             ]
         ),
         OnboardingSlide(
-            badge: "ON-DEVICE APPLE SILICON NEURAL ENGINE",
-            title: "Real-Time 60fps Shoot Maturity Quality Inspection",
-            description: "Evaluate the fine-to-coarse leaf ratio directly on your iPhone camera. Guarantees 85% Two Leaves and a Bud auction export benchmarks 100% offline.",
+            badge: "ON-DEVICE COMPUTER VISION",
+            title: "Field-Level Fine Leaf Quality Grading",
+            description: "Inspect shoots directly through your camera to verify that harvested tea leaves meet the 85% Two Leaves and a Bud benchmark for Colombo auction standards.",
             pills: [
-                OnboardingPill(title: "60 FPS", subtitle: "Live Scanner"),
-                OnboardingPill(title: "Zero Latency", subtitle: "Neural Engine"),
-                OnboardingPill(title: "Grade A", subtitle: "Fine Shoot")
+                OnboardingPill(title: "85%+", subtitle: "Fine Leaf Target"),
+                OnboardingPill(title: "Two & Bud", subtitle: "Export Standard"),
+                OnboardingPill(title: "100%", subtitle: "Offline Scanner")
             ]
         ),
         OnboardingSlide(
-            badge: "DEAP GENETIC ALGORITHM ENGINE",
-            title: "Conflict-Free Workforce Scheduling & Factory Protection",
-            description: "Translate complex yield forecasts into balanced 6-day plucking rosters, preventing mountain labor mismatch and factory withering trough overloads.",
+            badge: "GENETIC ROSTER OPTIMIZATION",
+            title: "Balanced Plucking Rosters & Factory Intake Control",
+            description: "Convert yield forecasts into balanced 6-day plucking rosters that prevent field labor misallocation and protect factory withering troughs from overloading.",
             pills: [
-                OnboardingPill(title: "3,000 kg", subtitle: "Intake Cap"),
-                OnboardingPill(title: "6-Day", subtitle: "Rest Cycle"),
+                OnboardingPill(title: "3,000 kg", subtitle: "Withering Cap"),
+                OnboardingPill(title: "6-Day", subtitle: "Harvest Cycle"),
                 OnboardingPill(title: "Optimal", subtitle: "Labor Match")
             ]
         )

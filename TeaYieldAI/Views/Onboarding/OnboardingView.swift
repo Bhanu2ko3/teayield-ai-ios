@@ -6,13 +6,8 @@ struct OnboardingView: View {
 
     @Binding var hasCompletedOnboarding: Bool
     @State private var currentSlide = 0
-    @AppStorage("appThemeMode") private var appThemeMode: String = AppThemeMode.system.rawValue
 
     private let slides: [OnboardingSlide] = OnboardingSlide.defaultSlides
-
-    private var currentThemeMode: AppThemeMode {
-        AppThemeMode(rawValue: appThemeMode) ?? .system
-    }
 
     var body: some View {
         NavigationStack {
@@ -54,25 +49,9 @@ struct OnboardingView: View {
 
     private var topHeaderBar: some View {
         HStack {
-            
-            Spacer()
+            ThemeToggleView(style: .circle)
 
-            Menu {
-                ForEach(AppThemeMode.allCases) { mode in
-                    Button {
-                        HapticFeedback.selection()
-                        appThemeMode = mode.rawValue
-                    } label: {
-                        Label(mode.title, systemImage: mode.iconName)
-                    }
-                }
-            } label: {
-                Image(systemName: currentThemeMode.iconName)
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(AppTheme.emerald)
-                    .padding(6)
-            }
-            .accessibilityLabel("Appearance Theme Switcher")
+            Spacer()
 
             Button(action: completeOnboarding) {
                 Text("Skip")
