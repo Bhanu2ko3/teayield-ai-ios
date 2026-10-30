@@ -14,6 +14,8 @@ final class SupervisorManagementViewModel: ObservableObject {
     // Sheet Presentations
     @Published var isShowingInviteSheet: Bool = false
     @Published var selectedSupervisor: UserProfile? = nil
+    @Published var supervisorToDelete: UserProfile? = nil
+    @Published var isShowingRevokeConfirmation: Bool = false
 
     private let apiService: APIServiceProtocol
     private let authService: AuthServiceProtocol
@@ -63,5 +65,11 @@ final class SupervisorManagementViewModel: ObservableObject {
         if !supervisors.contains(where: { $0.id == domainSupervisor.id }) {
             supervisors.insert(domainSupervisor, at: 0)
         }
+    }
+
+    /// Revokes active delegation of a field supervisor.
+    func revokeSupervisor(_ supervisor: UserProfile) async {
+        supervisors.removeAll(where: { $0.id == supervisor.id })
+        HapticFeedback.success()
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F6613101F6C43E1B8828903 /* EditFieldDivisionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0D5C80B80B4D7090C806C8 /* EditFieldDivisionSheetView.swift */; };
 		74ABC773308D036800E22417 /* TeaYieldAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC772308D036800E22417 /* TeaYieldAITests.swift */; };
 		74ABC77D308D036800E22417 /* TeaYieldAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77C308D036800E22417 /* TeaYieldAIUITests.swift */; };
 		74ABC77F308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77E308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift */; };
@@ -179,6 +180,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD0D5C80B80B4D7090C806C8 /* EditFieldDivisionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFieldDivisionSheetView.swift; sourceTree = "<group>"; };
 		74ABC75E308D036400E22417 /* TeaYieldAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeaYieldAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeaYieldAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		74ABC772308D036800E22417 /* TeaYieldAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAITests.swift; sourceTree = "<group>"; };
@@ -721,6 +723,7 @@
 		74ABC849308D090100E22417 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				FD0D5C80B80B4D7090C806C8 /* EditFieldDivisionSheetView.swift */,
 				74ABCBA3308D0F0000E22417 /* EditPluckerSheetView.swift */,
 				74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */,
 				74ABCB21308D0E0000E22417 /* EditEstateSheetView.swift */,
@@ -933,6 +936,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F6613101F6C43E1B8828903 /* EditFieldDivisionSheetView.swift in Sources */,
 				74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */,
 				74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */,
 				74ABCBB3308D0F0000E22417 /* EditPluckerSheetView.swift in Sources */,

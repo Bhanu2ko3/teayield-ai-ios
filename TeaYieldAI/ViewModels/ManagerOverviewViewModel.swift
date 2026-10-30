@@ -479,4 +479,21 @@ final class ManagerOverviewViewModel: ObservableObject {
             }
         }
     }
+
+    // MARK: - Field Division CRUD Operations
+
+    /// Updates field division parameters in local cache and current telemetry state.
+    func updateFieldLocally(_ updatedField: TeaField) async {
+        if let index = fields.firstIndex(where: { $0.id == updatedField.id }) {
+            fields[index] = updatedField
+            try? await fieldRepository.saveField(updatedField)
+            HapticFeedback.success()
+        }
+    }
+
+    /// Retires a field division from active estate telemetry.
+    func deleteFieldLocally(_ field: TeaField) async {
+        fields.removeAll(where: { $0.id == field.id })
+        HapticFeedback.success()
+    }
 }

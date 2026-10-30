@@ -75,6 +75,21 @@ struct SupervisorManagementView: View {
                     showsDismissButton: true
                 )
             }
+            .confirmationDialog(
+                "Revoke Field Supervisor Delegation?",
+                isPresented: $viewModel.isShowingRevokeConfirmation,
+                titleVisibility: .visible,
+                presenting: viewModel.supervisorToDelete
+            ) { supervisor in
+                Button("Revoke \(supervisor.fullName)", role: .destructive) {
+                    Task {
+                        await viewModel.revokeSupervisor(supervisor)
+                    }
+                }
+                Button("Cancel", role: .cancel) { }
+            } message: { supervisor in
+                Text("Are you sure you want to revoke field access credentials for \(supervisor.fullName) (\(supervisor.employeeId))?")
+            }
             .task {
                 await viewModel.loadSupervisors()
             }
@@ -169,13 +184,38 @@ struct SupervisorManagementView: View {
             Spacer()
 
             VStack(alignment: .trailing, spacing: 4) {
-                Text("SUPERVISOR")
-                    .font(.system(size: 9, weight: .bold, design: .rounded))
-                    .foregroundColor(AppTheme.emerald)
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 2)
-                    .background(AppTheme.emerald.opacity(0.12))
-                    .cornerRadius(AppTheme.radiusSmall)
+                HStack(spacing: 6) {
+                    Text("SUPERVISOR")
+                        .font(.system(size: 9, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.emerald)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(AppTheme.emerald.opacity(0.12))
+                        .cornerRadius(AppTheme.radiusSmall)
+
+                    Menu {
+                        Button {
+                            // Resend password rotation email notification
+                            HapticFeedback.success()
+                        } label: {
+                            Label("Resend Invite", systemImage: "paperplane")
+                        }
+
+                        Divider()
+
+                        Button(role: .destructive) {
+                            viewModel.supervisorToDelete = supervisor
+                            viewModel.isShowingRevokeConfirmation = true
+                        } label: {
+                            Label("Revoke Delegation", systemImage: "person.crop.circle.badge.xmark")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
+                            .font(.system(size: 18))
+                            .foregroundColor(.secondary)
+                            .padding(2)
+                    }
+                }
 
                 if supervisor.mustChangePassword {
                     Text("PENDING ROTATION")

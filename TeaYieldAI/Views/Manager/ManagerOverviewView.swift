@@ -8,6 +8,9 @@ struct ManagerOverviewView: View {
     @State private var showingFullProfileSheet: Bool = false
     @State private var isShowingEditEstateSheet: Bool = false
     @State private var isShowingAddFieldSheet: Bool = false
+    @State private var editingField: TeaField? = nil
+    @State private var fieldToDelete: TeaField? = nil
+    @State private var isShowingDeleteFieldConfirmation: Bool = false
 
     init(container: AppContainerProtocol, viewModel: ManagerOverviewViewModel? = nil) {
         self.container = container
@@ -111,6 +114,31 @@ struct ManagerOverviewView: View {
                         }
                     )
                 }
+            }
+            .sheet(item: $editingField) { field in
+                EditFieldDivisionSheetView(
+                    field: field,
+                    onUpdated: { updated in
+                        Task {
+                            await viewModel.updateFieldLocally(updated)
+                        }
+                    }
+                )
+            }
+            .confirmationDialog(
+                "Retire Field Division?",
+                isPresented: $isShowingDeleteFieldConfirmation,
+                titleVisibility: .visible,
+                presenting: fieldToDelete
+            ) { field in
+                Button("Retire \(field.name)", role: .destructive) {
+                    Task {
+                        await viewModel.deleteFieldLocally(field)
+                    }
+                }
+                Button("Cancel", role: .cancel) { }
+            } message: { field in
+                Text("Are you sure you want to retire \(field.blockCode) (\(field.name))? Historical harvest logs will remain archived.")
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -304,12 +332,12 @@ struct ManagerOverviewView: View {
 
     private var estateDivisionsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack {
+            HStack(alignment: .center) {
                 SectionHeaderView(
                     title: "ESTATE DIVISIONS & NDVI STATUS",
                     subtitle: "Sentinel-2 vegetative canopy health across plantation blocks",
                     icon: "leaf.fill",
-                    badge: "\(viewModel.fields.count) DIVISIONS",
+                    badge: "\(viewModel.fields.count) BLOCKS",
                     badgeColor: AppTheme.emerald
                 )
 
@@ -320,16 +348,17 @@ struct ManagerOverviewView: View {
                         isShowingAddFieldSheet = true
                     } label: {
                         HStack(spacing: 4) {
-                            Image(systemName: "plus.circle.fill")
-                                .font(.system(size: 12))
-                            Text("Add Division")
-                                .font(.system(size: 11, weight: .semibold, design: .rounded))
+                            Image(systemName: "plus")
+                                .font(.system(size: 11, weight: .bold))
+                            Text("New Block")
+                                .font(.system(size: 11, weight: .bold, design: .rounded))
                         }
                         .foregroundColor(.white)
                         .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
+                        .padding(.vertical, 7)
                         .background(AppTheme.emerald)
                         .cornerRadius(AppTheme.radiusSmall)
+                        .shadow(color: AppTheme.emerald.opacity(0.25), radius: 4, x: 0, y: 2)
                     }
                     .accessibilityLabel("Add new field division block")
                 }
@@ -357,7 +386,16 @@ struct ManagerOverviewView: View {
             } else {
                 VStack(spacing: 10) {
                     ForEach(viewModel.fields) { field in
-                        ManagerFieldRowView(field: field)
+                        ManagerFieldRowView(
+                            field: field,
+                            onEdit: {
+                                editingField = field
+                            },
+                            onDelete: {
+                                fieldToDelete = field
+                                isShowingDeleteFieldConfirmation = true
+                            }
+                        )
                     }
                 }
             }
@@ -387,18 +425,42 @@ struct ManagerOverviewView: View {
     }
 
     private func statusPill(title: String, count: Int, color: Color) -> some View {
-        VStack(spacing: 4) {
-            Text("\(count)")
-                .font(.system(size: 20, weight: .bold, design: .rounded))
-                .foregroundColor(color)
+        HStack(spacing: 8) {
+            ZStack {
+                Circle()
+                    .fill(color.opacity(0.15))
+                    .frame(width: 32, height: 32)
 
-            Text(title)
-                .font(.appCaption)
-                .foregroundColor(.secondary)
+                Text("\(count)")
+                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                    .foregroundColor(color)
+            }
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title)
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+
+                Text(statusSubtitle(for: title))
+                    .font(.system(size: 10, weight: .medium, design: .rounded))
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer(minLength: 0)
         }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 10)
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 12)
         .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
+    }
+
+    private func statusSubtitle(for title: String) -> String {
+        switch title {
+        case "Ready": return "Harvest"
+        case "Growing": return "Vegetative"
+        case "Resting": return "Dormant"
+        default: return "Blocks"
+        }
     }
 
     private var teamDelegationSection: some View {
@@ -422,19 +484,19 @@ struct ManagerOverviewView: View {
                 } label: {
                     HStack(spacing: 12) {
                         ZStack {
-                            Circle()
+                            RoundedRectangle(cornerRadius: AppTheme.radiusSmall)
                                 .fill(Color.blue.opacity(0.12))
-                                .frame(width: 40, height: 40)
+                                .frame(width: 44, height: 44)
 
                             Image(systemName: "person.3.fill")
                                 .foregroundColor(.blue)
-                                .font(.system(size: 16))
+                                .font(.system(size: 18, weight: .semibold))
                         }
 
-                        VStack(alignment: .leading, spacing: 2) {
+                        VStack(alignment: .leading, spacing: 3) {
                             HStack {
                                 Text("Plucker Harvesters")
-                                    .font(.appHeadline)
+                                    .font(.system(size: 15, weight: .bold, design: .rounded))
                                     .foregroundColor(.primary)
 
                                 Spacer()
@@ -443,7 +505,7 @@ struct ManagerOverviewView: View {
                                     .font(.system(size: 11, weight: .bold, design: .rounded))
                                     .foregroundColor(AppTheme.emerald)
                                     .padding(.horizontal, 7)
-                                    .padding(.vertical, 2)
+                                    .padding(.vertical, 3)
                                     .background(AppTheme.emerald.opacity(0.12))
                                     .cornerRadius(AppTheme.radiusSmall)
                             }
@@ -469,26 +531,26 @@ struct ManagerOverviewView: View {
                 } label: {
                     HStack(spacing: 12) {
                         ZStack {
-                            Circle()
+                            RoundedRectangle(cornerRadius: AppTheme.radiusSmall)
                                 .fill(AppTheme.emerald.opacity(0.12))
-                                .frame(width: 40, height: 40)
+                                .frame(width: 44, height: 44)
 
                             Image(systemName: "person.badge.shield.checkmark.fill")
                                 .foregroundColor(AppTheme.emerald)
-                                .font(.system(size: 16))
+                                .font(.system(size: 18, weight: .semibold))
                         }
 
-                        VStack(alignment: .leading, spacing: 2) {
+                        VStack(alignment: .leading, spacing: 3) {
                             HStack {
                                 Text("Field Supervisors")
-                                    .font(.appHeadline)
+                                    .font(.system(size: 15, weight: .bold, design: .rounded))
                                     .foregroundColor(.primary)
 
                                 Spacer()
 
                                 HStack(spacing: 3) {
-                                    Image(systemName: "plus.circle.fill")
-                                        .font(.system(size: 10))
+                                    Image(systemName: "plus")
+                                        .font(.system(size: 9, weight: .bold))
                                     Text("Invite")
                                         .font(.system(size: 10, weight: .bold, design: .rounded))
                                 }
