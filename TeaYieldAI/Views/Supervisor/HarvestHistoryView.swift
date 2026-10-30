@@ -1,15 +1,21 @@
 import SwiftUI
 
-/// View displaying historically recorded green leaf weighing logs with quality grades and sync status.
+/// View displaying historically recorded green leaf weighing logs with quality grades, time range filtering, and multi-criteria sorting.
 /// Conforms strictly to Section 5 Design System and eliminates all tech-stack leaks.
 struct HarvestHistoryView: View {
 
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: HarvestHistoryViewModel
 
-    init(harvestRepository: HarvestRepositoryProtocol) {
+    init(
+        harvestRepository: HarvestRepositoryProtocol,
+        apiService: APIServiceProtocol? = nil
+    ) {
         _viewModel = StateObject(
-            wrappedValue: HarvestHistoryViewModel(harvestRepository: harvestRepository)
+            wrappedValue: HarvestHistoryViewModel(
+                harvestRepository: harvestRepository,
+                apiService: apiService
+            )
         )
     }
 
@@ -19,9 +25,10 @@ struct HarvestHistoryView: View {
                 .ignoresSafeArea()
 
             ScrollView {
-                VStack(spacing: 16) {
+                VStack(spacing: 14) {
                     summaryHeaderCard
-                    filterSegmentedPicker
+                    timeRangeSelector
+                    controlsRow
                     TeaYieldSearchBar(
                         text: $viewModel.searchText,
                         placeholder: "Search by plucker name or ID..."
@@ -37,11 +44,6 @@ struct HarvestHistoryView: View {
         }
         .navigationTitle("Weighing History")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                ThemeToggleView(style: .circle)
-            }
-        }
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarBackground(Color(uiColor: .systemGroupedBackground), for: .navigationBar)
         .task {
@@ -87,7 +89,7 @@ struct HarvestHistoryView: View {
                     .font(.system(size: 11, weight: .medium, design: .rounded))
                     .foregroundColor(.secondary)
 
-                Text("\(viewModel.records.count)")
+                Text("\(viewModel.filteredRecordsCount)")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .foregroundColor(.primary)
             }
@@ -97,18 +99,86 @@ struct HarvestHistoryView: View {
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 
-    private var filterSegmentedPicker: some View {
-        Picker("Filter Logs", selection: $viewModel.filterSelection) {
-            ForEach(HarvestHistoryViewModel.FilterOption.allCases) { option in
-                Text(option.rawValue).tag(option)
+    // MARK: - Time Range Filter Tabs
+
+    private var timeRangeSelector: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(HarvestHistoryViewModel.TimeRangeOption.allCases) { range in
+                    Button {
+                        HapticFeedback.selection()
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            viewModel.timeRangeSelection = range
+                        }
+                    } label: {
+                        Text(range.rawValue)
+                            .font(.system(size: 12, weight: viewModel.timeRangeSelection == range ? .bold : .medium, design: .rounded))
+                            .foregroundColor(viewModel.timeRangeSelection == range ? .white : .primary)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .background(viewModel.timeRangeSelection == range ? AppTheme.emerald : Color(uiColor: .secondarySystemGroupedBackground))
+                            .cornerRadius(AppTheme.radiusSmall)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: AppTheme.radiusSmall)
+                                    .stroke(viewModel.timeRangeSelection == range ? AppTheme.emerald : Color.secondary.opacity(0.15), lineWidth: 1)
+                            )
+                    }
+                }
             }
-        }
-        .pickerStyle(.segmented)
-        .onChange(of: viewModel.filterSelection) { _ in
-            HapticFeedback.selection()
+            .padding(.horizontal, 2)
         }
     }
 
+    // MARK: - Filter & Sort Controls Row
+
+    private var controlsRow: some View {
+        HStack(spacing: 10) {
+            // Segmented Sync Status Picker
+            Picker("Filter Logs", selection: $viewModel.filterSelection) {
+                ForEach(HarvestHistoryViewModel.SyncFilterOption.allCases) { option in
+                    Text(option.rawValue).tag(option)
+                }
+            }
+            .pickerStyle(.segmented)
+            .onChange(of: viewModel.filterSelection) { _ in
+                HapticFeedback.selection()
+            }
+
+            // Sort Menu Dropdown
+            Menu {
+                Picker("Sort Order", selection: $viewModel.sortSelection) {
+                    ForEach(HarvestHistoryViewModel.SortOption.allCases) { option in
+                        Label(option.rawValue, systemImage: sortIcon(for: option))
+                            .tag(option)
+                    }
+                }
+            } label: {
+                HStack(spacing: 5) {
+                    Image(systemName: "arrow.up.arrow.down")
+                        .font(.system(size: 11, weight: .bold))
+                    Text("Sort")
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                }
+                .foregroundColor(AppTheme.emerald)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 7)
+                .background(AppTheme.emerald.opacity(0.12))
+                .cornerRadius(AppTheme.radiusSmall)
+            }
+        }
+    }
+
+    private func sortIcon(for option: HarvestHistoryViewModel.SortOption) -> String {
+        switch option {
+        case .newestFirst: return "clock.arrow.circlepath"
+        case .oldestFirst: return "clock"
+        case .highestWeight: return "scalemass.fill"
+        case .lowestWeight: return "scalemass"
+        case .highestQuality: return "rosette"
+        }
+    }
+
+    // MARK: - Records List
 
     private var recordsListSection: some View {
         VStack(spacing: 10) {
@@ -139,7 +209,7 @@ struct HarvestHistoryView: View {
                 .font(.appHeadline)
                 .foregroundColor(.primary)
 
-            Text("Saved green leaf weigh-ins and fine leaf ratio inspection grades will populate here once recorded from field blocks.")
+            Text("No green leaf logs match the selected time range or filter criteria. Recorded logs will appear here immediately.")
                 .font(.appCaption)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)

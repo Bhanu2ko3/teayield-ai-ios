@@ -35,11 +35,6 @@ struct ScannerHudOverlayView: View {
                     .stroke(reticleColor, style: StrokeStyle(lineWidth: 3.5, lineCap: .round))
                     .frame(width: 270, height: 270)
 
-                // Central crosshair dot
-                Circle()
-                    .fill(reticleColor.opacity(0.8))
-                    .frame(width: 6, height: 6)
-
                 // Dominant stage pill inside reticle
                 if let stage = dominantStage {
                     VStack {
@@ -63,14 +58,9 @@ struct ScannerHudOverlayView: View {
             VStack(spacing: 8) {
                 HStack {
                     VStack(alignment: .leading, spacing: 3) {
-                        HStack(spacing: 6) {
-                            Circle()
-                                .fill(reticleColor)
-                                .frame(width: 8, height: 8)
-                            Text(qualityGrade)
-                                .font(.system(size: 13, weight: .bold, design: .rounded))
-                                .foregroundColor(reticleColor)
-                        }
+                        Text(qualityGrade)
+                            .font(.system(size: 13, weight: .bold, design: .rounded))
+                            .foregroundColor(reticleColor)
 
                         Text("Fine Leaf Export Standard (85%)")
                             .font(.system(size: 11, weight: .medium, design: .rounded))

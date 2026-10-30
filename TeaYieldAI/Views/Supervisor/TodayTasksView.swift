@@ -71,7 +71,10 @@ struct TodayTasksView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 12) {
                         NavigationLink {
-                            HarvestHistoryView(harvestRepository: container.harvestRepository)
+                            HarvestHistoryView(
+                                harvestRepository: container.harvestRepository,
+                                apiService: container.apiService
+                            )
                         } label: {
                             Image(systemName: "clock.arrow.circlepath")
                                 .font(.system(size: 16, weight: .semibold))

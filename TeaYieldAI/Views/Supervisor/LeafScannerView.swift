@@ -169,7 +169,7 @@ struct LeafScannerView: View {
                 #endif
 
                 ScannerHudOverlayView(
-                    fineLeafRatio: viewModel.smoothedFineLeafRatio > 0 ? viewModel.smoothedFineLeafRatio : viewModel.fineLeafRatio,
+                    fineLeafRatio: viewModel.fineLeafRatio,
                     dominantStage: viewModel.assessment?.dominantStage,
                     qualityGrade: viewModel.qualityGrade,
                     meetsExportQuality: viewModel.isOptimalHarvest,
