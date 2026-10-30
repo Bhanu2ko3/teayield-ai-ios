@@ -8,7 +8,7 @@ struct LeafScannerView: View {
     @StateObject private var viewModel: LeafScannerViewModel
     var onRecordWeighingTap: ((Double) -> Void)?
 
-    @State private var selectedPickerItem: PhotosPickerItem?
+    @State private var selectedPickerItems: [PhotosPickerItem] = []
     @State private var showingDetailSheet = false
     @Environment(\.colorScheme) private var colorScheme
 
@@ -281,11 +281,15 @@ struct LeafScannerView: View {
     private var photoInspectionSection: some View {
         ScrollView {
             VStack(spacing: 20) {
-                // Photo Picker Header
-                PhotosPicker(selection: $selectedPickerItem, matching: .images) {
+                // Multi-Photo Picker Header
+                PhotosPicker(
+                    selection: $selectedPickerItems,
+                    maxSelectionCount: 10,
+                    matching: .images
+                ) {
                     HStack(spacing: 8) {
                         Image(systemName: "photo.on.rectangle.angled")
-                        Text("Select Shoot from Photo Library")
+                        Text(viewModel.selectedImages.isEmpty ? "Select Shoots from Photo Library" : "Select Different Shoots (\(viewModel.selectedImages.count) Selected)")
                             .fontWeight(.semibold)
                     }
                     .font(.appHeadline)
@@ -297,16 +301,81 @@ struct LeafScannerView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 16)
-                .onChange(of: selectedPickerItem) { newItem in
+                .onChange(of: selectedPickerItems) { newItems in
                     Task {
-                        if let data = try? await newItem?.loadTransferable(type: Data.self),
-                           let image = UIImage(data: data) {
-                            viewModel.analyzeSelectedImage(image)
+                        var loadedImages: [UIImage] = []
+                        for item in newItems {
+                            if let data = try? await item.loadTransferable(type: Data.self),
+                               let img = UIImage(data: data) {
+                                loadedImages.append(img)
+                            }
+                        }
+                        if !loadedImages.isEmpty {
+                            viewModel.analyzeBatchImages(loadedImages)
                         }
                     }
                 }
 
-                // Image Preview Card
+                // Batch Aggregate Quality Banner
+                if !viewModel.batchAssessments.isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("BATCH QUALITY BENCHMARK")
+                                    .font(.system(size: 10, weight: .bold))
+                                    .foregroundColor(.secondary)
+                                Text("\(viewModel.batchAssessments.count) Shoots Inspected")
+                                    .font(.appHeadline)
+                                    .foregroundColor(.primary)
+                            }
+                            Spacer()
+                            VStack(alignment: .trailing, spacing: 2) {
+                                Text(String(format: "%.1f%%", viewModel.batchAverageFineLeafRatio * 100))
+                                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                                    .foregroundColor(viewModel.batchAverageFineLeafRatio >= 0.85 ? AppTheme.emerald : AppTheme.amber)
+                                Text(viewModel.batchAverageFineLeafRatio >= 0.85 ? "Export Benchmark" : "Off-Grade Warning")
+                                    .font(.system(size: 10, weight: .semibold, design: .rounded))
+                                    .foregroundColor(viewModel.batchAverageFineLeafRatio >= 0.85 ? AppTheme.emerald : AppTheme.amber)
+                            }
+                        }
+
+                        // Horizontal Thumbnail Carousel to inspect individual shoots
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 10) {
+                                ForEach(Array(viewModel.batchAssessments.enumerated()), id: \.offset) { index, item in
+                                    Button {
+                                        HapticFeedback.selection()
+                                        viewModel.selectBatchItem(at: index)
+                                    } label: {
+                                        ZStack(alignment: .bottomTrailing) {
+                                            Image(uiImage: item.image)
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 64, height: 64)
+                                                .clipShape(RoundedRectangle(cornerRadius: AppTheme.radiusSmall))
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: AppTheme.radiusSmall)
+                                                        .stroke(viewModel.selectedBatchIndex == index ? AppTheme.emerald : Color.clear, lineWidth: 3)
+                                                )
+
+                                            // Small quality indicator dot
+                                            Circle()
+                                                .fill(item.assessment.meetsExportQuality ? AppTheme.emerald : AppTheme.amber)
+                                                .frame(width: 12, height: 12)
+                                                .padding(4)
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.vertical, 4)
+                        }
+                    }
+                    .padding(14)
+                    .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+                    .padding(.horizontal, 20)
+                }
+
+                // Image Preview Card (Selected Shoot)
                 if let image = viewModel.selectedImage {
                     VStack(spacing: 12) {
                         Image(uiImage: image)

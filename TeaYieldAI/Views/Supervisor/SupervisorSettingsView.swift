@@ -41,6 +41,8 @@ struct SupervisorSettingsView: View {
                     AppInfoSectionView(viewModel: viewModel)
                     logoutButton
                 }
+                .frame(maxWidth: 580)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 16)
             }

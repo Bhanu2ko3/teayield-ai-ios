@@ -55,6 +55,8 @@ struct UserProfileView: View {
                             accountSecuritySection
                             accountActionsSection
                         }
+                        .frame(maxWidth: 540)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.horizontal, 20)
                         .padding(.bottom, 24)
                     }

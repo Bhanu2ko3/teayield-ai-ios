@@ -30,6 +30,10 @@ final class LeafScannerViewModel: ObservableObject {
     @Published var scanMode: LeafScanMode = .liveCamera
 
     @Published var selectedImage: UIImage? = nil
+    @Published var selectedImages: [UIImage] = []
+    @Published var selectedBatchIndex: Int = 0
+    @Published var batchAssessments: [(image: UIImage, assessment: LeafQualityAssessment)] = []
+    @Published var batchAverageFineLeafRatio: Double = 0.0
     @Published var isAnalyzingPhoto: Bool = false
     @Published var frameSampleCount: Int = 0
     @Published var errorMessage: String? = nil
@@ -132,27 +136,58 @@ final class LeafScannerViewModel: ObservableObject {
 
     // MARK: - Static Photo Inspection (PhotosUI / Test Images)
 
-    /// Analyzes a high-resolution photograph selected from the device photo library or test bundle.
+    /// Analyzes a single high-resolution photograph.
     func analyzeSelectedImage(_ image: UIImage) {
-        guard let cgImage = image.cgImage else {
-            self.errorMessage = "Unable to extract image bitmap for Vision analysis."
-            return
-        }
+        analyzeBatchImages([image])
+    }
 
-        self.selectedImage = image
+    /// Analyzes multiple high-resolution photographs concurrently using Apple Neural Engine.
+    func analyzeBatchImages(_ images: [UIImage]) {
+        guard !images.isEmpty else { return }
+
+        self.selectedImages = images
+        self.selectedBatchIndex = 0
+        self.selectedImage = images.first
         self.isAnalyzingPhoto = true
         self.errorMessage = nil
+        self.batchAssessments = []
 
         Task {
-            do {
-                let result = try await classifier.classify(image: cgImage)
-                self.applyAssessment(result)
-                self.isAnalyzingPhoto = false
-            } catch {
-                self.errorMessage = error.localizedDescription
-                self.isAnalyzingPhoto = false
+            var results: [(image: UIImage, assessment: LeafQualityAssessment)] = []
+
+            for img in images {
+                guard let cgImage = img.cgImage else { continue }
+                if let assessed = try? await classifier.classify(image: cgImage) {
+                    results.append((image: img, assessment: assessed))
+                }
             }
+
+            self.batchAssessments = results
+
+            if let first = results.first {
+                self.applyAssessment(first.assessment)
+            }
+
+            // Compute aggregate quality ratio across all batch samples
+            if !results.isEmpty {
+                let sumRatio = results.reduce(0.0) { $0 + $1.assessment.fineLeafRatio }
+                self.batchAverageFineLeafRatio = sumRatio / Double(results.count)
+            } else {
+                self.batchAverageFineLeafRatio = 0.0
+                self.errorMessage = "Unable to classify selected shoot images."
+            }
+
+            self.isAnalyzingPhoto = false
         }
+    }
+
+    /// Selects an inspected shoot from the batch carousel to view detailed assessment.
+    func selectBatchItem(at index: Int) {
+        guard index >= 0 && index < batchAssessments.count else { return }
+        self.selectedBatchIndex = index
+        let item = batchAssessments[index]
+        self.selectedImage = item.image
+        self.applyAssessment(item.assessment)
     }
 
     // MARK: - Telemetry Aggregation
