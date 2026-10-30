@@ -98,6 +98,7 @@ struct UserProfileDTO: Codable {
             fullName: fullName,
             role: domainRole,
             employeeId: derivedEmployeeId,
+            phoneNumber: phoneNumber,
             estateId: estateId,
             mustChangePassword: mustChangePassword ?? false
         )

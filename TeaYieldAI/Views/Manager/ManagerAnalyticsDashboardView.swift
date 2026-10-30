@@ -290,7 +290,7 @@ struct ManagerAnalyticsDashboardView: View {
 
                 Spacer()
 
-                Stepper(value: $viewModel.availablePluckersCount, in: 5...300, step: 5) {
+                Stepper(value: $viewModel.availablePluckersCount, in: 1...300, step: 1) {
                     Text("\(viewModel.availablePluckersCount) Workers")
                         .font(.system(size: 13, weight: .bold, design: .rounded))
                         .foregroundColor(AppTheme.emerald)

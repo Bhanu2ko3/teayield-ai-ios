@@ -17,6 +17,7 @@ enum MockData {
         fullName: "Kusal Bandara",
         role: .fieldSupervisor,
         employeeId: "SUP-402",
+        phoneNumber: "+94 77 123 4567",
         estateId: nuwaraEliyaEstateId
     )
     
@@ -26,6 +27,7 @@ enum MockData {
         fullName: "Bhanuka Bandara",
         role: .estateManager,
         employeeId: "MGR-082",
+        phoneNumber: "+94 71 890 1234",
         estateId: nuwaraEliyaEstateId
     )
 

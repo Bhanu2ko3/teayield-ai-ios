@@ -18,6 +18,9 @@ protocol AuthServiceProtocol: AnyObject {
     /// Updates the local session and Keychain state with a newly onboarded estate identifier.
     func updateCurrentUserEstate(estateId: UUID)
 
+    /// Updates the local user session with refreshed cloud profile data.
+    func updateUserProfile(_ profile: UserProfile)
+
     /// Marks the active user's temporary password rotation as complete.
     func completePasswordChange()
 

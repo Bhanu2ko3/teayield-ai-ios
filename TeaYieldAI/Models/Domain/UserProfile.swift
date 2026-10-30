@@ -20,6 +20,7 @@ struct UserProfile: Identifiable, Hashable, Codable {
     let fullName: String
     let role: UserRole
     let employeeId: String
+    let phoneNumber: String?
     let estateId: UUID?
     let mustChangePassword: Bool
     
@@ -29,6 +30,7 @@ struct UserProfile: Identifiable, Hashable, Codable {
         fullName: String,
         role: UserRole,
         employeeId: String,
+        phoneNumber: String? = nil,
         estateId: UUID? = nil,
         mustChangePassword: Bool = false
     ) {
@@ -37,6 +39,7 @@ struct UserProfile: Identifiable, Hashable, Codable {
         self.fullName = fullName
         self.role = role
         self.employeeId = employeeId
+        self.phoneNumber = phoneNumber
         self.estateId = estateId
         self.mustChangePassword = mustChangePassword
     }
@@ -62,6 +65,7 @@ struct UserProfile: Identifiable, Hashable, Codable {
             fullName: fullName,
             role: role,
             employeeId: employeeId,
+            phoneNumber: phoneNumber,
             estateId: newEstateId,
             mustChangePassword: mustChangePassword
         )
@@ -75,6 +79,7 @@ struct UserProfile: Identifiable, Hashable, Codable {
             fullName: fullName,
             role: role,
             employeeId: employeeId,
+            phoneNumber: phoneNumber,
             estateId: estateId,
             mustChangePassword: false
         )

@@ -235,13 +235,26 @@ struct UserProfileView: View {
                         .cornerRadius(AppTheme.radiusSmall)
                 }
 
-                HStack(spacing: 6) {
-                    Image(systemName: "envelope.fill")
-                        .font(.system(size: 11))
-                        .foregroundColor(.secondary)
-                    Text(viewModel.email)
-                        .font(.system(size: 13, weight: .medium, design: .rounded))
-                        .foregroundColor(.secondary)
+                VStack(spacing: 4) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "envelope.fill")
+                            .font(.system(size: 11))
+                            .foregroundColor(.secondary)
+                        Text(viewModel.email)
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+
+                    if viewModel.hasPhoneNumber {
+                        HStack(spacing: 6) {
+                            Image(systemName: "phone.fill")
+                                .font(.system(size: 11))
+                                .foregroundColor(AppTheme.emerald)
+                            Text(viewModel.phoneNumber)
+                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                                .foregroundColor(.primary)
+                        }
+                    }
                 }
                 .padding(.top, 2)
             }
@@ -359,6 +372,17 @@ struct UserProfileView: View {
                     label: "Division Sector",
                     value: viewModel.divisionDisplayName
                 )
+
+                if viewModel.hasPhoneNumber {
+                    Divider().padding(.leading, 46)
+
+                    infoRow(
+                        icon: "phone.fill",
+                        tint: AppTheme.emerald,
+                        label: "Official Contact",
+                        value: viewModel.phoneNumber
+                    )
+                }
             }
             .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
         }

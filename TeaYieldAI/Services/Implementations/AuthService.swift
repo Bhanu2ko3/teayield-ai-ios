@@ -86,6 +86,11 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
         _ = keychain.saveCodable(updated, forKey: KeychainHelper.Key.currentUser)
     }
 
+    func updateUserProfile(_ profile: UserProfile) {
+        self.currentUser = profile
+        _ = keychain.saveCodable(profile, forKey: KeychainHelper.Key.currentUser)
+    }
+
     func completePasswordChange() {
         guard let user = currentUser else { return }
         let updated = user.withPasswordChanged()

@@ -81,6 +81,18 @@ final class UserProfileViewModel: ObservableObject {
         user?.email.isEmpty == false ? user!.email : "No email registered"
     }
 
+    var phoneNumber: String {
+        if let phone = user?.phoneNumber, !phone.isEmpty {
+            return phone
+        }
+        return "Not Registered"
+    }
+
+    var hasPhoneNumber: Bool {
+        guard let phone = user?.phoneNumber else { return false }
+        return !phone.isEmpty
+    }
+
     var avatarInitials: String {
         guard let name = user?.fullName, !name.isEmpty else {
             return isManager ? "EM" : "FS"
@@ -168,7 +180,8 @@ final class UserProfileViewModel: ObservableObject {
 
         do {
             let profileDTO = try await api.fetchCurrentUserProfile()
-            _ = profileDTO.toDomain(employeeId: self.employeeId)
+            let updatedUser = profileDTO.toDomain(employeeId: self.employeeId)
+            authService.updateUserProfile(updatedUser)
             // Re-sync local state
             await loadProfileTelemetry()
             self.refreshSuccessMessage = "Profile telemetry synchronized with cloud."
