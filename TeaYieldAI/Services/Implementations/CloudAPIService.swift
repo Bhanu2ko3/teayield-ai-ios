@@ -84,6 +84,10 @@ final class CloudAPIService: APIServiceProtocol {
         try await execute(.inviteSupervisor(request))
     }
 
+    func fetchSupervisors(estateId: UUID) async throws -> [UserProfileDTO] {
+        try await execute(.listSupervisors(estateId: estateId))
+    }
+
     func changePassword(request: PasswordChangeRequestDTO) async throws -> StatusResponseDTO {
         try await execute(.changePassword(request))
     }
@@ -102,6 +106,14 @@ final class CloudAPIService: APIServiceProtocol {
 
     func createPlucker(request: PluckerCreateRequestDTO) async throws -> PluckerResponseDTO {
         try await execute(.createPlucker(request))
+    }
+
+    func updatePlucker(id: UUID, request: PluckerUpdateRequestDTO) async throws -> PluckerResponseDTO {
+        try await execute(.updatePlucker(id: id, payload: request))
+    }
+
+    func deletePlucker(id: UUID) async throws -> StatusResponseDTO {
+        try await execute(.deletePlucker(id: id))
     }
 
     func triggerYieldPrediction(request: PredictionTriggerDTO) async throws -> YieldPredictionBatchResponseDTO {

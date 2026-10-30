@@ -1,0 +1,228 @@
+import SwiftUI
+
+/// Dedicated field supervisor management and roster overview screen for estate managers.
+/// Lists active supervisors, corporate emails, employee codes, and provides an invite button.
+struct SupervisorManagementView: View {
+
+    @StateObject private var viewModel: SupervisorManagementViewModel
+    private let container: AppContainerProtocol
+
+    init(container: AppContainerProtocol) {
+        self.container = container
+        _viewModel = StateObject(
+            wrappedValue: SupervisorManagementViewModel(
+                apiService: container.apiService,
+                authService: container.authService
+            )
+        )
+    }
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                Color(uiColor: .systemGroupedBackground)
+                    .ignoresSafeArea()
+
+                ScrollView {
+                    VStack(spacing: 16) {
+                        // Header Banner
+                        supervisorHeroCard
+
+                        // Search Bar
+                        searchField
+
+                        // Supervisor Roster List
+                        if viewModel.isLoading && viewModel.supervisors.isEmpty {
+                            ProgressView("Loading supervisors...")
+                                .padding(.top, 40)
+                        } else if viewModel.filteredSupervisors.isEmpty {
+                            emptyStateView
+                        } else {
+                            LazyVStack(spacing: 12) {
+                                ForEach(viewModel.filteredSupervisors) { supervisor in
+                                    supervisorCard(supervisor)
+                                }
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                }
+                .refreshable {
+                    await viewModel.loadSupervisors()
+                }
+            }
+            .navigationTitle("Field Supervisors")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        viewModel.isShowingInviteSheet = true
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "plus.circle.fill")
+                            Text("Invite")
+                                .font(.system(size: 14, weight: .semibold))
+                        }
+                        .foregroundColor(AppTheme.emerald)
+                    }
+                    .accessibilityLabel("Invite subordinate field supervisor")
+                }
+            }
+            .sheet(isPresented: $viewModel.isShowingInviteSheet) {
+                InviteSupervisorSheetView(
+                    apiService: container.apiService,
+                    showsDismissButton: true
+                )
+            }
+            .task {
+                await viewModel.loadSupervisors()
+            }
+            .applyAppTheme()
+        }
+    }
+
+    // MARK: - Subviews
+
+    private var supervisorHeroCard: some View {
+        HStack(spacing: 14) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.emerald.opacity(0.14))
+                    .frame(width: 48, height: 48)
+
+                Image(systemName: "person.badge.shield.checkmark.fill")
+                    .foregroundColor(AppTheme.emerald)
+                    .font(.system(size: 20))
+            }
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Operational Field Staff")
+                    .font(.appHeadline)
+                    .foregroundColor(.primary)
+
+                Text("Supervisors coordinate daily plucking tasks, edge AI leaf scans, and field weigh-ins.")
+                    .font(.appCaption)
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer()
+        }
+        .padding(14)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+    }
+
+    private var searchField: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.secondary)
+
+            TextField("Search supervisor by name or email...", text: $viewModel.searchText)
+                .font(.appBody)
+
+            if !viewModel.searchText.isEmpty {
+                Button {
+                    viewModel.searchText = ""
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+        .padding(10)
+        .background(Color(uiColor: .tertiarySystemGroupedBackground))
+        .cornerRadius(AppTheme.radiusMedium)
+    }
+
+    private func supervisorCard(_ supervisor: UserProfile) -> some View {
+        HStack(spacing: 12) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.emerald.opacity(0.12))
+                    .frame(width: 44, height: 44)
+
+                Image(systemName: "person.crop.circle.badge.checkmark")
+                    .foregroundColor(AppTheme.emerald)
+                    .font(.system(size: 18))
+            }
+
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 6) {
+                    Text(supervisor.fullName)
+                        .font(.appHeadline)
+                        .foregroundColor(.primary)
+
+                    Text(supervisor.employeeId)
+                        .font(.system(size: 10, weight: .bold, design: .monospaced))
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(AppTheme.emerald.opacity(0.12))
+                        .foregroundColor(AppTheme.emerald)
+                        .cornerRadius(AppTheme.radiusSmall)
+                }
+
+                Text(supervisor.email)
+                    .font(.appCaption)
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer()
+
+            VStack(alignment: .trailing, spacing: 4) {
+                Text("SUPERVISOR")
+                    .font(.system(size: 9, weight: .bold, design: .rounded))
+                    .foregroundColor(AppTheme.emerald)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(AppTheme.emerald.opacity(0.12))
+                    .cornerRadius(AppTheme.radiusSmall)
+
+                if supervisor.mustChangePassword {
+                    Text("PENDING ROTATION")
+                        .font(.system(size: 8, weight: .semibold))
+                        .foregroundColor(AppTheme.amber)
+                }
+            }
+        }
+        .padding(14)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+    }
+
+    private var emptyStateView: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "person.2.slash")
+                .font(.system(size: 36))
+                .foregroundColor(.secondary.opacity(0.6))
+                .padding(.top, 24)
+
+            Text("No Supervisors Found")
+                .font(.appHeadline)
+                .foregroundColor(.primary)
+
+            Text("Delegate a field supervisor with a manager-issued temporary password to oversee plucking gangs.")
+                .font(.appCaption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 16)
+
+            Button {
+                viewModel.isShowingInviteSheet = true
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "paperplane.fill")
+                    Text("Invite Supervisor Now")
+                }
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .background(AppTheme.emerald)
+                .cornerRadius(AppTheme.radiusMedium)
+            }
+            .padding(.top, 8)
+        }
+        .padding(24)
+        .frame(maxWidth: .infinity)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+    }
+}

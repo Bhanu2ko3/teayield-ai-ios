@@ -17,7 +17,8 @@ struct ManagerExecutiveSuiteView: View {
         case spatialMap = "Estate Spatial GIS"
         case yieldAnalytics = "Harvest Analytics"
         case fieldRoster = "Division Blocks"
-        case teamDelegation = "Staff Delegation"
+        case pluckers = "Plucker Workforce"
+        case teamDelegation = "Field Supervisors"
         case profile = "Officer Profile"
         case diagnostics = "Settings & Diagnostics"
 
@@ -29,6 +30,7 @@ struct ManagerExecutiveSuiteView: View {
             case .spatialMap: return "map.fill"
             case .yieldAnalytics: return "chart.bar.xaxis"
             case .fieldRoster: return "leaf.fill"
+            case .pluckers: return "person.3.fill"
             case .teamDelegation: return "person.badge.shield.checkmark.fill"
             case .profile: return "person.crop.circle.fill"
             case .diagnostics: return "gearshape.fill"
@@ -159,8 +161,10 @@ struct ManagerExecutiveSuiteView: View {
             ManagerAnalyticsDashboardView(viewModel: viewModel)
         case .fieldRoster:
             divisionRosterGrid
+        case .pluckers:
+            PluckerManagementView(container: container)
         case .teamDelegation:
-            InviteSupervisorSheetView(apiService: container.apiService, showsDismissButton: false)
+            SupervisorManagementView(container: container)
         case .profile:
             UserProfileView(
                 authService: container.authService,

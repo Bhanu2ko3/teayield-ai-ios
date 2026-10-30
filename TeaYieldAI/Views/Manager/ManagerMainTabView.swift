@@ -13,6 +13,7 @@ struct ManagerMainTabView: View {
         case overview
         case analytics
         case map
+        case pluckers
         case settings
     }
 
@@ -56,6 +57,12 @@ struct ManagerMainTabView: View {
                 Label("Map", systemImage: "map.fill")
             }
             .tag(Tab.map)
+
+            PluckerManagementView(container: container)
+                .tabItem {
+                    Label("Pluckers", systemImage: "person.3.fill")
+                }
+                .tag(Tab.pluckers)
 
             SupervisorSettingsView(container: container)
                 .tabItem {

@@ -154,6 +154,11 @@
 		74ABCB21308D0F0000E22417 /* InputSanitizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB20308D0F0000E22417 /* InputSanitizer.swift */; };
 		74ABCB31308D0F0000E22417 /* InputSanitizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB30308D0F0000E22417 /* InputSanitizerTests.swift */; };
 		74ABCB41308D0F0000E22417 /* ThemeToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB40308D0F0000E22417 /* ThemeToggleView.swift */; };
+		74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCBA1308D0F0000E22417 /* PluckerManagementViewModel.swift */; };
+		74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCBA2308D0F0000E22417 /* SupervisorManagementViewModel.swift */; };
+		74ABCBB3308D0F0000E22417 /* EditPluckerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCBA3308D0F0000E22417 /* EditPluckerSheetView.swift */; };
+		74ABCBB4308D0F0000E22417 /* PluckerManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCBA4308D0F0000E22417 /* PluckerManagementView.swift */; };
+		74ABCBB5308D0F0000E22417 /* SupervisorManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCBA5308D0F0000E22417 /* SupervisorManagementView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -324,6 +329,11 @@
 		74ABCB20308D0F0000E22417 /* InputSanitizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSanitizer.swift; sourceTree = "<group>"; };
 		74ABCB30308D0F0000E22417 /* InputSanitizerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSanitizerTests.swift; sourceTree = "<group>"; };
 		74ABCB40308D0F0000E22417 /* ThemeToggleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeToggleView.swift; sourceTree = "<group>"; };
+		74ABCBA1308D0F0000E22417 /* PluckerManagementViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluckerManagementViewModel.swift; sourceTree = "<group>"; };
+		74ABCBA2308D0F0000E22417 /* SupervisorManagementViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorManagementViewModel.swift; sourceTree = "<group>"; };
+		74ABCBA3308D0F0000E22417 /* EditPluckerSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPluckerSheetView.swift; sourceTree = "<group>"; };
+		74ABCBA4308D0F0000E22417 /* PluckerManagementView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluckerManagementView.swift; sourceTree = "<group>"; };
+		74ABCBA5308D0F0000E22417 /* SupervisorManagementView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorManagementView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -576,6 +586,8 @@
 		74ABC7BC308D053100E22417 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCBA1308D0F0000E22417 /* PluckerManagementViewModel.swift */,
+				74ABCBA2308D0F0000E22417 /* SupervisorManagementViewModel.swift */,
 				74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */,
 				74ABCB08308D0E0000E22417 /* ForcePasswordChangeViewModel.swift */,
 				74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */,
@@ -641,6 +653,7 @@
 		74ABC7C7308D053100E22417 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCBA3308D0F0000E22417 /* EditPluckerSheetView.swift */,
 				74ABC9A2308D0E0000E22417 /* AppearanceSettingsSectionView.swift */,
 				74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */,
 				74ABC7C9308D053100E22417 /* TaskCardView.swift */,
@@ -694,6 +707,8 @@
 		74ABC848308D090100E22417 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCBA4308D0F0000E22417 /* PluckerManagementView.swift */,
+				74ABCBA5308D0F0000E22417 /* SupervisorManagementView.swift */,
 				74ABC85A308D090100E22417 /* ManagerMainTabView.swift */,
 				74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */,
 				74ABCA0B308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift */,
@@ -706,6 +721,7 @@
 		74ABC849308D090100E22417 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCBA3308D0F0000E22417 /* EditPluckerSheetView.swift */,
 				74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */,
 				74ABCB21308D0E0000E22417 /* EditEstateSheetView.swift */,
 				74ABCB23308D0E0000E22417 /* AddFieldDivisionSheetView.swift */,
@@ -917,6 +933,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */,
+				74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */,
+				74ABCBB3308D0F0000E22417 /* EditPluckerSheetView.swift in Sources */,
+				74ABCBB4308D0F0000E22417 /* PluckerManagementView.swift in Sources */,
+				74ABCBB5308D0F0000E22417 /* SupervisorManagementView.swift in Sources */,
 				74ABCB11308D0E0000E22417 /* TeaYieldButton.swift in Sources */,
 				74ABCB13308D0E0000E22417 /* SectionHeaderView.swift in Sources */,
 				74ABCB41308D0F0000E22417 /* ThemeToggleView.swift in Sources */,
@@ -1039,6 +1060,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */,
+				74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */,
+				74ABCBB3308D0F0000E22417 /* EditPluckerSheetView.swift in Sources */,
+				74ABCBB4308D0F0000E22417 /* PluckerManagementView.swift in Sources */,
+				74ABCBB5308D0F0000E22417 /* SupervisorManagementView.swift in Sources */,
 				74ABCB0F308D0E0000E22417 /* MultiTenantOnboardingTests.swift in Sources */,
 				74ABCA26308D0E0000E22417 /* UserProfileViewModelTests.swift in Sources */,
 				74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */,
@@ -1074,6 +1100,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */,
+				74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */,
+				74ABCBB3308D0F0000E22417 /* EditPluckerSheetView.swift in Sources */,
+				74ABCBB4308D0F0000E22417 /* PluckerManagementView.swift in Sources */,
+				74ABCBB5308D0F0000E22417 /* SupervisorManagementView.swift in Sources */,
 				74ABC77D308D036800E22417 /* TeaYieldAIUITests.swift in Sources */,
 				74ABC77F308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift in Sources */,
 			);

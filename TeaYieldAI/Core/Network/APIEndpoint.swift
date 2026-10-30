@@ -25,6 +25,9 @@ enum APIEndpoint {
     case getFieldWeather(fieldId: UUID, limit: Int?)
     case listPluckers(estateId: UUID)
     case createPlucker(PluckerCreateRequestDTO)
+    case updatePlucker(id: UUID, payload: PluckerUpdateRequestDTO)
+    case deletePlucker(id: UUID)
+    case listSupervisors(estateId: UUID)
     case getDailyTasks(estateId: UUID, dayIndex: Int?)
     case triggerYieldPrediction(PredictionTriggerDTO)
     case optimizeRoster(RosterOptimizationRequestDTO)
@@ -40,6 +43,8 @@ enum APIEndpoint {
             return "auth/signup-manager"
         case .inviteSupervisor:
             return "auth/invite-supervisor"
+        case .listSupervisors:
+            return "auth/supervisors"
         case .changePassword:
             return "auth/change-password"
         case .getMe:
@@ -58,6 +63,8 @@ enum APIEndpoint {
             return "fields/\(fieldId.uuidString)/weather"
         case .listPluckers, .createPlucker:
             return "pluckers"
+        case .updatePlucker(let id, _), .deletePlucker(let id):
+            return "pluckers/\(id.uuidString)"
         case .getDailyTasks:
             return "tasks/daily"
         case .triggerYieldPrediction:
@@ -77,9 +84,11 @@ enum APIEndpoint {
         switch self {
         case .login, .signupManager, .inviteSupervisor, .changePassword, .onboardEstate, .createPlucker, .createField, .triggerYieldPrediction, .optimizeRoster, .syncHarvest:
             return .post
-        case .updateEstate:
+        case .updateEstate, .updatePlucker:
             return .put
-        case .getMe, .listEstates, .getEstate, .getFields, .getFieldNDVI, .getFieldWeather, .listPluckers, .getDailyTasks, .getCurrentRoster, .getHarvestLogs:
+        case .deletePlucker:
+            return .delete
+        case .getMe, .listEstates, .getEstate, .getFields, .getFieldNDVI, .getFieldWeather, .listPluckers, .listSupervisors, .getDailyTasks, .getCurrentRoster, .getHarvestLogs:
             return .get
         }
     }
@@ -95,6 +104,8 @@ enum APIEndpoint {
             guard let limit = limit else { return nil }
             return [URLQueryItem(name: "limit", value: String(limit))]
         case .listPluckers(let estateId):
+            return [URLQueryItem(name: "estate_id", value: estateId.uuidString)]
+        case .listSupervisors(let estateId):
             return [URLQueryItem(name: "estate_id", value: estateId.uuidString)]
         case .getDailyTasks(let estateId, let dayIndex):
             var items = [URLQueryItem(name: "estate_id", value: estateId.uuidString)]
@@ -140,6 +151,8 @@ enum APIEndpoint {
         case .updateEstate(_, let payload):
             return try? encoder.encode(payload)
         case .createPlucker(let payload):
+            return try? encoder.encode(payload)
+        case .updatePlucker(_, let payload):
             return try? encoder.encode(payload)
         case .createField(let payload):
             return try? encoder.encode(payload)

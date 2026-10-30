@@ -44,6 +44,9 @@ protocol APIServiceProtocol: AnyObject {
     /// Provisions a subordinate field supervisor under the authenticated manager.
     func inviteSupervisor(request: SupervisorInviteRequestDTO) async throws -> UserProfileDTO
 
+    /// Fetches all provisioned subordinate field supervisors for an estate.
+    func fetchSupervisors(estateId: UUID) async throws -> [UserProfileDTO]
+
     /// Rotates account credentials.
     func changePassword(request: PasswordChangeRequestDTO) async throws -> StatusResponseDTO
 
@@ -58,6 +61,12 @@ protocol APIServiceProtocol: AnyObject {
 
     /// Registers a new tea plucker employee.
     func createPlucker(request: PluckerCreateRequestDTO) async throws -> PluckerResponseDTO
+
+    /// Updates existing tea plucker details or productivity rate.
+    func updatePlucker(id: UUID, request: PluckerUpdateRequestDTO) async throws -> PluckerResponseDTO
+
+    /// Deletes or deregisters a plucker employee record.
+    func deletePlucker(id: UUID) async throws -> StatusResponseDTO
 
     /// Triggers on-demand multivariate LSTM deep learning yield forecast execution.
     func triggerYieldPrediction(request: PredictionTriggerDTO) async throws -> YieldPredictionBatchResponseDTO

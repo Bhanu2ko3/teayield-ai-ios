@@ -6,10 +6,8 @@ struct ManagerOverviewView: View {
     @StateObject private var viewModel: ManagerOverviewViewModel
     private let container: AppContainerProtocol
     @State private var showingFullProfileSheet: Bool = false
-    @State private var isShowingInviteSupervisorSheet: Bool = false
     @State private var isShowingEditEstateSheet: Bool = false
     @State private var isShowingAddFieldSheet: Bool = false
-    @State private var isShowingAddPluckerSheet: Bool = false
 
     init(container: AppContainerProtocol, viewModel: ManagerOverviewViewModel? = nil) {
         self.container = container
@@ -85,9 +83,6 @@ struct ManagerOverviewView: View {
             }
             .navigationTitle("Executive Overview")
             .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $isShowingInviteSupervisorSheet) {
-                InviteSupervisorSheetView(apiService: container.apiService)
-            }
             .sheet(isPresented: $isShowingEditEstateSheet) {
                 if let estateId = container.authService.currentUser?.estateId {
                     EditEstateSheetView(
@@ -107,19 +102,6 @@ struct ManagerOverviewView: View {
             .sheet(isPresented: $isShowingAddFieldSheet) {
                 if let estateId = container.authService.currentUser?.estateId {
                     AddFieldDivisionSheetView(
-                        apiService: container.apiService,
-                        estateId: estateId,
-                        onCreated: {
-                            Task {
-                                await viewModel.loadEstateTelemetry()
-                            }
-                        }
-                    )
-                }
-            }
-            .sheet(isPresented: $isShowingAddPluckerSheet) {
-                if let estateId = container.authService.currentUser?.estateId {
-                    AddPluckerSheetView(
                         apiService: container.apiService,
                         estateId: estateId,
                         onCreated: {
@@ -422,58 +404,116 @@ struct ManagerOverviewView: View {
     private var teamDelegationSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Image(systemName: "person.badge.shield.checkmark.fill")
+                Image(systemName: "person.2.badge.gearshape.fill")
                     .foregroundColor(AppTheme.emerald)
                     .font(.system(size: 16))
 
-                Text("Team & Staff Delegation")
+                Text("Workforce & Staff Management")
                     .font(.appHeadline)
                     .foregroundColor(.primary)
 
                 Spacer()
-
-                HStack(spacing: 8) {
-                    if let user = container.authService.currentUser, user.estateId != nil {
-                        Button {
-                            isShowingAddPluckerSheet = true
-                        } label: {
-                            HStack(spacing: 4) {
-                                Image(systemName: "person.badge.plus")
-                                    .font(.system(size: 11))
-                                Text("Add Plucker")
-                                    .font(.system(size: 11, weight: .semibold, design: .rounded))
-                            }
-                            .foregroundColor(.blue)
-                            .padding(.horizontal, 9)
-                            .padding(.vertical, 6)
-                            .background(Color.blue.opacity(0.12))
-                            .cornerRadius(AppTheme.radiusSmall)
-                        }
-                        .accessibilityLabel("Enroll new plucker worker")
-                    }
-
-                    Button {
-                        isShowingInviteSupervisorSheet = true
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "plus.circle.fill")
-                                .font(.system(size: 11))
-                            Text("Invite")
-                                .font(.system(size: 11, weight: .semibold, design: .rounded))
-                        }
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 9)
-                        .padding(.vertical, 6)
-                        .background(AppTheme.emerald)
-                        .cornerRadius(AppTheme.radiusSmall)
-                    }
-                    .accessibilityLabel("Invite subordinate field supervisor")
-                }
             }
 
-            Text("Provision field supervisors with manager-issued temporary passwords to coordinate weighing and leaf quality scans.")
-                .font(.appCaption)
-                .foregroundColor(.secondary)
+            VStack(spacing: 10) {
+                // Plucker Workforce Navigation Link Card
+                NavigationLink {
+                    PluckerManagementView(container: container)
+                } label: {
+                    HStack(spacing: 12) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.blue.opacity(0.12))
+                                .frame(width: 40, height: 40)
+
+                            Image(systemName: "person.3.fill")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 16))
+                        }
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            HStack {
+                                Text("Plucker Harvesters")
+                                    .font(.appHeadline)
+                                    .foregroundColor(.primary)
+
+                                Spacer()
+
+                                Text("\(viewModel.availablePluckersCount) Enrolled")
+                                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                                    .foregroundColor(AppTheme.emerald)
+                                    .padding(.horizontal, 7)
+                                    .padding(.vertical, 2)
+                                    .background(AppTheme.emerald.opacity(0.12))
+                                    .cornerRadius(AppTheme.radiusSmall)
+                            }
+
+                            Text("Manage plucker registry, daily rates, and duty status")
+                                .font(.appCaption)
+                                .foregroundColor(.secondary)
+                        }
+
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(12)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .cornerRadius(AppTheme.radiusMedium)
+                }
+                .accessibilityLabel("Open plucker workforce management")
+
+                // Field Supervisors Navigation Link Card
+                NavigationLink {
+                    SupervisorManagementView(container: container)
+                } label: {
+                    HStack(spacing: 12) {
+                        ZStack {
+                            Circle()
+                                .fill(AppTheme.emerald.opacity(0.12))
+                                .frame(width: 40, height: 40)
+
+                            Image(systemName: "person.badge.shield.checkmark.fill")
+                                .foregroundColor(AppTheme.emerald)
+                                .font(.system(size: 16))
+                        }
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            HStack {
+                                Text("Field Supervisors")
+                                    .font(.appHeadline)
+                                    .foregroundColor(.primary)
+
+                                Spacer()
+
+                                HStack(spacing: 3) {
+                                    Image(systemName: "plus.circle.fill")
+                                        .font(.system(size: 10))
+                                    Text("Invite")
+                                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                                }
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 3)
+                                .background(AppTheme.emerald)
+                                .cornerRadius(AppTheme.radiusSmall)
+                            }
+
+                            Text("Provision and monitor subordinate field superintendents")
+                                .font(.appCaption)
+                                .foregroundColor(.secondary)
+                        }
+
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(12)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .cornerRadius(AppTheme.radiusMedium)
+                }
+                .accessibilityLabel("Open field supervisor delegation and roster")
+            }
         }
         .padding(16)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
