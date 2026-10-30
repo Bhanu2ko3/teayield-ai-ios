@@ -4,6 +4,9 @@ import SwiftUI
 struct ManagerAnalyticsDashboardView: View {
 
     @ObservedObject var viewModel: ManagerOverviewViewModel
+    @State private var generatedPDFData: Data? = nil
+    @State private var isShowingShareSheet: Bool = false
+    @State private var isGeneratingPDF: Bool = false
 
     var body: some View {
         ScrollView {
@@ -251,7 +254,7 @@ struct ManagerAnalyticsDashboardView: View {
                     .font(.system(size: 16))
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Plucking Schedule Optimizer (Genetic Algorithm)")
+                    Text("Plucking Schedule Optimizer")
                         .font(.appHeadline)
                         .foregroundColor(.primary)
 
@@ -278,7 +281,7 @@ struct ManagerAnalyticsDashboardView: View {
             }
 
             // Dynamic Plucker Labor Input
-            HStack(spacing: 12) {
+            HStack(spacing: 8) {
                 VStack(alignment: .leading, spacing: 3) {
                     Text("Active Plucker Labor Pool")
                         .font(.system(size: 13, weight: .bold, design: .rounded))
@@ -288,18 +291,19 @@ struct ManagerAnalyticsDashboardView: View {
                         .foregroundColor(.secondary)
                 }
 
-                Spacer(minLength: 8)
+                Spacer()
 
-                HStack(spacing: 10) {
-                    HStack(alignment: .firstTextBaseline, spacing: 3) {
+                HStack(spacing: 8) {
+                    HStack(alignment: .firstTextBaseline, spacing: 2) {
                         Text("\(viewModel.availablePluckersCount)")
-                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                            .font(.system(size: 17, weight: .bold, design: .rounded))
                             .foregroundColor(AppTheme.emerald)
 
                         Text("pluckers")
                             .font(.system(size: 11, weight: .semibold, design: .rounded))
                             .foregroundColor(.secondary)
                     }
+                    .fixedSize()
 
                     HStack(spacing: 0) {
                         Button {
@@ -309,15 +313,15 @@ struct ManagerAnalyticsDashboardView: View {
                             }
                         } label: {
                             Image(systemName: "minus")
-                                .font(.system(size: 12, weight: .bold))
+                                .font(.system(size: 11, weight: .bold))
                                 .foregroundColor(viewModel.availablePluckersCount > 1 ? .primary : .secondary.opacity(0.4))
-                                .frame(width: 34, height: 32)
+                                .frame(width: 30, height: 30)
                                 .contentShape(Rectangle())
                         }
                         .disabled(viewModel.availablePluckersCount <= 1)
 
                         Divider()
-                            .frame(height: 18)
+                            .frame(height: 16)
 
                         Button {
                             if viewModel.availablePluckersCount < 500 {
@@ -326,9 +330,9 @@ struct ManagerAnalyticsDashboardView: View {
                             }
                         } label: {
                             Image(systemName: "plus")
-                                .font(.system(size: 12, weight: .bold))
+                                .font(.system(size: 11, weight: .bold))
                                 .foregroundColor(viewModel.availablePluckersCount < 500 ? .primary : .secondary.opacity(0.4))
-                                .frame(width: 34, height: 32)
+                                .frame(width: 30, height: 30)
                                 .contentShape(Rectangle())
                         }
                         .disabled(viewModel.availablePluckersCount >= 500)
@@ -376,30 +380,70 @@ struct ManagerAnalyticsDashboardView: View {
                     }
 
                     if !roster.days.isEmpty {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Daily Shift Allocations (Mon - Sat)")
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Daily Shift Allocations & Division Assignments (Mon - Sat)")
                                 .font(.system(size: 11, weight: .semibold))
                                 .foregroundColor(.secondary)
 
                             ForEach(roster.days) { day in
-                                HStack {
-                                    Text(day.dayName)
-                                        .font(.system(size: 12, weight: .medium))
-                                        .frame(width: 80, alignment: .leading)
+                                VStack(alignment: .leading, spacing: 6) {
+                                    HStack {
+                                        Text(day.dayName)
+                                            .font(.system(size: 12, weight: .bold))
+                                            .frame(width: 80, alignment: .leading)
 
-                                    Text("\(day.totalAssignedPluckers) pluckers")
-                                        .font(.system(size: 11))
-                                        .foregroundColor(.secondary)
+                                        Text("\(day.totalAssignedPluckers) pluckers")
+                                            .font(.system(size: 11, weight: .semibold, design: .rounded))
+                                            .foregroundColor(.primary)
 
-                                    Spacer()
+                                        Spacer()
 
-                                    Text(String(format: "%.0f kg target", day.estimatedDailyIntakeKg))
-                                        .font(.system(size: 11, weight: .semibold, design: .rounded))
-                                        .foregroundColor(AppTheme.emerald)
+                                        Text(String(format: "%.0f kg target", day.estimatedDailyIntakeKg))
+                                            .font(.system(size: 11, weight: .bold, design: .rounded))
+                                            .foregroundColor(AppTheme.emerald)
+                                    }
+
+                                    // Detailed field assignments per day
+                                    if !day.fieldAssignments.isEmpty {
+                                        VStack(alignment: .leading, spacing: 3) {
+                                            ForEach(day.fieldAssignments) { assignment in
+                                                HStack(spacing: 4) {
+                                                    Circle()
+                                                        .fill(AppTheme.emerald)
+                                                        .frame(width: 4, height: 4)
+                                                    Text(assignment.fieldName)
+                                                        .font(.system(size: 10, weight: .medium))
+                                                        .foregroundColor(.secondary)
+                                                        .lineLimit(1)
+                                                    Spacer()
+                                                    Text("\(assignment.assignedPluckers) pluckers • \(String(format: "%.0f kg", assignment.targetHarvestKg))")
+                                                        .font(.system(size: 10, design: .rounded))
+                                                        .foregroundColor(.secondary)
+                                                }
+                                            }
+                                        }
+                                        .padding(.leading, 8)
+                                        .padding(.top, 2)
+                                    } else {
+                                        // Dynamic division recommendation based on ready/growing fields
+                                        let suggestedFields = viewModel.fields.filter { $0.status == .ready }
+                                        let fieldNames = suggestedFields.isEmpty ? viewModel.fields.prefix(2).map { $0.name }.joined(separator: ", ") : suggestedFields.prefix(2).map { $0.name }.joined(separator: ", ")
+                                        if !fieldNames.isEmpty {
+                                            HStack(spacing: 4) {
+                                                Image(systemName: "leaf.fill")
+                                                    .font(.system(size: 9))
+                                                    .foregroundColor(AppTheme.emerald)
+                                                Text("Assigned: \(fieldNames)")
+                                                    .font(.system(size: 10, weight: .medium))
+                                                    .foregroundColor(.secondary)
+                                                    .lineLimit(1)
+                                            }
+                                            .padding(.leading, 8)
+                                        }
+                                    }
                                 }
-                                .padding(.vertical, 4)
-                                .padding(.horizontal, 8)
-                                .background(Color(uiColor: .tertiarySystemGroupedBackground).opacity(0.5))
+                                .padding(8)
+                                .background(Color(uiColor: .tertiarySystemGroupedBackground).opacity(0.7))
                                 .cornerRadius(AppTheme.radiusSmall)
                             }
                         }
@@ -411,20 +455,73 @@ struct ManagerAnalyticsDashboardView: View {
                     .foregroundColor(.secondary)
             }
 
-            TeaYieldButton(
-                title: viewModel.isOptimizingRoster ? "Optimizing Schedule..." : (viewModel.activeRoster == nil ? "Generate Plucking Schedule" : "Re-optimize Plucking Schedule"),
-                icon: "calendar.badge.clock",
-                style: .primary,
-                isLoading: viewModel.isOptimizingRoster
-            ) {
-                Task {
-                    await viewModel.optimizeWorkforceRoster()
+            VStack(spacing: 10) {
+                TeaYieldButton(
+                    title: viewModel.isOptimizingRoster ? "Optimizing Schedule..." : (viewModel.activeRoster == nil ? "Generate Plucking Schedule" : "Re-optimize Plucking Schedule"),
+                    icon: "calendar.badge.clock",
+                    style: .primary,
+                    isLoading: viewModel.isOptimizingRoster
+                ) {
+                    Task {
+                        await viewModel.optimizeWorkforceRoster()
+                    }
+                }
+                .disabled(viewModel.isOptimizingRoster)
+
+                if let roster = viewModel.activeRoster {
+                    TeaYieldButton(
+                        title: isGeneratingPDF ? "Preparing Official Document..." : "Export Official PDF Roster",
+                        icon: "doc.text.fill",
+                        style: .secondary,
+                        isLoading: isGeneratingPDF
+                    ) {
+                        exportRosterPDF(roster: roster)
+                    }
+                    .disabled(isGeneratingPDF)
                 }
             }
-            .disabled(viewModel.isOptimizingRoster)
         }
         .padding(14)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+        .sheet(isPresented: $isShowingShareSheet) {
+            if let pdfData = generatedPDFData {
+                let tempURL = saveTempPDF(data: pdfData)
+                ShareSheet(activityItems: [tempURL])
+            }
+        }
+    }
+
+    private func exportRosterPDF(roster: RosterOptimizationResponseDTO) {
+        isGeneratingPDF = true
+        HapticFeedback.lightImpact()
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            let estateName = viewModel.estateDisplayName
+            let fieldNames = viewModel.fields.map { "\($0.name) (\($0.blockCode))" }
+            let data = RosterPDFGenerator.generatePDF(
+                roster: roster,
+                estateName: estateName,
+                district: "Central Highlands",
+                managerName: "Estate Superintendent",
+                fieldDivisions: fieldNames
+            )
+
+            DispatchQueue.main.async {
+                self.generatedPDFData = data
+                self.isGeneratingPDF = false
+                self.isShowingShareSheet = true
+                HapticFeedback.success()
+            }
+        }
+    }
+
+    private func saveTempPDF(data: Data) -> URL {
+        let tempDir = FileManager.default.temporaryDirectory
+        let fileName = "TeaYield_Plucking_Roster_\(Date().formatted(date: .numeric, time: .omitted)).pdf"
+            .replacingOccurrences(of: "/", with: "-")
+        let fileURL = tempDir.appendingPathComponent(fileName)
+        try? data.write(to: fileURL)
+        return fileURL
     }
 }
 

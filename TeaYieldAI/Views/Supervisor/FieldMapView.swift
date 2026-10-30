@@ -240,7 +240,7 @@ struct FieldMapView: View {
                 filterPill(
                     title: "All Divisions (\(viewModel.fields.count))",
                     isSelected: viewModel.filterStatus == nil,
-                    color: .primary
+                    color: AppTheme.forest
                 ) {
                     viewModel.setFilter(nil)
                 }
@@ -269,7 +269,7 @@ struct FieldMapView: View {
                     viewModel.setFilter(.resting)
                 }
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 14)
             .padding(.vertical, 8)
         }
         .teaYieldCard(cornerRadius: AppTheme.radiusMedium)

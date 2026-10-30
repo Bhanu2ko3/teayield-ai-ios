@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABCPDF0000000200E22417 /* RosterPDFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCPDF0000000100E22417 /* RosterPDFGenerator.swift */; };
+		74ABCPDF0000000400E22417 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCPDF0000000300E22417 /* ShareSheet.swift */; };
+		74ABCPDF0000000600E22417 /* RosterPDFGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCPDF0000000500E22417 /* RosterPDFGeneratorTests.swift */; };
 		74ABCTST0000000A00E22417 /* APIEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000900E22417 /* APIEndpointTests.swift */; };
 		74ABCTST0000000800E22417 /* KeychainHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000700E22417 /* KeychainHelperTests.swift */; };
 		74ABCTST0000000600E22417 /* TeaYieldWidgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000500E22417 /* TeaYieldWidgetTests.swift */; };
@@ -199,6 +202,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABCPDF0000000100E22417 /* RosterPDFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterPDFGenerator.swift; sourceTree = "<group>"; };
+		74ABCPDF0000000300E22417 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		74ABCPDF0000000500E22417 /* RosterPDFGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterPDFGeneratorTests.swift; sourceTree = "<group>"; };
 		74ABCTST0000000900E22417 /* APIEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointTests.swift; sourceTree = "<group>"; };
 		74ABCTST0000000700E22417 /* KeychainHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelperTests.swift; sourceTree = "<group>"; };
 		74ABCTST0000000500E22417 /* TeaYieldWidgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldWidgetTests.swift; sourceTree = "<group>"; };
@@ -592,6 +598,7 @@
 		74ABC7B1308D053100E22417 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCPDF0000000100E22417 /* RosterPDFGenerator.swift */,
 				74ABCA03308D0E0000E22417 /* HapticFeedback.swift */,
 				74ABC881308D0B0100E22417 /* GeoJSONParser.swift */,
 				74ABC7B2308D053100E22417 /* AppConfiguration.swift */,
@@ -820,6 +827,7 @@
 		74ABC9E1308D0D0000E22417 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCPDF0000000500E22417 /* RosterPDFGeneratorTests.swift */,
 				74ABCTST0000000900E22417 /* APIEndpointTests.swift */,
 				74ABCTST0000000700E22417 /* KeychainHelperTests.swift */,
 				74ABCTST0000000500E22417 /* TeaYieldWidgetTests.swift */,
@@ -857,6 +865,7 @@
 		74ABCB15308D0E0000E22417 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCPDF0000000300E22417 /* ShareSheet.swift */,
 				74ABCA9B308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift */,
 				A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */,
 				74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */,
@@ -1032,6 +1041,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCPDF0000000200E22417 /* RosterPDFGenerator.swift in Sources */,
+				74ABCPDF0000000400E22417 /* ShareSheet.swift in Sources */,
 				74ABCA9C308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift in Sources */,
 				FAE8318DD7B44E6AA866C1C5 /* TeaYieldSearchBar.swift in Sources */,
 				BA226C3DE2734A7C9135186D /* DivisionManagementView.swift in Sources */,
@@ -1164,6 +1175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCPDF0000000600E22417 /* RosterPDFGeneratorTests.swift in Sources */,
 				74ABCTST0000000A00E22417 /* APIEndpointTests.swift in Sources */,
 				74ABCTST0000000800E22417 /* KeychainHelperTests.swift in Sources */,
 				74ABCTST0000000600E22417 /* TeaYieldWidgetTests.swift in Sources */,
