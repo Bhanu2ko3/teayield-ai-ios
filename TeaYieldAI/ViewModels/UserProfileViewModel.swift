@@ -145,6 +145,14 @@ final class UserProfileViewModel: ObservableObject {
         isLoading = true
         defer { isLoading = false }
 
+        // Fetch fresh profile from backend API to ensure latest phone number and metadata are synced
+        if let api = apiService {
+            if let profileDTO = try? await api.fetchCurrentUserProfile() {
+                let updatedUser = profileDTO.toDomain(employeeId: self.employeeId)
+                authService.updateUserProfile(updatedUser)
+            }
+        }
+
         // Fetch estate name dynamically if available
         if let estateId = user?.estateId, let api = apiService {
             if let estate = try? await api.fetchEstate(id: estateId) {

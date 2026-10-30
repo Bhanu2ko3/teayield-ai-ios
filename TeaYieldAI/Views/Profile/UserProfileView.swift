@@ -245,15 +245,13 @@ struct UserProfileView: View {
                             .foregroundColor(.secondary)
                     }
 
-                    if viewModel.hasPhoneNumber {
-                        HStack(spacing: 6) {
-                            Image(systemName: "phone.fill")
-                                .font(.system(size: 11))
-                                .foregroundColor(AppTheme.emerald)
-                            Text(viewModel.phoneNumber)
-                                .font(.system(size: 13, weight: .semibold, design: .rounded))
-                                .foregroundColor(.primary)
-                        }
+                    HStack(spacing: 6) {
+                        Image(systemName: "phone.fill")
+                            .font(.system(size: 11))
+                            .foregroundColor(viewModel.hasPhoneNumber ? AppTheme.emerald : .secondary)
+                        Text(viewModel.phoneNumber)
+                            .font(.system(size: 13, weight: viewModel.hasPhoneNumber ? .semibold : .regular, design: .rounded))
+                            .foregroundColor(viewModel.hasPhoneNumber ? .primary : .secondary)
                     }
                 }
                 .padding(.top, 2)

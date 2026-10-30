@@ -317,8 +317,8 @@ struct ManagerOverviewView: View {
     private var ndviDistributionSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             SectionHeaderView(
-                title: "CANOPY HEALTH DISTRIBUTION (SENTINEL-2 NDVI)",
-                subtitle: "Chlorophyll reflectance spectrum across active fields",
+                title: "CANOPY HEALTH DISTRIBUTION",
+                subtitle: "Sentinel-2 NDVI chlorophyll reflectance spectrum",
                 icon: "chart.pie.fill"
             )
 
@@ -332,36 +332,33 @@ struct ManagerOverviewView: View {
 
     private var estateDivisionsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .center) {
+            HStack(alignment: .top) {
                 SectionHeaderView(
-                    title: "ESTATE DIVISIONS & NDVI STATUS",
-                    subtitle: "Sentinel-2 vegetative canopy health across plantation blocks",
+                    title: "ESTATE DIVISIONS",
+                    subtitle: "Vegetative canopy health across blocks",
                     icon: "leaf.fill",
                     badge: "\(viewModel.fields.count) BLOCKS",
                     badgeColor: AppTheme.emerald
                 )
 
-                Spacer()
+                Spacer(minLength: 8)
 
-                if let user = container.authService.currentUser, user.estateId != nil {
-                    Button {
-                        isShowingAddFieldSheet = true
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "plus")
-                                .font(.system(size: 11, weight: .bold))
-                            Text("New Block")
-                                .font(.system(size: 11, weight: .bold, design: .rounded))
-                        }
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 7)
-                        .background(AppTheme.emerald)
-                        .cornerRadius(AppTheme.radiusSmall)
-                        .shadow(color: AppTheme.emerald.opacity(0.25), radius: 4, x: 0, y: 2)
+                NavigationLink {
+                    DivisionManagementView(container: container, viewModel: viewModel)
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("Manage All")
+                            .font(.system(size: 11, weight: .bold, design: .rounded))
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 9, weight: .bold))
                     }
-                    .accessibilityLabel("Add new field division block")
+                    .foregroundColor(AppTheme.emerald)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(AppTheme.emerald.opacity(0.12))
+                    .cornerRadius(AppTheme.radiusSmall)
                 }
+                .accessibilityLabel("Open full estate divisions management screen")
             }
 
             if viewModel.fields.isEmpty && !viewModel.isLoading {
@@ -385,17 +382,34 @@ struct ManagerOverviewView: View {
                 .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
             } else {
                 VStack(spacing: 10) {
-                    ForEach(viewModel.fields) { field in
+                    // Preview first 3 fields on Overview, direct to DivisionManagementView for full list
+                    ForEach(viewModel.fields.prefix(3)) { field in
                         ManagerFieldRowView(
                             field: field,
-                            onEdit: {
-                                editingField = field
-                            },
-                            onDelete: {
-                                fieldToDelete = field
-                                isShowingDeleteFieldConfirmation = true
-                            }
+                            onEdit: nil,
+                            onDelete: nil
                         )
+                    }
+
+                    if viewModel.fields.count > 3 {
+                        NavigationLink {
+                            DivisionManagementView(container: container, viewModel: viewModel)
+                        } label: {
+                            HStack {
+                                Text("View All \(viewModel.fields.count) Divisions")
+                                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                                    .foregroundColor(AppTheme.emerald)
+
+                                Spacer()
+
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .foregroundColor(AppTheme.emerald)
+                            }
+                            .padding(12)
+                            .background(AppTheme.emerald.opacity(0.08))
+                            .cornerRadius(AppTheme.radiusMedium)
+                        }
                     }
                 }
             }
@@ -425,32 +439,29 @@ struct ManagerOverviewView: View {
     }
 
     private func statusPill(title: String, count: Int, color: Color) -> some View {
-        HStack(spacing: 8) {
+        VStack(spacing: 4) {
             ZStack {
                 Circle()
-                    .fill(color.opacity(0.15))
-                    .frame(width: 32, height: 32)
+                    .fill(color.opacity(0.14))
+                    .frame(width: 36, height: 36)
 
                 Text("\(count)")
-                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
                     .foregroundColor(color)
             }
 
-            VStack(alignment: .leading, spacing: 1) {
-                Text(title)
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
-                    .foregroundColor(.primary)
+            Text(title)
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundColor(.primary)
+                .lineLimit(1)
 
-                Text(statusSubtitle(for: title))
-                    .font(.system(size: 10, weight: .medium, design: .rounded))
-                    .foregroundColor(.secondary)
-            }
-
-            Spacer(minLength: 0)
+            Text(statusSubtitle(for: title))
+                .font(.system(size: 10, weight: .medium, design: .rounded))
+                .foregroundColor(.secondary)
+                .lineLimit(1)
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 10)
         .frame(maxWidth: .infinity)
+        .padding(.vertical, 10)
         .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
     }
 
@@ -464,18 +475,12 @@ struct ManagerOverviewView: View {
     }
 
     private var teamDelegationSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Image(systemName: "person.2.badge.gearshape.fill")
-                    .foregroundColor(AppTheme.emerald)
-                    .font(.system(size: 16))
-
-                Text("Workforce & Staff Management")
-                    .font(.appHeadline)
-                    .foregroundColor(.primary)
-
-                Spacer()
-            }
+        VStack(alignment: .leading, spacing: 10) {
+            SectionHeaderView(
+                title: "WORKFORCE & STAFF MANAGEMENT",
+                subtitle: "Plucker registry & field supervisory roster",
+                icon: "person.2.badge.gearshape.fill"
+            )
 
             VStack(spacing: 10) {
                 // Plucker Workforce Navigation Link Card
@@ -519,9 +524,8 @@ struct ManagerOverviewView: View {
                             .font(.system(size: 12, weight: .semibold))
                             .foregroundColor(.secondary)
                     }
-                    .padding(12)
-                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(AppTheme.radiusMedium)
+                    .padding(14)
+                    .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
                 }
                 .accessibilityLabel("Open plucker workforce management")
 
@@ -570,15 +574,12 @@ struct ManagerOverviewView: View {
                             .font(.system(size: 12, weight: .semibold))
                             .foregroundColor(.secondary)
                     }
-                    .padding(12)
-                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(AppTheme.radiusMedium)
+                    .padding(14)
+                    .teaYieldCard(cornerRadius: AppTheme.radiusMedium)
                 }
                 .accessibilityLabel("Open field supervisor delegation and roster")
             }
         }
-        .padding(16)
-        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 }
 

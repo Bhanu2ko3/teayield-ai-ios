@@ -29,7 +29,10 @@ struct SupervisorManagementView: View {
                         supervisorHeroCard
 
                         // Search Bar
-                        searchField
+                        TeaYieldSearchBar(
+                            text: $viewModel.searchText,
+                            placeholder: "Search by supervisor name or employee ID..."
+                        )
 
                         // Supervisor Roster List
                         if viewModel.isLoading && viewModel.supervisors.isEmpty {
@@ -162,11 +165,12 @@ struct SupervisorManagementView: View {
             }
 
             VStack(alignment: .leading, spacing: 3) {
-                HStack(spacing: 6) {
-                    Text(supervisor.fullName)
-                        .font(.appHeadline)
-                        .foregroundColor(.primary)
+                Text(supervisor.fullName)
+                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+                    .lineLimit(1)
 
+                HStack(spacing: 6) {
                     Text(supervisor.employeeId)
                         .font(.system(size: 10, weight: .bold, design: .monospaced))
                         .padding(.horizontal, 6)
@@ -174,16 +178,21 @@ struct SupervisorManagementView: View {
                         .background(AppTheme.emerald.opacity(0.12))
                         .foregroundColor(AppTheme.emerald)
                         .cornerRadius(AppTheme.radiusSmall)
-                }
 
-                Text(supervisor.email)
-                    .font(.appCaption)
-                    .foregroundColor(.secondary)
+                    Text("•")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+
+                    Text(supervisor.email)
+                        .font(.appCaption)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                }
             }
 
-            Spacer()
+            Spacer(minLength: 6)
 
-            VStack(alignment: .trailing, spacing: 4) {
+            VStack(alignment: .trailing, spacing: 6) {
                 HStack(spacing: 6) {
                     Text("SUPERVISOR")
                         .font(.system(size: 9, weight: .bold, design: .rounded))

@@ -29,7 +29,10 @@ struct PluckerManagementView: View {
                         workforceSummaryBanner
 
                         // Search Bar
-                        searchField
+                        TeaYieldSearchBar(
+                            text: $viewModel.searchText,
+                            placeholder: "Search by plucker name or code..."
+                        )
 
                         // Plucker List
                         if viewModel.isLoading && viewModel.pluckers.isEmpty {

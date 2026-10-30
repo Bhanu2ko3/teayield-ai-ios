@@ -9,6 +9,8 @@ struct EditEstateSheetView: View {
     private let onUpdated: () -> Void
 
     @State private var estateName: String
+    @State private var selectedDistrict: String = SriLankanTeaDistrict.nuwaraEliya.rawValue
+    @State private var elevationInput: String = "1850"
     @State private var totalAcresInput: String
     @State private var dailyFactoryCapacityInput: String
     @State private var isSubmitting: Bool = false
@@ -34,6 +36,7 @@ struct EditEstateSheetView: View {
     private var isFormValid: Bool {
         let nameTrimmed = estateName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard nameTrimmed.count >= 2 && nameTrimmed.count <= 150 else { return false }
+        guard let elev = Int(InputSanitizer.sanitizeInteger(elevationInput)), elev >= 50 && elev <= 2600 else { return false }
         guard let acres = Double(InputSanitizer.sanitizeDecimal(totalAcresInput)), acres >= 1.0 && acres <= 50000.0 else { return false }
         guard let cap = Double(InputSanitizer.sanitizeDecimal(dailyFactoryCapacityInput)), cap >= 100.0 && cap <= 100000.0 else { return false }
         return true
@@ -91,6 +94,41 @@ struct EditEstateSheetView: View {
 
                     TextField("e.g. Pedro Estate Nuwara Eliya", text: $estateName)
                         .font(.appBody)
+                }
+                .padding(14)
+                .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                .cornerRadius(AppTheme.radiusMedium)
+            }
+
+            // District Picker
+            DistrictPickerField(selectedDistrict: $selectedDistrict)
+
+            // Mean Elevation
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("Mean Elevation")
+                        .font(.appCaption)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text("50 – 2,600 m")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(.secondary)
+                }
+
+                HStack {
+                    Image(systemName: "mountain.2.fill")
+                        .foregroundColor(.secondary)
+                        .frame(width: 20)
+
+                    TextField("e.g. 1850", text: $elevationInput)
+                        .keyboardType(.numberPad)
+                        .onChange(of: elevationInput) { newValue in
+                            elevationInput = InputSanitizer.sanitizeInteger(newValue)
+                        }
+
+                    Text("m a.s.l.")
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundColor(.secondary)
                 }
                 .padding(14)
                 .background(Color(uiColor: .tertiarySystemGroupedBackground))
@@ -180,15 +218,16 @@ struct EditEstateSheetView: View {
 
     private func submitUpdate() async {
         guard let acres = Double(totalAcresInput),
-              let cap = Double(dailyFactoryCapacityInput) else { return }
+              let cap = Double(dailyFactoryCapacityInput),
+              let elev = Int(elevationInput) else { return }
 
         isSubmitting = true
         errorMessage = nil
 
         let request = EstateUpdateRequestDTO(
             name: estateName.trimmingCharacters(in: .whitespacesAndNewlines),
-            district: nil,
-            elevationMeters: nil,
+            district: selectedDistrict,
+            elevationMeters: elev,
             totalAreaAcres: acres,
             dailyFactoryCapacityKg: cap
         )

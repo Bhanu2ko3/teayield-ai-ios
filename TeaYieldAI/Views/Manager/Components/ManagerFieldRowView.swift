@@ -54,43 +54,15 @@ struct ManagerFieldRowView: View {
 
             Spacer()
 
-            // NDVI Score, Readiness Badge & Context Menu
+            // NDVI Score & Readiness Badge
             VStack(alignment: .trailing, spacing: 4) {
-                HStack(spacing: 6) {
-                    Text(field.status.rawValue)
-                        .font(.system(size: 10, weight: .bold, design: .rounded))
-                        .foregroundColor(statusColor(for: field.status))
-                        .padding(.horizontal, 7)
-                        .padding(.vertical, 3)
-                        .background(statusColor(for: field.status).opacity(0.12))
-                        .cornerRadius(AppTheme.radiusSmall)
-
-                    if onEdit != nil || onDelete != nil {
-                        Menu {
-                            if let onEdit = onEdit {
-                                Button {
-                                    onEdit()
-                                } label: {
-                                    Label("Edit Block", systemImage: "pencil")
-                                }
-                            }
-
-                            if let onDelete = onDelete {
-                                Divider()
-                                Button(role: .destructive) {
-                                    onDelete()
-                                } label: {
-                                    Label("Retire Division", systemImage: "trash")
-                                }
-                            }
-                        } label: {
-                            Image(systemName: "ellipsis.circle")
-                                .font(.system(size: 18))
-                                .foregroundColor(.secondary)
-                                .padding(2)
-                        }
-                    }
-                }
+                Text(field.status.rawValue)
+                    .font(.system(size: 10, weight: .bold, design: .rounded))
+                    .foregroundColor(statusColor(for: field.status))
+                    .padding(.horizontal, 7)
+                    .padding(.vertical, 3)
+                    .background(statusColor(for: field.status).opacity(0.12))
+                    .cornerRadius(AppTheme.radiusSmall)
 
                 HStack(spacing: 4) {
                     Text("NDVI")
@@ -100,6 +72,32 @@ struct ManagerFieldRowView: View {
                     Text(field.formattedNDVI)
                         .font(.system(size: 12, weight: .bold, design: .monospaced))
                         .foregroundColor(statusColor(for: field.status))
+                }
+            }
+
+            if onEdit != nil || onDelete != nil {
+                Menu {
+                    if let onEdit = onEdit {
+                        Button {
+                            onEdit()
+                        } label: {
+                            Label("Edit Block", systemImage: "pencil")
+                        }
+                    }
+
+                    if let onDelete = onDelete {
+                        Divider()
+                        Button(role: .destructive) {
+                            onDelete()
+                        } label: {
+                            Label("Retire Division", systemImage: "trash")
+                        }
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .font(.system(size: 20))
+                        .foregroundColor(.secondary)
+                        .padding(4)
                 }
             }
         }

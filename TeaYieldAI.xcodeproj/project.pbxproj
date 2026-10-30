@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FAE8318DD7B44E6AA866C1C5 /* TeaYieldSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */; };
+		BA226C3DE2734A7C9135186D /* DivisionManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD57EE6216DB4016B7FF3B94 /* DivisionManagementView.swift */; };
 		8F6613101F6C43E1B8828903 /* EditFieldDivisionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0D5C80B80B4D7090C806C8 /* EditFieldDivisionSheetView.swift */; };
 		74ABC773308D036800E22417 /* TeaYieldAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC772308D036800E22417 /* TeaYieldAITests.swift */; };
 		74ABC77D308D036800E22417 /* TeaYieldAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77C308D036800E22417 /* TeaYieldAIUITests.swift */; };
@@ -180,6 +182,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldSearchBar.swift; sourceTree = "<group>"; };
+		DD57EE6216DB4016B7FF3B94 /* DivisionManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionManagementView.swift; sourceTree = "<group>"; };
 		FD0D5C80B80B4D7090C806C8 /* EditFieldDivisionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFieldDivisionSheetView.swift; sourceTree = "<group>"; };
 		74ABC75E308D036400E22417 /* TeaYieldAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeaYieldAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeaYieldAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -709,6 +713,7 @@
 		74ABC848308D090100E22417 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				DD57EE6216DB4016B7FF3B94 /* DivisionManagementView.swift */,
 				74ABCBA4308D0F0000E22417 /* PluckerManagementView.swift */,
 				74ABCBA5308D0F0000E22417 /* SupervisorManagementView.swift */,
 				74ABC85A308D090100E22417 /* ManagerMainTabView.swift */,
@@ -799,6 +804,7 @@
 		74ABCB15308D0E0000E22417 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */,
 				74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */,
 				74ABCB14308D0E0000E22417 /* SectionHeaderView.swift */,
 				74ABCB40308D0F0000E22417 /* ThemeToggleView.swift */,
@@ -936,6 +942,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAE8318DD7B44E6AA866C1C5 /* TeaYieldSearchBar.swift in Sources */,
+				BA226C3DE2734A7C9135186D /* DivisionManagementView.swift in Sources */,
 				8F6613101F6C43E1B8828903 /* EditFieldDivisionSheetView.swift in Sources */,
 				74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */,
 				74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */,
