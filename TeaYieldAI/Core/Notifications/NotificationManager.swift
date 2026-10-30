@@ -3,16 +3,29 @@ import UserNotifications
 
 /// Coordinates on-device local notifications for shift briefings, geofence arrivals, and sync alerts.
 @MainActor
-final class NotificationManager: ObservableObject {
+final class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
 
     static let shared = NotificationManager()
 
     @Published var isAuthorized: Bool = false
 
-    private init() {
+    private override init() {
+        super.init()
+        UNUserNotificationCenter.current().delegate = self
         Task {
             await checkAuthorizationStatus()
         }
+    }
+
+    // MARK: - UNUserNotificationCenterDelegate (Foreground Presentation)
+
+    nonisolated func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        // Show banner, sound, and badge even while app is active in foreground
+        completionHandler([.banner, .sound, .badge])
     }
 
     /// Requests user authorization for notification alerts, sounds, and badges.
@@ -56,20 +69,24 @@ final class NotificationManager: ObservableObject {
 
     /// Dispatches a geofence arrival reminder when a supervisor enters an assigned plucking field.
     func sendGeofenceArrivalAlert(fieldName: String) {
-        guard isAuthorized else { return }
+        Task {
+            if !isAuthorized {
+                _ = await requestAuthorization()
+            }
 
-        let content = UNMutableNotificationContent()
-        content.title = "Harvest Field Boundary Reached"
-        content.body = "You have arrived at \(fieldName). Tap to open the digital scale and record green leaf weigh-ins."
-        content.sound = .default
+            let content = UNMutableNotificationContent()
+            content.title = "Harvest Field Boundary Reached"
+            content.body = "You have entered \(fieldName). Spatial geofence active — tap to record green leaf harvest."
+            content.sound = .default
 
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        let request = UNNotificationRequest(
-            identifier: "geofence.arrival.\(UUID().uuidString)",
-            content: content,
-            trigger: trigger
-        )
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
+            let request = UNNotificationRequest(
+                identifier: "geofence.arrival.\(UUID().uuidString)",
+                content: content,
+                trigger: trigger
+            )
 
-        UNUserNotificationCenter.current().add(request)
+            try? await UNUserNotificationCenter.current().add(request)
+        }
     }
 }

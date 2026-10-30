@@ -278,25 +278,70 @@ struct ManagerAnalyticsDashboardView: View {
             }
 
             // Dynamic Plucker Labor Input
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text("Active Plucker Labor Pool")
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
                         .foregroundColor(.primary)
-                    Text("Adjust available workers for schedule optimization")
-                        .font(.system(size: 10))
+                    Text("Available harvesters for genetic schedule")
+                        .font(.system(size: 10, weight: .medium))
                         .foregroundColor(.secondary)
                 }
 
-                Spacer()
+                Spacer(minLength: 8)
 
-                Stepper(value: $viewModel.availablePluckersCount, in: 1...300, step: 1) {
-                    Text("\(viewModel.availablePluckersCount) Workers")
-                        .font(.system(size: 13, weight: .bold, design: .rounded))
-                        .foregroundColor(AppTheme.emerald)
+                HStack(spacing: 10) {
+                    HStack(alignment: .firstTextBaseline, spacing: 3) {
+                        Text("\(viewModel.availablePluckersCount)")
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                            .foregroundColor(AppTheme.emerald)
+
+                        Text("pluckers")
+                            .font(.system(size: 11, weight: .semibold, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+
+                    HStack(spacing: 0) {
+                        Button {
+                            if viewModel.availablePluckersCount > 1 {
+                                viewModel.availablePluckersCount -= 1
+                                HapticFeedback.selection()
+                            }
+                        } label: {
+                            Image(systemName: "minus")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(viewModel.availablePluckersCount > 1 ? .primary : .secondary.opacity(0.4))
+                                .frame(width: 34, height: 32)
+                                .contentShape(Rectangle())
+                        }
+                        .disabled(viewModel.availablePluckersCount <= 1)
+
+                        Divider()
+                            .frame(height: 18)
+
+                        Button {
+                            if viewModel.availablePluckersCount < 500 {
+                                viewModel.availablePluckersCount += 1
+                                HapticFeedback.selection()
+                            }
+                        } label: {
+                            Image(systemName: "plus")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(viewModel.availablePluckersCount < 500 ? .primary : .secondary.opacity(0.4))
+                                .frame(width: 34, height: 32)
+                                .contentShape(Rectangle())
+                        }
+                        .disabled(viewModel.availablePluckersCount >= 500)
+                    }
+                    .background(Color(uiColor: .secondarySystemGroupedBackground))
+                    .cornerRadius(AppTheme.radiusSmall)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: AppTheme.radiusSmall)
+                            .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+                    )
                 }
             }
-            .padding(10)
+            .padding(12)
             .background(Color(uiColor: .tertiarySystemGroupedBackground))
             .cornerRadius(AppTheme.radiusMedium)
 

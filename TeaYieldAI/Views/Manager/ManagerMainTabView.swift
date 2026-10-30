@@ -46,12 +46,7 @@ struct ManagerMainTabView: View {
             .tag(Tab.analytics)
 
             FieldMapView(
-                viewModel: FieldMapViewModel(
-                    fieldRepository: container.fieldRepository,
-                    locationService: container.locationService,
-                    apiService: container.apiService,
-                    authService: container.authService
-                )
+                container: container
             )
             .tabItem {
                 Label("Map", systemImage: "map.fill")

@@ -5,15 +5,38 @@ import MapKit
 struct FieldMapView: View {
 
     @StateObject private var viewModel: FieldMapViewModel
+    private var container: AppContainerProtocol?
     var onRecordWeighingTap: ((TeaField) -> Void)?
     var onBackTap: (() -> Void)?
 
+    @State private var weighingField: TeaField? = nil
+
     init(
         viewModel: FieldMapViewModel,
+        container: AppContainerProtocol? = nil,
         onRecordWeighingTap: ((TeaField) -> Void)? = nil,
         onBackTap: (() -> Void)? = nil
     ) {
         self._viewModel = StateObject(wrappedValue: viewModel)
+        self.container = container
+        self.onRecordWeighingTap = onRecordWeighingTap
+        self.onBackTap = onBackTap
+    }
+
+    init(
+        container: AppContainerProtocol,
+        onRecordWeighingTap: ((TeaField) -> Void)? = nil,
+        onBackTap: (() -> Void)? = nil
+    ) {
+        self.container = container
+        self._viewModel = StateObject(
+            wrappedValue: FieldMapViewModel(
+                fieldRepository: container.fieldRepository,
+                locationService: container.locationService,
+                apiService: container.apiService,
+                authService: container.authService
+            )
+        )
         self.onRecordWeighingTap = onRecordWeighingTap
         self.onBackTap = onBackTap
     }
@@ -23,9 +46,11 @@ struct FieldMapView: View {
         locationService: LocationServiceProtocol,
         apiService: APIServiceProtocol? = nil,
         authService: AuthServiceProtocol? = nil,
+        container: AppContainerProtocol? = nil,
         onRecordWeighingTap: ((TeaField) -> Void)? = nil,
         onBackTap: (() -> Void)? = nil
     ) {
+        self.container = container
         self._viewModel = StateObject(
             wrappedValue: FieldMapViewModel(
                 fieldRepository: fieldRepository,
@@ -66,7 +91,11 @@ struct FieldMapView: View {
                         field: selected,
                         isCurrentlyGeofenced: viewModel.activeGeofencedField?.id == selected.id,
                         onWeighTap: { field in
-                            onRecordWeighingTap?(field)
+                            if let onRecordWeighingTap = onRecordWeighingTap {
+                                onRecordWeighingTap(field)
+                            } else {
+                                weighingField = field
+                            }
                         },
                         onSimulateGeofenceTap: { field in
                             viewModel.simulateGeofenceArrival(at: field)
@@ -117,6 +146,20 @@ struct FieldMapView: View {
                 await viewModel.loadFields()
             }
             .animation(.spring(response: 0.35, dampingFraction: 0.8), value: viewModel.selectedField)
+            .sheet(item: $weighingField) { field in
+                if let appContainer = container ?? (AppContainer.shared as AppContainerProtocol) {
+                    HarvestWeighingFormView(
+                        viewModel: HarvestWeighingViewModel(
+                            harvestRepository: appContainer.harvestRepository,
+                            fieldRepository: appContainer.fieldRepository,
+                            syncManager: appContainer.syncManager,
+                            authService: appContainer.authService,
+                            apiService: appContainer.apiService,
+                            initialFieldId: field.id
+                        )
+                    )
+                }
+            }
             .applyAppTheme()
         }
     }

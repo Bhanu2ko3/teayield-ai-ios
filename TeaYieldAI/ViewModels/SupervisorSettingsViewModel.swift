@@ -5,11 +5,11 @@ import SwiftUI
 @MainActor
 final class SupervisorSettingsViewModel: ObservableObject {
 
-    @Published var offlineSyncEnabled: Bool = true
-    @Published var requireFaceIDOnLaunch: Bool = true
-    @Published var rainfallAlertsEnabled: Bool = true
-    @Published var factoryOverloadAlertsEnabled: Bool = true
-    @Published var fieldRestAlertsEnabled: Bool = true
+    @AppStorage("requireFaceIDOnLaunch") var requireFaceIDOnLaunch: Bool = true
+    @AppStorage("offlineSyncEnabled") var offlineSyncEnabled: Bool = true
+    @AppStorage("rainfallAlertsEnabled") var rainfallAlertsEnabled: Bool = true
+    @AppStorage("factoryOverloadAlertsEnabled") var factoryOverloadAlertsEnabled: Bool = true
+    @AppStorage("fieldRestAlertsEnabled") var fieldRestAlertsEnabled: Bool = true
     @Published var isSyncing: Bool = false
     @Published var syncStatusMessage: String?
     @Published var showingLogoutConfirmation: Bool = false

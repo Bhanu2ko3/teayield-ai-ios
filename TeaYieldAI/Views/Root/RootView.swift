@@ -4,9 +4,12 @@ import SwiftUI
 struct RootView: View {
 
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
+    @AppStorage("requireFaceIDOnLaunch") private var requireFaceIDOnLaunch: Bool = true
     @ObservedObject var authService: AuthService
     private let container: AppContainerProtocol
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @State private var hasUnlockedWithBiometrics: Bool = false
+    @State private var isEvaluatingBiometrics: Bool = false
 
     init(container: AppContainerProtocol) {
         self.container = container
@@ -47,6 +50,15 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.25), value: authService.currentUser?.mustChangePassword)
         .animation(.easeInOut(duration: 0.25), value: authService.currentUser?.estateId)
         .animation(.easeInOut(duration: 0.25), value: hasCompletedOnboarding)
+        .task {
+            // Biometric prompt on launch if authenticated and enabled
+            if authService.isAuthenticated && requireFaceIDOnLaunch && !hasUnlockedWithBiometrics && authService.isBiometricAvailable {
+                isEvaluatingBiometrics = true
+                _ = try? await authService.authenticateWithBiometrics()
+                hasUnlockedWithBiometrics = true
+                isEvaluatingBiometrics = false
+            }
+        }
     }
 }
 

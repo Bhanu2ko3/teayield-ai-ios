@@ -22,7 +22,10 @@ struct HarvestHistoryView: View {
                 VStack(spacing: 16) {
                     summaryHeaderCard
                     filterSegmentedPicker
-                    searchFieldSection
+                    TeaYieldSearchBar(
+                        text: $viewModel.searchText,
+                        placeholder: "Search by plucker name or ID..."
+                    )
                     recordsListSection
                 }
                 .padding(.horizontal, 16)
@@ -106,33 +109,6 @@ struct HarvestHistoryView: View {
         }
     }
 
-    private var searchFieldSection: some View {
-        HStack(spacing: 8) {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.secondary)
-                .font(.system(size: 14))
-
-            TextField("Search by plucker name or ID", text: $viewModel.searchText)
-                .font(.appBody)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-
-            if !viewModel.searchText.isEmpty {
-                Button {
-                    viewModel.searchText = ""
-                    HapticFeedback.selection()
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.secondary)
-                        .font(.system(size: 14))
-                }
-                .accessibilityLabel("Clear search text")
-            }
-        }
-        .padding(12)
-        .background(Color(uiColor: .tertiarySystemGroupedBackground))
-        .cornerRadius(AppTheme.radiusMedium)
-    }
 
     private var recordsListSection: some View {
         VStack(spacing: 10) {
