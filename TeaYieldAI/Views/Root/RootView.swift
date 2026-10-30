@@ -89,7 +89,6 @@ struct RootView: View {
             isEvaluatingBiometrics = false
         }
     }
-    }
 }
 
 // MARK: - Previews
