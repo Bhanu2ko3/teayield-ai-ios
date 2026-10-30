@@ -33,7 +33,7 @@ enum BiometricError: LocalizedError {
 }
 
 /// Manages biometric authentication policies utilizing Apple LocalAuthentication framework.
-final class BiometricAuthManager {
+final class BiometricAuthManager: @unchecked Sendable {
 
     static let shared = BiometricAuthManager()
 
@@ -41,9 +41,7 @@ final class BiometricAuthManager {
     var biometryType: BiometryType {
         let context = LAContext()
         var error: NSError?
-        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-            return .none
-        }
+        _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
 
         switch context.biometryType {
         case .faceID:
@@ -51,14 +49,24 @@ final class BiometricAuthManager {
         case .touchID:
             return .touchID
         default:
+            #if targetEnvironment(simulator)
+            return .faceID
+            #else
             return .none
+            #endif
         }
     }
 
     /// Evaluates whether the device possesses enrolled and functional biometrics.
     var canEvaluateBiometrics: Bool {
         let context = LAContext()
-        return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        var error: NSError?
+        let can = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return can
+        #endif
     }
 
     /// Prompts for Face ID or Touch ID verification with device passcode fallback.
@@ -66,6 +74,38 @@ final class BiometricAuthManager {
         let context = LAContext()
         context.localizedCancelTitle = "Cancel"
 
+        // Step 1: Explicitly prioritize Biometric Sensor (Face ID animation) if available
+        var biometryError: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &biometryError) {
+            return try await withCheckedThrowingContinuation { continuation in
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, error in
+                    if success {
+                        continuation.resume(returning: true)
+                    } else if let laError = error as? LAError {
+                        switch laError.code {
+                        case .userCancel:
+                            continuation.resume(throwing: BiometricError.userCancelled)
+                        case .userFallback:
+                            // Fallback to passcode if user explicitly chooses
+                            let fallbackContext = LAContext()
+                            fallbackContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { fbSuccess, fbError in
+                                if fbSuccess {
+                                    continuation.resume(returning: true)
+                                } else {
+                                    continuation.resume(throwing: BiometricError.failed("Passcode authentication failed"))
+                                }
+                            }
+                        default:
+                            continuation.resume(throwing: BiometricError.failed(laError.localizedDescription))
+                        }
+                    } else {
+                        continuation.resume(throwing: BiometricError.failed(error?.localizedDescription ?? "Biometric evaluation failed"))
+                    }
+                }
+            }
+        }
+
+        // Step 2: Fallback to device passcode policy if biometrics hardware is not enrolled
         return try await withCheckedThrowingContinuation { continuation in
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, error in
                 if success {

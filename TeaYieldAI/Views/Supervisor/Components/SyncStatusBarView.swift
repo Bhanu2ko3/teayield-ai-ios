@@ -47,18 +47,22 @@ struct SyncStatusBarView: View {
                     .padding(.vertical, 6)
                     .background(buttonBackgroundColor)
                     .foregroundColor(buttonTextColor)
-                    .cornerRadius(8)
+                    .cornerRadius(AppTheme.radiusSmall)
                 }
+                .accessibilityLabel("Synchronize \(unsyncedCount) queued weighing records now")
+                .accessibilityHint("Uploads local offline harvest logs to estate cloud")
             }
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
         .background(bannerBackgroundColor)
-        .cornerRadius(12)
+        .cornerRadius(AppTheme.radiusMedium)
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
                 .stroke(borderColor, lineWidth: 1)
         )
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Sync status: \(primaryStatusTitle). \(statusMessage ?? "")")
     }
 
     // MARK: - Computed Styling
@@ -73,7 +77,7 @@ struct SyncStatusBarView: View {
         if isOffline {
             return "Offline Mode (Using Local Cache)"
         }
-        return "All Harvest Logs Synchronized"
+        return "Estate Cloud Synchronized"
     }
 
     @ViewBuilder
@@ -95,39 +99,66 @@ struct SyncStatusBarView: View {
 
     private var bannerBackgroundColor: Color {
         if unsyncedCount > 0 {
-            return Color.orange.opacity(0.12)
+            return AppTheme.amber.opacity(0.12)
         }
         if isOffline {
-            return Color.yellow.opacity(0.12)
+            return AppTheme.amberLight.opacity(0.12)
         }
-        return Color(red: 0.02, green: 0.59, blue: 0.41).opacity(0.1)
+        return AppTheme.emerald.opacity(0.1)
     }
 
     private var borderColor: Color {
         if unsyncedCount > 0 {
-            return Color.orange.opacity(0.3)
+            return AppTheme.amber.opacity(0.3)
         }
         if isOffline {
-            return Color.yellow.opacity(0.3)
+            return AppTheme.amberLight.opacity(0.3)
         }
-        return Color(red: 0.02, green: 0.59, blue: 0.41).opacity(0.25)
+        return AppTheme.emerald.opacity(0.25)
     }
 
     private var textColor: Color {
         if unsyncedCount > 0 {
-            return Color.orange
+            return AppTheme.amber
         }
         if isOffline {
-            return Color(red: 0.8, green: 0.6, blue: 0.0)
+            return AppTheme.amber
         }
-        return Color(red: 0.02, green: 0.59, blue: 0.41)
+        return AppTheme.emerald
     }
 
     private var buttonBackgroundColor: Color {
-        Color.orange
+        AppTheme.amber
     }
 
     private var buttonTextColor: Color {
         Color.white
     }
 }
+
+// MARK: - Previews
+
+struct SyncStatusBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 12) {
+            SyncStatusBarView(
+                unsyncedCount: 0,
+                isSyncing: false,
+                isOffline: false,
+                statusMessage: "All records synced with Supabase",
+                onSyncTap: {}
+            )
+
+            SyncStatusBarView(
+                unsyncedCount: 3,
+                isSyncing: false,
+                isOffline: false,
+                statusMessage: "3 offline records pending upload",
+                onSyncTap: {}
+            )
+        }
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+

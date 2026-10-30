@@ -11,7 +11,7 @@
 > **Strict Assessment Compliance:** Remote Cloud AI APIs (OpenAI, Gemini REST APIs) do NOT satisfy Component 3 requirements. All Machine Learning models must run 100% on-device on Apple Silicon Neural Engine (`CoreML` + `Vision`).
 
 ### 1.1 Problem & Domain Rationale
-High-grade Ceylon Tea requires harvesting at the precise maturity window—specifically **"Two Leaves and a Bud" (ලපටි දළු %)**. Plucking too early reduces total crop weight, while plucking coarse, mature leaves ruins tea flavor profiles and drops auction market prices from $5.00/kg down to $1.50/kg.
+High-grade Ceylon Tea requires harvesting at the precise maturity window—specifically **"Two Leaves and a Bud" (Fine Leaf Ratio %)**. Plucking too early reduces total crop weight, while plucking coarse, mature leaves ruins tea flavor profiles and drops auction market prices from $5.00/kg down to $1.50/kg.
 
 The **TeaYield AI Shoot Scanner** allows field superintendents to point their iPhone camera at tea bushes in remote mountain fields. The app scans tea shoots in real-time (60fps) to compute the **Fine-to-Coarse Leaf Ratio (Bud & 2-Leaves %)** with 0-latency and zero cellular signal requirement.
 

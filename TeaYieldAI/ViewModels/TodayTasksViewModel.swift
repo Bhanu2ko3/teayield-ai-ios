@@ -14,6 +14,8 @@ final class TodayTasksViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showErrorAlert: Bool = false
 
+    @Published var estateName: String = ""
+
     var totalTargetKg: Double {
         tasks.reduce(0.0) { $0 + $1.targetWeightKg }
     }
@@ -31,28 +33,90 @@ final class TodayTasksViewModel: ObservableObject {
         tasks.reduce(0) { $0 + $1.assignedPluckersCount }
     }
 
+    var estateDisplayName: String {
+        if !estateName.isEmpty {
+            return estateName
+        }
+        if let user = authService.currentUser, let estateId = user.estateId {
+            return "Estate #\(estateId.uuidString.prefix(6).uppercased())"
+        }
+        return "Central Tea Plantation"
+    }
+
+    var activeArrivalFieldName: String {
+        tasks.first?.fieldName ?? "Assigned Field"
+    }
+
+    @Published var activeGeofencedField: TeaField? = nil
+
+    var supervisorName: String {
+        authService.currentUser?.fullName ?? "Field Officer"
+    }
+
+    var supervisorEmployeeId: String {
+        if let id = authService.currentUser?.employeeId, !id.isEmpty {
+            return id
+        }
+        if let user = authService.currentUser {
+            return "ID-\(user.id.uuidString.prefix(6).uppercased())"
+        }
+        return "ID-058146"
+    }
+
+    var supervisorRoleTitle: String {
+        authService.currentUser?.role.title ?? "Field Superintendent"
+    }
+
     private let apiService: APIServiceProtocol
     private let syncManager: SyncManagerProtocol
     private let fieldRepository: FieldRepositoryProtocol
     private let harvestRepository: HarvestRepositoryProtocol
     private let authService: AuthServiceProtocol
+    let locationService: LocationServiceProtocol
     private let tasksCacheKey = "teayield.cache.today_tasks"
+    private var hasDispatchedGeofenceNotification: Bool = false
 
     init(
         apiService: APIServiceProtocol,
         syncManager: SyncManagerProtocol,
         fieldRepository: FieldRepositoryProtocol,
         harvestRepository: HarvestRepositoryProtocol,
-        authService: AuthServiceProtocol
+        authService: AuthServiceProtocol,
+        locationService: LocationServiceProtocol = LocationService()
     ) {
         self.apiService = apiService
         self.syncManager = syncManager
         self.fieldRepository = fieldRepository
         self.harvestRepository = harvestRepository
         self.authService = authService
+        self.locationService = locationService
+
+        setupGeofenceObservers()
 
         Task {
             await refreshPendingSyncCount()
+        }
+    }
+
+    private func setupGeofenceObservers() {
+        NotificationCenter.default.addObserver(
+            forName: .teaFieldGeofenceEntered,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            Task { @MainActor [weak self] in
+                self?.activeGeofencedField = notification.object as? TeaField
+            }
+        }
+
+        NotificationCenter.default.addObserver(
+            forName: .teaFieldGeofenceExited,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.activeGeofencedField = nil
+            }
         }
     }
 
@@ -63,7 +127,7 @@ final class TodayTasksViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        guard let user = authService.currentUser else {
+        guard authService.isAuthenticated else {
             isLoading = false
             errorMessage = "No active user session. Please log in."
             showErrorAlert = true
@@ -74,32 +138,106 @@ final class TodayTasksViewModel: ObservableObject {
         let weekday = calendar.component(.weekday, from: Date())
         let dayIndex = max(1, min(6, (weekday == 1) ? 6 : weekday - 1))
 
+        guard let estateId = authService.currentUser?.estateId else {
+            isLoading = false
+            return
+        }
+
+        // Fetch estate enterprise profile dynamically
+        if let estate = try? await apiService.fetchEstate(id: estateId) {
+            self.estateName = estate.name
+        }
+
+        // Fetch and cache estate fields in background for offline persistence
+        if let fieldDTOs = try? await apiService.fetchFields(estateId: estateId) {
+            let domainFields = fieldDTOs.map { $0.toDomain() }
+            try? await fieldRepository.saveFields(domainFields)
+        }
+
         do {
-            let response = try await apiService.fetchDailyTasks(estateId: user.estateId, dayIndex: dayIndex)
-            let domainTasks = response.assignedFields.map { $0.toDomain(shiftDate: Date()) }
+            let response = try await apiService.fetchDailyTasks(estateId: estateId, dayIndex: dayIndex)
+            var domainTasks = response.assignedFields.map { $0.toDomain(shiftDate: Date()) }
+
+            // Aggregate harvested green leaf weigh-ins recorded today per field from Core Data
+            await enrichTasksWithActualHarvest(&domainTasks)
+
             self.tasks = domainTasks
             self.isOffline = false
+            self.statusBannerMessage = "All field plucking tasks synchronized"
 
             // Persist the official server schedule locally for offline mountain field access
             if let data = try? JSONEncoder().encode(domainTasks) {
                 UserDefaults.standard.set(data, forKey: tasksCacheKey)
             }
 
-            // Fetch and cache estate fields in background for offline persistence
-            if let fieldDTOs = try? await apiService.fetchFields(estateId: user.estateId) {
-                let domainFields = fieldDTOs.map { $0.toDomain() }
-                try? await fieldRepository.saveFields(domainFields)
-            }
-
             self.isLoading = false
+        } catch let networkError as NetworkError {
+            switch networkError {
+            case .notFound:
+                // Server is online, but no field blocks registered yet for this estate
+                self.isOffline = false
+                self.tasks = []
+                self.statusBannerMessage = "Cloud API Connected • All records synchronized"
+                self.isLoading = false
+            case .connectionFailure:
+                // Genuinely offline: load cached schedule
+                self.isOffline = true
+                self.statusBannerMessage = "Offline mode. Connect to estate network to sync."
+                await loadTasksFromOfflineCache()
+                self.isLoading = false
+            case .unauthorized:
+                self.isOffline = false
+                self.errorMessage = "Session expired. Please log in again."
+                self.showErrorAlert = true
+                self.isLoading = false
+            default:
+                self.isOffline = false
+                await loadTasksFromOfflineCache()
+                self.isLoading = false
+            }
         } catch {
-            // Offline fallback: load cached official schedule
             self.isOffline = true
-            loadTasksFromOfflineCache()
+            await loadTasksFromOfflineCache()
             self.isLoading = false
         }
 
+        // Start hardware geofence monitoring for harvest-ready field boundaries
+        if let cached = try? await fieldRepository.fetchCachedFields(), !cached.isEmpty {
+            locationService.startMonitoringFields(cached)
+        }
+
         await refreshPendingSyncCount()
+    }
+
+    /// Simulates arriving at a specific assigned field boundary for live demonstration during the Viva exam.
+    func simulateArrival(at task: PluckingTask) {
+        Task {
+            let matchedField: TeaField
+            if let cached = try? await fieldRepository.fetchCachedFields(),
+               let existing = cached.first(where: { $0.id == task.fieldId }) {
+                matchedField = existing
+            } else {
+                matchedField = TeaField(
+                    id: task.fieldId,
+                    estateId: authService.currentUser?.estateId ?? UUID(),
+                    name: task.fieldName,
+                    blockCode: task.blockCode,
+                    acreage: 4.2,
+                    currentNDVI: 0.78,
+                    status: .ready,
+                    centroidLatitude: task.centroidLatitude,
+                    centroidLongitude: task.centroidLongitude,
+                    polygonCoordinates: [],
+                    lastHarvestedDate: nil
+                )
+            }
+            locationService.simulateArrival(at: matchedField)
+        }
+    }
+
+    /// Simulates exiting a field boundary to demonstrate geofence departure during the Viva exam.
+    func simulateExit() {
+        locationService.simulateExit()
     }
 
     /// Triggers an immediate store-and-forward batch sync of pending weighing records.
@@ -147,10 +285,28 @@ final class TodayTasksViewModel: ObservableObject {
 
     // MARK: - Private Offline Fallback
 
-    private func loadTasksFromOfflineCache() {
+    /// Correlates assigned field tasks with actual local Core Data green leaf weigh-in records.
+    private func enrichTasksWithActualHarvest(_ taskList: inout [PluckingTask]) async {
+        guard let allRecords = try? await harvestRepository.fetchAllRecords() else { return }
+
+        let calendar = Calendar.current
+        for i in 0..<taskList.count {
+            let fieldId = taskList[i].fieldId
+            // Sum harvested weight logged today for this field
+            let fieldTodayRecords = allRecords.filter { record in
+                record.fieldId == fieldId && calendar.isDateInToday(record.timestamp)
+            }
+            let totalHarvested = fieldTodayRecords.reduce(0.0) { $0 + $1.netWeightKg }
+            taskList[i].harvestedWeightKg = totalHarvested
+            taskList[i].isCompleted = (taskList[i].targetWeightKg > 0 && totalHarvested >= taskList[i].targetWeightKg)
+        }
+    }
+
+    private func loadTasksFromOfflineCache() async {
         if let data = UserDefaults.standard.data(forKey: tasksCacheKey),
-           let cached = try? JSONDecoder().decode([PluckingTask].self, from: data),
+           var cached = try? JSONDecoder().decode([PluckingTask].self, from: data),
            !cached.isEmpty {
+            await enrichTasksWithActualHarvest(&cached)
             self.tasks = cached
             statusBannerMessage = "Operating offline. Displaying cached schedule from estate server."
         } else {

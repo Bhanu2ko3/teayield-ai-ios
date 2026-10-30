@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 
 /// Production implementation of FieldRepositoryProtocol managing offline tea field caching.
-final class FieldRepository: FieldRepositoryProtocol {
+final class FieldRepository: FieldRepositoryProtocol, @unchecked Sendable {
 
     private let persistenceController: PersistenceController
 
@@ -32,6 +32,7 @@ final class FieldRepository: FieldRepositoryProtocol {
 
     func saveFields(_ fields: [TeaField]) async throws {
         let backgroundContext = persistenceController.newBackgroundContext()
+        let controller = persistenceController
         try await backgroundContext.perform {
             for field in fields {
                 let request = NSFetchRequest<TeaFieldEntity>(entityName: "TeaFieldEntity")
@@ -48,7 +49,7 @@ final class FieldRepository: FieldRepositoryProtocol {
                 entity.update(from: field)
             }
 
-            try self.persistenceController.save(context: backgroundContext)
+            try controller.save(context: backgroundContext)
         }
     }
 }

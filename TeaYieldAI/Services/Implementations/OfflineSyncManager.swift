@@ -10,12 +10,12 @@ final class OfflineSyncManager: ObservableObject, SyncManagerProtocol {
 
     private let apiService: APIServiceProtocol
     private let harvestRepository: HarvestRepositoryProtocol
-    private let networkMonitor: NetworkMonitor
+    private let networkMonitor: NetworkMonitorProtocol
 
     init(
         apiService: APIServiceProtocol,
         harvestRepository: HarvestRepositoryProtocol,
-        networkMonitor: NetworkMonitor = .shared
+        networkMonitor: NetworkMonitorProtocol = NetworkMonitor.shared
     ) {
         self.apiService = apiService
         self.harvestRepository = harvestRepository
@@ -100,6 +100,10 @@ final class OfflineSyncManager: ObservableObject, SyncManagerProtocol {
             message = "Synced \(response.processedRecords) record(s). \(response.failedRecords) record(s) failed geofence boundary validation."
         } else {
             message = "Successfully synced \(response.processedRecords) record(s)."
+        }
+
+        if response.processedRecords > 0 {
+            NotificationManager.shared.sendSyncConfirmation(recordsCount: response.processedRecords)
         }
 
         let result = SyncResult(

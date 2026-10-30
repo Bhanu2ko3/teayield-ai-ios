@@ -1,0 +1,322 @@
+import SwiftUI
+
+/// Modal sheet enabling estate managers to provision subordinate field supervisors.
+/// Generates temporary passwords and provides instant credential copying for field dispatch.
+struct InviteSupervisorSheetView: View {
+
+    @StateObject private var viewModel: InviteSupervisorViewModel
+    @Environment(\.dismiss) private var dismiss
+    @State private var hasCopiedCredentials: Bool = false
+    private let showsDismissButton: Bool
+
+    init(apiService: APIServiceProtocol, showsDismissButton: Bool = true) {
+        self.showsDismissButton = showsDismissButton
+        _viewModel = StateObject(wrappedValue: InviteSupervisorViewModel(apiService: apiService))
+    }
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                Color(uiColor: .systemGroupedBackground)
+                    .ignoresSafeArea()
+
+                ScrollView {
+                    VStack(spacing: 20) {
+                        if viewModel.invitationSuccess {
+                            invitationSuccessCard
+                        } else {
+                            invitationFormCard
+                        }
+                    }
+                    .frame(maxWidth: 600)
+                    .padding(20)
+                    .frame(maxWidth: .infinity)
+                }
+            }
+            .navigationTitle("Provision Supervisor")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                if showsDismissButton {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(viewModel.invitationSuccess ? "Close" : "Cancel") {
+                            dismiss()
+                        }
+                    }
+                }
+            }
+            .alert("Invitation Failed", isPresented: $viewModel.showErrorAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(viewModel.errorMessage ?? "An error occurred while provisioning supervisor credentials.")
+            }
+            .applyAppTheme()
+        }
+    }
+
+    // MARK: - Form Card
+
+    private var invitationFormCard: some View {
+        VStack(spacing: 18) {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(AppTheme.emerald.opacity(0.12))
+                        .frame(width: 44, height: 44)
+
+                    Image(systemName: "person.badge.shield.checkmark.fill")
+                        .foregroundColor(AppTheme.emerald)
+                        .font(.system(size: 20))
+                }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Delegate Field Supervisor")
+                        .font(.appHeadline)
+                        .foregroundColor(.primary)
+
+                    Text("Provision operational staff for this estate with a temporary password.")
+                        .font(.system(size: 11, weight: .regular))
+                        .foregroundColor(.secondary)
+                }
+
+                Spacer()
+            }
+
+            VStack(spacing: 14) {
+                // Full Legal Name
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Full Legal Name")
+                        .font(.appCaption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
+
+                    HStack {
+                        Image(systemName: "person.fill")
+                            .foregroundColor(.secondary)
+                            .frame(width: 20)
+
+                        TextField("Full legal name", text: $viewModel.fullName)
+                            .autocapitalization(.words)
+                    }
+                    .padding(14)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .cornerRadius(AppTheme.radiusMedium)
+                }
+
+                // Email
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Supervisor Email Address")
+                        .font(.appCaption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
+
+                    HStack {
+                        Image(systemName: "envelope.fill")
+                            .foregroundColor(.secondary)
+                            .frame(width: 20)
+
+                        TextField("Supervisor corporate email", text: $viewModel.email)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                            .keyboardType(.emailAddress)
+                            .foregroundColor(.primary)
+                    }
+                    .padding(14)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .cornerRadius(AppTheme.radiusMedium)
+                }
+
+                // Temporary Password
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack {
+                        Text("Initial Temporary Password")
+                            .font(.appCaption)
+                            .fontWeight(.medium)
+                            .foregroundColor(.secondary)
+
+                        Spacer()
+
+                        Button {
+                            viewModel.regeneratePassword()
+                            HapticFeedback.selection()
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: "arrow.clockwise")
+                                    .font(.system(size: 10))
+                                Text("Generate")
+                                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                            }
+                            .foregroundColor(AppTheme.emerald)
+                        }
+                    }
+
+                    HStack {
+                        Image(systemName: "key.fill")
+                            .foregroundColor(.secondary)
+                            .frame(width: 20)
+
+                        TextField("Temporary password", text: $viewModel.temporaryPassword)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                    }
+                    .padding(14)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .cornerRadius(AppTheme.radiusMedium)
+
+                    Text("The supervisor must rotate this password upon their first sign-in.")
+                        .font(.system(size: 10, weight: .regular))
+                        .foregroundColor(.secondary)
+                }
+
+                // Mobile Phone
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Field Radio / Contact Phone (Optional)")
+                        .font(.appCaption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
+
+                    HStack(spacing: 8) {
+                        Image(systemName: "phone.fill")
+                            .foregroundColor(.secondary)
+                            .frame(width: 20)
+
+                        HStack(spacing: 6) {
+                            Text("+94")
+                                .font(.appBody)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.primary)
+
+                            Rectangle()
+                                .fill(Color.primary.opacity(0.15))
+                                .frame(width: 1, height: 18)
+                        }
+
+                        TextField("77 123 4567", text: $viewModel.phoneNumber)
+                            .keyboardType(.numberPad)
+                            .disableAutocorrection(true)
+                            .foregroundColor(.primary)
+                            .onChange(of: viewModel.phoneNumber) { newValue in
+                                viewModel.phoneNumber = InputSanitizer.sanitizeInteger(newValue)
+                            }
+                    }
+                    .padding(14)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .cornerRadius(AppTheme.radiusMedium)
+
+                    if !viewModel.phoneNumber.isEmpty && !viewModel.isPhoneValid {
+                        Text("Please enter a valid 9-digit Sri Lankan phone number (e.g. 77 123 4567).")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(AppTheme.crimson)
+                    }
+                }
+            }
+
+            TeaYieldButton(
+                title: "Send Staff Credentials",
+                icon: "paperplane.fill",
+                style: .primary,
+                isLoading: viewModel.isSubmitting
+            ) {
+                Task {
+                    await viewModel.inviteSupervisor()
+                }
+            }
+            .disabled(!viewModel.isFormValid || viewModel.isSubmitting)
+            .accessibilityLabel("Send Staff Credentials")
+        }
+        .padding(18)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+    }
+
+    // MARK: - Success Card
+
+    private var invitationSuccessCard: some View {
+        VStack(spacing: 20) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.emerald.opacity(0.14))
+                    .frame(width: 60, height: 60)
+
+                Image(systemName: "checkmark.seal.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(AppTheme.emerald)
+            }
+
+            VStack(spacing: 6) {
+                Text("Supervisor Account Created")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+
+                Text("Share these temporary credentials with the supervisor. They will be prompted to rotate the password immediately.")
+                    .font(.appSubheadline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+
+            VStack(alignment: .leading, spacing: 12) {
+                credentialSummaryRow(label: "Full Name", value: viewModel.fullName)
+                credentialSummaryRow(label: "Login Email", value: viewModel.email)
+                credentialSummaryRow(label: "Temporary Password", value: viewModel.temporaryPassword)
+            }
+            .padding(16)
+            .background(Color(uiColor: .secondarySystemGroupedBackground))
+            .cornerRadius(AppTheme.radiusMedium)
+            .overlay(
+                RoundedRectangle(cornerRadius: AppTheme.radiusMedium)
+                    .stroke(AppTheme.borderSubtle, lineWidth: 1)
+            )
+
+            TeaYieldButton(
+                title: hasCopiedCredentials ? "Credentials Copied to Clipboard" : "Copy Credentials",
+                icon: hasCopiedCredentials ? "checkmark" : "doc.on.doc.fill",
+                style: .primary
+            ) {
+                let shareText = """
+                TeaYield AI Supervisor Credentials
+                Name: \(viewModel.fullName)
+                Email: \(viewModel.email)
+                Temporary Password: \(viewModel.temporaryPassword)
+                Note: Rotate credentials on first mobile sign-in.
+                """
+                UIPasteboard.general.string = shareText
+                hasCopiedCredentials = true
+                HapticFeedback.success()
+            }
+
+            Button {
+                viewModel.resetForm()
+                hasCopiedCredentials = false
+            } label: {
+                Text("Provision Another Supervisor")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundColor(AppTheme.emerald)
+            }
+            .padding(.top, 4)
+        }
+        .padding(20)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+    }
+
+    private func credentialSummaryRow(label: String, value: String) -> some View {
+        HStack {
+            Text(label)
+                .font(.appCaption)
+                .foregroundColor(.secondary)
+            Spacer()
+            Text(value)
+                .font(.system(size: 13, weight: .semibold, design: .monospaced))
+                .foregroundColor(.primary)
+        }
+    }
+}
+
+// MARK: - Previews
+
+struct InviteSupervisorSheetView_Previews: PreviewProvider {
+    static var previews: some View {
+        InviteSupervisorSheetView(apiService: AppContainer.shared.apiService)
+    }
+}
+
+

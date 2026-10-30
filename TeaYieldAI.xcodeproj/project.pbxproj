@@ -1,0 +1,1621 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		74ABCPDF0000000200E22417 /* RosterPDFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCPDF0000000100E22417 /* RosterPDFGenerator.swift */; };
+		74ABCPDF0000000400E22417 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCPDF0000000300E22417 /* ShareSheet.swift */; };
+		74ABCPDF0000000600E22417 /* RosterPDFGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCPDF0000000500E22417 /* RosterPDFGeneratorTests.swift */; };
+		74ABCTST0000000A00E22417 /* APIEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000900E22417 /* APIEndpointTests.swift */; };
+		74ABCTST0000000800E22417 /* KeychainHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000700E22417 /* KeychainHelperTests.swift */; };
+		74ABCTST0000000600E22417 /* TeaYieldWidgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000500E22417 /* TeaYieldWidgetTests.swift */; };
+		74ABCTST0000000400E22417 /* SupervisorManagementViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000300E22417 /* SupervisorManagementViewModelTests.swift */; };
+		74ABCTST0000000200E22417 /* PluckerManagementViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000100E22417 /* PluckerManagementViewModelTests.swift */; };
+		74ABCWID0000000400E22417 /* TeaYieldAIWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCWID0000000300E22417 /* TeaYieldAIWidget.swift */; };
+		74ABCWID0000000E00E22417 /* TeaYieldAIWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 74ABCWID0000000200E22417 /* TeaYieldAIWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		74ABCA9C308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA9B308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift */; };
+		74ABCA9A308D0E0000E22417 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74ABCA99308D0E0000E22417 /* Assets.xcassets */; };
+		FAE8318DD7B44E6AA866C1C5 /* TeaYieldSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */; };
+		BA226C3DE2734A7C9135186D /* DivisionManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD57EE6216DB4016B7FF3B94 /* DivisionManagementView.swift */; };
+		8F6613101F6C43E1B8828903 /* EditFieldDivisionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0D5C80B80B4D7090C806C8 /* EditFieldDivisionSheetView.swift */; };
+		74ABC773308D036800E22417 /* TeaYieldAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC772308D036800E22417 /* TeaYieldAITests.swift */; };
+		74ABC77D308D036800E22417 /* TeaYieldAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77C308D036800E22417 /* TeaYieldAIUITests.swift */; };
+		74ABC77F308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC77E308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift */; };
+		74ABC7CD308D053200E22417 /* TeaYieldAIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC78C308D053100E22417 /* TeaYieldAIApp.swift */; };
+		74ABC7CE308D053200E22417 /* NDVIRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC78F308D053100E22417 /* NDVIRepositoryProtocol.swift */; };
+		74ABC7CF308D053200E22417 /* FieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC790308D053100E22417 /* FieldRepository.swift */; };
+		74ABC7D0308D053200E22417 /* NDVIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC791308D053100E22417 /* NDVIRepository.swift */; };
+		74ABC7D1308D053200E22417 /* FieldRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC792308D053100E22417 /* FieldRepositoryProtocol.swift */; };
+		74ABC7D2308D053200E22417 /* HarvestRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC793308D053100E22417 /* HarvestRepositoryProtocol.swift */; };
+		74ABC7D3308D053200E22417 /* HarvestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC794308D053100E22417 /* HarvestRepository.swift */; };
+		74ABC7D4308D053200E22417 /* TeaFieldEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC796308D053100E22417 /* TeaFieldEntity.swift */; };
+		74ABC7D5308D053200E22417 /* NDVILogEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC797308D053100E22417 /* NDVILogEntity.swift */; };
+		74ABC7D6308D053200E22417 /* HarvestLogEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC798308D053100E22417 /* HarvestLogEntity.swift */; };
+		74ABC7D7308D053200E22417 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC799308D053100E22417 /* PersistenceController.swift */; };
+		74ABC7D8308D053200E22417 /* EstateDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC79C308D053100E22417 /* EstateDTOs.swift */; };
+		74ABC7D9308D053200E22417 /* AuthDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC79D308D053100E22417 /* AuthDTOs.swift */; };
+		74ABC7DA308D053200E22417 /* TaskDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC79E308D053100E22417 /* TaskDTOs.swift */; };
+		74ABC7DB308D053200E22417 /* APIErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC79F308D053100E22417 /* APIErrorDTO.swift */; };
+		74ABC7DC308D053200E22417 /* FieldDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A0308D053100E22417 /* FieldDTOs.swift */; };
+		74ABC7DD308D053200E22417 /* HarvestSyncDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A1308D053100E22417 /* HarvestSyncDTOs.swift */; };
+		74ABC7DE308D053200E22417 /* HarvestRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A3308D053100E22417 /* HarvestRecord.swift */; };
+		74ABC7DF308D053200E22417 /* TeaField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A4308D053100E22417 /* TeaField.swift */; };
+		74ABC7E0308D053200E22417 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A5308D053100E22417 /* UserProfile.swift */; };
+		74ABC7E1308D053200E22417 /* PluckingTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A6308D053100E22417 /* PluckingTask.swift */; };
+		74ABC7E2308D053200E22417 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7A9308D053100E22417 /* AppContainer.swift */; };
+		74ABC7E3308D053200E22417 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7AB308D053100E22417 /* KeychainHelper.swift */; };
+		74ABC7E4308D053200E22417 /* BiometricAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7AC308D053100E22417 /* BiometricAuthManager.swift */; };
+		74ABC7E5308D053200E22417 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7AE308D053100E22417 /* APIEndpoint.swift */; };
+		74ABC7E6308D053200E22417 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7AF308D053100E22417 /* NetworkError.swift */; };
+		74ABC7E7308D053200E22417 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B0308D053100E22417 /* NetworkMonitor.swift */; };
+		74ABC7E8308D053200E22417 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B2308D053100E22417 /* AppConfiguration.swift */; };
+		74ABC7E9308D053200E22417 /* OfflineSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B5308D053100E22417 /* OfflineSyncManager.swift */; };
+		74ABC7EA308D053200E22417 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B6308D053100E22417 /* AuthService.swift */; };
+		74ABC7EB308D053200E22417 /* CloudAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B7308D053100E22417 /* CloudAPIService.swift */; };
+		74ABC7EC308D053200E22417 /* AuthServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7B9308D053100E22417 /* AuthServiceProtocol.swift */; };
+		74ABC7ED308D053200E22417 /* SyncManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BA308D053100E22417 /* SyncManagerProtocol.swift */; };
+		74ABC7EE308D053200E22417 /* APIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BB308D053100E22417 /* APIServiceProtocol.swift */; };
+		74ABC7EF308D053200E22417 /* TodayTasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BD308D053100E22417 /* TodayTasksViewModel.swift */; };
+		74ABC7F0308D053200E22417 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BE308D053100E22417 /* AuthViewModel.swift */; };
+		74ABC7F1308D053200E22417 /* HarvestWeighingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */; };
+		74ABC7F2308D053200E22417 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C2308D053100E22417 /* LoginView.swift */; };
+		74ABC860308D0B0100E22417 /* BiometricLockOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC861308D0B0100E22417 /* BiometricLockOverlayView.swift */; };
+		74ABC7F3308D053200E22417 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C4308D053100E22417 /* RootView.swift */; };
+		74ABC7F4308D053200E22417 /* TodayTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C6308D053100E22417 /* TodayTasksView.swift */; };
+		74ABC7F5308D053200E22417 /* SyncStatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */; };
+		74ABC7F6308D053200E22417 /* TaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C9308D053100E22417 /* TaskCardView.swift */; };
+		74ABC7F7308D053200E22417 /* HarvestWeighingFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */; };
+		74ABC7F8308D053200E22417 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7CC308D053100E22417 /* MockData.swift */; };
+		74ABC811308D070100E22417 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC801308D070100E22417 /* AppTheme.swift */; };
+		74ABC812308D070100E22417 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC802308D070100E22417 /* OnboardingView.swift */; };
+		74ABC813308D070100E22417 /* SupervisorMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC803308D070100E22417 /* SupervisorMainTabView.swift */; };
+		74ABC814308D070100E22417 /* SupervisorSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC804308D070100E22417 /* SupervisorSettingsView.swift */; };
+		74ABC830308D080100E22417 /* SupervisorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC820308D080100E22417 /* SupervisorSettingsViewModel.swift */; };
+		74ABC831308D080100E22417 /* OfficerProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC821308D080100E22417 /* OfficerProfileCardView.swift */; };
+		74ABC832308D080100E22417 /* DataStorageSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC822308D080100E22417 /* DataStorageSectionView.swift */; };
+		74ABC833308D080100E22417 /* SecuritySettingsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC823308D080100E22417 /* SecuritySettingsSectionView.swift */; };
+		74ABC834308D080100E22417 /* NotificationSettingsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC824308D080100E22417 /* NotificationSettingsSectionView.swift */; };
+		74ABC835308D080100E22417 /* AppInfoSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC825308D080100E22417 /* AppInfoSectionView.swift */; };
+		74ABC836308D080100E22417 /* LeafScannerPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC826308D080100E22417 /* LeafScannerPlaceholderView.swift */; };
+		74ABC837308D080100E22417 /* FieldMapPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC827308D080100E22417 /* FieldMapPlaceholderView.swift */; };
+		74ABC838308D080100E22417 /* GeofenceArrivalBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC828308D080100E22417 /* GeofenceArrivalBannerView.swift */; };
+		74ABC839308D080100E22417 /* KpiSummaryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC829308D080100E22417 /* KpiSummaryRowView.swift */; };
+		74ABC83A308D080100E22417 /* OnboardingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC82A308D080100E22417 /* OnboardingSlide.swift */; };
+		74ABC83B308D080100E22417 /* Components/OnboardingSlideCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC82B308D080100E22417 /* Components/OnboardingSlideCardView.swift */; };
+		74ABC850308D090100E22417 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC840308D090100E22417 /* NotificationManager.swift */; };
+		74ABC851308D090100E22417 /* HarvestHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC841308D090100E22417 /* HarvestHistoryViewModel.swift */; };
+		74ABC852308D090100E22417 /* ManagerOverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC842308D090100E22417 /* ManagerOverviewViewModel.swift */; };
+		74ABC853308D090100E22417 /* HarvestRecordRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC843308D090100E22417 /* HarvestRecordRowView.swift */; };
+		74ABC854308D090100E22417 /* HarvestHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC844308D090100E22417 /* HarvestHistoryView.swift */; };
+		74ABC855308D090100E22417 /* FactoryIntakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */; };
+		74ABC856308D090100E22417 /* ManagerOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC846308D090100E22417 /* ManagerOverviewView.swift */; };
+		74ABC857308D090100E22417 /* ManagerFieldRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC858308D090100E22417 /* ManagerFieldRowView.swift */; };
+		74ABC859308D090100E22417 /* ManagerMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC85A308D090100E22417 /* ManagerMainTabView.swift */; };
+		74ABC860308D0A0100E22417 /* LeafQualityAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */; };
+		74ABC862308D0A0100E22417 /* CameraServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC863308D0A0100E22417 /* CameraServiceProtocol.swift */; };
+		74ABC864308D0A0100E22417 /* VisionLeafClassifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC865308D0A0100E22417 /* VisionLeafClassifierProtocol.swift */; };
+		74ABC866308D0A0100E22417 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC867308D0A0100E22417 /* CameraService.swift */; };
+		74ABC868308D0A0100E22417 /* VisionLeafClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC869308D0A0100E22417 /* VisionLeafClassifier.swift */; };
+		74ABC86A308D0A0100E22417 /* LeafScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */; };
+		74ABC86C308D0A0100E22417 /* LeafScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC86D308D0A0100E22417 /* LeafScannerView.swift */; };
+		74ABC86E308D0A0100E22417 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC86F308D0A0100E22417 /* CameraPreviewView.swift */; };
+		74ABC870308D0A0100E22417 /* ScannerHudOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC871308D0A0100E22417 /* ScannerHudOverlayView.swift */; };
+		74ABC872308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC873308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel */; };
+		74ABC874308D0A0100E22417 /* TeaShootClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC875308D0A0100E22417 /* TeaShootClassifier.mlmodel */; };
+		74ABC876308D0A0100E22417 /* sample_fine_shoot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 74ABC877308D0A0100E22417 /* sample_fine_shoot.jpg */; };
+		74ABC878308D0A0100E22417 /* sample_coarse_leaf.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 74ABC879308D0A0100E22417 /* sample_coarse_leaf.jpg */; };
+		74ABC880308D0B0100E22417 /* GeoJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC881308D0B0100E22417 /* GeoJSONParser.swift */; };
+		74ABC882308D0B0100E22417 /* TeaFieldMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */; };
+		74ABC884308D0B0100E22417 /* FieldMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */; };
+		74ABC886308D0B0100E22417 /* InteractiveMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC887308D0B0100E22417 /* InteractiveMapView.swift */; };
+		74ABC888308D0B0100E22417 /* FieldDetailBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC889308D0B0100E22417 /* FieldDetailBottomSheetView.swift */; };
+		74ABC88A308D0B0100E22417 /* FieldMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC88B308D0B0100E22417 /* FieldMapView.swift */; };
+		74ABC890308D0C0100E22417 /* LocationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */; };
+		74ABC892308D0C0100E22417 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC893308D0C0100E22417 /* LocationService.swift */; };
+		74ABC900308D0D0000E22417 /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC901308D0D0000E22417 /* MockAPIService.swift */; };
+		74ABC902308D0D0000E22417 /* MockAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC903308D0D0000E22417 /* MockAuthService.swift */; };
+		74ABC904308D0D0000E22417 /* MockCameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC905308D0D0000E22417 /* MockCameraService.swift */; };
+		74ABC906308D0D0000E22417 /* MockFieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC907308D0D0000E22417 /* MockFieldRepository.swift */; };
+		74ABC908308D0D0000E22417 /* MockHarvestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC909308D0D0000E22417 /* MockHarvestRepository.swift */; };
+		74ABC90A308D0D0000E22417 /* MockNDVIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC90B308D0D0000E22417 /* MockNDVIRepository.swift */; };
+		74ABC90C308D0D0000E22417 /* MockLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC90D308D0D0000E22417 /* MockLocationService.swift */; };
+		74ABC90E308D0D0000E22417 /* MockSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC90F308D0D0000E22417 /* MockSyncManager.swift */; };
+		74ABC910308D0D0000E22417 /* MockVisionLeafClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC911308D0D0000E22417 /* MockVisionLeafClassifier.swift */; };
+		74ABC912308D0D0000E22417 /* MockNetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC913308D0D0000E22417 /* MockNetworkMonitor.swift */; };
+		74ABC920308D0D0000E22417 /* LeafScannerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC921308D0D0000E22417 /* LeafScannerViewModelTests.swift */; };
+		74ABC922308D0D0000E22417 /* FieldMapViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC923308D0D0000E22417 /* FieldMapViewModelTests.swift */; };
+		74ABC924308D0D0000E22417 /* TodayTasksViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC925308D0D0000E22417 /* TodayTasksViewModelTests.swift */; };
+		74ABC926308D0D0000E22417 /* HarvestWeighingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC927308D0D0000E22417 /* HarvestWeighingViewModelTests.swift */; };
+		74ABC928308D0D0000E22417 /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC929308D0D0000E22417 /* LocationServiceTests.swift */; };
+		74ABC92A308D0D0000E22417 /* GeoJSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC92B308D0D0000E22417 /* GeoJSONParserTests.swift */; };
+		74ABC92C308D0D0000E22417 /* OfflineSyncManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC92D308D0D0000E22417 /* OfflineSyncManagerTests.swift */; };
+		74ABC92E308D0D0000E22417 /* DomainModelAndDTOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC92F308D0D0000E22417 /* DomainModelAndDTOTests.swift */; };
+		74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */; };
+		74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */; };
+		74ABC944308D0D0000E22417 /* ManagerOverviewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */; };
+		74ABC946308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */; };
+		74ABC948308D0D0000E22417 /* CoreDataRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC949308D0D0000E22417 /* CoreDataRepositoryTests.swift */; };
+		74ABC9A1308D0E0000E22417 /* AppearanceSettingsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC9A2308D0E0000E22417 /* AppearanceSettingsSectionView.swift */; };
+		74ABCA02308D0E0000E22417 /* YieldAnalyticsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */; };
+		74ABCA04308D0E0000E22417 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA03308D0E0000E22417 /* HapticFeedback.swift */; };
+		74ABCA06308D0E0000E22417 /* YieldComparisonChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */; };
+		74ABCA08308D0E0000E22417 /* NDVITrendChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */; };
+		74ABCA0A308D0E0000E22417 /* FactoryCapacityChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */; };
+		74ABCA0C308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0B308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift */; };
+		74ABCA0E308D0E0000E22417 /* ManagerExecutiveSuiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */; };
+		74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */; };
+		74ABCA21308D0E0000E22417 /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */; };
+		74ABCA23308D0E0000E22417 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA24308D0E0000E22417 /* UserProfileView.swift */; };
+		74ABCA26308D0E0000E22417 /* UserProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */; };
+		74ABCA30308D0E0000E22417 /* Plucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA31308D0E0000E22417 /* Plucker.swift */; };
+		74ABCA32308D0E0000E22417 /* PluckerDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA33308D0E0000E22417 /* PluckerDTOs.swift */; };
+		74ABCA34308D0E0000E22417 /* OptimizationDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA35308D0E0000E22417 /* OptimizationDTOs.swift */; };
+		74ABCB01308D0E0000E22417 /* Components/DistrictPickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB02308D0E0000E22417 /* Components/DistrictPickerField.swift */; };
+		74ABCB03308D0E0000E22417 /* EstateOnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */; };
+		74ABCB05308D0E0000E22417 /* EstateOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */; };
+		74ABCB07308D0E0000E22417 /* ForcePasswordChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB08308D0E0000E22417 /* ForcePasswordChangeViewModel.swift */; };
+		74ABCB09308D0E0000E22417 /* ForcePasswordChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */; };
+		74ABCB0B308D0E0000E22417 /* InviteSupervisorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */; };
+		74ABCB0D308D0E0000E22417 /* InviteSupervisorSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */; };
+		74ABCB20308D0E0000E22417 /* EditEstateSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB21308D0E0000E22417 /* EditEstateSheetView.swift */; };
+		74ABCB22308D0E0000E22417 /* AddFieldDivisionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB23308D0E0000E22417 /* AddFieldDivisionSheetView.swift */; };
+		74ABCB24308D0E0000E22417 /* AddPluckerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB25308D0E0000E22417 /* AddPluckerSheetView.swift */; };
+		74ABCB0F308D0E0000E22417 /* MultiTenantOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */; };
+		74ABCB11308D0E0000E22417 /* TeaYieldButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */; };
+		74ABCB13308D0E0000E22417 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB14308D0E0000E22417 /* SectionHeaderView.swift */; };
+		74ABCB21308D0F0000E22417 /* InputSanitizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB20308D0F0000E22417 /* InputSanitizer.swift */; };
+		74ABCB31308D0F0000E22417 /* InputSanitizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB30308D0F0000E22417 /* InputSanitizerTests.swift */; };
+		74ABCB41308D0F0000E22417 /* ThemeToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCB40308D0F0000E22417 /* ThemeToggleView.swift */; };
+		74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCBA1308D0F0000E22417 /* PluckerManagementViewModel.swift */; };
+		74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCBA2308D0F0000E22417 /* SupervisorManagementViewModel.swift */; };
+		74ABCBB3308D0F0000E22417 /* EditPluckerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCBA3308D0F0000E22417 /* EditPluckerSheetView.swift */; };
+		74ABCBB4308D0F0000E22417 /* PluckerManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCBA4308D0F0000E22417 /* PluckerManagementView.swift */; };
+		74ABCBB5308D0F0000E22417 /* SupervisorManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCBA5308D0F0000E22417 /* SupervisorManagementView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		74ABCWID0000000F00E22417 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74ABC756308D036400E22417 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74ABCWID0000000100E22417;
+			remoteInfo = TeaYieldAIWidget;
+		};
+		74ABC76F308D036800E22417 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74ABC756308D036400E22417 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74ABC75D308D036400E22417;
+			remoteInfo = TeaYieldAI;
+		};
+		74ABC779308D036800E22417 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74ABC756308D036400E22417 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74ABC75D308D036400E22417;
+			remoteInfo = TeaYieldAI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		74ABCPDF0000000100E22417 /* RosterPDFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterPDFGenerator.swift; sourceTree = "<group>"; };
+		74ABCPDF0000000300E22417 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		74ABCPDF0000000500E22417 /* RosterPDFGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterPDFGeneratorTests.swift; sourceTree = "<group>"; };
+		74ABCTST0000000900E22417 /* APIEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointTests.swift; sourceTree = "<group>"; };
+		74ABCTST0000000700E22417 /* KeychainHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelperTests.swift; sourceTree = "<group>"; };
+		74ABCTST0000000500E22417 /* TeaYieldWidgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldWidgetTests.swift; sourceTree = "<group>"; };
+		74ABCTST0000000300E22417 /* SupervisorManagementViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupervisorManagementViewModelTests.swift; sourceTree = "<group>"; };
+		74ABCTST0000000100E22417 /* PluckerManagementViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluckerManagementViewModelTests.swift; sourceTree = "<group>"; };
+		74ABCWID0000000200E22417 /* TeaYieldAIWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TeaYieldAIWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		74ABCWID0000000300E22417 /* TeaYieldAIWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAIWidget.swift; sourceTree = "<group>"; };
+		74ABCWID0000000500E22417 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74ABCA9B308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldDashboardWidgetView.swift; sourceTree = "<group>"; };
+		74ABCA99308D0E0000E22417 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldSearchBar.swift; sourceTree = "<group>"; };
+		DD57EE6216DB4016B7FF3B94 /* DivisionManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionManagementView.swift; sourceTree = "<group>"; };
+		FD0D5C80B80B4D7090C806C8 /* EditFieldDivisionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFieldDivisionSheetView.swift; sourceTree = "<group>"; };
+		74ABC75E308D036400E22417 /* TeaYieldAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeaYieldAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeaYieldAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74ABC772308D036800E22417 /* TeaYieldAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAITests.swift; sourceTree = "<group>"; };
+		74ABC778308D036800E22417 /* TeaYieldAIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeaYieldAIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74ABC77C308D036800E22417 /* TeaYieldAIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAIUITests.swift; sourceTree = "<group>"; };
+		74ABC77E308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAIUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		74ABC78C308D053100E22417 /* TeaYieldAIApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaYieldAIApp.swift; sourceTree = "<group>"; };
+		74ABC78F308D053100E22417 /* NDVIRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVIRepositoryProtocol.swift; sourceTree = "<group>"; };
+		74ABC790308D053100E22417 /* FieldRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldRepository.swift; sourceTree = "<group>"; };
+		74ABC791308D053100E22417 /* NDVIRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVIRepository.swift; sourceTree = "<group>"; };
+		74ABC792308D053100E22417 /* FieldRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldRepositoryProtocol.swift; sourceTree = "<group>"; };
+		74ABC793308D053100E22417 /* HarvestRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestRepositoryProtocol.swift; sourceTree = "<group>"; };
+		74ABC794308D053100E22417 /* HarvestRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestRepository.swift; sourceTree = "<group>"; };
+		74ABC796308D053100E22417 /* TeaFieldEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaFieldEntity.swift; sourceTree = "<group>"; };
+		74ABC797308D053100E22417 /* NDVILogEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVILogEntity.swift; sourceTree = "<group>"; };
+		74ABC798308D053100E22417 /* HarvestLogEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestLogEntity.swift; sourceTree = "<group>"; };
+		74ABC799308D053100E22417 /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		74ABC79C308D053100E22417 /* EstateDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstateDTOs.swift; sourceTree = "<group>"; };
+		74ABC79D308D053100E22417 /* AuthDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthDTOs.swift; sourceTree = "<group>"; };
+		74ABC79E308D053100E22417 /* TaskDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDTOs.swift; sourceTree = "<group>"; };
+		74ABC79F308D053100E22417 /* APIErrorDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIErrorDTO.swift; sourceTree = "<group>"; };
+		74ABC7A0308D053100E22417 /* FieldDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldDTOs.swift; sourceTree = "<group>"; };
+		74ABC7A1308D053100E22417 /* HarvestSyncDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestSyncDTOs.swift; sourceTree = "<group>"; };
+		74ABC7A3308D053100E22417 /* HarvestRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestRecord.swift; sourceTree = "<group>"; };
+		74ABC7A4308D053100E22417 /* TeaField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaField.swift; sourceTree = "<group>"; };
+		74ABC7A5308D053100E22417 /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		74ABC7A6308D053100E22417 /* PluckingTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluckingTask.swift; sourceTree = "<group>"; };
+		74ABC7A9308D053100E22417 /* AppContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		74ABC7AB308D053100E22417 /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		74ABC7AC308D053100E22417 /* BiometricAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricAuthManager.swift; sourceTree = "<group>"; };
+		74ABC7AE308D053100E22417 /* APIEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		74ABC7AF308D053100E22417 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		74ABC7B0308D053100E22417 /* NetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		74ABC7B2308D053100E22417 /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		74ABC7B5308D053100E22417 /* OfflineSyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineSyncManager.swift; sourceTree = "<group>"; };
+		74ABC7B6308D053100E22417 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		74ABC7B7308D053100E22417 /* CloudAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudAPIService.swift; sourceTree = "<group>"; };
+		74ABC7B9308D053100E22417 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
+		74ABC7BA308D053100E22417 /* SyncManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerProtocol.swift; sourceTree = "<group>"; };
+		74ABC7BB308D053100E22417 /* APIServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIServiceProtocol.swift; sourceTree = "<group>"; };
+		74ABC7BD308D053100E22417 /* TodayTasksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTasksViewModel.swift; sourceTree = "<group>"; };
+		74ABC7BE308D053100E22417 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestWeighingViewModel.swift; sourceTree = "<group>"; };
+		74ABC7C2308D053100E22417 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		74ABC861308D0B0100E22417 /* BiometricLockOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricLockOverlayView.swift; sourceTree = "<group>"; };
+		74ABC7C4308D053100E22417 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		74ABC7C6308D053100E22417 /* TodayTasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTasksView.swift; sourceTree = "<group>"; };
+		74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncStatusBarView.swift; sourceTree = "<group>"; };
+		74ABC7C9308D053100E22417 /* TaskCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCardView.swift; sourceTree = "<group>"; };
+		74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestWeighingFormView.swift; sourceTree = "<group>"; };
+		74ABC7CC308D053100E22417 /* MockData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		74ABC801308D070100E22417 /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		74ABC802308D070100E22417 /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		74ABC803308D070100E22417 /* SupervisorMainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorMainTabView.swift; sourceTree = "<group>"; };
+		74ABC804308D070100E22417 /* SupervisorSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorSettingsView.swift; sourceTree = "<group>"; };
+		74ABC820308D080100E22417 /* SupervisorSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorSettingsViewModel.swift; sourceTree = "<group>"; };
+		74ABC821308D080100E22417 /* OfficerProfileCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficerProfileCardView.swift; sourceTree = "<group>"; };
+		74ABC822308D080100E22417 /* DataStorageSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStorageSectionView.swift; sourceTree = "<group>"; };
+		74ABC823308D080100E22417 /* SecuritySettingsSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsSectionView.swift; sourceTree = "<group>"; };
+		74ABC824308D080100E22417 /* NotificationSettingsSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsSectionView.swift; sourceTree = "<group>"; };
+		74ABC825308D080100E22417 /* AppInfoSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoSectionView.swift; sourceTree = "<group>"; };
+		74ABC826308D080100E22417 /* LeafScannerPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerPlaceholderView.swift; sourceTree = "<group>"; };
+		74ABC827308D080100E22417 /* FieldMapPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapPlaceholderView.swift; sourceTree = "<group>"; };
+		74ABC828308D080100E22417 /* GeofenceArrivalBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeofenceArrivalBannerView.swift; sourceTree = "<group>"; };
+		74ABC829308D080100E22417 /* KpiSummaryRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KpiSummaryRowView.swift; sourceTree = "<group>"; };
+		74ABC82A308D080100E22417 /* OnboardingSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
+		74ABC82B308D080100E22417 /* Components/OnboardingSlideCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Components/OnboardingSlideCardView.swift; sourceTree = "<group>"; };
+		74ABC840308D090100E22417 /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		74ABC841308D090100E22417 /* HarvestHistoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestHistoryViewModel.swift; sourceTree = "<group>"; };
+		74ABC842308D090100E22417 /* ManagerOverviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerOverviewViewModel.swift; sourceTree = "<group>"; };
+		74ABC843308D090100E22417 /* HarvestRecordRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestRecordRowView.swift; sourceTree = "<group>"; };
+		74ABC844308D090100E22417 /* HarvestHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestHistoryView.swift; sourceTree = "<group>"; };
+		74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactoryIntakeCardView.swift; sourceTree = "<group>"; };
+		74ABC846308D090100E22417 /* ManagerOverviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerOverviewView.swift; sourceTree = "<group>"; };
+		74ABC858308D090100E22417 /* ManagerFieldRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerFieldRowView.swift; sourceTree = "<group>"; };
+		74ABC85A308D090100E22417 /* ManagerMainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerMainTabView.swift; sourceTree = "<group>"; };
+		74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafQualityAssessment.swift; sourceTree = "<group>"; };
+		74ABC863308D0A0100E22417 /* CameraServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraServiceProtocol.swift; sourceTree = "<group>"; };
+		74ABC865308D0A0100E22417 /* VisionLeafClassifierProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionLeafClassifierProtocol.swift; sourceTree = "<group>"; };
+		74ABC867308D0A0100E22417 /* CameraService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
+		74ABC869308D0A0100E22417 /* VisionLeafClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionLeafClassifier.swift; sourceTree = "<group>"; };
+		74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerViewModel.swift; sourceTree = "<group>"; };
+		74ABC86D308D0A0100E22417 /* LeafScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerView.swift; sourceTree = "<group>"; };
+		74ABC86F308D0A0100E22417 /* CameraPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		74ABC871308D0A0100E22417 /* ScannerHudOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerHudOverlayView.swift; sourceTree = "<group>"; };
+		74ABC873308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TeaShootClassifier_v2.mlmodel; sourceTree = "<group>"; };
+		74ABC875308D0A0100E22417 /* TeaShootClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TeaShootClassifier.mlmodel; sourceTree = "<group>"; };
+		74ABC877308D0A0100E22417 /* sample_fine_shoot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample_fine_shoot.jpg; sourceTree = "<group>"; };
+		74ABC879308D0A0100E22417 /* sample_coarse_leaf.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample_coarse_leaf.jpg; sourceTree = "<group>"; };
+		74ABC881308D0B0100E22417 /* GeoJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONParser.swift; sourceTree = "<group>"; };
+		74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaFieldMapItem.swift; sourceTree = "<group>"; };
+		74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapViewModel.swift; sourceTree = "<group>"; };
+		74ABC887308D0B0100E22417 /* InteractiveMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveMapView.swift; sourceTree = "<group>"; };
+		74ABC889308D0B0100E22417 /* FieldDetailBottomSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldDetailBottomSheetView.swift; sourceTree = "<group>"; };
+		74ABC88B308D0B0100E22417 /* FieldMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapView.swift; sourceTree = "<group>"; };
+		74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceProtocol.swift; sourceTree = "<group>"; };
+		74ABC893308D0C0100E22417 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		74ABC901308D0D0000E22417 /* MockAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
+		74ABC903308D0D0000E22417 /* MockAuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuthService.swift; sourceTree = "<group>"; };
+		74ABC905308D0D0000E22417 /* MockCameraService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCameraService.swift; sourceTree = "<group>"; };
+		74ABC907308D0D0000E22417 /* MockFieldRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFieldRepository.swift; sourceTree = "<group>"; };
+		74ABC909308D0D0000E22417 /* MockHarvestRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockHarvestRepository.swift; sourceTree = "<group>"; };
+		74ABC90B308D0D0000E22417 /* MockNDVIRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNDVIRepository.swift; sourceTree = "<group>"; };
+		74ABC90D308D0D0000E22417 /* MockLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationService.swift; sourceTree = "<group>"; };
+		74ABC90F308D0D0000E22417 /* MockSyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSyncManager.swift; sourceTree = "<group>"; };
+		74ABC911308D0D0000E22417 /* MockVisionLeafClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVisionLeafClassifier.swift; sourceTree = "<group>"; };
+		74ABC913308D0D0000E22417 /* MockNetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNetworkMonitor.swift; sourceTree = "<group>"; };
+		74ABC921308D0D0000E22417 /* LeafScannerViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeafScannerViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC923308D0D0000E22417 /* FieldMapViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldMapViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC925308D0D0000E22417 /* TodayTasksViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTasksViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC927308D0D0000E22417 /* HarvestWeighingViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestWeighingViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC929308D0D0000E22417 /* LocationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
+		74ABC92B308D0D0000E22417 /* GeoJSONParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoJSONParserTests.swift; sourceTree = "<group>"; };
+		74ABC92D308D0D0000E22417 /* OfflineSyncManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineSyncManagerTests.swift; sourceTree = "<group>"; };
+		74ABC92F308D0D0000E22417 /* DomainModelAndDTOTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainModelAndDTOTests.swift; sourceTree = "<group>"; };
+		74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestHistoryViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerOverviewViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorSettingsViewModelTests.swift; sourceTree = "<group>"; };
+		74ABC949308D0D0000E22417 /* CoreDataRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataRepositoryTests.swift; sourceTree = "<group>"; };
+		74ABC9A2308D0E0000E22417 /* AppearanceSettingsSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsSectionView.swift; sourceTree = "<group>"; };
+		74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldAnalyticsItem.swift; sourceTree = "<group>"; };
+		74ABCA03308D0E0000E22417 /* HapticFeedback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
+		74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldComparisonChartView.swift; sourceTree = "<group>"; };
+		74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDVITrendChartView.swift; sourceTree = "<group>"; };
+		74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactoryCapacityChartView.swift; sourceTree = "<group>"; };
+		74ABCA0B308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerAnalyticsDashboardView.swift; sourceTree = "<group>"; };
+		74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerExecutiveSuiteView.swift; sourceTree = "<group>"; };
+		74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YieldAnalyticsTests.swift; sourceTree = "<group>"; };
+		74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewModel.swift; sourceTree = "<group>"; };
+		74ABCA24308D0E0000E22417 /* UserProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewModelTests.swift; sourceTree = "<group>"; };
+		74ABCA31308D0E0000E22417 /* Plucker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plucker.swift; sourceTree = "<group>"; };
+		74ABCA33308D0E0000E22417 /* PluckerDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluckerDTOs.swift; sourceTree = "<group>"; };
+		74ABCA35308D0E0000E22417 /* OptimizationDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptimizationDTOs.swift; sourceTree = "<group>"; };
+		74ABCB02308D0E0000E22417 /* Components/DistrictPickerField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Components/DistrictPickerField.swift; sourceTree = "<group>"; };
+		74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstateOnboardingViewModel.swift; sourceTree = "<group>"; };
+		74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EstateOnboardingView.swift; sourceTree = "<group>"; };
+		74ABCB08308D0E0000E22417 /* ForcePasswordChangeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForcePasswordChangeViewModel.swift; sourceTree = "<group>"; };
+		74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForcePasswordChangeView.swift; sourceTree = "<group>"; };
+		74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteSupervisorViewModel.swift; sourceTree = "<group>"; };
+		74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteSupervisorSheetView.swift; sourceTree = "<group>"; };
+		74ABCB21308D0E0000E22417 /* EditEstateSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEstateSheetView.swift; sourceTree = "<group>"; };
+		74ABCB23308D0E0000E22417 /* AddFieldDivisionSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFieldDivisionSheetView.swift; sourceTree = "<group>"; };
+		74ABCB25308D0E0000E22417 /* AddPluckerSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPluckerSheetView.swift; sourceTree = "<group>"; };
+		74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTenantOnboardingTests.swift; sourceTree = "<group>"; };
+		74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaYieldButton.swift; sourceTree = "<group>"; };
+		74ABCB14308D0E0000E22417 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		74ABCB20308D0F0000E22417 /* InputSanitizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSanitizer.swift; sourceTree = "<group>"; };
+		74ABCB30308D0F0000E22417 /* InputSanitizerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSanitizerTests.swift; sourceTree = "<group>"; };
+		74ABCB40308D0F0000E22417 /* ThemeToggleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeToggleView.swift; sourceTree = "<group>"; };
+		74ABCBA1308D0F0000E22417 /* PluckerManagementViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluckerManagementViewModel.swift; sourceTree = "<group>"; };
+		74ABCBA2308D0F0000E22417 /* SupervisorManagementViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorManagementViewModel.swift; sourceTree = "<group>"; };
+		74ABCBA3308D0F0000E22417 /* EditPluckerSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPluckerSheetView.swift; sourceTree = "<group>"; };
+		74ABCBA4308D0F0000E22417 /* PluckerManagementView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluckerManagementView.swift; sourceTree = "<group>"; };
+		74ABCBA5308D0F0000E22417 /* SupervisorManagementView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorManagementView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		74ABCWID0000000800E22417 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC75B308D036400E22417 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC76B308D036800E22417 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC775308D036800E22417 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		74ABCWID0000000600E22417 /* TeaYieldAIWidget */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCWID0000000300E22417 /* TeaYieldAIWidget.swift */,
+				74ABCWID0000000500E22417 /* Info.plist */,
+			);
+			path = TeaYieldAIWidget;
+			sourceTree = "<group>";
+		};
+		74ABC755308D036400E22417 = {
+			isa = PBXGroup;
+			children = (
+				74ABC760308D036400E22417 /* TeaYieldAI */,
+				74ABCWID0000000600E22417 /* TeaYieldAIWidget */,
+				74ABC771308D036800E22417 /* TeaYieldAITests */,
+				74ABC77B308D036800E22417 /* TeaYieldAIUITests */,
+				74ABC75F308D036400E22417 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		74ABC75F308D036400E22417 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCWID0000000200E22417 /* TeaYieldAIWidget.appex */,
+				74ABC75E308D036400E22417 /* TeaYieldAI.app */,
+				74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */,
+				74ABC778308D036800E22417 /* TeaYieldAIUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		74ABC760308D036400E22417 /* TeaYieldAI */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCA99308D0E0000E22417 /* Assets.xcassets */,
+				74ABC78B308D053100E22417 /* App */,
+				74ABC7A7308D053100E22417 /* Core */,
+				74ABC79A308D053100E22417 /* Models */,
+				74ABC78D308D053100E22417 /* Persistence */,
+				74ABC7CB308D053100E22417 /* Preview Content */,
+				74ABC7B3308D053100E22417 /* Services */,
+				74ABC7BC308D053100E22417 /* ViewModels */,
+				74ABC7C0308D053100E22417 /* Views */,
+			);
+			path = TeaYieldAI;
+			sourceTree = "<group>";
+		};
+		74ABC771308D036800E22417 /* TeaYieldAITests */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC9E0308D0D0000E22417 /* Mocks */,
+				74ABC9E1308D0D0000E22417 /* Tests */,
+				74ABC772308D036800E22417 /* TeaYieldAITests.swift */,
+			);
+			path = TeaYieldAITests;
+			sourceTree = "<group>";
+		};
+		74ABC77B308D036800E22417 /* TeaYieldAIUITests */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC77C308D036800E22417 /* TeaYieldAIUITests.swift */,
+				74ABC77E308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift */,
+			);
+			path = TeaYieldAIUITests;
+			sourceTree = "<group>";
+		};
+		74ABC78B308D053100E22417 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC78C308D053100E22417 /* TeaYieldAIApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		74ABC78D308D053100E22417 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC78E308D053100E22417 /* Repositories */,
+				74ABC795308D053100E22417 /* Models */,
+				74ABC799308D053100E22417 /* PersistenceController.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		74ABC78E308D053100E22417 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC78F308D053100E22417 /* NDVIRepositoryProtocol.swift */,
+				74ABC790308D053100E22417 /* FieldRepository.swift */,
+				74ABC791308D053100E22417 /* NDVIRepository.swift */,
+				74ABC792308D053100E22417 /* FieldRepositoryProtocol.swift */,
+				74ABC793308D053100E22417 /* HarvestRepositoryProtocol.swift */,
+				74ABC794308D053100E22417 /* HarvestRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		74ABC795308D053100E22417 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC796308D053100E22417 /* TeaFieldEntity.swift */,
+				74ABC797308D053100E22417 /* NDVILogEntity.swift */,
+				74ABC798308D053100E22417 /* HarvestLogEntity.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		74ABC79A308D053100E22417 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC79B308D053100E22417 /* DTOs */,
+				74ABC7A2308D053100E22417 /* Domain */,
+				74ABC87A308D0A0100E22417 /* CoreML */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		74ABC79B308D053100E22417 /* DTOs */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCA35308D0E0000E22417 /* OptimizationDTOs.swift */,
+				74ABCA33308D0E0000E22417 /* PluckerDTOs.swift */,
+				74ABC79C308D053100E22417 /* EstateDTOs.swift */,
+				74ABC79D308D053100E22417 /* AuthDTOs.swift */,
+				74ABC79E308D053100E22417 /* TaskDTOs.swift */,
+				74ABC79F308D053100E22417 /* APIErrorDTO.swift */,
+				74ABC7A0308D053100E22417 /* FieldDTOs.swift */,
+				74ABC7A1308D053100E22417 /* HarvestSyncDTOs.swift */,
+			);
+			path = DTOs;
+			sourceTree = "<group>";
+		};
+		74ABC7A2308D053100E22417 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCA31308D0E0000E22417 /* Plucker.swift */,
+				74ABCA01308D0E0000E22417 /* YieldAnalyticsItem.swift */,
+				74ABC883308D0B0100E22417 /* TeaFieldMapItem.swift */,
+				74ABC861308D0A0100E22417 /* LeafQualityAssessment.swift */,
+				74ABC7A3308D053100E22417 /* HarvestRecord.swift */,
+				74ABC7A4308D053100E22417 /* TeaField.swift */,
+				74ABC7A5308D053100E22417 /* UserProfile.swift */,
+				74ABC7A6308D053100E22417 /* PluckingTask.swift */,
+				74ABC82A308D080100E22417 /* OnboardingSlide.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		74ABC7A7308D053100E22417 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7A8308D053100E22417 /* DI */,
+				74ABC7AA308D053100E22417 /* Security */,
+				74ABC7AD308D053100E22417 /* Network */,
+				74ABC7B1308D053100E22417 /* Utilities */,
+				74ABC847308D090100E22417 /* Notifications */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		74ABC7A8308D053100E22417 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7A9308D053100E22417 /* AppContainer.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		74ABC7AA308D053100E22417 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7AB308D053100E22417 /* KeychainHelper.swift */,
+				74ABC7AC308D053100E22417 /* BiometricAuthManager.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		74ABC7AD308D053100E22417 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7AE308D053100E22417 /* APIEndpoint.swift */,
+				74ABC7AF308D053100E22417 /* NetworkError.swift */,
+				74ABC7B0308D053100E22417 /* NetworkMonitor.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		74ABC7B1308D053100E22417 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCPDF0000000100E22417 /* RosterPDFGenerator.swift */,
+				74ABCA03308D0E0000E22417 /* HapticFeedback.swift */,
+				74ABC881308D0B0100E22417 /* GeoJSONParser.swift */,
+				74ABC7B2308D053100E22417 /* AppConfiguration.swift */,
+				74ABC801308D070100E22417 /* AppTheme.swift */,
+				74ABCB20308D0F0000E22417 /* InputSanitizer.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		74ABC7B3308D053100E22417 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7B4308D053100E22417 /* Implementations */,
+				74ABC7B8308D053100E22417 /* Protocols */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		74ABC7B4308D053100E22417 /* Implementations */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC893308D0C0100E22417 /* LocationService.swift */,
+				74ABC867308D0A0100E22417 /* CameraService.swift */,
+				74ABC869308D0A0100E22417 /* VisionLeafClassifier.swift */,
+				74ABC7B5308D053100E22417 /* OfflineSyncManager.swift */,
+				74ABC7B6308D053100E22417 /* AuthService.swift */,
+				74ABC7B7308D053100E22417 /* CloudAPIService.swift */,
+			);
+			path = Implementations;
+			sourceTree = "<group>";
+		};
+		74ABC7B8308D053100E22417 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC891308D0C0100E22417 /* LocationServiceProtocol.swift */,
+				74ABC863308D0A0100E22417 /* CameraServiceProtocol.swift */,
+				74ABC865308D0A0100E22417 /* VisionLeafClassifierProtocol.swift */,
+				74ABC7B9308D053100E22417 /* AuthServiceProtocol.swift */,
+				74ABC7BA308D053100E22417 /* SyncManagerProtocol.swift */,
+				74ABC7BB308D053100E22417 /* APIServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		74ABC7BC308D053100E22417 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCBA1308D0F0000E22417 /* PluckerManagementViewModel.swift */,
+				74ABCBA2308D0F0000E22417 /* SupervisorManagementViewModel.swift */,
+				74ABCB0C308D0E0000E22417 /* InviteSupervisorViewModel.swift */,
+				74ABCB08308D0E0000E22417 /* ForcePasswordChangeViewModel.swift */,
+				74ABCB04308D0E0000E22417 /* EstateOnboardingViewModel.swift */,
+				74ABCA22308D0E0000E22417 /* UserProfileViewModel.swift */,
+				74ABC885308D0B0100E22417 /* FieldMapViewModel.swift */,
+				74ABC86B308D0A0100E22417 /* LeafScannerViewModel.swift */,
+				74ABC7BD308D053100E22417 /* TodayTasksViewModel.swift */,
+				74ABC7BE308D053100E22417 /* AuthViewModel.swift */,
+				74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */,
+				74ABC820308D080100E22417 /* SupervisorSettingsViewModel.swift */,
+				74ABC841308D090100E22417 /* HarvestHistoryViewModel.swift */,
+				74ABC842308D090100E22417 /* ManagerOverviewViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		74ABC7C0308D053100E22417 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCB15308D0E0000E22417 /* Common */,
+				74ABCA25308D0E0000E22417 /* Profile */,
+				74ABC806308D070100E22417 /* Onboarding */,
+				74ABC7C1308D053100E22417 /* Auth */,
+				74ABC7C3308D053100E22417 /* Root */,
+				74ABC7C5308D053100E22417 /* Supervisor */,
+				74ABC848308D090100E22417 /* Manager */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		74ABC7C1308D053100E22417 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */,
+				74ABC7C2308D053100E22417 /* LoginView.swift */,
+				74ABC861308D0B0100E22417 /* BiometricLockOverlayView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		74ABC7C3308D053100E22417 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC7C4308D053100E22417 /* RootView.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		74ABC7C5308D053100E22417 /* Supervisor */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC88B308D0B0100E22417 /* FieldMapView.swift */,
+				74ABC86D308D0A0100E22417 /* LeafScannerView.swift */,
+				74ABC803308D070100E22417 /* SupervisorMainTabView.swift */,
+				74ABC7C6308D053100E22417 /* TodayTasksView.swift */,
+				74ABC7C7308D053100E22417 /* Components */,
+				74ABC7CA308D053100E22417 /* HarvestWeighingFormView.swift */,
+				74ABC844308D090100E22417 /* HarvestHistoryView.swift */,
+				74ABC804308D070100E22417 /* SupervisorSettingsView.swift */,
+			);
+			path = Supervisor;
+			sourceTree = "<group>";
+		};
+		74ABC7C7308D053100E22417 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCBA3308D0F0000E22417 /* EditPluckerSheetView.swift */,
+				74ABC9A2308D0E0000E22417 /* AppearanceSettingsSectionView.swift */,
+				74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */,
+				74ABC7C9308D053100E22417 /* TaskCardView.swift */,
+				74ABC821308D080100E22417 /* OfficerProfileCardView.swift */,
+				74ABC822308D080100E22417 /* DataStorageSectionView.swift */,
+				74ABC823308D080100E22417 /* SecuritySettingsSectionView.swift */,
+				74ABC824308D080100E22417 /* NotificationSettingsSectionView.swift */,
+				74ABC825308D080100E22417 /* AppInfoSectionView.swift */,
+				74ABC826308D080100E22417 /* LeafScannerPlaceholderView.swift */,
+				74ABC86F308D0A0100E22417 /* CameraPreviewView.swift */,
+				74ABC871308D0A0100E22417 /* ScannerHudOverlayView.swift */,
+				74ABC827308D080100E22417 /* FieldMapPlaceholderView.swift */,
+				74ABC887308D0B0100E22417 /* InteractiveMapView.swift */,
+				74ABC889308D0B0100E22417 /* FieldDetailBottomSheetView.swift */,
+				74ABC828308D080100E22417 /* GeofenceArrivalBannerView.swift */,
+				74ABC829308D080100E22417 /* KpiSummaryRowView.swift */,
+				74ABC843308D090100E22417 /* HarvestRecordRowView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		74ABC7CB308D053100E22417 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC877308D0A0100E22417 /* sample_fine_shoot.jpg */,
+				74ABC879308D0A0100E22417 /* sample_coarse_leaf.jpg */,
+				74ABC7CC308D053100E22417 /* MockData.swift */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		74ABC806308D070100E22417 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCB06308D0E0000E22417 /* EstateOnboardingView.swift */,
+				74ABCB02308D0E0000E22417 /* Components/DistrictPickerField.swift */,
+				74ABC802308D070100E22417 /* OnboardingView.swift */,
+				74ABC82B308D080100E22417 /* Components/OnboardingSlideCardView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		74ABC847308D090100E22417 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC840308D090100E22417 /* NotificationManager.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		74ABC848308D090100E22417 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				DD57EE6216DB4016B7FF3B94 /* DivisionManagementView.swift */,
+				74ABCBA4308D0F0000E22417 /* PluckerManagementView.swift */,
+				74ABCBA5308D0F0000E22417 /* SupervisorManagementView.swift */,
+				74ABC85A308D090100E22417 /* ManagerMainTabView.swift */,
+				74ABCA0D308D0E0000E22417 /* ManagerExecutiveSuiteView.swift */,
+				74ABCA0B308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift */,
+				74ABC846308D090100E22417 /* ManagerOverviewView.swift */,
+				74ABC849308D090100E22417 /* Components */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		74ABC849308D090100E22417 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FD0D5C80B80B4D7090C806C8 /* EditFieldDivisionSheetView.swift */,
+				74ABCBA3308D0F0000E22417 /* EditPluckerSheetView.swift */,
+				74ABCB0E308D0E0000E22417 /* InviteSupervisorSheetView.swift */,
+				74ABCB21308D0E0000E22417 /* EditEstateSheetView.swift */,
+				74ABCB23308D0E0000E22417 /* AddFieldDivisionSheetView.swift */,
+				74ABCB25308D0E0000E22417 /* AddPluckerSheetView.swift */,
+				74ABCA09308D0E0000E22417 /* FactoryCapacityChartView.swift */,
+				74ABCA07308D0E0000E22417 /* NDVITrendChartView.swift */,
+				74ABCA05308D0E0000E22417 /* YieldComparisonChartView.swift */,
+				74ABC845308D090100E22417 /* FactoryIntakeCardView.swift */,
+				74ABC858308D090100E22417 /* ManagerFieldRowView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		74ABC87A308D0A0100E22417 /* CoreML */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC873308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel */,
+				74ABC875308D0A0100E22417 /* TeaShootClassifier.mlmodel */,
+			);
+			path = CoreML;
+			sourceTree = "<group>";
+		};
+		74ABC9E0308D0D0000E22417 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				74ABC901308D0D0000E22417 /* MockAPIService.swift */,
+				74ABC903308D0D0000E22417 /* MockAuthService.swift */,
+				74ABC905308D0D0000E22417 /* MockCameraService.swift */,
+				74ABC907308D0D0000E22417 /* MockFieldRepository.swift */,
+				74ABC909308D0D0000E22417 /* MockHarvestRepository.swift */,
+				74ABC90B308D0D0000E22417 /* MockNDVIRepository.swift */,
+				74ABC90D308D0D0000E22417 /* MockLocationService.swift */,
+				74ABC90F308D0D0000E22417 /* MockSyncManager.swift */,
+				74ABC911308D0D0000E22417 /* MockVisionLeafClassifier.swift */,
+				74ABC913308D0D0000E22417 /* MockNetworkMonitor.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		74ABC9E1308D0D0000E22417 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCPDF0000000500E22417 /* RosterPDFGeneratorTests.swift */,
+				74ABCTST0000000900E22417 /* APIEndpointTests.swift */,
+				74ABCTST0000000700E22417 /* KeychainHelperTests.swift */,
+				74ABCTST0000000500E22417 /* TeaYieldWidgetTests.swift */,
+				74ABCTST0000000300E22417 /* SupervisorManagementViewModelTests.swift */,
+				74ABCTST0000000100E22417 /* PluckerManagementViewModelTests.swift */,
+				74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */,
+				74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */,
+				74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */,
+				74ABC941308D0D0000E22417 /* AuthViewModelTests.swift */,
+				74ABCB30308D0F0000E22417 /* InputSanitizerTests.swift */,
+				74ABC943308D0D0000E22417 /* HarvestHistoryViewModelTests.swift */,
+				74ABC945308D0D0000E22417 /* ManagerOverviewViewModelTests.swift */,
+				74ABC947308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift */,
+				74ABC949308D0D0000E22417 /* CoreDataRepositoryTests.swift */,
+				74ABC921308D0D0000E22417 /* LeafScannerViewModelTests.swift */,
+				74ABC923308D0D0000E22417 /* FieldMapViewModelTests.swift */,
+				74ABC925308D0D0000E22417 /* TodayTasksViewModelTests.swift */,
+				74ABC927308D0D0000E22417 /* HarvestWeighingViewModelTests.swift */,
+				74ABC929308D0D0000E22417 /* LocationServiceTests.swift */,
+				74ABC92B308D0D0000E22417 /* GeoJSONParserTests.swift */,
+				74ABC92D308D0D0000E22417 /* OfflineSyncManagerTests.swift */,
+				74ABC92F308D0D0000E22417 /* DomainModelAndDTOTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		74ABCA25308D0E0000E22417 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCA24308D0E0000E22417 /* UserProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		74ABCB15308D0E0000E22417 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCPDF0000000300E22417 /* ShareSheet.swift */,
+				74ABCA9B308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift */,
+				A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */,
+				74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */,
+				74ABCB14308D0E0000E22417 /* SectionHeaderView.swift */,
+				74ABCB40308D0F0000E22417 /* ThemeToggleView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		74ABCWID0000000100E22417 /* TeaYieldAIWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74ABCWID0000000A00E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAIWidget" */;
+			buildPhases = (
+				74ABCWID0000000700E22417 /* Sources */,
+				74ABCWID0000000800E22417 /* Frameworks */,
+				74ABCWID0000000900E22417 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TeaYieldAIWidget;
+			productName = TeaYieldAIWidget;
+			productReference = 74ABCWID0000000200E22417 /* TeaYieldAIWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		74ABC75D308D036400E22417 /* TeaYieldAI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74ABC782308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAI" */;
+			buildPhases = (
+				74ABC75A308D036400E22417 /* Sources */,
+				74ABC75B308D036400E22417 /* Frameworks */,
+				74ABC75C308D036400E22417 /* Resources */,
+				74ABCWID0000000D00E22417 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74ABCWID0000001000E22417 /* PBXTargetDependency */,
+			);
+			name = TeaYieldAI;
+			productName = TeaYieldAI;
+			productReference = 74ABC75E308D036400E22417 /* TeaYieldAI.app */;
+			productType = "com.apple.product-type.application";
+		};
+		74ABC76D308D036800E22417 /* TeaYieldAITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74ABC785308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAITests" */;
+			buildPhases = (
+				74ABC76A308D036800E22417 /* Sources */,
+				74ABC76B308D036800E22417 /* Frameworks */,
+				74ABC76C308D036800E22417 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74ABC770308D036800E22417 /* PBXTargetDependency */,
+			);
+			name = TeaYieldAITests;
+			productName = TeaYieldAITests;
+			productReference = 74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		74ABC777308D036800E22417 /* TeaYieldAIUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74ABC788308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAIUITests" */;
+			buildPhases = (
+				74ABC774308D036800E22417 /* Sources */,
+				74ABC775308D036800E22417 /* Frameworks */,
+				74ABC776308D036800E22417 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74ABC77A308D036800E22417 /* PBXTargetDependency */,
+			);
+			name = TeaYieldAIUITests;
+			productName = TeaYieldAIUITests;
+			productReference = 74ABC778308D036800E22417 /* TeaYieldAIUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		74ABC756308D036400E22417 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					74ABC75D308D036400E22417 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					74ABC76D308D036800E22417 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 74ABC75D308D036400E22417;
+					};
+					74ABC777308D036800E22417 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 74ABC75D308D036400E22417;
+					};
+				};
+			};
+			buildConfigurationList = 74ABC759308D036400E22417 /* Build configuration list for PBXProject "TeaYieldAI" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 74ABC755308D036400E22417;
+			productRefGroup = 74ABC75F308D036400E22417 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				74ABC75D308D036400E22417 /* TeaYieldAI */,
+				74ABCWID0000000100E22417 /* TeaYieldAIWidget */,
+				74ABC76D308D036800E22417 /* TeaYieldAITests */,
+				74ABC777308D036800E22417 /* TeaYieldAIUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		74ABCWID0000000900E22417 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC75C308D036400E22417 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74ABCA9A308D0E0000E22417 /* Assets.xcassets in Resources */,
+				74ABC876308D0A0100E22417 /* sample_fine_shoot.jpg in Resources */,
+				74ABC878308D0A0100E22417 /* sample_coarse_leaf.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC76C308D036800E22417 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC776308D036800E22417 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		74ABCWID0000000700E22417 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74ABCWID0000000400E22417 /* TeaYieldAIWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC75A308D036400E22417 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74ABCPDF0000000200E22417 /* RosterPDFGenerator.swift in Sources */,
+				74ABCPDF0000000400E22417 /* ShareSheet.swift in Sources */,
+				74ABCA9C308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift in Sources */,
+				FAE8318DD7B44E6AA866C1C5 /* TeaYieldSearchBar.swift in Sources */,
+				BA226C3DE2734A7C9135186D /* DivisionManagementView.swift in Sources */,
+				8F6613101F6C43E1B8828903 /* EditFieldDivisionSheetView.swift in Sources */,
+				74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */,
+				74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */,
+				74ABCBB3308D0F0000E22417 /* EditPluckerSheetView.swift in Sources */,
+				74ABCBB4308D0F0000E22417 /* PluckerManagementView.swift in Sources */,
+				74ABCBB5308D0F0000E22417 /* SupervisorManagementView.swift in Sources */,
+				74ABCB11308D0E0000E22417 /* TeaYieldButton.swift in Sources */,
+				74ABCB13308D0E0000E22417 /* SectionHeaderView.swift in Sources */,
+				74ABCB41308D0F0000E22417 /* ThemeToggleView.swift in Sources */,
+				74ABCB0D308D0E0000E22417 /* InviteSupervisorSheetView.swift in Sources */,
+				74ABCB20308D0E0000E22417 /* EditEstateSheetView.swift in Sources */,
+				74ABCB22308D0E0000E22417 /* AddFieldDivisionSheetView.swift in Sources */,
+				74ABCB24308D0E0000E22417 /* AddPluckerSheetView.swift in Sources */,
+				74ABCB0B308D0E0000E22417 /* InviteSupervisorViewModel.swift in Sources */,
+				74ABCB09308D0E0000E22417 /* ForcePasswordChangeView.swift in Sources */,
+				74ABCB07308D0E0000E22417 /* ForcePasswordChangeViewModel.swift in Sources */,
+				74ABCB05308D0E0000E22417 /* EstateOnboardingView.swift in Sources */,
+				74ABCB03308D0E0000E22417 /* EstateOnboardingViewModel.swift in Sources */,
+				74ABCB01308D0E0000E22417 /* Components/DistrictPickerField.swift in Sources */,
+				74ABCA30308D0E0000E22417 /* Plucker.swift in Sources */,
+				74ABCA32308D0E0000E22417 /* PluckerDTOs.swift in Sources */,
+				74ABCA34308D0E0000E22417 /* OptimizationDTOs.swift in Sources */,
+				74ABCA02308D0E0000E22417 /* YieldAnalyticsItem.swift in Sources */,
+				74ABCA04308D0E0000E22417 /* HapticFeedback.swift in Sources */,
+				74ABCA06308D0E0000E22417 /* YieldComparisonChartView.swift in Sources */,
+				74ABCA08308D0E0000E22417 /* NDVITrendChartView.swift in Sources */,
+				74ABCA0A308D0E0000E22417 /* FactoryCapacityChartView.swift in Sources */,
+				74ABCA0C308D0E0000E22417 /* ManagerAnalyticsDashboardView.swift in Sources */,
+				74ABCA0E308D0E0000E22417 /* ManagerExecutiveSuiteView.swift in Sources */,
+				74ABC890308D0C0100E22417 /* LocationServiceProtocol.swift in Sources */,
+				74ABC892308D0C0100E22417 /* LocationService.swift in Sources */,
+				74ABC880308D0B0100E22417 /* GeoJSONParser.swift in Sources */,
+				74ABC882308D0B0100E22417 /* TeaFieldMapItem.swift in Sources */,
+				74ABC884308D0B0100E22417 /* FieldMapViewModel.swift in Sources */,
+				74ABC886308D0B0100E22417 /* InteractiveMapView.swift in Sources */,
+				74ABC888308D0B0100E22417 /* FieldDetailBottomSheetView.swift in Sources */,
+				74ABC88A308D0B0100E22417 /* FieldMapView.swift in Sources */,
+				74ABC860308D0A0100E22417 /* LeafQualityAssessment.swift in Sources */,
+				74ABC862308D0A0100E22417 /* CameraServiceProtocol.swift in Sources */,
+				74ABC864308D0A0100E22417 /* VisionLeafClassifierProtocol.swift in Sources */,
+				74ABC866308D0A0100E22417 /* CameraService.swift in Sources */,
+				74ABC868308D0A0100E22417 /* VisionLeafClassifier.swift in Sources */,
+				74ABC86A308D0A0100E22417 /* LeafScannerViewModel.swift in Sources */,
+				74ABC86C308D0A0100E22417 /* LeafScannerView.swift in Sources */,
+				74ABC86E308D0A0100E22417 /* CameraPreviewView.swift in Sources */,
+				74ABC870308D0A0100E22417 /* ScannerHudOverlayView.swift in Sources */,
+				74ABC872308D0A0100E22417 /* TeaShootClassifier_v2.mlmodel in Sources */,
+				74ABC874308D0A0100E22417 /* TeaShootClassifier.mlmodel in Sources */,
+				74ABC7DF308D053200E22417 /* TeaField.swift in Sources */,
+				74ABC7D3308D053200E22417 /* HarvestRepository.swift in Sources */,
+				74ABC7D6308D053200E22417 /* HarvestLogEntity.swift in Sources */,
+				74ABC7DA308D053200E22417 /* TaskDTOs.swift in Sources */,
+				74ABC7D0308D053200E22417 /* NDVIRepository.swift in Sources */,
+				74ABC7DE308D053200E22417 /* HarvestRecord.swift in Sources */,
+				74ABC7D4308D053200E22417 /* TeaFieldEntity.swift in Sources */,
+				74ABC7E7308D053200E22417 /* NetworkMonitor.swift in Sources */,
+				74ABC7F0308D053200E22417 /* AuthViewModel.swift in Sources */,
+				74ABC7F8308D053200E22417 /* MockData.swift in Sources */,
+				74ABC7EE308D053200E22417 /* APIServiceProtocol.swift in Sources */,
+				74ABC7EB308D053200E22417 /* CloudAPIService.swift in Sources */,
+				74ABC7EC308D053200E22417 /* AuthServiceProtocol.swift in Sources */,
+				74ABC7DB308D053200E22417 /* APIErrorDTO.swift in Sources */,
+				74ABC7F6308D053200E22417 /* TaskCardView.swift in Sources */,
+				74ABC7E9308D053200E22417 /* OfflineSyncManager.swift in Sources */,
+				74ABC7E4308D053200E22417 /* BiometricAuthManager.swift in Sources */,
+				74ABC7F1308D053200E22417 /* HarvestWeighingViewModel.swift in Sources */,
+				74ABC7F2308D053200E22417 /* LoginView.swift in Sources */,
+				74ABC860308D0B0100E22417 /* BiometricLockOverlayView.swift in Sources */,
+				74ABC7F4308D053200E22417 /* TodayTasksView.swift in Sources */,
+				74ABC7D7308D053200E22417 /* PersistenceController.swift in Sources */,
+				74ABC7DD308D053200E22417 /* HarvestSyncDTOs.swift in Sources */,
+				74ABC7D2308D053200E22417 /* HarvestRepositoryProtocol.swift in Sources */,
+				74ABC7DC308D053200E22417 /* FieldDTOs.swift in Sources */,
+				74ABC7E0308D053200E22417 /* UserProfile.swift in Sources */,
+				74ABC7F5308D053200E22417 /* SyncStatusBarView.swift in Sources */,
+				74ABC7D1308D053200E22417 /* FieldRepositoryProtocol.swift in Sources */,
+				74ABC7D8308D053200E22417 /* EstateDTOs.swift in Sources */,
+				74ABC7D9308D053200E22417 /* AuthDTOs.swift in Sources */,
+				74ABC7ED308D053200E22417 /* SyncManagerProtocol.swift in Sources */,
+				74ABC7E1308D053200E22417 /* PluckingTask.swift in Sources */,
+				74ABC7E2308D053200E22417 /* AppContainer.swift in Sources */,
+				74ABC7E5308D053200E22417 /* APIEndpoint.swift in Sources */,
+				74ABC7CF308D053200E22417 /* FieldRepository.swift in Sources */,
+				74ABC7CE308D053200E22417 /* NDVIRepositoryProtocol.swift in Sources */,
+				74ABC7CD308D053200E22417 /* TeaYieldAIApp.swift in Sources */,
+				74ABC7E6308D053200E22417 /* NetworkError.swift in Sources */,
+				74ABC7E3308D053200E22417 /* KeychainHelper.swift in Sources */,
+				74ABC7EA308D053200E22417 /* AuthService.swift in Sources */,
+				74ABC7F3308D053200E22417 /* RootView.swift in Sources */,
+				74ABC7E8308D053200E22417 /* AppConfiguration.swift in Sources */,
+				74ABC7F7308D053200E22417 /* HarvestWeighingFormView.swift in Sources */,
+				74ABC7D5308D053200E22417 /* NDVILogEntity.swift in Sources */,
+				74ABC7EF308D053200E22417 /* TodayTasksViewModel.swift in Sources */,
+				74ABC811308D070100E22417 /* AppTheme.swift in Sources */,
+				74ABCB21308D0F0000E22417 /* InputSanitizer.swift in Sources */,
+				74ABC812308D070100E22417 /* OnboardingView.swift in Sources */,
+				74ABC813308D070100E22417 /* SupervisorMainTabView.swift in Sources */,
+				74ABC814308D070100E22417 /* SupervisorSettingsView.swift in Sources */,
+				74ABC830308D080100E22417 /* SupervisorSettingsViewModel.swift in Sources */,
+				74ABC831308D080100E22417 /* OfficerProfileCardView.swift in Sources */,
+				74ABC832308D080100E22417 /* DataStorageSectionView.swift in Sources */,
+				74ABC833308D080100E22417 /* SecuritySettingsSectionView.swift in Sources */,
+				74ABCA21308D0E0000E22417 /* UserProfileViewModel.swift in Sources */,
+				74ABCA23308D0E0000E22417 /* UserProfileView.swift in Sources */,
+				74ABC9A1308D0E0000E22417 /* AppearanceSettingsSectionView.swift in Sources */,
+				74ABC834308D080100E22417 /* NotificationSettingsSectionView.swift in Sources */,
+				74ABC835308D080100E22417 /* AppInfoSectionView.swift in Sources */,
+				74ABC836308D080100E22417 /* LeafScannerPlaceholderView.swift in Sources */,
+				74ABC837308D080100E22417 /* FieldMapPlaceholderView.swift in Sources */,
+				74ABC838308D080100E22417 /* GeofenceArrivalBannerView.swift in Sources */,
+				74ABC839308D080100E22417 /* KpiSummaryRowView.swift in Sources */,
+				74ABC83A308D080100E22417 /* OnboardingSlide.swift in Sources */,
+				74ABC83B308D080100E22417 /* Components/OnboardingSlideCardView.swift in Sources */,
+				74ABC850308D090100E22417 /* NotificationManager.swift in Sources */,
+				74ABC851308D090100E22417 /* HarvestHistoryViewModel.swift in Sources */,
+				74ABC852308D090100E22417 /* ManagerOverviewViewModel.swift in Sources */,
+				74ABC853308D090100E22417 /* HarvestRecordRowView.swift in Sources */,
+				74ABC854308D090100E22417 /* HarvestHistoryView.swift in Sources */,
+				74ABC855308D090100E22417 /* FactoryIntakeCardView.swift in Sources */,
+				74ABC856308D090100E22417 /* ManagerOverviewView.swift in Sources */,
+				74ABC857308D090100E22417 /* ManagerFieldRowView.swift in Sources */,
+				74ABC859308D090100E22417 /* ManagerMainTabView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC76A308D036800E22417 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74ABCPDF0000000600E22417 /* RosterPDFGeneratorTests.swift in Sources */,
+				74ABCTST0000000A00E22417 /* APIEndpointTests.swift in Sources */,
+				74ABCTST0000000800E22417 /* KeychainHelperTests.swift in Sources */,
+				74ABCTST0000000600E22417 /* TeaYieldWidgetTests.swift in Sources */,
+				74ABCTST0000000400E22417 /* SupervisorManagementViewModelTests.swift in Sources */,
+				74ABCTST0000000200E22417 /* PluckerManagementViewModelTests.swift in Sources */,
+				74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */,
+				74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */,
+				74ABCBB3308D0F0000E22417 /* EditPluckerSheetView.swift in Sources */,
+				74ABCBB4308D0F0000E22417 /* PluckerManagementView.swift in Sources */,
+				74ABCBB5308D0F0000E22417 /* SupervisorManagementView.swift in Sources */,
+				74ABCB0F308D0E0000E22417 /* MultiTenantOnboardingTests.swift in Sources */,
+				74ABCA26308D0E0000E22417 /* UserProfileViewModelTests.swift in Sources */,
+				74ABCA10308D0E0000E22417 /* YieldAnalyticsTests.swift in Sources */,
+				74ABC940308D0D0000E22417 /* AuthViewModelTests.swift in Sources */,
+				74ABCB31308D0F0000E22417 /* InputSanitizerTests.swift in Sources */,
+				74ABC942308D0D0000E22417 /* HarvestHistoryViewModelTests.swift in Sources */,
+				74ABC944308D0D0000E22417 /* ManagerOverviewViewModelTests.swift in Sources */,
+				74ABC946308D0D0000E22417 /* SupervisorSettingsViewModelTests.swift in Sources */,
+				74ABC948308D0D0000E22417 /* CoreDataRepositoryTests.swift in Sources */,
+				74ABC900308D0D0000E22417 /* MockAPIService.swift in Sources */,
+				74ABC902308D0D0000E22417 /* MockAuthService.swift in Sources */,
+				74ABC904308D0D0000E22417 /* MockCameraService.swift in Sources */,
+				74ABC906308D0D0000E22417 /* MockFieldRepository.swift in Sources */,
+				74ABC908308D0D0000E22417 /* MockHarvestRepository.swift in Sources */,
+				74ABC90A308D0D0000E22417 /* MockNDVIRepository.swift in Sources */,
+				74ABC90C308D0D0000E22417 /* MockLocationService.swift in Sources */,
+				74ABC90E308D0D0000E22417 /* MockSyncManager.swift in Sources */,
+				74ABC910308D0D0000E22417 /* MockVisionLeafClassifier.swift in Sources */,
+				74ABC912308D0D0000E22417 /* MockNetworkMonitor.swift in Sources */,
+				74ABC920308D0D0000E22417 /* LeafScannerViewModelTests.swift in Sources */,
+				74ABC922308D0D0000E22417 /* FieldMapViewModelTests.swift in Sources */,
+				74ABC924308D0D0000E22417 /* TodayTasksViewModelTests.swift in Sources */,
+				74ABC926308D0D0000E22417 /* HarvestWeighingViewModelTests.swift in Sources */,
+				74ABC928308D0D0000E22417 /* LocationServiceTests.swift in Sources */,
+				74ABC92A308D0D0000E22417 /* GeoJSONParserTests.swift in Sources */,
+				74ABC92C308D0D0000E22417 /* OfflineSyncManagerTests.swift in Sources */,
+				74ABC92E308D0D0000E22417 /* DomainModelAndDTOTests.swift in Sources */,
+				74ABC773308D036800E22417 /* TeaYieldAITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74ABC774308D036800E22417 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */,
+				74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */,
+				74ABCBB3308D0F0000E22417 /* EditPluckerSheetView.swift in Sources */,
+				74ABCBB4308D0F0000E22417 /* PluckerManagementView.swift in Sources */,
+				74ABCBB5308D0F0000E22417 /* SupervisorManagementView.swift in Sources */,
+				74ABC77D308D036800E22417 /* TeaYieldAIUITests.swift in Sources */,
+				74ABC77F308D036800E22417 /* TeaYieldAIUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		74ABCWID0000001000E22417 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74ABCWID0000000100E22417 /* TeaYieldAIWidget */;
+			targetProxy = 74ABCWID0000000F00E22417 /* PBXContainerItemProxy */;
+		};
+		74ABC770308D036800E22417 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74ABC75D308D036400E22417 /* TeaYieldAI */;
+			targetProxy = 74ABC76F308D036800E22417 /* PBXContainerItemProxy */;
+		};
+		74ABC77A308D036800E22417 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74ABC75D308D036400E22417 /* TeaYieldAI */;
+			targetProxy = 74ABC779308D036800E22417 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		74ABCWID0000000B00E22417 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = TeaYieldAIWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "TeaYield AI";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAI.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		74ABCWID0000000C00E22417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = TeaYieldAIWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "TeaYield AI";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAI.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		74ABC780308D036800E22417 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		74ABC781308D036800E22417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		74ABC783308D036800E22417 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TeaYieldAI/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "TeaYield AI requires camera access to scan tea shoots in real-time and analyze leaf maturity ratio.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "TeaYield AI uses Face ID to secure estate yield records and manager approvals.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TeaYield AI requires background location access to trigger proximity notifications as you arrive at assigned tea fields.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TeaYield AI requires location access to monitor field boundaries and trigger harvest alerts when entering plucking zones.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		74ABC784308D036800E22417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TeaYieldAI/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "TeaYield AI requires camera access to scan tea shoots in real-time and analyze leaf maturity ratio.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "TeaYield AI uses Face ID to secure estate yield records and manager approvals.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TeaYield AI requires background location access to trigger proximity notifications as you arrive at assigned tea fields.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TeaYield AI requires location access to monitor field boundaries and trigger harvest alerts when entering plucking zones.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		74ABC786308D036800E22417 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TeaYieldAI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TeaYieldAI";
+			};
+			name = Debug;
+		};
+		74ABC787308D036800E22417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TeaYieldAI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TeaYieldAI";
+			};
+			name = Release;
+		};
+		74ABC789308D036800E22417 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAIUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TeaYieldAI;
+			};
+			name = Debug;
+		};
+		74ABC78A308D036800E22417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAIUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TeaYieldAI;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		74ABCWID0000000A00E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAIWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74ABCWID0000000B00E22417 /* Debug */,
+				74ABCWID0000000C00E22417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74ABC759308D036400E22417 /* Build configuration list for PBXProject "TeaYieldAI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74ABC780308D036800E22417 /* Debug */,
+				74ABC781308D036800E22417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74ABC782308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74ABC783308D036800E22417 /* Debug */,
+				74ABC784308D036800E22417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74ABC785308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74ABC786308D036800E22417 /* Debug */,
+				74ABC787308D036800E22417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74ABC788308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAIUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74ABC789308D036800E22417 /* Debug */,
+				74ABC78A308D036800E22417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 74ABC756308D036400E22417 /* Project object */;
+}

@@ -8,7 +8,11 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
     @Published public private(set) var isAuthenticated: Bool = false
 
     var isBiometricAvailable: Bool {
-        biometricManager.canEvaluateBiometrics && keychain.readString(forKey: KeychainHelper.Key.accessToken) != nil
+        biometricManager.canEvaluateBiometrics
+    }
+
+    var hasEnrolledBiometricCredentials: Bool {
+        keychain.readString(forKey: KeychainHelper.Key.accessToken) != nil
     }
 
     var biometricType: BiometryType {
@@ -58,10 +62,46 @@ final class AuthService: ObservableObject, AuthServiceProtocol {
         return domainUser
     }
 
+    func signupManager(request: ManagerSignUpRequestDTO) async throws -> UserProfile {
+        let tokenResponse = try await apiService.signupManager(request: request)
+        let emailPrefix = request.email.components(separatedBy: "@").first?.uppercased() ?? "MGR"
+        let domainUser = tokenResponse.user.toDomain(employeeId: emailPrefix)
+
+        // Securely persist credentials in the device Keychain
+        _ = keychain.saveString(tokenResponse.accessToken, forKey: KeychainHelper.Key.accessToken)
+        _ = keychain.saveCodable(domainUser, forKey: KeychainHelper.Key.currentUser)
+        _ = keychain.saveString(request.email, forKey: KeychainHelper.Key.lastUserEmail)
+
+        self.apiService.authToken = tokenResponse.accessToken
+        self.currentUser = domainUser
+        self.isAuthenticated = true
+
+        return domainUser
+    }
+
+    func updateCurrentUserEstate(estateId: UUID) {
+        guard let user = currentUser else { return }
+        let updated = user.withEstateId(estateId)
+        self.currentUser = updated
+        _ = keychain.saveCodable(updated, forKey: KeychainHelper.Key.currentUser)
+    }
+
+    func updateUserProfile(_ profile: UserProfile) {
+        self.currentUser = profile
+        _ = keychain.saveCodable(profile, forKey: KeychainHelper.Key.currentUser)
+    }
+
+    func completePasswordChange() {
+        guard let user = currentUser else { return }
+        let updated = user.withPasswordChanged()
+        self.currentUser = updated
+        _ = keychain.saveCodable(updated, forKey: KeychainHelper.Key.currentUser)
+    }
+
     func authenticateWithBiometrics() async throws -> UserProfile {
         guard let cachedToken = keychain.readString(forKey: KeychainHelper.Key.accessToken),
               let cachedUser = keychain.readCodable(UserProfile.self, forKey: KeychainHelper.Key.currentUser) else {
-            throw BiometricError.failed("No stored credentials found. Please log in with email and password first.")
+            throw BiometricError.failed("No linked biometric profile found. Please sign in with your enterprise email and password once to enable \(biometricType.rawValue) on this device.")
         }
 
         let prompt = "Authenticate with \(biometricType.rawValue) to unlock TeaYield AI"

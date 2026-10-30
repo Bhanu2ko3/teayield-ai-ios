@@ -10,10 +10,19 @@ final class CloudAPIService: APIServiceProtocol {
 
     init(
         baseURL: URL = AppConfiguration.apiBaseURL,
-        session: URLSession = .shared
+        session: URLSession? = nil
     ) {
         self.baseURL = baseURL
-        self.session = session
+        if let session = session {
+            self.session = session
+        } else {
+            let config = URLSessionConfiguration.default
+            config.timeoutIntervalForRequest = AppConfiguration.timeoutInterval
+            config.timeoutIntervalForResource = AppConfiguration.timeoutInterval
+            config.waitsForConnectivity = false
+            config.requestCachePolicy = .reloadIgnoringLocalCacheData
+            self.session = URLSession(configuration: config)
+        }
         self.decoder = JSONDecoder()
     }
 
@@ -25,6 +34,14 @@ final class CloudAPIService: APIServiceProtocol {
         return tokenResponse
     }
 
+    func fetchCurrentUserProfile() async throws -> UserProfileDTO {
+        try await execute(.getMe)
+    }
+
+    func fetchEstates() async throws -> [EstateResponseDTO] {
+        try await execute(.listEstates)
+    }
+
     func fetchEstate(id: UUID) async throws -> EstateResponseDTO {
         try await execute(.getEstate(id: id))
     }
@@ -33,12 +50,82 @@ final class CloudAPIService: APIServiceProtocol {
         try await execute(.getFields(estateId: estateId))
     }
 
+    func createField(request: FieldCreateRequestDTO) async throws -> FieldResponseDTO {
+        try await execute(.createField(request))
+    }
+
+    func fetchFieldNDVI(fieldId: UUID, limit: Int? = 12) async throws -> [NDVILogResponseDTO] {
+        try await execute(.getFieldNDVI(fieldId: fieldId, limit: limit))
+    }
+
+    func fetchFieldWeather(fieldId: UUID, limit: Int? = 12) async throws -> [WeatherLogResponseDTO] {
+        try await execute(.getFieldWeather(fieldId: fieldId, limit: limit))
+    }
+
     func fetchDailyTasks(estateId: UUID, dayIndex: Int? = nil) async throws -> DailySupervisorTasksResponseDTO {
         try await execute(.getDailyTasks(estateId: estateId, dayIndex: dayIndex))
     }
 
     func syncHarvestBatch(_ batch: HarvestSyncBatchDTO) async throws -> HarvestSyncResponseDTO {
         try await execute(.syncHarvest(batch))
+    }
+
+    func fetchHarvestLogs(fieldId: UUID? = nil, limit: Int? = 50, offset: Int? = 0) async throws -> [HarvestLogRecordResponseDTO] {
+        try await execute(.getHarvestLogs(fieldId: fieldId, limit: limit, offset: offset))
+    }
+
+    func signupManager(request: ManagerSignUpRequestDTO) async throws -> TokenResponseDTO {
+        let tokenResponse: TokenResponseDTO = try await execute(.signupManager(request))
+        self.authToken = tokenResponse.accessToken
+        return tokenResponse
+    }
+
+    func inviteSupervisor(request: SupervisorInviteRequestDTO) async throws -> UserProfileDTO {
+        try await execute(.inviteSupervisor(request))
+    }
+
+    func fetchSupervisors(estateId: UUID) async throws -> [UserProfileDTO] {
+        try await execute(.listSupervisors(estateId: estateId))
+    }
+
+    func changePassword(request: PasswordChangeRequestDTO) async throws -> StatusResponseDTO {
+        try await execute(.changePassword(request))
+    }
+
+    func onboardEstate(request: EstateOnboardRequestDTO) async throws -> EstateResponseDTO {
+        try await execute(.onboardEstate(request))
+    }
+
+    func updateEstate(id: UUID, request: EstateUpdateRequestDTO) async throws -> EstateResponseDTO {
+        try await execute(.updateEstate(id: id, payload: request))
+    }
+
+    func fetchPluckers(estateId: UUID) async throws -> [PluckerResponseDTO] {
+        try await execute(.listPluckers(estateId: estateId))
+    }
+
+    func createPlucker(request: PluckerCreateRequestDTO) async throws -> PluckerResponseDTO {
+        try await execute(.createPlucker(request))
+    }
+
+    func updatePlucker(id: UUID, request: PluckerUpdateRequestDTO) async throws -> PluckerResponseDTO {
+        try await execute(.updatePlucker(id: id, payload: request))
+    }
+
+    func deletePlucker(id: UUID) async throws -> StatusResponseDTO {
+        try await execute(.deletePlucker(id: id))
+    }
+
+    func triggerYieldPrediction(request: PredictionTriggerDTO) async throws -> YieldPredictionBatchResponseDTO {
+        try await execute(.triggerYieldPrediction(request))
+    }
+
+    func optimizeRoster(request: RosterOptimizationRequestDTO) async throws -> RosterOptimizationResponseDTO {
+        try await execute(.optimizeRoster(request))
+    }
+
+    func fetchCurrentRoster(estateId: UUID, weekStartDate: String) async throws -> RosterOptimizationResponseDTO {
+        try await execute(.getCurrentRoster(estateId: estateId, weekStartDate: weekStartDate))
     }
 
     // MARK: - Private Request Executor
