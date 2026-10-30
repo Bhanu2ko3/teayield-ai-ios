@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABCWID0000000400E22417 /* TeaYieldAIWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCWID0000000300E22417 /* TeaYieldAIWidget.swift */; };
+		74ABCWID0000000E00E22417 /* TeaYieldAIWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 74ABCWID0000000200E22417 /* TeaYieldAIWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		74ABCA9C308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA9B308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift */; };
 		74ABCA9A308D0E0000E22417 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74ABCA99308D0E0000E22417 /* Assets.xcassets */; };
 		FAE8318DD7B44E6AA866C1C5 /* TeaYieldSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */; };
 		BA226C3DE2734A7C9135186D /* DivisionManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD57EE6216DB4016B7FF3B94 /* DivisionManagementView.swift */; };
@@ -167,6 +170,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		74ABCWID0000000F00E22417 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74ABC756308D036400E22417 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74ABCWID0000000100E22417;
+			remoteInfo = TeaYieldAIWidget;
+		};
 		74ABC76F308D036800E22417 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 74ABC756308D036400E22417 /* Project object */;
@@ -184,6 +194,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABCWID0000000200E22417 /* TeaYieldAIWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TeaYieldAIWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		74ABCWID0000000300E22417 /* TeaYieldAIWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAIWidget.swift; sourceTree = "<group>"; };
+		74ABCWID0000000500E22417 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74ABCA9B308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldDashboardWidgetView.swift; sourceTree = "<group>"; };
 		74ABCA99308D0E0000E22417 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldSearchBar.swift; sourceTree = "<group>"; };
 		DD57EE6216DB4016B7FF3B94 /* DivisionManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionManagementView.swift; sourceTree = "<group>"; };
@@ -347,6 +361,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		74ABCWID0000000800E22417 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		74ABC75B308D036400E22417 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -371,10 +392,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		74ABCWID0000000600E22417 /* TeaYieldAIWidget */ = {
+			isa = PBXGroup;
+			children = (
+				74ABCWID0000000300E22417 /* TeaYieldAIWidget.swift */,
+				74ABCWID0000000500E22417 /* Info.plist */,
+			);
+			path = TeaYieldAIWidget;
+			sourceTree = "<group>";
+		};
 		74ABC755308D036400E22417 = {
 			isa = PBXGroup;
 			children = (
 				74ABC760308D036400E22417 /* TeaYieldAI */,
+				74ABCWID0000000600E22417 /* TeaYieldAIWidget */,
 				74ABC771308D036800E22417 /* TeaYieldAITests */,
 				74ABC77B308D036800E22417 /* TeaYieldAIUITests */,
 				74ABC75F308D036400E22417 /* Products */,
@@ -384,6 +415,7 @@
 		74ABC75F308D036400E22417 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCWID0000000200E22417 /* TeaYieldAIWidget.appex */,
 				74ABC75E308D036400E22417 /* TeaYieldAI.app */,
 				74ABC76E308D036800E22417 /* TeaYieldAITests.xctest */,
 				74ABC778308D036800E22417 /* TeaYieldAIUITests.xctest */,
@@ -810,6 +842,7 @@
 		74ABCB15308D0E0000E22417 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA9B308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift */,
 				A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */,
 				74ABCB12308D0E0000E22417 /* TeaYieldButton.swift */,
 				74ABCB14308D0E0000E22417 /* SectionHeaderView.swift */,
@@ -821,6 +854,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		74ABCWID0000000100E22417 /* TeaYieldAIWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74ABCWID0000000A00E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAIWidget" */;
+			buildPhases = (
+				74ABCWID0000000700E22417 /* Sources */,
+				74ABCWID0000000800E22417 /* Frameworks */,
+				74ABCWID0000000900E22417 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TeaYieldAIWidget;
+			productName = TeaYieldAIWidget;
+			productReference = 74ABCWID0000000200E22417 /* TeaYieldAIWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		74ABC75D308D036400E22417 /* TeaYieldAI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 74ABC782308D036800E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAI" */;
@@ -828,10 +878,12 @@
 				74ABC75A308D036400E22417 /* Sources */,
 				74ABC75B308D036400E22417 /* Frameworks */,
 				74ABC75C308D036400E22417 /* Resources */,
+				74ABCWID0000000D00E22417 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				74ABCWID0000001000E22417 /* PBXTargetDependency */,
 			);
 			name = TeaYieldAI;
 			productName = TeaYieldAI;
@@ -911,6 +963,7 @@
 			projectRoot = "";
 			targets = (
 				74ABC75D308D036400E22417 /* TeaYieldAI */,
+				74ABCWID0000000100E22417 /* TeaYieldAIWidget */,
 				74ABC76D308D036800E22417 /* TeaYieldAITests */,
 				74ABC777308D036800E22417 /* TeaYieldAIUITests */,
 			);
@@ -918,6 +971,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		74ABCWID0000000900E22417 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		74ABC75C308D036400E22417 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -945,10 +1005,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		74ABCWID0000000700E22417 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74ABCWID0000000400E22417 /* TeaYieldAIWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		74ABC75A308D036400E22417 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCA9C308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift in Sources */,
 				FAE8318DD7B44E6AA866C1C5 /* TeaYieldSearchBar.swift in Sources */,
 				BA226C3DE2734A7C9135186D /* DivisionManagementView.swift in Sources */,
 				8F6613101F6C43E1B8828903 /* EditFieldDivisionSheetView.swift in Sources */,
@@ -1133,6 +1202,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		74ABCWID0000001000E22417 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74ABCWID0000000100E22417 /* TeaYieldAIWidget */;
+			targetProxy = 74ABCWID0000000F00E22417 /* PBXContainerItemProxy */;
+		};
 		74ABC770308D036800E22417 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 74ABC75D308D036400E22417 /* TeaYieldAI */;
@@ -1146,6 +1220,67 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		74ABCWID0000000B00E22417 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = TeaYieldAIWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "TeaYield AI";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAI.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		74ABCWID0000000C00E22417 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = TeaYieldAIWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "TeaYield AI";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teayield.TeaYieldAI.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		74ABC780308D036800E22417 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1403,6 +1538,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		74ABCWID0000000A00E22417 /* Build configuration list for PBXNativeTarget "TeaYieldAIWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74ABCWID0000000B00E22417 /* Debug */,
+				74ABCWID0000000C00E22417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		74ABC759308D036400E22417 /* Build configuration list for PBXProject "TeaYieldAI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

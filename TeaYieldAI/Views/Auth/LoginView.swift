@@ -47,6 +47,8 @@ struct LoginView: View {
                             actionButtonsSection
                             securityFooterSection
                         }
+                        .frame(maxWidth: 480)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.horizontal, 20)
                         .padding(.bottom, 24)
                     }
