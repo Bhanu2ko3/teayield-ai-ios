@@ -6,6 +6,7 @@ import MapKit
 struct ManagerExecutiveSuiteView: View {
 
     private let container: AppContainerProtocol
+    @AppStorage("requireFaceIDOnLaunch") private var requireFaceIDOnLaunch: Bool = true
     @StateObject private var viewModel: ManagerOverviewViewModel
     @State private var selectedNavigationItem: ExecutiveNavDestination? = .overview
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
@@ -102,6 +103,25 @@ struct ManagerExecutiveSuiteView: View {
         }
         .listStyle(.sidebar)
         .navigationTitle("TeaYield Executive")
+        .toolbar {
+            if requireFaceIDOnLaunch {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        HapticFeedback.selection()
+                        NotificationCenter.default.post(name: Notification.Name("TeaYieldLockAppRequested"), object: nil)
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "lock.shield.fill")
+                                .font(.system(size: 15))
+                            Text("Lock")
+                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        }
+                        .foregroundColor(AppTheme.emerald)
+                    }
+                    .accessibilityLabel("Lock application immediately with Face ID")
+                }
+            }
+        }
         .onChange(of: selectedNavigationItem) { _ in
             HapticFeedback.selection()
         }
@@ -274,6 +294,25 @@ struct ManagerExecutiveSuiteView: View {
         .background(Color(uiColor: .systemGroupedBackground))
         .navigationTitle("Executive Overview")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if requireFaceIDOnLaunch {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        HapticFeedback.selection()
+                        NotificationCenter.default.post(name: Notification.Name("TeaYieldLockAppRequested"), object: nil)
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "lock.shield.fill")
+                                .font(.system(size: 15))
+                            Text("Lock")
+                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        }
+                        .foregroundColor(AppTheme.emerald)
+                    }
+                    .accessibilityLabel("Lock application immediately with Face ID")
+                }
+            }
+        }
     }
 
     private func kpiMetricCard(title: String, value: String, subtext: String, icon: String, color: Color) -> some View {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABCA9A308D0E0000E22417 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74ABCA99308D0E0000E22417 /* Assets.xcassets */; };
 		FAE8318DD7B44E6AA866C1C5 /* TeaYieldSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */; };
 		BA226C3DE2734A7C9135186D /* DivisionManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD57EE6216DB4016B7FF3B94 /* DivisionManagementView.swift */; };
 		8F6613101F6C43E1B8828903 /* EditFieldDivisionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0D5C80B80B4D7090C806C8 /* EditFieldDivisionSheetView.swift */; };
@@ -183,6 +184,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABCA99308D0E0000E22417 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A437014A67984786BB8CBA3B /* TeaYieldSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldSearchBar.swift; sourceTree = "<group>"; };
 		DD57EE6216DB4016B7FF3B94 /* DivisionManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionManagementView.swift; sourceTree = "<group>"; };
 		FD0D5C80B80B4D7090C806C8 /* EditFieldDivisionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFieldDivisionSheetView.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 		74ABC760308D036400E22417 /* TeaYieldAI */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCA99308D0E0000E22417 /* Assets.xcassets */,
 				74ABC78B308D053100E22417 /* App */,
 				74ABC7A7308D053100E22417 /* Core */,
 				74ABC79A308D053100E22417 /* Models */,
@@ -919,6 +922,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCA9A308D0E0000E22417 /* Assets.xcassets in Resources */,
 				74ABC876308D0A0100E22417 /* sample_fine_shoot.jpg in Resources */,
 				74ABC878308D0A0100E22417 /* sample_coarse_leaf.jpg in Resources */,
 			);

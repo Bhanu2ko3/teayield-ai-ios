@@ -98,9 +98,16 @@ final class HarvestHistoryViewModel: ObservableObject {
         }
 
         // 4. Sort Records
+        // Note: For Newest First, newly created unsynced local records are prioritized at the top
+        // so field officers immediately see their latest batch entry.
         switch sortSelection {
         case .newestFirst:
-            result.sort(by: { $0.timestamp > $1.timestamp })
+            result.sort { first, second in
+                if first.isSynced != second.isSynced {
+                    return !first.isSynced && second.isSynced
+                }
+                return first.timestamp > second.timestamp
+            }
         case .oldestFirst:
             result.sort(by: { $0.timestamp < $1.timestamp })
         case .highestWeight:
@@ -147,8 +154,7 @@ final class HarvestHistoryViewModel: ObservableObject {
 
         do {
             let fetched = try await harvestRepository.fetchAllRecords()
-            // Default to newest first
-            self.records = fetched.sorted(by: { $0.timestamp > $1.timestamp })
+            self.records = fetched
         } catch {
             self.records = []
         }
