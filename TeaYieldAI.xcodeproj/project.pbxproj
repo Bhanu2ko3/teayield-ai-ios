@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74ABCTST0000000A00E22417 /* APIEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000900E22417 /* APIEndpointTests.swift */; };
+		74ABCTST0000000800E22417 /* KeychainHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000700E22417 /* KeychainHelperTests.swift */; };
+		74ABCTST0000000600E22417 /* TeaYieldWidgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000500E22417 /* TeaYieldWidgetTests.swift */; };
+		74ABCTST0000000400E22417 /* SupervisorManagementViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000300E22417 /* SupervisorManagementViewModelTests.swift */; };
+		74ABCTST0000000200E22417 /* PluckerManagementViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCTST0000000100E22417 /* PluckerManagementViewModelTests.swift */; };
 		74ABCWID0000000400E22417 /* TeaYieldAIWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCWID0000000300E22417 /* TeaYieldAIWidget.swift */; };
 		74ABCWID0000000E00E22417 /* TeaYieldAIWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 74ABCWID0000000200E22417 /* TeaYieldAIWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		74ABCA9C308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABCA9B308D0E0000E22417 /* TeaYieldDashboardWidgetView.swift */; };
@@ -194,6 +199,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74ABCTST0000000900E22417 /* APIEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointTests.swift; sourceTree = "<group>"; };
+		74ABCTST0000000700E22417 /* KeychainHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelperTests.swift; sourceTree = "<group>"; };
+		74ABCTST0000000500E22417 /* TeaYieldWidgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldWidgetTests.swift; sourceTree = "<group>"; };
+		74ABCTST0000000300E22417 /* SupervisorManagementViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupervisorManagementViewModelTests.swift; sourceTree = "<group>"; };
+		74ABCTST0000000100E22417 /* PluckerManagementViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluckerManagementViewModelTests.swift; sourceTree = "<group>"; };
 		74ABCWID0000000200E22417 /* TeaYieldAIWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TeaYieldAIWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		74ABCWID0000000300E22417 /* TeaYieldAIWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeaYieldAIWidget.swift; sourceTree = "<group>"; };
 		74ABCWID0000000500E22417 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -810,6 +820,11 @@
 		74ABC9E1308D0D0000E22417 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				74ABCTST0000000900E22417 /* APIEndpointTests.swift */,
+				74ABCTST0000000700E22417 /* KeychainHelperTests.swift */,
+				74ABCTST0000000500E22417 /* TeaYieldWidgetTests.swift */,
+				74ABCTST0000000300E22417 /* SupervisorManagementViewModelTests.swift */,
+				74ABCTST0000000100E22417 /* PluckerManagementViewModelTests.swift */,
 				74ABCB10308D0E0000E22417 /* MultiTenantOnboardingTests.swift */,
 				74ABCA27308D0E0000E22417 /* UserProfileViewModelTests.swift */,
 				74ABCA0F308D0E0000E22417 /* YieldAnalyticsTests.swift */,
@@ -1149,6 +1164,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ABCTST0000000A00E22417 /* APIEndpointTests.swift in Sources */,
+				74ABCTST0000000800E22417 /* KeychainHelperTests.swift in Sources */,
+				74ABCTST0000000600E22417 /* TeaYieldWidgetTests.swift in Sources */,
+				74ABCTST0000000400E22417 /* SupervisorManagementViewModelTests.swift in Sources */,
+				74ABCTST0000000200E22417 /* PluckerManagementViewModelTests.swift in Sources */,
 				74ABCBB1308D0F0000E22417 /* PluckerManagementViewModel.swift in Sources */,
 				74ABCBB2308D0F0000E22417 /* SupervisorManagementViewModel.swift in Sources */,
 				74ABCBB3308D0F0000E22417 /* EditPluckerSheetView.swift in Sources */,

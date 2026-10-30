@@ -42,8 +42,8 @@ struct HarvestHistoryViewModelTests {
         ]
     }
 
-    @Test("Verifies loading records sorts chronologically descending")
-    func loadRecordsSorting() async {
+    @Test("Verifies loading records stores all records from repository")
+    func loadRecords() async {
         let samples = createSampleRecords()
         let repo = MockHarvestRepository(initialRecords: samples)
         let viewModel = HarvestHistoryViewModel(harvestRepository: repo)
@@ -51,8 +51,22 @@ struct HarvestHistoryViewModelTests {
         await viewModel.loadRecords()
 
         #expect(viewModel.records.count == 2)
-        #expect(viewModel.records.first?.pluckerId == "PLK-010") // Newer first
-        #expect(viewModel.records.last?.pluckerId == "PLK-011")
+    }
+
+    @Test("Verifies newest first sorting prioritizes pending offline records at the top")
+    func sortingPrioritizesPendingOfflineRecords() async {
+        let samples = createSampleRecords()
+        let repo = MockHarvestRepository(initialRecords: samples)
+        let viewModel = HarvestHistoryViewModel(harvestRepository: repo)
+
+        await viewModel.loadRecords()
+        viewModel.sortSelection = .newestFirst
+
+        // In filteredRecords, unsynced (PLK-011) is pinned to top for immediate officer visibility
+        #expect(viewModel.filteredRecords.first?.pluckerId == "PLK-011")
+        #expect(viewModel.filteredRecords.first?.isSynced == false)
+        #expect(viewModel.filteredRecords.last?.pluckerId == "PLK-010")
+        #expect(viewModel.filteredRecords.last?.isSynced == true)
     }
 
     @Test("Verifies filtering by synchronization state")
