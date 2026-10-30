@@ -49,6 +49,24 @@ final class TodayTasksViewModel: ObservableObject {
 
     @Published var activeGeofencedField: TeaField? = nil
 
+    var supervisorName: String {
+        authService.currentUser?.fullName ?? "Field Officer"
+    }
+
+    var supervisorEmployeeId: String {
+        if let id = authService.currentUser?.employeeId, !id.isEmpty {
+            return id
+        }
+        if let user = authService.currentUser {
+            return "ID-\(user.id.uuidString.prefix(6).uppercased())"
+        }
+        return "ID-058146"
+    }
+
+    var supervisorRoleTitle: String {
+        authService.currentUser?.role.title ?? "Field Superintendent"
+    }
+
     private let apiService: APIServiceProtocol
     private let syncManager: SyncManagerProtocol
     private let fieldRepository: FieldRepositoryProtocol
@@ -138,7 +156,11 @@ final class TodayTasksViewModel: ObservableObject {
 
         do {
             let response = try await apiService.fetchDailyTasks(estateId: estateId, dayIndex: dayIndex)
-            let domainTasks = response.assignedFields.map { $0.toDomain(shiftDate: Date()) }
+            var domainTasks = response.assignedFields.map { $0.toDomain(shiftDate: Date()) }
+
+            // Aggregate harvested green leaf weigh-ins recorded today per field from Core Data
+            await enrichTasksWithActualHarvest(&domainTasks)
+
             self.tasks = domainTasks
             self.isOffline = false
             self.statusBannerMessage = "All field plucking tasks synchronized"
@@ -161,7 +183,7 @@ final class TodayTasksViewModel: ObservableObject {
                 // Genuinely offline: load cached schedule
                 self.isOffline = true
                 self.statusBannerMessage = "Offline mode. Connect to estate network to sync."
-                loadTasksFromOfflineCache()
+                await loadTasksFromOfflineCache()
                 self.isLoading = false
             case .unauthorized:
                 self.isOffline = false
@@ -170,12 +192,12 @@ final class TodayTasksViewModel: ObservableObject {
                 self.isLoading = false
             default:
                 self.isOffline = false
-                loadTasksFromOfflineCache()
+                await loadTasksFromOfflineCache()
                 self.isLoading = false
             }
         } catch {
             self.isOffline = true
-            loadTasksFromOfflineCache()
+            await loadTasksFromOfflineCache()
             self.isLoading = false
         }
 
@@ -263,10 +285,28 @@ final class TodayTasksViewModel: ObservableObject {
 
     // MARK: - Private Offline Fallback
 
-    private func loadTasksFromOfflineCache() {
+    /// Correlates assigned field tasks with actual local Core Data green leaf weigh-in records.
+    private func enrichTasksWithActualHarvest(_ taskList: inout [PluckingTask]) async {
+        guard let allRecords = try? await harvestRepository.fetchAllRecords() else { return }
+
+        let calendar = Calendar.current
+        for i in 0..<taskList.count {
+            let fieldId = taskList[i].fieldId
+            // Sum harvested weight logged today for this field
+            let fieldTodayRecords = allRecords.filter { record in
+                record.fieldId == fieldId && calendar.isDateInToday(record.timestamp)
+            }
+            let totalHarvested = fieldTodayRecords.reduce(0.0) { $0 + $1.netWeightKg }
+            taskList[i].harvestedWeightKg = totalHarvested
+            taskList[i].isCompleted = (taskList[i].targetWeightKg > 0 && totalHarvested >= taskList[i].targetWeightKg)
+        }
+    }
+
+    private func loadTasksFromOfflineCache() async {
         if let data = UserDefaults.standard.data(forKey: tasksCacheKey),
-           let cached = try? JSONDecoder().decode([PluckingTask].self, from: data),
+           var cached = try? JSONDecoder().decode([PluckingTask].self, from: data),
            !cached.isEmpty {
+            await enrichTasksWithActualHarvest(&cached)
             self.tasks = cached
             statusBannerMessage = "Operating offline. Displaying cached schedule from estate server."
         } else {

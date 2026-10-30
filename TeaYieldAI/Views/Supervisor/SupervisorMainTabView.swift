@@ -15,6 +15,7 @@ struct SupervisorMainTabView: View {
         case tasks
         case scanner
         case map
+        case pluckers
         case settings
     }
 
@@ -63,6 +64,12 @@ struct SupervisorMainTabView: View {
                 Label("Map", systemImage: "map.fill")
             }
             .tag(Tab.map)
+
+            PluckerManagementView(container: container)
+                .tabItem {
+                    Label("Pluckers", systemImage: "person.3.fill")
+                }
+                .tag(Tab.pluckers)
 
             SupervisorSettingsView(container: container)
                 .tabItem {

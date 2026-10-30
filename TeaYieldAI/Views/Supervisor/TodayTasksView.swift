@@ -3,6 +3,7 @@ import SwiftUI
 /// Main dashboard view for field supervisors managing daily plucking tasks, progress, and offline logs.
 struct TodayTasksView: View {
 
+    @AppStorage("requireFaceIDOnLaunch") private var requireFaceIDOnLaunch: Bool = true
     @StateObject private var viewModel: TodayTasksViewModel
     @State private var showingWeighingSheet = false
     @State private var showingProfileSheet = false
@@ -30,7 +31,7 @@ struct TodayTasksView: View {
 
                 ScrollView {
                     VStack(spacing: 16) {
-                        estateContextBar
+                        supervisorProfileHeader
                         syncStatusSection
                         KpiSummaryRowView(
                             targetKg: viewModel.totalTargetKg,
@@ -47,28 +48,28 @@ struct TodayTasksView: View {
                 }
             }
             .navigationTitle("Today's Operations")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        HapticFeedback.selection()
-                        NotificationCenter.default.post(name: Notification.Name("TeaYieldLockAppRequested"), object: nil)
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "lock.shield.fill")
-                                .font(.system(size: 15))
-                            Text("Lock")
-                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                if requireFaceIDOnLaunch {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            HapticFeedback.selection()
+                            NotificationCenter.default.post(name: Notification.Name("TeaYieldLockAppRequested"), object: nil)
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: "lock.shield.fill")
+                                    .font(.system(size: 15))
+                                Text("Lock")
+                                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                            }
+                            .foregroundColor(AppTheme.emerald)
                         }
-                        .foregroundColor(AppTheme.emerald)
+                        .accessibilityLabel("Lock application immediately with Face ID")
                     }
-                    .accessibilityLabel("Lock application immediately with Face ID")
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 12) {
-                        ThemeToggleView(style: .circle)
-
                         NavigationLink {
                             HarvestHistoryView(harvestRepository: container.harvestRepository)
                         } label: {
@@ -116,43 +117,77 @@ struct TodayTasksView: View {
 
     // MARK: - Subviews
 
-    private var estateContextBar: some View {
-        HStack {
-            HStack(spacing: 6) {
-                Image(systemName: "leaf.fill")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundColor(AppTheme.emerald)
+    private var supervisorProfileHeader: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 14) {
+                ZStack {
+                    Circle()
+                        .fill(AppTheme.emerald.opacity(0.12))
+                        .frame(width: 48, height: 48)
 
-                Text(viewModel.estateDisplayName)
-                    .font(.system(size: 12, weight: .bold, design: .rounded))
-                    .foregroundColor(.primary)
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 6)
-            .background(AppTheme.emerald.opacity(0.12))
-            .cornerRadius(AppTheme.radiusSmall)
-
-            Spacer()
-
-            Button {
-                selectedFieldForWeighing = viewModel.tasks.first?.fieldId
-                showingWeighingSheet = true
-            } label: {
-                HStack(spacing: 5) {
-                    Image(systemName: "plus")
-                        .font(.system(size: 11, weight: .bold))
-                    Text("Weigh Leaf")
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                    Image(systemName: "person.crop.circle.badge.checkmark")
+                        .foregroundColor(AppTheme.emerald)
+                        .font(.system(size: 20))
                 }
-                .foregroundColor(.white)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(AppTheme.emerald)
-                .cornerRadius(AppTheme.radiusSmall)
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(viewModel.supervisorName)
+                        .font(.appHeadline)
+                        .foregroundColor(.primary)
+
+                    Text(viewModel.supervisorRoleTitle)
+                        .font(.appCaption)
+                        .foregroundColor(.secondary)
+                }
+
+                Spacer()
+
+                Button {
+                    selectedFieldForWeighing = viewModel.tasks.first?.fieldId
+                    showingWeighingSheet = true
+                } label: {
+                    HStack(spacing: 5) {
+                        Image(systemName: "plus")
+                            .font(.system(size: 11, weight: .bold))
+                        Text("Weigh Leaf")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
+                    .background(AppTheme.emerald)
+                    .cornerRadius(AppTheme.radiusSmall)
+                }
+                .accessibilityLabel("Record Leaf Weighing")
             }
-            .accessibilityLabel("Record Leaf Weighing")
+
+            Divider()
+
+            HStack {
+                HStack(spacing: 6) {
+                    Text("EMPLOYEE ID")
+                        .font(.system(size: 9, weight: .bold, design: .rounded))
+                        .foregroundColor(.secondary)
+                    Text(viewModel.supervisorEmployeeId)
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.emerald)
+                }
+
+                Spacer()
+
+                HStack(spacing: 6) {
+                    Image(systemName: "leaf.fill")
+                        .font(.system(size: 10))
+                        .foregroundColor(AppTheme.emerald)
+                    Text(viewModel.estateDisplayName)
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                }
+            }
         }
-        .padding(.horizontal, 2)
+        .padding(14)
+        .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 
     private var syncStatusSection: some View {
@@ -300,6 +335,7 @@ struct TodayTasksView: View {
         .onDisappear {
             Task {
                 await viewModel.refreshPendingSyncCount()
+                await viewModel.loadTodayTasks()
             }
         }
     }

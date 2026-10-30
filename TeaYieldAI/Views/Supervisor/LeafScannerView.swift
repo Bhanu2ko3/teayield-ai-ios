@@ -212,8 +212,12 @@ struct LeafScannerView: View {
         #if targetEnvironment(simulator)
         .contentShape(Rectangle())
         .onTapGesture {
+            HapticFeedback.lightImpact()
             if viewModel.assessment == nil {
-                HapticFeedback.lightImpact()
+                loadSampleFineShoot()
+            } else if viewModel.isOptimalHarvest {
+                loadSampleCoarseLeaf()
+            } else {
                 loadSampleFineShoot()
             }
         }

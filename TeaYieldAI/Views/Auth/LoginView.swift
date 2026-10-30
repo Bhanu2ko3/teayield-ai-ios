@@ -452,21 +452,6 @@ struct LoginView: View {
                     }
                 }
             )
-
-            if viewModel.authMode == .signIn && viewModel.isBiometricAvailable {
-                TeaYieldButton(
-                    title: "Sign in with \(viewModel.biometricType.rawValue)",
-                    icon: viewModel.biometricType == .faceID ? "faceid" : "touchid",
-                    style: .secondary,
-                    isLoading: false,
-                    isDisabled: viewModel.isLoading,
-                    action: {
-                        Task {
-                            await viewModel.authenticateWithBiometrics()
-                        }
-                    }
-                )
-            }
         }
     }
 

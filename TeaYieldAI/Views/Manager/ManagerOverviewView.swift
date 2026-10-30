@@ -3,6 +3,7 @@ import SwiftUI
 /// Executive oversight dashboard for estate managers and agronomists coordinating macro yield and factory intake.
 struct ManagerOverviewView: View {
 
+    @AppStorage("requireFaceIDOnLaunch") private var requireFaceIDOnLaunch: Bool = true
     @StateObject private var viewModel: ManagerOverviewViewModel
     private let container: AppContainerProtocol
     @State private var showingFullProfileSheet: Bool = false
@@ -141,20 +142,22 @@ struct ManagerOverviewView: View {
                 Text("Are you sure you want to retire \(field.blockCode) (\(field.name))? Historical harvest logs will remain archived.")
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        HapticFeedback.selection()
-                        NotificationCenter.default.post(name: Notification.Name("TeaYieldLockAppRequested"), object: nil)
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "lock.shield.fill")
-                                .font(.system(size: 15))
-                            Text("Lock")
-                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                if requireFaceIDOnLaunch {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            HapticFeedback.selection()
+                            NotificationCenter.default.post(name: Notification.Name("TeaYieldLockAppRequested"), object: nil)
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: "lock.shield.fill")
+                                    .font(.system(size: 15))
+                                Text("Lock")
+                                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                            }
+                            .foregroundColor(AppTheme.emerald)
                         }
-                        .foregroundColor(AppTheme.emerald)
+                        .accessibilityLabel("Lock application immediately with Face ID")
                     }
-                    .accessibilityLabel("Lock application immediately with Face ID")
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
