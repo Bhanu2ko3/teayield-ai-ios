@@ -51,6 +51,7 @@
 		74ABC7F0308D053200E22417 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BE308D053100E22417 /* AuthViewModel.swift */; };
 		74ABC7F1308D053200E22417 /* HarvestWeighingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */; };
 		74ABC7F2308D053200E22417 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C2308D053100E22417 /* LoginView.swift */; };
+		74ABC860308D0B0100E22417 /* BiometricLockOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC861308D0B0100E22417 /* BiometricLockOverlayView.swift */; };
 		74ABC7F3308D053200E22417 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C4308D053100E22417 /* RootView.swift */; };
 		74ABC7F4308D053200E22417 /* TodayTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C6308D053100E22417 /* TodayTasksView.swift */; };
 		74ABC7F5308D053200E22417 /* SyncStatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */; };
@@ -229,6 +230,7 @@
 		74ABC7BE308D053100E22417 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		74ABC7BF308D053100E22417 /* HarvestWeighingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarvestWeighingViewModel.swift; sourceTree = "<group>"; };
 		74ABC7C2308D053100E22417 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		74ABC861308D0B0100E22417 /* BiometricLockOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricLockOverlayView.swift; sourceTree = "<group>"; };
 		74ABC7C4308D053100E22417 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		74ABC7C6308D053100E22417 /* TodayTasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTasksView.swift; sourceTree = "<group>"; };
 		74ABC7C8308D053100E22417 /* SyncStatusBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncStatusBarView.swift; sourceTree = "<group>"; };
@@ -629,6 +631,7 @@
 			children = (
 				74ABCB0A308D0E0000E22417 /* ForcePasswordChangeView.swift */,
 				74ABC7C2308D053100E22417 /* LoginView.swift */,
+				74ABC861308D0B0100E22417 /* BiometricLockOverlayView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1011,6 +1014,7 @@
 				74ABC7E4308D053200E22417 /* BiometricAuthManager.swift in Sources */,
 				74ABC7F1308D053200E22417 /* HarvestWeighingViewModel.swift in Sources */,
 				74ABC7F2308D053200E22417 /* LoginView.swift in Sources */,
+				74ABC860308D0B0100E22417 /* BiometricLockOverlayView.swift in Sources */,
 				74ABC7F4308D053200E22417 /* TodayTasksView.swift in Sources */,
 				74ABC7D7308D053200E22417 /* PersistenceController.swift in Sources */,
 				74ABC7DD308D053200E22417 /* HarvestSyncDTOs.swift in Sources */,

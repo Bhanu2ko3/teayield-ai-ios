@@ -45,20 +45,50 @@ struct RootView: View {
                 SupervisorMainTabView(container: container)
             }
         }
+        .overlay {
+            if authService.isAuthenticated && requireFaceIDOnLaunch && !hasUnlockedWithBiometrics && authService.isBiometricAvailable {
+                BiometricLockOverlayView(
+                    officerName: authService.currentUser?.fullName ?? "Officer",
+                    biometryType: authService.biometricType,
+                    onUnlockTap: {
+                        triggerBiometricAuthentication()
+                    }
+                )
+                .transition(.opacity)
+                .zIndex(999)
+            }
+        }
         .applyAppTheme()
         .animation(.easeInOut(duration: 0.25), value: authService.isAuthenticated)
         .animation(.easeInOut(duration: 0.25), value: authService.currentUser?.mustChangePassword)
         .animation(.easeInOut(duration: 0.25), value: authService.currentUser?.estateId)
         .animation(.easeInOut(duration: 0.25), value: hasCompletedOnboarding)
-        .task {
-            // Biometric prompt on launch if authenticated and enabled
-            if authService.isAuthenticated && requireFaceIDOnLaunch && !hasUnlockedWithBiometrics && authService.isBiometricAvailable {
-                isEvaluatingBiometrics = true
-                _ = try? await authService.authenticateWithBiometrics()
-                hasUnlockedWithBiometrics = true
-                isEvaluatingBiometrics = false
+        .animation(.easeInOut(duration: 0.25), value: hasUnlockedWithBiometrics)
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("TeaYieldLockAppRequested"))) { _ in
+            withAnimation(.easeInOut(duration: 0.25)) {
+                hasUnlockedWithBiometrics = false
             }
         }
+        .task {
+            // Instant Biometric prompt on launch if authenticated and enabled
+            if authService.isAuthenticated && requireFaceIDOnLaunch && !hasUnlockedWithBiometrics && authService.isBiometricAvailable {
+                triggerBiometricAuthentication()
+            }
+        }
+    }
+
+    private func triggerBiometricAuthentication() {
+        guard !isEvaluatingBiometrics else { return }
+        isEvaluatingBiometrics = true
+        Task {
+            if let _ = try? await authService.authenticateWithBiometrics() {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    hasUnlockedWithBiometrics = true
+                }
+            }
+            isEvaluatingBiometrics = false
+        }
+    }
     }
 }
 

@@ -11,8 +11,33 @@ struct HarvestWeighingFormView: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
+    @State private var showingFieldPickerSheet: Bool = false
+    @State private var showingPluckerPickerSheet: Bool = false
+    @State private var fieldSearchText: String = ""
+    @State private var pluckerSearchText: String = ""
+
     private var selectedField: TeaField? {
         viewModel.availableFields.first(where: { $0.id == viewModel.selectedFieldId })
+    }
+
+    private var filteredFields: [TeaField] {
+        if fieldSearchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return viewModel.availableFields
+        }
+        return viewModel.availableFields.filter {
+            $0.name.localizedCaseInsensitiveContains(fieldSearchText) ||
+            $0.blockCode.localizedCaseInsensitiveContains(fieldSearchText)
+        }
+    }
+
+    private var filteredPluckers: [Plucker] {
+        if pluckerSearchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return viewModel.availablePluckers
+        }
+        return viewModel.availablePluckers.filter {
+            $0.fullName.localizedCaseInsensitiveContains(pluckerSearchText) ||
+            $0.pluckerCode.localizedCaseInsensitiveContains(pluckerSearchText)
+        }
     }
 
     var body: some View {
@@ -29,6 +54,8 @@ struct HarvestWeighingFormView: View {
                         weightMeasurementCard
                         shootQualityCard
                         geospatialAuditCard
+
+                        validationCard
 
                         if let message = viewModel.validationMessage {
                             validationBanner(message: message)
@@ -57,6 +84,12 @@ struct HarvestWeighingFormView: View {
                 Button("OK", role: .cancel) { }
             } message: {
                 Text(viewModel.errorMessage ?? "Failed to save record.")
+            }
+            .sheet(isPresented: $showingFieldPickerSheet) {
+                fieldPickerModalSheet
+            }
+            .sheet(isPresented: $showingPluckerPickerSheet) {
+                pluckerPickerModalSheet
             }
             .applyAppTheme()
         }
@@ -106,57 +139,65 @@ struct HarvestWeighingFormView: View {
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
 
-                Menu {
-                    ForEach(viewModel.availableFields) { field in
-                        Button {
-                            viewModel.selectedFieldId = field.id
-                            viewModel.updateCoordinatesForSelectedField()
-                            HapticFeedback.selection()
-                        } label: {
-                            HStack {
-                                Text(field.name)
-                                Spacer()
-                                Text(field.formattedAcreage)
-                            }
-                        }
-                    }
-                } label: {
-                    HStack {
-                        Image(systemName: "leaf.fill")
-                            .foregroundColor(selectedField == nil ? .secondary : AppTheme.emerald)
-                            .frame(width: 20)
-
-                        if let field = selectedField {
-                            Text(field.name)
-                                .font(.appBody)
-                                .foregroundColor(.primary)
-
-                            Spacer()
-
-                            Text(field.formattedAcreage)
-                                .font(.system(size: 11, weight: .semibold, design: .rounded))
-                                .foregroundColor(.secondary)
-                        } else {
-                            Text("Select Field Block")
-                                .font(.appBody)
-                                .foregroundColor(.secondary)
-
-                            Spacer()
-                        }
-
-                        Image(systemName: "chevron.up.chevron.down")
-                            .font(.system(size: 12))
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(14)
-                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(AppTheme.radiusMedium)
-                }
-                .accessibilityLabel("Target Field Block: \(selectedField?.name ?? "Not selected")")
+                fieldSelectorButton
             }
         }
         .padding(16)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+    }
+
+    private var fieldSelectorButton: some View {
+        Button {
+            HapticFeedback.selection()
+            fieldSearchText = ""
+            showingFieldPickerSheet = true
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "leaf.fill")
+                    .foregroundColor(selectedField == nil ? .secondary : AppTheme.emerald)
+                    .frame(width: 20)
+
+                if let field = selectedField {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(field.name)
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
+                            .foregroundColor(.primary)
+                            .lineLimit(1)
+
+                        Text("\(field.blockCode) • \(field.formattedAcreage)")
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    let status = field.status
+                    Text(status.rawValue.uppercased())
+                        .font(.system(size: 9, weight: .bold, design: .rounded))
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 3)
+                        .background(fieldStatusColor(for: status).opacity(0.15))
+                        .foregroundColor(fieldStatusColor(for: status))
+                        .cornerRadius(AppTheme.radiusSmall)
+                } else {
+                    Text("Select Field Block")
+                        .font(.appBody)
+                        .foregroundColor(.secondary)
+
+                    Spacer()
+                }
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.secondary)
+            }
+            .padding(14)
+            .background(Color(uiColor: .tertiarySystemGroupedBackground))
+            .cornerRadius(AppTheme.radiusMedium)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Target Field Block: \(selectedField?.name ?? "Not selected")")
+        .accessibilityHint("Double tap to choose field division from list")
     }
 
     private var pluckerDetailsCard: some View {
@@ -174,52 +215,7 @@ struct HarvestWeighingFormView: View {
                         .fontWeight(.medium)
                         .foregroundColor(.secondary)
 
-                    Menu {
-                        ForEach(viewModel.availablePluckers) { plucker in
-                            Button {
-                                viewModel.selectPlucker(plucker)
-                                HapticFeedback.selection()
-                            } label: {
-                                HStack {
-                                    Text("\(plucker.pluckerCode) - \(plucker.fullName)")
-                                    Spacer()
-                                    Text(plucker.formattedAverageRate)
-                                }
-                            }
-                        }
-                    } label: {
-                        HStack {
-                            Image(systemName: "person.badge.shield.checkmark.fill")
-                                .foregroundColor(viewModel.selectedPlucker == nil ? .secondary : AppTheme.emerald)
-                                .frame(width: 20)
-
-                            if let plucker = viewModel.selectedPlucker {
-                                Text("\(plucker.pluckerCode) • \(plucker.fullName)")
-                                    .font(.appBody)
-                                    .foregroundColor(.primary)
-
-                                Spacer()
-
-                                Text(plucker.formattedAverageRate)
-                                    .font(.system(size: 11, weight: .semibold, design: .rounded))
-                                    .foregroundColor(.secondary)
-                            } else {
-                                Text("Choose from Estate Roster")
-                                    .font(.appBody)
-                                    .foregroundColor(.secondary)
-
-                                Spacer()
-                            }
-
-                            Image(systemName: "chevron.up.chevron.down")
-                                .font(.system(size: 12))
-                                .foregroundColor(.secondary)
-                        }
-                        .padding(14)
-                        .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                        .cornerRadius(AppTheme.radiusMedium)
-                    }
-                    .accessibilityLabel("Estate Plucker Roster: \(viewModel.selectedPlucker?.displayName ?? "Not selected")")
+                    pluckerRosterSelectorButton
                 }
             } else {
                 HStack(spacing: 8) {
@@ -233,56 +229,114 @@ struct HarvestWeighingFormView: View {
                 .padding(.vertical, 4)
             }
 
-            HStack(spacing: 12) {
-                // Plucker ID
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Plucker Code")
-                        .font(.appCaption)
-                        .fontWeight(.medium)
-                        .foregroundColor(.secondary)
-
-                    HStack {
-                        Image(systemName: "number")
-                            .foregroundColor(.secondary)
-                            .frame(width: 16)
-
-                        TextField("PLK-001", text: $viewModel.pluckerId)
-                            .autocapitalization(.allCharacters)
-                            .disableAutocorrection(true)
-                            .onChange(of: viewModel.pluckerId) { newValue in
-                                viewModel.pluckerId = InputSanitizer.sanitizePluckerId(newValue)
-                            }
-                    }
-                    .padding(14)
-                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(AppTheme.radiusMedium)
-                }
-                .frame(maxWidth: 135)
-
-                // Plucker Name
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Worker Name")
-                        .font(.appCaption)
-                        .fontWeight(.medium)
-                        .foregroundColor(.secondary)
-
-                    HStack {
-                        Image(systemName: "person.fill")
-                            .foregroundColor(.secondary)
-                            .frame(width: 16)
-
-                        TextField("Enter name", text: $viewModel.pluckerName)
-                            .autocapitalization(.words)
-                            .disableAutocorrection(false)
-                    }
-                    .padding(14)
-                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
-                    .cornerRadius(AppTheme.radiusMedium)
-                }
-            }
+            manualPluckerInputRow
         }
         .padding(16)
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
+    }
+
+    private var pluckerRosterSelectorButton: some View {
+        Button {
+            HapticFeedback.selection()
+            pluckerSearchText = ""
+            showingPluckerPickerSheet = true
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "person.badge.shield.checkmark.fill")
+                    .foregroundColor(viewModel.selectedPlucker == nil ? .secondary : AppTheme.emerald)
+                    .frame(width: 20)
+
+                if let plucker = viewModel.selectedPlucker {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(plucker.fullName)
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
+                            .foregroundColor(.primary)
+                            .lineLimit(1)
+
+                        Text("\(plucker.pluckerCode) • Avg \(plucker.formattedAverageRate)")
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    let isActive = plucker.isActive
+                    Text(isActive ? "ACTIVE" : "ON LEAVE")
+                        .font(.system(size: 9, weight: .bold, design: .rounded))
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 3)
+                        .background(isActive ? AppTheme.emerald.opacity(0.15) : AppTheme.amber.opacity(0.15))
+                        .foregroundColor(isActive ? AppTheme.emerald : AppTheme.amber)
+                        .cornerRadius(AppTheme.radiusSmall)
+                } else {
+                    Text("Choose from Estate Roster")
+                        .font(.appBody)
+                        .foregroundColor(.secondary)
+
+                    Spacer()
+                }
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.secondary)
+            }
+            .padding(14)
+            .background(Color(uiColor: .tertiarySystemGroupedBackground))
+            .cornerRadius(AppTheme.radiusMedium)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Estate Plucker Roster: \(viewModel.selectedPlucker?.displayName ?? "Not selected")")
+        .accessibilityHint("Double tap to select registered plucker from roster")
+    }
+
+    private var manualPluckerInputRow: some View {
+        HStack(spacing: 12) {
+            // Plucker ID
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Plucker Code")
+                    .font(.appCaption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.secondary)
+
+                HStack {
+                    Image(systemName: "number")
+                        .foregroundColor(.secondary)
+                        .frame(width: 16)
+
+                    TextField("PLK-001", text: $viewModel.pluckerId)
+                        .autocapitalization(.allCharacters)
+                        .disableAutocorrection(true)
+                        .onChange(of: viewModel.pluckerId) { newValue in
+                            viewModel.pluckerId = InputSanitizer.sanitizePluckerId(newValue)
+                        }
+                }
+                .padding(14)
+                .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                .cornerRadius(AppTheme.radiusMedium)
+            }
+            .frame(maxWidth: 135)
+
+            // Plucker Name
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Worker Name")
+                    .font(.appCaption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.secondary)
+
+                HStack {
+                    Image(systemName: "person.fill")
+                        .foregroundColor(.secondary)
+                        .frame(width: 16)
+
+                    TextField("Enter name", text: $viewModel.pluckerName)
+                        .autocapitalization(.words)
+                        .disableAutocorrection(false)
+                }
+                .padding(14)
+                .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                .cornerRadius(AppTheme.radiusMedium)
+            }
+        }
     }
 
     private var weightMeasurementCard: some View {
@@ -511,6 +565,50 @@ struct HarvestWeighingFormView: View {
         .teaYieldCard(cornerRadius: AppTheme.radiusLarge)
     }
 
+    private var validationCard: some View {
+        Group {
+            if let reason = validationHint {
+                HStack(spacing: 8) {
+                    Image(systemName: "info.circle.fill")
+                        .foregroundColor(AppTheme.amber)
+                        .font(.system(size: 14))
+
+                    Text(reason)
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(AppTheme.amber)
+
+                    Spacer()
+                }
+                .padding(12)
+                .background(AppTheme.amber.opacity(0.12))
+                .cornerRadius(AppTheme.radiusMedium)
+                .transition(.opacity)
+            }
+        }
+    }
+
+    private var validationHint: String? {
+        if viewModel.selectedFieldId == nil {
+            return "Please select a target tea field division above."
+        }
+        if viewModel.pluckerId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return "Select a plucker from roster or enter plucker code."
+        }
+        if viewModel.grossWeightInput.isEmpty {
+            return "Enter the gross scale reading (kg)."
+        }
+        if viewModel.grossWeight <= 0.0 {
+            return "Gross weight must be greater than 0 kg."
+        }
+        if viewModel.grossWeight > 250.0 {
+            return "Gross weight cannot exceed 250 kg per harvest bag."
+        }
+        if viewModel.grossWeight <= viewModel.bagTareWeight {
+            return String(format: "Gross weight must exceed bag tare deduction (%.1f kg).", viewModel.bagTareWeight)
+        }
+        return nil
+    }
+
     private func validationBanner(message: String) -> some View {
         HStack(spacing: 8) {
             Image(systemName: "exclamationmark.triangle.fill")
@@ -559,6 +657,222 @@ struct HarvestWeighingFormView: View {
         }
         .padding(.top, 8)
         .padding(.bottom, 24)
+    }
+
+    // MARK: - Picker Modal Sheets
+
+    private var fieldPickerModalSheet: some View {
+        NavigationStack {
+            VStack(spacing: 12) {
+                TeaYieldSearchBar(
+                    text: $fieldSearchText,
+                    placeholder: "Search field name or block code..."
+                )
+                .padding(.horizontal, 16)
+                .padding(.top, 12)
+
+                ScrollView {
+                    LazyVStack(spacing: 8) {
+                        if filteredFields.isEmpty {
+                            VStack(spacing: 8) {
+                                Image(systemName: "leaf.circle")
+                                    .font(.system(size: 32))
+                                    .foregroundColor(.secondary)
+                                Text("No matching field blocks")
+                                    .font(.appHeadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 40)
+                        } else {
+                            ForEach(filteredFields) { field in
+                                fieldPickerRow(field: field)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 20)
+                }
+            }
+            .background(Color(uiColor: .systemGroupedBackground).ignoresSafeArea())
+            .navigationTitle("Select Field Division")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") {
+                        showingFieldPickerSheet = false
+                    }
+                    .foregroundColor(AppTheme.emerald)
+                }
+            }
+        }
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
+    }
+
+    private func fieldPickerRow(field: TeaField) -> some View {
+        let isSelected = viewModel.selectedFieldId == field.id
+        let status = field.status
+        let statusColor = fieldStatusColor(for: status)
+
+        return Button {
+            viewModel.selectedFieldId = field.id
+            viewModel.updateCoordinatesForSelectedField()
+            HapticFeedback.selection()
+            showingFieldPickerSheet = false
+        } label: {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(statusColor.opacity(0.12))
+                        .frame(width: 38, height: 38)
+                    Image(systemName: "leaf.fill")
+                        .font(.system(size: 14))
+                        .foregroundColor(statusColor)
+                }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(field.name)
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
+
+                    HStack(spacing: 6) {
+                        Text(field.blockCode)
+                            .font(.system(size: 10, weight: .bold, design: .monospaced))
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 1)
+                            .background(Color.secondary.opacity(0.12))
+                            .cornerRadius(AppTheme.radiusSmall)
+
+                        Text(field.formattedAcreage)
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                }
+
+                Spacer()
+
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(AppTheme.emerald)
+                        .font(.system(size: 18))
+                }
+            }
+            .padding(12)
+            .background(Color(uiColor: .secondarySystemGroupedBackground))
+            .cornerRadius(AppTheme.radiusMedium)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var pluckerPickerModalSheet: some View {
+        NavigationStack {
+            VStack(spacing: 12) {
+                TeaYieldSearchBar(
+                    text: $pluckerSearchText,
+                    placeholder: "Search plucker name or ID code..."
+                )
+                .padding(.horizontal, 16)
+                .padding(.top, 12)
+
+                ScrollView {
+                    LazyVStack(spacing: 8) {
+                        if filteredPluckers.isEmpty {
+                            VStack(spacing: 8) {
+                                Image(systemName: "person.crop.circle.badge.exclamationmark")
+                                    .font(.system(size: 32))
+                                    .foregroundColor(.secondary)
+                                Text("No matching pluckers in roster")
+                                    .font(.appHeadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 40)
+                        } else {
+                            ForEach(filteredPluckers) { plucker in
+                                pluckerPickerRow(plucker: plucker)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 20)
+                }
+            }
+            .background(Color(uiColor: .systemGroupedBackground).ignoresSafeArea())
+            .navigationTitle("Select Estate Plucker")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") {
+                        showingPluckerPickerSheet = false
+                    }
+                    .foregroundColor(AppTheme.emerald)
+                }
+            }
+        }
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
+    }
+
+    private func pluckerPickerRow(plucker: Plucker) -> some View {
+        let isSelected = viewModel.selectedPlucker?.id == plucker.id
+
+        return Button {
+            viewModel.selectPlucker(plucker)
+            HapticFeedback.selection()
+            showingPluckerPickerSheet = false
+        } label: {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(AppTheme.emerald.opacity(0.12))
+                        .frame(width: 38, height: 38)
+                    Image(systemName: "person.fill")
+                        .font(.system(size: 14))
+                        .foregroundColor(AppTheme.emerald)
+                }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(plucker.fullName)
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
+
+                    HStack(spacing: 6) {
+                        Text(plucker.pluckerCode)
+                            .font(.system(size: 10, weight: .bold, design: .monospaced))
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 1)
+                            .background(Color.secondary.opacity(0.12))
+                            .cornerRadius(AppTheme.radiusSmall)
+
+                        Text("Avg \(plucker.formattedAverageRate)")
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                }
+
+                Spacer()
+
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(AppTheme.emerald)
+                        .font(.system(size: 18))
+                }
+            }
+            .padding(12)
+            .background(Color(uiColor: .secondarySystemGroupedBackground))
+            .cornerRadius(AppTheme.radiusMedium)
+        }
+        .buttonStyle(.plain)
+    }
+    private func fieldStatusColor(for status: FieldReadinessStatus) -> Color {
+        switch status {
+        case .ready: return AppTheme.emerald
+        case .growing: return AppTheme.amber
+        case .resting: return AppTheme.crimson
+        }
     }
 }
 

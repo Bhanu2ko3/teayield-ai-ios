@@ -49,6 +49,22 @@ struct TodayTasksView: View {
             .navigationTitle("Today's Operations")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        HapticFeedback.selection()
+                        NotificationCenter.default.post(name: Notification.Name("TeaYieldLockAppRequested"), object: nil)
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "lock.shield.fill")
+                                .font(.system(size: 15))
+                            Text("Lock")
+                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        }
+                        .foregroundColor(AppTheme.emerald)
+                    }
+                    .accessibilityLabel("Lock application immediately with Face ID")
+                }
+
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 12) {
                         ThemeToggleView(style: .circle)

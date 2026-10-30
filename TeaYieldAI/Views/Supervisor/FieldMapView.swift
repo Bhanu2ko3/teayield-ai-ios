@@ -147,18 +147,17 @@ struct FieldMapView: View {
             }
             .animation(.spring(response: 0.35, dampingFraction: 0.8), value: viewModel.selectedField)
             .sheet(item: $weighingField) { field in
-                if let appContainer = container ?? (AppContainer.shared as AppContainerProtocol) {
-                    HarvestWeighingFormView(
-                        viewModel: HarvestWeighingViewModel(
-                            harvestRepository: appContainer.harvestRepository,
-                            fieldRepository: appContainer.fieldRepository,
-                            syncManager: appContainer.syncManager,
-                            authService: appContainer.authService,
-                            apiService: appContainer.apiService,
-                            initialFieldId: field.id
-                        )
+                let appContainer = container ?? AppContainer.shared
+                HarvestWeighingFormView(
+                    viewModel: HarvestWeighingViewModel(
+                        harvestRepository: appContainer.harvestRepository,
+                        fieldRepository: appContainer.fieldRepository,
+                        syncManager: appContainer.syncManager,
+                        authService: appContainer.authService,
+                        apiService: appContainer.apiService,
+                        initialFieldId: field.id
                     )
-                }
+                )
             }
             .applyAppTheme()
         }
